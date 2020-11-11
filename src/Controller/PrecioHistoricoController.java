@@ -1,4 +1,4 @@
 package Controller;
 
-public class PrecioHistoricoController {
+public class PrecioHistoricoController extends MenuController {
 }

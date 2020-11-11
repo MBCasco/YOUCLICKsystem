@@ -1,4 +1,4 @@
 package Controller;
 
-public class FacturaController {
+public class FacturaController extends MenuController {
 }

@@ -1,4 +1,4 @@
 package Controller;
 
-public class EmpleadosController {
+public class EmpleadosController extends MenuController{
 }

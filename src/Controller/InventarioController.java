@@ -1,4 +1,4 @@
 package Controller;
 
-public class InventarioController {
+public class InventarioController extends MenuController{
 }

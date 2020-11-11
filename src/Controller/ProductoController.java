@@ -1,4 +1,4 @@
 package Controller;
 
-public class ProductoController {
+public class ProductoController  extends MenuController{
 }
