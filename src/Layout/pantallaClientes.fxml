@@ -157,15 +157,15 @@
                   <Font name="Dubai Bold" size="16.0" />
                </font>
             </Label>
-            <TableView fx:id="table_clientes" layoutX="14.0" layoutY="243.0" onMouseClicked="#getSelected" prefHeight="326.0" prefWidth="603.0" style="-fx-background-color: eed09d; -fx-border-color: a18262; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-width: 2;">
-              <columns>
-                  <TableColumn fx:id="col_id" prefWidth="66.0" text="ID" />
-                <TableColumn fx:id="col_nombre" prefWidth="97.33331298828125" text="Nombre" />
+            <TableView fx:id="table_clientes" fixedCellSize="0.0" layoutX="14.0" layoutY="243.0" onMouseClicked="#getSelected" prefHeight="326.0" prefWidth="603.0" style="-fx-background-color: eed09d; -fx-border-color: a18262; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-width: 2;">
+               <columns>
+                  <TableColumn fx:id="col_cliente" prefWidth="80.333251953125" text="ID" />
+                  <TableColumn fx:id="col_nombre" prefWidth="97.33331298828125" text="Nombre" />
                   <TableColumn fx:id="col_direccion" prefWidth="92.66668701171875" text="Dirección" />
                   <TableColumn fx:id="col_telefono" prefWidth="80.333251953125" text="Teléfono" />
                   <TableColumn fx:id="col_correo" prefWidth="139.666748046875" text="Correo" />
-                <TableColumn fx:id="col_Sexo" prefWidth="84.66668701171875" text="ID Sexo" />
-              </columns>
+                  <TableColumn fx:id="col_Sexo" prefWidth="84.66668701171875" text="ID Sexo" />
+               </columns>
             </TableView>
             <ImageView fitHeight="32.0" fitWidth="36.0" layoutX="90.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                <image>

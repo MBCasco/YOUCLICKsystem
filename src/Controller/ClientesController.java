@@ -2,12 +2,14 @@ package Controller;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+
 import javax.swing.*;
 import java.net.URL;
 import java.sql.Connection;
@@ -20,7 +22,7 @@ public class ClientesController extends MenuController implements Initializable 
     private TableView<clientes> table_clientes;
 
     @FXML
-    private TableColumn<clientes, Integer> col_id;
+    private TableColumn<clientes, Integer> col_cliente;
 
     @FXML
     private TableColumn<clientes, String> col_nombre;
@@ -35,7 +37,7 @@ public class ClientesController extends MenuController implements Initializable 
     private TableColumn<clientes, String> col_correo;
 
     @FXML
-    private TableColumn<clientes, String> col_Sexo;
+    private TableColumn<clientes, Integer> col_Sexo;
 
 
     @FXML
@@ -94,10 +96,10 @@ public class ClientesController extends MenuController implements Initializable 
 
     public void Delete(){
         conn = connect.conDB();
-        String sql = "Delete from cliente where IDClientes = ?";
+        String sql = "Delete from cliente where IDCliente = ?";
         try{
             pst = conn.prepareStatement(sql);
-            pst.setString(1, txt_id.getText());
+            pst.setString(1, txt_eliminar.getText());
             pst.execute();
             JOptionPane.showMessageDialog(null, "Eliminado");
             UpdateTable();
@@ -108,12 +110,12 @@ public class ClientesController extends MenuController implements Initializable 
     }
 
     public void UpdateTable(){
-        col_id.setCellValueFactory(new PropertyValueFactory<clientes,Integer>("idCliente"));
+        col_cliente.setCellValueFactory(new PropertyValueFactory<clientes,Integer>("idCliente"));
         col_nombre.setCellValueFactory(new PropertyValueFactory<clientes,String>("nombre"));
         col_direccion.setCellValueFactory(new PropertyValueFactory<clientes,String>("direccion"));
         col_telefono.setCellValueFactory(new PropertyValueFactory<clientes,Integer>("telefono"));
         col_correo.setCellValueFactory(new PropertyValueFactory<clientes,String>("correo"));
-        col_Sexo.setCellValueFactory(new PropertyValueFactory<clientes,String>("Sexo"));
+        col_Sexo.setCellValueFactory(new PropertyValueFactory<clientes,Integer>("Sexo"));
 
         listM = connect.getdataclientes();
         table_clientes.setItems(listM);
@@ -127,6 +129,8 @@ public class ClientesController extends MenuController implements Initializable 
     public void Edit(){
         try{
             conn = connect.conDB();
+
+
             String value1 = txt_id.getText();
             String value2 = txt_nombre.getText();
             String value3 = txt_direccion.getText();
@@ -134,8 +138,9 @@ public class ClientesController extends MenuController implements Initializable 
             String value5 = txt_correo.getText();
             String value6 = txt_Sexo.getText();
 
-            String sql = "update cliente set IDCliente= '"+value1+"', nombreCliente= '"+value2+"', dirreccionCliente= '"+
-                    value3+"', telefonoCliente= '"+value4+"', correoCliente= '"+value5+", IDSexo= '"+value6+"' where IDCliente='"+value1+"' ";
+            String sql = "update cliente set nombreCliente= '"+value2+"', dirreccionCliente= '"+
+                    value3+"', telefonoCliente= '"+value4+"', correoCliente= '"+value5+", ' where IDCliente='"+value1+"' ";
+
             pst = conn.prepareStatement(sql);
             pst.execute();
             JOptionPane.showMessageDialog(null, "Update");
@@ -148,7 +153,7 @@ public class ClientesController extends MenuController implements Initializable 
 
     @FXML
     void Search_cliente(){
-        col_id.setCellValueFactory(new PropertyValueFactory<clientes,Integer>("idClientes"));
+        col_cliente.setCellValueFactory(new PropertyValueFactory<clientes,Integer>("idCliente"));
         col_nombre.setCellValueFactory(new PropertyValueFactory<clientes,String>("nombre"));
 
         dataList = connect.getdataclientes();
@@ -181,11 +186,11 @@ public class ClientesController extends MenuController implements Initializable 
         if(index <= -1){
             return;
         }
-        txt_id.setText(col_id.getCellData(index).toString());
-        txt_nombre.setText(col_nombre.getCellData(index));
-        txt_direccion.setText(col_direccion.getCellData(index));
+        txt_id.setText(col_cliente.getCellData(index).toString());
+        txt_nombre.setText(col_nombre.getCellData(index).toString());
+        txt_direccion.setText(col_direccion.getCellData(index).toString());
         txt_telefono.setText(col_telefono.getCellData(index).toString());
-        txt_correo.setText(col_correo.getCellData(index));
-        txt_Sexo.setText(col_Sexo.getCellData(index));
+        txt_correo.setText(col_correo.getCellData(index).toString());
+        txt_Sexo.setText(col_Sexo.getCellData(index).toString());
     }
 }

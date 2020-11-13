@@ -29,7 +29,7 @@ public class connect {
                 ResultSet rs = ps.executeQuery();
 
                 while(rs.next()){
-                    list.add(new clientes( Integer.parseInt(rs.getString("IDCliente")), rs.getString("nombreCliente"), rs.getString("dirreccionCliente"), Integer.parseInt(rs.getString("telefonoCliente")), rs.getString("correoCliente"), Integer.parseInt(rs.getString("IDSexo"))));
+                    list.add(new clientes(Integer.parseInt(rs.getString("IDCliente")), rs.getString("nombreCliente"), rs.getString("dirreccionCliente"), Integer.parseInt(rs.getString("telefonoCliente")), rs.getString("correoCliente"), Integer.parseInt(rs.getString("IDSexo"))));
                 }
             }catch(Exception e){
             }

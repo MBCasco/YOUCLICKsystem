@@ -1,6 +1,7 @@
 package Controller;
 
 public class clientes {
+
     int idCliente;
     int telefono;
     int sexo;
