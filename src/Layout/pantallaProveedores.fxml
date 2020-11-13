@@ -9,7 +9,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1360.0" style="-fx-background-color: #616161; -fx-border-color: c29b61; -fx-border-width: 3;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ProveedoresController">
    <children>
-      <Pane layoutX="222.0" layoutY="24.0" prefHeight="108.0" prefWidth="1119.0" style="-fx-background-color: #ffc107; -fx-border-color: c29b61; -fx-background-radius: 10; -fx-border-radius: 5; -fx-border-style: solid; -fx-border-width: 4;">
+      <Pane layoutX="235.0" layoutY="24.0" prefHeight="108.0" prefWidth="1099.0" style="-fx-background-color: #ffc107; -fx-border-color: c29b61; -fx-background-radius: 10; -fx-border-radius: 5; -fx-border-style: solid; -fx-border-width: 4;">
          <children>
             <Label layoutX="407.0" layoutY="22.0" prefHeight="61.0" prefWidth="358.0" text="PROVEEDORES">
                <font>
@@ -23,41 +23,30 @@
             </ImageView>
          </children>
       </Pane>
-      <Label layoutX="228.0" layoutY="149.0" prefHeight="46.0" prefWidth="389.0" style="-fx-background-color: d5c5ae; -fx-border-color: ffc107; -fx-border-width: 2; -fx-border-radius: 5; -fx-background-radius: 5;" text=" Digíte datos:">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <Separator layoutX="226.0" layoutY="196.0" prefHeight="37.0" prefWidth="389.0" />
-      <TableView layoutX="632.0" layoutY="240.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="506.0" prefWidth="713.0" style="-fx-background-color: eed09d; -fx-border-color: a18262; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-width: 2;">
+      <Separator layoutX="238.0" layoutY="200.0" prefHeight="37.0" prefWidth="377.0" />
+      <TableView fx:id="table_proveedores" layoutX="641.0" layoutY="244.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="497.0" prefWidth="687.0" style="-fx-background-color: eed09d; -fx-border-color: a18262; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-width: 2;">
          <columns>
-            <TableColumn prefWidth="100.66668701171875" text="ID" />
-            <TableColumn prefWidth="170.0" text="Empresa" />
-            <TableColumn prefWidth="114.0" text="Correo" />
-            <TableColumn prefWidth="175.0" text="Dirección" />
-            <TableColumn prefWidth="163.0" text="IDContacto" />
+            <TableColumn fx:id="col_id" prefWidth="100.66668701171875" text="ID" />
+            <TableColumn fx:id="col_nombre" prefWidth="170.0" text="Empresa" />
+            <TableColumn fx:id="col_correo" prefWidth="114.0" text="Correo" />
+            <TableColumn fx:id="col_direccion" prefWidth="175.0" text="Dirección" />
+            <TableColumn fx:id="col_idContacto" prefWidth="163.0" text="IDContacto" />
          </columns>
       </TableView>
-      <HBox layoutX="635.0" layoutY="198.0" minWidth="-Infinity" prefHeight="36.0" prefWidth="708.0">
+      <HBox layoutX="641.0" layoutY="155.0" minWidth="-Infinity" prefHeight="36.0" prefWidth="708.0">
          <children>
             <ImageView fitHeight="36.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@iconos/buscar.png" />
                </image>
             </ImageView>
-            <TextField maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="34.0" prefWidth="519.0" promptText="Nombre de la empresa proveedora" style="-fx-background-color: beige; -fx-border-color: ffc107;">
+            <TextField fx:id="filterField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="34.0" prefWidth="519.0" promptText="Búsqueda por nombre o ID" style="-fx-background-color: beige; -fx-border-color: ffc107;">
                <HBox.margin>
                   <Insets left="6.0" />
                </HBox.margin>
             </TextField>
-            <Button mnemonicParsing="false" prefHeight="34.0" prefWidth="182.0" style="-fx-border-color: ffc107; -fx-background-color: a18262;" text="BUSCAR" />
          </children>
       </HBox>
-      <Label layoutX="633.0" layoutY="149.0" prefHeight="42.0" prefWidth="708.0" style="-fx-background-color: d5c5ae; -fx-border-color: ffc107; -fx-border-width: 2; -fx-border-radius: 5; -fx-background-radius: 5;" text=" Búsqueda:">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
       <VBox layoutX="14.0" layoutY="24.0" prefHeight="720.0" prefWidth="195.0" spacing="5.0">
          <children>
             <Button alignment="CENTER" mnemonicParsing="false" onAction="#cliente" prefHeight="120.0" prefWidth="200.0" style="-fx-background-color: #616161; -fx-border-color: FFdb58; -fx-border-radius: 2;" text="Clientes" textFill="WHITE">
@@ -134,87 +123,68 @@
             </Button>
          </children>
       </VBox>
-      <Button layoutX="497.0" layoutY="596.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="91.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="ACTUALIZAR" />
-      <Button layoutX="315.0" layoutY="595.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="95.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="REGISTRAR" />
-      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="521.0" layoutY="717.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="95.0" style="-fx-border-color: ffc107; -fx-background-color: a18262;" text="ELIMINAR" />
-      <ImageView fitHeight="47.0" fitWidth="55.0" layoutX="234.0" layoutY="679.0" pickOnBounds="true" preserveRatio="true">
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="1026.0" layoutY="198.0" mnemonicParsing="false" onAction="#Delete" prefHeight="32.0" prefWidth="95.0" style="-fx-border-color: ffc107; -fx-background-color: a18262;" text="ELIMINAR" textFill="#eed09d" />
+      <ImageView fitHeight="39.0" fitWidth="38.0" layoutX="641.0" layoutY="195.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@iconos/eliminar%20(1).png" />
          </image>
       </ImageView>
-      <TextField layoutX="285.0" layoutY="685.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="331.0" promptText="Nombre de la empresa proveedora" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
-      <Label alignment="CENTER" layoutX="237.0" layoutY="645.0" prefHeight="29.0" prefWidth="248.0" style="-fx-background-color: eed09d; -fx-background-radius: 3; -fx-border-color: black; -fx-border-radius: 3;" text="Eliminar ">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <ImageView fitHeight="43.0" fitWidth="51.0" layoutX="446.0" layoutY="596.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@iconos/actualizado.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="42.0" fitWidth="52.0" layoutX="261.0" layoutY="595.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@iconos/portapapeles.png" />
-         </image>
-      </ImageView>
-      <TabPane layoutX="229.0" layoutY="268.0" prefHeight="323.0" prefWidth="389.0" style="-fx-background-color: d5c5ae; -fx-border-color: ffc107; -fx-border-width: 2; -fx-border-radius: 5; -fx-background-radius: 5;" tabClosingPolicy="UNAVAILABLE">
+      <TextField fx:id="txt_eliminar" layoutX="679.0" layoutY="201.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="331.0" promptText="Nombre de la empresa proveedora" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
+      <TabPane layoutX="238.0" layoutY="243.0" prefHeight="500.0" prefWidth="381.0" style="-fx-background-color: d5c5ae; -fx-border-color: ffc107; -fx-border-width: 2; -fx-border-radius: 5; -fx-background-radius: 5;" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Información general">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="304.0" prefWidth="373.0">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="453.0" prefWidth="377.0">
                      <children>
-                        <TextField layoutX="5.0" layoutY="257.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="372.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
-                        <Label alignment="CENTER" layoutX="5.0" layoutY="224.0" prefHeight="28.0" prefWidth="255.0" style="-fx-background-color: eed09d; -fx-background-radius: 3; -fx-border-color: black; -fx-border-radius: 3;" text="Dirección">
+                        <TextField fx:id="txt_direccion" layoutX="5.0" layoutY="274.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="368.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
+                        <Label alignment="CENTER" layoutX="5.0" layoutY="241.0" prefHeight="28.0" prefWidth="255.0" style="-fx-background-color: eed09d; -fx-background-radius: 3; -fx-border-color: black; -fx-border-radius: 3;" text="Dirección">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="4.0" layoutY="191.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="372.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
-                        <Label alignment="CENTER" layoutX="4.0" layoutY="152.0" prefHeight="32.0" prefWidth="256.0" style="-fx-background-color: eed09d; -fx-background-radius: 3; -fx-border-color: black; -fx-border-radius: 3;" text="Correo ">
+                        <TextField fx:id="txt_correo" layoutX="4.0" layoutY="200.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="368.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
+                        <Label alignment="CENTER" layoutX="4.0" layoutY="163.0" prefHeight="32.0" prefWidth="256.0" style="-fx-background-color: eed09d; -fx-background-radius: 3; -fx-border-color: black; -fx-border-radius: 3;" text="Correo ">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="3.0" layoutY="123.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="373.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
-                        <Label alignment="CENTER" layoutX="5.0" layoutY="84.0" prefHeight="32.0" prefWidth="253.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="Nombre">
+                        <TextField fx:id="txt_nombre" layoutX="3.0" layoutY="122.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="370.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
+                        <Label alignment="CENTER" layoutX="5.0" layoutY="89.0" prefHeight="29.0" prefWidth="253.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="Nombre">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="4.0" layoutY="51.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="374.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
-                        <Label alignment="CENTER" layoutX="4.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="165.0" style="-fx-background-color: eed09d; -fx-background-radius: 3; -fx-border-color: black; -fx-border-radius: 3;" text="ID ">
+                        <TextField fx:id="txt_idProveedor" layoutX="4.0" layoutY="47.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="368.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
+                        <Label alignment="CENTER" layoutX="4.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="28.0" prefWidth="165.0" style="-fx-background-color: eed09d; -fx-background-radius: 3; -fx-border-color: black; -fx-border-radius: 3;" text="ID ">
                            <font>
                               <Font size="13.0" />
                            </font>
                         </Label>
-                     </children>
-                  </AnchorPane>
-            </content>
-          </Tab>
-          <Tab text="Información Contacto">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="304.0" prefWidth="390.0">
-                     <children>
-                        <Label alignment="CENTER" layoutX="4.0" layoutY="8.0" prefHeight="32.0" prefWidth="256.0" style="-fx-background-color: eed09d; -fx-background-radius: 3; -fx-border-color: black; -fx-border-radius: 3;" text="ID contacto">
+                        <Button layoutX="79.0" layoutY="395.0" mnemonicParsing="false" onAction="#Add_proveedor" prefHeight="37.0" prefWidth="95.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="REGISTRAR" textFill="#eed09d" />
+                        <ImageView fitHeight="42.0" fitWidth="52.0" layoutX="40.0" layoutY="393.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@iconos/portapapeles.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="43.0" fitWidth="51.0" layoutX="201.0" layoutY="392.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@iconos/actualizado.png" />
+                           </image>
+                        </ImageView>
+                        <Button layoutX="239.0" layoutY="396.0" mnemonicParsing="false" onAction="#Edit" prefHeight="37.0" prefWidth="91.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="ACTUALIZAR" textFill="#eed09d" />
+                        <Label alignment="CENTER" layoutX="5.0" layoutY="315.0" prefHeight="28.0" prefWidth="255.0" style="-fx-background-color: eed09d; -fx-background-radius: 3; -fx-border-color: black; -fx-border-radius: 3;" text="ID Contacto">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="4.0" layoutY="47.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="372.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
-                        <Label alignment="CENTER" layoutX="4.0" layoutY="83.0" prefHeight="32.0" prefWidth="256.0" style="-fx-background-color: eed09d; -fx-background-radius: 3; -fx-border-color: black; -fx-border-radius: 3;" text="Correo ">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Label>
-                        <TextField layoutX="4.0" layoutY="122.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="372.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
+                        <TextField fx:id="txt_idContacto" layoutX="5.0" layoutY="346.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="368.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
         </tabs>
       </TabPane>
-      <Label alignment="CENTER" layoutX="233.0" layoutY="224.0" prefHeight="32.0" prefWidth="381.0" style="-fx-background-color: #FFC107; -fx-border-color: c29b61;" text="Datos del proveedor">
+      <Label alignment="CENTER" layoutX="234.0" layoutY="156.0" prefHeight="46.0" prefWidth="387.0" style="-fx-background-color: #FFC107; -fx-border-color: c29b61;" text="Datos del proveedor">
          <font>
             <Font name="Dubai Bold" size="16.0" />
          </font>
