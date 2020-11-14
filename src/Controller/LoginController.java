@@ -74,8 +74,10 @@ public class LoginController implements GlobalConstans {
             preparedStatement.setString(2, password);
             resultSet = preparedStatement.executeQuery();
             if (!resultSet.next()) {
+
                 lblError.setTextFill(Color.TOMATO);
-                lblError.setText("Ingrese el correcto Usuario/Contraseña");
+                lblError.setText("Ingrese correctamente el usuario-contraseña");
+
                 System.err.println("Inicio Incorrecto");
                 return "Error";
             } else {

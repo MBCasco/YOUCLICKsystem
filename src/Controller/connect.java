@@ -15,7 +15,7 @@ public class connect {
     public static Connection conDB(){
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/ferreteria","root","qwerty123456789");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/ferreteria","root","");
             return conn;
         }catch (Exception e){
             JOptionPane.showMessageDialog(null, e);

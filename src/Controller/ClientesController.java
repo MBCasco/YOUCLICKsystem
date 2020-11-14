@@ -5,9 +5,7 @@ import javafx.collections.transformation.SortedList;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import javax.swing.*;
@@ -16,6 +14,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ClientesController extends MenuController implements Initializable {
     @FXML
@@ -62,7 +62,7 @@ public class ClientesController extends MenuController implements Initializable 
     private TextField txt_eliminar;
 
     @FXML
-    private TextField txt_Sexo;
+    private ComboBox Sexo;
 
 
     ObservableList<clientes> listM;
@@ -73,25 +73,124 @@ public class ClientesController extends MenuController implements Initializable 
     ResultSet rs = null;
     PreparedStatement pst = null;
 
-    public void Add_clientes(){
+    public void Add_clientes() {
         conn = connect.conDB();
         String sql = "insert into cliente (nombreCliente,dirreccionCliente,telefonoCLiente,correoCliente,IDSexo)values(?,?,?,?,?)";
-        try{
-            pst = conn.prepareStatement(sql);
+        if (validateFields() & validateDireccion() & validateEmail() & validateName() & validateNumber()){
+            try {
+                pst = conn.prepareStatement(sql);
 
-            pst.setString(1, txt_nombre.getText());
-            pst.setString(2, txt_direccion.getText());
-            pst.setString(3, txt_telefono.getText());
-            pst.setString(4, txt_correo.getText());
-            pst.setString(5, txt_Sexo.getText());
-            pst.execute();
+                pst.setString(1, txt_nombre.getText());
+                pst.setString(2, txt_direccion.getText());
+                pst.setString(3, txt_telefono.getText());
+                pst.setString(4, txt_correo.getText());
+                pst.setString(5, Sexo.getValue().toString());
+                pst.execute();
 
-            JOptionPane.showMessageDialog(null, "Agregado");
-            UpdateTable();
-            Search_cliente();
-        }catch (Exception e){
-            JOptionPane.showMessageDialog(null, e);
+
+                    JOptionPane.showMessageDialog(null, "Agregado");
+                    clearFields();
+
+                UpdateTable();
+                Search_cliente();
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
         }
+
+
+    }
+
+    private boolean validateNumber(){
+        Pattern p = Pattern.compile("[0-9]");
+        Matcher m = p.matcher(txt_telefono.getText());
+
+        if(m.find() && m.group().equals(txt_telefono.getText())){
+            return true;
+        } else{
+            Alert alert =new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Validar Número");
+            alert.setHeaderText(null);
+            alert.setContentText("Por favor ingresar un número válido");
+            alert.showAndWait();
+
+            return false;
+        }
+    }
+
+    private boolean validateName(){
+        Pattern p = Pattern.compile("[A-Za-z]");
+        Matcher m = p.matcher(txt_nombre.getText());
+
+        if(m.find() && m.group().equals(txt_nombre.getText())){
+            return true;
+        } else{
+            Alert alert =new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Validar Nombre");
+            alert.setHeaderText(null);
+            alert.setContentText("Por favor ingresar un nombre válido");
+            alert.showAndWait();
+
+            return false;
+        }
+    }
+    private boolean validateDireccion(){
+        Pattern p = Pattern.compile("[A-Za-z]");
+        Matcher m = p.matcher(txt_direccion.getText());
+
+        if(m.find() && m.group().equals(txt_direccion.getText())){
+            return true;
+        } else{
+            Alert alert =new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Validar direcion");
+            alert.setHeaderText(null);
+            alert.setContentText("Por favor ingresar una direccion válida");
+            alert.showAndWait();
+
+            return false;
+        }
+    }
+
+    private boolean validateEmail(){
+        Pattern p = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"+"[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+        Matcher m = p.matcher(txt_correo.getText());
+
+        if(m.find() && m.group().equals(txt_correo.getText())){
+            return true;
+        } else{
+            Alert alert =new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Validar Correo");
+            alert.setHeaderText(null);
+            alert.setContentText("Por favor ingresar un correo válido");
+            alert.showAndWait();
+
+            return false;
+        }
+    }
+
+    private boolean validateFields(){
+        if (txt_nombre.getText().isEmpty() | txt_direccion.getText().isEmpty() | txt_telefono.getText().isEmpty() | txt_correo.getText().isEmpty() ){
+
+            Alert alert =new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Espacios vacios!");
+            alert.setHeaderText(null);
+            alert.setContentText("Espacio vacío, por favor ingresar datos");
+            alert.showAndWait();
+
+            return false;
+        }
+        return true;
+    }
+
+    private void clearFields() {
+        txt_id.clear();
+        txt_nombre.clear();
+        txt_direccion.clear();
+        txt_correo.clear();
+        txt_telefono.clear();
+        txt_eliminar.clear();
+        //Sexo.Items.clear();
     }
 
     public void Delete(){
@@ -104,6 +203,7 @@ public class ClientesController extends MenuController implements Initializable 
             JOptionPane.showMessageDialog(null, "Eliminado");
             UpdateTable();
             Search_cliente();
+            clearFields();
         }catch (Exception e){
             JOptionPane.showMessageDialog(null, e);
         }
@@ -122,29 +222,33 @@ public class ClientesController extends MenuController implements Initializable 
     }
     @Override
     public void initialize(URL url, ResourceBundle rb){
+        Sexo.getItems().addAll("1","2");
         UpdateTable();
         Search_cliente();
+        clearFields();
     }
 
     public void Edit(){
         try{
             conn = connect.conDB();
 
+
             String value1 = txt_id.getText();
             String value2 = txt_nombre.getText();
             String value3 = txt_direccion.getText();
             String value4 = txt_telefono.getText();
             String value5 = txt_correo.getText();
-            String value6 = txt_Sexo.getText();
+            String value6 = Sexo.getValue().toString();
 
             String sql = "update cliente set nombreCliente= '"+value2+"', dirreccionCliente= '"+
-                    value3+"', telefonoCliente= '"+value4+"', correoCliente= '"+value5+" ' where IDCliente='"+value1+"' ";
+                    value3+"', telefonoCliente= '"+value4+"', correoCliente= '"+value5+", IDSexo= '"+value6+" ' where IDCliente='"+value1+"' ";
 
             pst = conn.prepareStatement(sql);
             pst.execute();
-            JOptionPane.showMessageDialog(null, "Actualizado");
+            JOptionPane.showMessageDialog(null, "Update");
             UpdateTable();
             Search_cliente();
+            clearFields();
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, e);
         }
@@ -190,8 +294,7 @@ public class ClientesController extends MenuController implements Initializable 
         txt_direccion.setText(col_direccion.getCellData(index).toString());
         txt_telefono.setText(col_telefono.getCellData(index).toString());
         txt_correo.setText(col_correo.getCellData(index).toString());
-        txt_Sexo.setText(col_Sexo.getCellData(index).toString());
+        Sexo.setValue(col_Sexo.getCellData(index).toString());
     }
-
 
 }
