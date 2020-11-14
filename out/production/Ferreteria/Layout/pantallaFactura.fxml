@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1360.0" style="-fx-background-color: #616161; -fx-border-color: c29b61; -fx-border-width: 3;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.FacturaController">
+   <children>
+      <TableView layoutX="248.0" layoutY="408.0" prefHeight="289.0" prefWidth="1076.0" style="-fx-background-color: eed09d;">
+        <columns>
+          <TableColumn editable="false" prefWidth="135.0" text="ID Producto" />
+          <TableColumn editable="false" minWidth="0.0" prefWidth="321.0" text="Producto" />
+            <TableColumn editable="false" prefWidth="225.0" text="Precio actual" />
+            <TableColumn editable="false" prefWidth="194.0" text="Cantidad" />
+            <TableColumn editable="false" prefWidth="200.0" text="SubTotal" />
+        </columns>
+      </TableView>
+      <TextField editable="false" layoutX="622.0" layoutY="707.0" prefHeight="44.0" prefWidth="221.0" promptText="SubTotal" style="-fx-border-color: ffc107;" />
+      <TextField editable="false" layoutX="856.0" layoutY="707.0" prefHeight="44.0" prefWidth="224.0" promptText="Impuesto I.S.V" style="-fx-border-color: ffc107;" />
+      <TextField editable="false" layoutX="1088.0" layoutY="707.0" prefHeight="44.0" prefWidth="224.0" promptText="Total" style="-fx-border-color: ffc107;" />
+      <AnchorPane layoutX="250.0" layoutY="143.0" prefHeight="247.0" prefWidth="536.0" style="-fx-background-color: d5c5ae; -fx-border-color: ffc107; -fx-border-width: 2; -fx-background-radius: 5; -fx-border-radius: 5;">
+         <children>
+            <TextField editable="false" layoutX="14.0" layoutY="38.0" prefHeight="39.0" prefWidth="224.0" promptText="ID Factura" style="-fx-border-color: ffc107;" />
+            <TextField editable="false" layoutX="253.0" layoutY="40.0" prefHeight="39.0" prefWidth="246.0" promptText="Fecha" style="-fx-border-color: ffc107;" />
+            <TextField editable="false" layoutX="253.0" layoutY="99.0" prefHeight="39.0" prefWidth="246.0" promptText="Nombre Completo" style="-fx-border-color: FFC107;" />
+            <TextField editable="false" layoutX="253.0" layoutY="170.0" prefHeight="39.0" prefWidth="246.0" promptText="Stock Actual" style="-fx-border-color: ffc107;" />
+            <ComboBox layoutX="15.0" layoutY="170.0" prefHeight="39.0" prefWidth="224.0" promptText="ID Producto" style="-fx-background-color: eed09d; -fx-border-color: a18262; -fx-border-width: 2;" />
+            <ComboBox layoutX="15.0" layoutY="99.0" prefHeight="39.0" prefWidth="224.0" promptText="ID Cliente" style="-fx-background-color: eed09d; -fx-border-color: a18262; -fx-border-width: 2;" />
+         </children>
+      </AnchorPane>
+      <ImageView fitHeight="60.0" fitWidth="52.0" layoutX="1030.0" layoutY="143.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@iconos/employee.png" />
+         </image>
+      </ImageView>
+      <ComboBox layoutX="952.0" layoutY="203.0" prefHeight="44.0" prefWidth="246.0" promptText="ID Empleado" style="-fx-background-color: eed09d; -fx-border-color: a18262; -fx-border-width: 2;" />
+      <Button layoutX="1127.0" layoutY="342.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="116.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="Imprimir" textFill="#eed09d">
+         <font>
+            <Font name="Dubai Bold" size="18.0" />
+         </font>
+      </Button>
+      <Button layoutX="1022.0" layoutY="342.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="92.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="Quitar" textFill="#eed09d">
+         <font>
+            <Font name="Dubai Bold" size="18.0" />
+         </font>
+      </Button>
+      <Button layoutX="918.0" layoutY="344.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="92.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="Agregar" textFill="#eed09d">
+         <font>
+            <Font name="Dubai Bold" size="18.0" />
+         </font>
+      </Button>
+      <ImageView fitHeight="60.0" fitWidth="52.0" layoutX="940.0" layoutY="279.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@iconos/agregar-usuario.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="60.0" fitWidth="52.0" layoutX="1160.0" layoutY="279.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@iconos/impresion.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="60.0" fitWidth="52.0" layoutX="1043.0" layoutY="281.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@iconos/eliminar2.png" />
+         </image>
+      </ImageView>
+      <Label alignment="CENTER" layoutX="250.0" layoutY="16.0" prefHeight="118.0" prefWidth="1089.0" style="-fx-background-color: FFC107; -fx-background-radius: 10; -fx-border-color: c29b61; -fx-border-radius: 5; -fx-border-style: solid; -fx-border-width: 4;" text="FACTURAS">
+         <font>
+            <Font name="Elephant" size="36.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="109.0" fitWidth="139.0" layoutX="522.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="100.0" fitWidth="112.0" layoutX="426.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@iconos/receipt.png" />
+         </image>
+      </ImageView>
+      <VBox layoutX="14.0" layoutY="24.0" prefHeight="720.0" prefWidth="195.0" spacing="5.0">
+         <children>
+            <VBox prefHeight="720.0" prefWidth="195.0" spacing="5.0">
+               <children>
+                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#cliente" prefHeight="120.0" prefWidth="200.0" style="-fx-background-color: #616161; -fx-border-color: FFdb58; -fx-border-radius: 2;" text="Clientes" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="83.0" fitWidth="73.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Imagenes/iconos/MenuLateral/Cliente.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#empleado" prefHeight="120.0" prefWidth="200.0" style="-fx-background-color: #616161; -fx-border-color: FFdb58; -fx-border-radius: 2;" text="Empleados" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="83.0" fitWidth="73.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Imagenes/iconos/MenuLateral/Empleado.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#proveedor" prefHeight="120.0" prefWidth="200.0" style="-fx-background-color: #616161; -fx-border-color: FFdb58; -fx-border-radius: 2;" text="Proveedores" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="62.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Imagenes/iconos/MenuLateral/proveedor.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button alignment="CENTER" layoutX="10.0" layoutY="135.0" mnemonicParsing="false" onAction="#producto" prefHeight="120.0" prefWidth="200.0" style="-fx-background-color: #616161; -fx-border-color: FFdb58; -fx-border-radius: 2;" text="Productos" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="66.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Imagenes/iconos/MenuLateral/producto.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#inventario" prefHeight="120.0" prefWidth="200.0" style="-fx-background-color: #616161; -fx-border-color: FFdb58; -fx-border-radius: 2;" text="Inventario" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="66.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Imagenes/iconos/MenuLateral/Inventario.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#factura" prefHeight="123.0" prefWidth="206.0" style="-fx-background-color: #616161; -fx-border-color: FFdb58; -fx-border-radius: 2;" text="Facturas" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="66.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Imagenes/iconos/MenuLateral/Factura.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

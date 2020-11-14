@@ -1,16 +1,18 @@
+
 import Controller.GlobalConstans;
+import Controller.*;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-
 
 public class Main extends Application implements GlobalConstans {
+    private double xOffset = 0;
+    private double yOffset = 0;
 
     //Estas son las variables de la conexion a la BD
 
@@ -26,24 +28,21 @@ public class Main extends Application implements GlobalConstans {
     }
 
 
-    public void start(Stage primaryStage) throws Exception {
-        //Este es el codigo para lanzar la pantalla principal(aun no terminada) en javaFX
-        // lo que se deberia lanzar aqui realmente es el login pero aun estamos en pruebas del menu junto a Naho asi que...
+    public void start(Stage stage) throws Exception {
+        //Este es el codigo para lanzar la pantalla login
 
-        Parent root = FXMLLoader.load(getClass().getResource("/Layout/pantallaPrincipal.fxml"));
-        stage.setTitle("Inicio");
-        stage.setScene(new Scene(root, 1360, 768));
+        Parent root = FXMLLoader.load(getClass().getResource("/Layout/pantallaLogin.fxml"));
+
+        root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                stage.setX(event.getScreenX() - xOffset);
+                stage.setY(event.getScreenY() - yOffset);
+            }
+        });
+
+        stage.setScene(new Scene(root, 620, 350));
         stage.show();
-
-
-
-
-        //Esta es una query para la bd la el primer value es la Primary key asi que se debe cambiar
-        // cuando la bd este bien eso no deben poner porque bueno sera auto incremental
-
-        // String query = "INSERT INTO CLIENTE(IDCliente,nombreCliente, apellidoCliente, telefonoCliente, dirreccionCliente, correoCliente) VALUES(6,'Jaime4','Jimenez', '99909990','sukaza','zukorreo')";
-        //        con.createStatement().executeUpdate(query);
-        //        System.out.println("Funziona");
 
     }
 

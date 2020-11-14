@@ -86,7 +86,7 @@ public class ClientesController extends MenuController implements Initializable 
             pst.setString(5, txt_Sexo.getText());
             pst.execute();
 
-            JOptionPane.showMessageDialog(null, "Users Add succes");
+            JOptionPane.showMessageDialog(null, "Agregado");
             UpdateTable();
             Search_cliente();
         }catch (Exception e){
@@ -130,7 +130,6 @@ public class ClientesController extends MenuController implements Initializable 
         try{
             conn = connect.conDB();
 
-
             String value1 = txt_id.getText();
             String value2 = txt_nombre.getText();
             String value3 = txt_direccion.getText();
@@ -139,11 +138,11 @@ public class ClientesController extends MenuController implements Initializable 
             String value6 = txt_Sexo.getText();
 
             String sql = "update cliente set nombreCliente= '"+value2+"', dirreccionCliente= '"+
-                    value3+"', telefonoCliente= '"+value4+"', correoCliente= '"+value5+", ' where IDCliente='"+value1+"' ";
+                    value3+"', telefonoCliente= '"+value4+"', correoCliente= '"+value5+" ' where IDCliente='"+value1+"' ";
 
             pst = conn.prepareStatement(sql);
             pst.execute();
-            JOptionPane.showMessageDialog(null, "Update");
+            JOptionPane.showMessageDialog(null, "Actualizado");
             UpdateTable();
             Search_cliente();
         }catch(Exception e){
@@ -193,4 +192,6 @@ public class ClientesController extends MenuController implements Initializable 
         txt_correo.setText(col_correo.getCellData(index).toString());
         txt_Sexo.setText(col_Sexo.getCellData(index).toString());
     }
+
+
 }

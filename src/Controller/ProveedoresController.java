@@ -74,7 +74,7 @@ public class ProveedoresController extends MenuController implements Initializab
 
     public void Add_proveedor(){
         conn = connect.conDB();
-        String sql = "insert into PROVEEDORES (empresaProveedor,correoProveedor,direccionProveedor,IDCOntactoProveedor)values(?,?,?,?)";
+        String sql = "insert into PROVEEDORES (empresaProveedor,correoProveedor,direccionProveedor,IDContactoProveedor)values(?,?,?,?)";
         try{
             pst = conn.prepareStatement(sql);
             pst.setString(1, txt_nombre.getText());
@@ -128,9 +128,9 @@ public class ProveedoresController extends MenuController implements Initializab
     }
     @Override
     public void initialize(URL url, ResourceBundle rb){
-        UpdateTable();
-        Search_proveedor();
-        clearFields();
+     //   UpdateTable();
+      //  Search_proveedor();
+      //  clearFields();
     }
 
     public void Edit(){
@@ -142,8 +142,8 @@ public class ProveedoresController extends MenuController implements Initializab
             String value4 = txt_correo.getText();
             String value5 = txt_idContacto.getText();
 
-            String sql = "update PROVEEDORES set IDProveedor= '"+value1+"', nombreProveedor= '"+value2+"', direccionCliente= '"+
-                    value3+"', correoProveedor= '"+value4+"', IDContacto= '"+value5+"' where IDProveedor='"+value1+"' ";
+            String sql = "update PROVEEDORES set IDProveedor= '"+value1+"', empresaProveedor= '"+value2+"', direccionProveedor= '"+
+                    value3+"', correoProveedor= '"+value4+"', IDContactoProveedor= '"+value5+"' where IDProveedor='"+value1+"' ";
             pst = conn.prepareStatement(sql);
             pst.execute();
             JOptionPane.showMessageDialog(null, "Actualizado");

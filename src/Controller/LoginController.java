@@ -1,4 +1,93 @@
 package Controller;
 
-public class LoginController {
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Label;
+import javafx.stage.Stage;
+import javafx.scene.paint.Color;
+import java.io.IOException;
+import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ResourceBundle;
+import javafx.scene.input.MouseEvent;
+
+
+public class LoginController implements GlobalConstans {
+
+    @FXML
+    private Label lbl_close;
+
+    @FXML
+    private Label lblError;
+
+    @FXML
+    private TextField usuarioTextField;
+
+    @FXML
+    private TextField contraseñaField;
+
+    @FXML
+    private Button loginButton;
+
+    public void handleButtonAction(MouseEvent event){
+        if(event.getSource() == lbl_close){
+            System.exit(0);
+        }
+        if(event.getSource() == loginButton){
+            //login here
+            if(LogIn().equals("Success")){
+                try{
+
+                    Scene scene = new Scene (FXMLLoader.load(getClass().getResource("/Layout/pantallaPrincipal.fxml")));
+                    stage.setScene(scene);
+                    stage.show();
+
+                }catch (IOException ex){
+                    System.err.println(ex.getMessage());
+                }
+            }
+        }
+    }
+
+
+    public LoginController(){ con = connect.conDB(); }
+    Connection con = null;
+    PreparedStatement preparedStatement = null;
+    ResultSet resultSet = null;
+
+    private String LogIn() {
+        String email = usuarioTextField.getText();
+        String password = contraseñaField.getText();
+
+        String sql = "SELECT * FROM admins Where email = ? and password = ?";
+
+        try {
+            preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setString(1, email);
+            preparedStatement.setString(2, password);
+            resultSet = preparedStatement.executeQuery();
+            if (!resultSet.next()) {
+                lblError.setTextFill(Color.TOMATO);
+                lblError.setText("Ingrese el correcto Usuario/Contraseña");
+                System.err.println("Inicio Incorrecto");
+                return "Error";
+            } else {
+                lblError.setTextFill(Color.GREEN);
+                lblError.setAccessibleText("Inicio Exitoso..Redireccionado..");
+                System.out.println("Inicio Exitoso");
+                return "Success";
+            }
+
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
+            return "Exception";
+        }
+    }
 }
