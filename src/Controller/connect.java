@@ -2,7 +2,6 @@
 package Controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import javax.swing.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -14,8 +13,8 @@ public class connect {
 
     public static Connection conDB(){
         try{
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/ferreteria","root","");
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/ferreteria1","root","140120101305");
             return conn;
         }catch (Exception e){
             JOptionPane.showMessageDialog(null, e);
@@ -46,6 +45,20 @@ public class connect {
 
             while(rs.next()){
                 list.add(new proveedores( Integer.parseInt(rs.getString("IDProveedor")), rs.getString("empresaProveedor"), rs.getString("correoProveedor"), rs.getString("direccionProveedor"), Integer.parseInt(rs.getString("IDContactoProveedor"))));
+            }
+        }catch(Exception e){
+        }
+        return list;
+    }
+    public static ObservableList<producto> getdataproducto(){
+        Connection conn = conDB();
+        ObservableList<producto> list = FXCollections.observableArrayList();
+        try{
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM producto");
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()){
+                list.add(new producto( Integer.parseInt(rs.getString("IDProducto")), rs.getString("nombreProducto"), rs.getString("descripcionProducto"), Integer.parseInt(rs.getString("IDMarca")), Integer.parseInt(rs.getString("IDCategoria")), Integer.parseInt(rs.getString("IDPrecioHistorico"))));
             }
         }catch(Exception e){
         }
