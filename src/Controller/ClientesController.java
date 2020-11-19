@@ -37,7 +37,7 @@ public class ClientesController extends MenuController implements Initializable 
     private TableColumn<clientes, String> col_correo;
 
     @FXML
-    private TableColumn<clientes, Integer> col_Sexo;
+    private TableColumn<clientes, String> col_Sexo;
 
 
     @FXML
@@ -62,11 +62,12 @@ public class ClientesController extends MenuController implements Initializable 
     private TextField txt_eliminar;
 
     @FXML
-    private ComboBox Sexo;
+    private ComboBox<String> Sexo;
 
 
     ObservableList<clientes> listM;
     ObservableList<clientes> dataList;
+    ObservableList<String> listsexo = connect.getdatasexo();
 
     int index = -1;
     Connection conn = null;
@@ -76,7 +77,7 @@ public class ClientesController extends MenuController implements Initializable 
     public void Add_clientes() {
         conn = connect.conDB();
         String sql = "insert into cliente (nombreCliente,dirreccionCliente,telefonoCLiente,correoCliente,IDSexo)values(?,?,?,?,?)";
-        if (validateFields() & validateDireccion() & validateEmail() & validateName() & validateNumber()){
+        if (validateFields() &validateName() & validateDireccion()  & validateNumber() & validateEmail()  ){
             try {
                 pst = conn.prepareStatement(sql);
 
@@ -103,8 +104,8 @@ public class ClientesController extends MenuController implements Initializable 
     }
 
     private boolean validateNumber(){
-        Pattern p = Pattern.compile("[0-9]");
-        Matcher m = p.matcher(txt_telefono.getText());
+        Pattern p = Pattern.compile("[0-9]{8}");
+        Matcher m = p.matcher(txt_telefono.getText().trim());
 
         if(m.find() && m.group().equals(txt_telefono.getText())){
             return true;
@@ -112,7 +113,8 @@ public class ClientesController extends MenuController implements Initializable 
             Alert alert =new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Validar Número");
             alert.setHeaderText(null);
-            alert.setContentText("Por favor ingresar un número válido");
+            alert.setContentText("El número debe contener maximo 8 digitos" +
+                    " Y el campo no acepta espacios en blanco");
             alert.showAndWait();
 
             return false;
@@ -120,7 +122,7 @@ public class ClientesController extends MenuController implements Initializable 
     }
 
     private boolean validateName(){
-        Pattern p = Pattern.compile("[A-Za-z]");
+        Pattern p = Pattern.compile("[A-Za-z ]+");
         Matcher m = p.matcher(txt_nombre.getText());
 
         if(m.find() && m.group().equals(txt_nombre.getText())){
@@ -136,7 +138,7 @@ public class ClientesController extends MenuController implements Initializable 
         }
     }
     private boolean validateDireccion(){
-        Pattern p = Pattern.compile("[A-Za-z]");
+        Pattern p = Pattern.compile("[A-Za-z ]+");
         Matcher m = p.matcher(txt_direccion.getText());
 
         if(m.find() && m.group().equals(txt_direccion.getText())){
@@ -162,7 +164,8 @@ public class ClientesController extends MenuController implements Initializable 
             Alert alert =new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Validar Correo");
             alert.setHeaderText(null);
-            alert.setContentText("Por favor ingresar un correo válido");
+            alert.setContentText("Por favor ingresar un correo válido" +
+                    " ejemplo@gmail.com");
             alert.showAndWait();
 
             return false;
@@ -175,7 +178,7 @@ public class ClientesController extends MenuController implements Initializable 
             Alert alert =new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Espacios vacios!");
             alert.setHeaderText(null);
-            alert.setContentText("Espacio vacío, por favor ingresar datos");
+            alert.setContentText("Espacios vacíos, por favor ingresar datos");
             alert.showAndWait();
 
             return false;
@@ -212,17 +215,17 @@ public class ClientesController extends MenuController implements Initializable 
     public void UpdateTable(){
         col_cliente.setCellValueFactory(new PropertyValueFactory<clientes,Integer>("idCliente"));
         col_nombre.setCellValueFactory(new PropertyValueFactory<clientes,String>("nombre"));
-        col_direccion.setCellValueFactory(new PropertyValueFactory<clientes,String>("direccion"));
         col_telefono.setCellValueFactory(new PropertyValueFactory<clientes,Integer>("telefono"));
+        col_direccion.setCellValueFactory(new PropertyValueFactory<clientes,String>("direccion"));
         col_correo.setCellValueFactory(new PropertyValueFactory<clientes,String>("correo"));
-        col_Sexo.setCellValueFactory(new PropertyValueFactory<clientes,Integer>("Sexo"));
+        col_Sexo.setCellValueFactory(new PropertyValueFactory<clientes,String>("sexo"));
 
         listM = connect.getdataclientes();
         table_clientes.setItems(listM);
     }
     @Override
     public void initialize(URL url, ResourceBundle rb){
-        Sexo.getItems().addAll("1","2");
+        Sexo.setItems(listsexo);
         UpdateTable();
         Search_cliente();
         clearFields();
@@ -241,11 +244,11 @@ public class ClientesController extends MenuController implements Initializable 
             String value6 = Sexo.getValue().toString();
 
             String sql = "update cliente set nombreCliente= '"+value2+"', dirreccionCliente= '"+
-                    value3+"', telefonoCliente= '"+value4+"', correoCliente= '"+value5+", IDSexo= '"+value6+" ' where IDCliente='"+value1+"' ";
+                    value3+"', telefonoCliente= '"+value4+"', correoCliente= '"+value5+", descripcionSexo= '"+value6+" ' where IDCliente='"+value1+"' ";
 
             pst = conn.prepareStatement(sql);
             pst.execute();
-            JOptionPane.showMessageDialog(null, "Update");
+            JOptionPane.showMessageDialog(null, "Actualizado");
             UpdateTable();
             Search_cliente();
             clearFields();

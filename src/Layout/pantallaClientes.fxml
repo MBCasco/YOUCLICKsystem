@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import java.lang.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
@@ -120,7 +121,12 @@
                   <Font name="Dubai Bold" size="12.0" />
                </font>
             </Label>
-            <ComboBox fx:id="Sexo" layoutX="68.0" layoutY="469.0" prefHeight="25.0" prefWidth="299.0" promptText="Elija" />
+            <ComboBox fx:id="Sexo" layoutX="71.0" layoutY="469.0" prefHeight="25.0" prefWidth="299.0" promptText="Elija" />
+            <ImageView fitHeight="43.0" fitWidth="36.0" layoutX="34.0" layoutY="460.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@iconos/employees%20(1).png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
       <AnchorPane layoutX="695.0" layoutY="155.0" prefHeight="588.0" prefWidth="626.0" style="-fx-background-color: d5c5ae; -fx-border-color: ffc107; -fx-border-width: 2; -fx-border-radius: 5; -fx-background-radius: 5;">

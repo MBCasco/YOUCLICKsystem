@@ -4,7 +4,7 @@ public class clientes {
 
     int idCliente;
     int telefono;
-    int sexo;
+    String  sexo;
     String nombre, direccion, correo;
 
 
@@ -29,7 +29,7 @@ public class clientes {
         this.correo = correo;
     }
 
-    public void setSexo(int Sexo) {
+    public void setSexo(String Sexo) {
         this.sexo = Sexo;
     }
 
@@ -51,11 +51,11 @@ public class clientes {
         return correo;
     }
 
-    public int getSexo() {
+    public String getSexo() {
         return sexo;
     }
 
-    public clientes(int idCliente, String nombre, String direccion, int telefono, String correo, int sexo) {
+    public clientes(int idCliente, String nombre,int telefono,  String direccion, String correo, String sexo) {
         this.idCliente = idCliente;
         this.telefono = telefono;
         this.nombre = nombre;
