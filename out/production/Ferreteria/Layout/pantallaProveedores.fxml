@@ -9,7 +9,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1360.0" style="-fx-background-color: #616161; -fx-border-color: c29b61; -fx-border-width: 3;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ProveedoresController">
    <children>
-      <Pane layoutX="235.0" layoutY="24.0" prefHeight="108.0" prefWidth="1099.0" style="-fx-background-color: #ffc107; -fx-border-color: c29b61; -fx-background-radius: 10; -fx-border-radius: 5; -fx-border-style: solid; -fx-border-width: 4;">
+      <Pane layoutX="223.0" layoutY="24.0" prefHeight="108.0" prefWidth="1099.0" style="-fx-background-color: #ffc107; -fx-border-color: c29b61; -fx-background-radius: 10; -fx-border-radius: 5; -fx-border-style: solid; -fx-border-width: 4;">
          <children>
             <Label layoutX="407.0" layoutY="22.0" prefHeight="61.0" prefWidth="358.0" text="PROVEEDORES">
                <font>
@@ -100,60 +100,61 @@
             </Button>
          </children>
       </VBox>
-      <Pane layoutX="223.0" layoutY="155.0" prefHeight="587.0" prefWidth="1079.0" style="-fx-background-color: d5c5ae; -fx-border-color: ffc107; -fx-border-width: 2;">
+      <Pane layoutX="223.0" layoutY="155.0" prefHeight="587.0" prefWidth="1093.0" style="-fx-background-color: d5c5ae; -fx-border-color: ffc107; -fx-border-width: 2;">
          <children>
-            <Label alignment="CENTER" layoutY="14.0" prefHeight="32.0" prefWidth="1079.0" style="-fx-background-color: #FFC107; -fx-border-color: c29b61;" text="Datos del proveedor">
+            <Label alignment="CENTER" layoutY="14.0" prefHeight="32.0" prefWidth="1093.0" style="-fx-background-color: #FFC107; -fx-border-color: c29b61;" text="Datos del proveedor y contacto">
                <font>
                   <Font name="Dubai Bold" size="16.0" />
                </font>
             </Label>
-            <TabPane layoutX="-1.0" layoutY="44.0" prefHeight="536.0" prefWidth="1079.0" style="-fx-background-color: d5c5ae;" tabClosingPolicy="UNAVAILABLE">
+            <TabPane layoutX="-1.0" layoutY="44.0" prefHeight="536.0" prefWidth="1093.0" style="-fx-background-color: d5c5ae;" tabClosingPolicy="UNAVAILABLE">
                <tabs>
-                  <Tab text="Información de la empresa">
+                  <Tab text="Proveedor">
                      <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="502.0" prefWidth="1067.0">
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="507.0" prefWidth="1091.0">
                            <children>
-                              <TextField layoutX="24.0" layoutY="350.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="305.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
-                              <Label alignment="CENTER" layoutX="20.0" layoutY="303.0" prefHeight="32.0" prefWidth="112.0" style="-fx-background-color: eed09d; -fx-background-radius: 3; -fx-border-color: black; -fx-border-radius: 3;" text="Dirección" textFill="#8d5910">
+                              <TextField fx:id="txt_direccionProveedor" layoutX="14.0" layoutY="299.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="336.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
+                              <Label alignment="CENTER" layoutX="14.0" layoutY="260.0" prefHeight="32.0" prefWidth="112.0" style="-fx-background-color: eed09d; -fx-background-radius: 3; -fx-border-color: black; -fx-border-radius: 3;" text="Dirección" textFill="#8d5910">
                                  <font>
                                     <Font name="Dubai Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <TextField layoutX="24.0" layoutY="262.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="305.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
-                              <Label alignment="CENTER" layoutX="19.0" layoutY="213.0" prefHeight="32.0" prefWidth="112.0" style="-fx-background-color: eed09d; -fx-background-radius: 3; -fx-border-color: black; -fx-border-radius: 3;" text="Correo " textFill="#8d5910">
+                              <TextField fx:id="txt_correoProveedor" layoutX="14.0" layoutY="223.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="336.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
+                              <Label alignment="CENTER" layoutX="14.0" layoutY="184.0" prefHeight="32.0" prefWidth="112.0" style="-fx-background-color: eed09d; -fx-background-radius: 3; -fx-border-color: black; -fx-border-radius: 3;" text="Correo " textFill="#8d5910">
                                  <font>
                                     <Font name="Dubai Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <TextField layoutX="24.0" layoutY="172.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="305.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
-                              <Label alignment="CENTER" layoutX="23.0" layoutY="125.0" prefHeight="32.0" prefWidth="112.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="Nombre " textFill="#8d5910">
+                              <TextField fx:id="txt_nombreProveedor" layoutX="14.0" layoutY="151.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="336.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
+                              <Label alignment="CENTER" layoutX="14.0" layoutY="113.0" prefHeight="32.0" prefWidth="112.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="Nombre " textFill="#8d5910">
                                  <font>
                                     <Font name="Dubai Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <TextField editable="false" layoutX="24.0" layoutY="79.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="305.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
-                              <Label alignment="CENTER" layoutX="25.0" layoutY="35.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="112.0" style="-fx-background-color: eed09d; -fx-background-radius: 3; -fx-border-color: black; -fx-border-radius: 3;" text="ID " textFill="#8d5910">
+                              <TextField fx:id="txt_idProveedor" editable="false" layoutX="14.0" layoutY="79.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="336.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
+                              <Label alignment="CENTER" layoutX="14.0" layoutY="42.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="112.0" style="-fx-background-color: eed09d; -fx-background-radius: 3; -fx-border-color: black; -fx-border-radius: 3;" text="ID " textFill="#8d5910">
                                  <font>
                                     <Font name="Dubai Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <TableView layoutX="367.0" layoutY="213.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="273.0" prefWidth="705.0" style="-fx-background-color: eed09d; -fx-border-color: a18262; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-width: 2;">
+                              <TableView fx:id="table_proveedores" layoutX="365.0" layoutY="223.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#getSelectedProveedores" prefHeight="273.0" prefWidth="717.0" style="-fx-background-color: eed09d; -fx-border-color: a18262; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-width: 2;">
                                  <columns>
-                                    <TableColumn prefWidth="87.0" text="ID" />
-                                    <TableColumn prefWidth="184.0" text="Empresa" />
-                                    <TableColumn prefWidth="180.0" text="Correo" />
-                                    <TableColumn prefWidth="250.0" text="Dirección" />
+                                    <TableColumn fx:id="col_idProveedor" prefWidth="66.0" text="ID" />
+                                    <TableColumn fx:id="col_nombreProveedor" prefWidth="205.0" text="Nombre del proveedor" />
+                                    <TableColumn fx:id="col_correoProveedor" prefWidth="81.0" text="Correo" />
+                                    <TableColumn fx:id="col_direccionProveedor" minWidth="0.0" prefWidth="186.0" text="Dirección" />
+                                    <TableColumn fx:id="col_IDContactoProveedor" prefWidth="159.0" text="IDContacto pov" />
                                  </columns>
                               </TableView>
-                              <AnchorPane layoutX="364.0" layoutY="6.0" prefHeight="199.0" prefWidth="703.0" style="-fx-background-color: d5c5ae; -fx-border-color: ffc107; -fx-border-width: 2; -fx-border-radius: 5; -fx-background-radius: 5;">
+                              <AnchorPane layoutX="367.0" layoutY="11.0" prefHeight="199.0" prefWidth="703.0" style="-fx-background-color: d5c5ae; -fx-border-color: ffc107; -fx-border-width: 2; -fx-border-radius: 5; -fx-background-radius: 5;">
                                  <children>
                                     <Label alignment="CENTER" layoutX="43.0" layoutY="56.0" prefHeight="29.0" prefWidth="280.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="Buscar " textFill="#8d5910">
                                        <font>
                                           <Font name="Dubai Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <TextField layoutX="79.0" layoutY="93.0" prefHeight="41.0" prefWidth="244.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
-                                    <TextField layoutX="437.0" layoutY="93.0" prefHeight="41.0" prefWidth="244.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
+                                    <TextField fx:id="filterFieldProveedor" layoutX="79.0" layoutY="93.0" prefHeight="27.0" prefWidth="244.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
+                                    <TextField fx:id="txt_eliminarProveedor" layoutX="437.0" layoutY="93.0" prefHeight="27.0" prefWidth="244.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
                                     <Label alignment="CENTER" layoutX="402.0" layoutY="56.0" prefHeight="29.0" prefWidth="280.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="Eliminar " textFill="#8d5910">
                                        <font>
                                           <Font name="Dubai Bold" size="12.0" />
@@ -169,7 +170,7 @@
                                           <Image url="@../Rar$DIa8484.29514/iconos/eliminar%20(1).png" />
                                        </image>
                                     </ImageView>
-                                    <Button layoutX="599.0" layoutY="143.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="83.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="Eliminar" textFill="#eed09d">
+                                    <Button layoutX="599.0" layoutY="143.0" mnemonicParsing="false" onAction="#DeleteProveedor" prefHeight="27.0" prefWidth="83.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="Eliminar" textFill="#eed09d">
                                        <font>
                                           <Font name="Dubai Bold" size="12.0" />
                                        </font>
@@ -181,22 +182,22 @@
                                     </Label>
                                  </children>
                               </AnchorPane>
-                              <Button layoutX="240.0" layoutY="417.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="83.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="Actualizar" textFill="#eed09d">
+                              <Button layoutX="254.0" layoutY="427.0" mnemonicParsing="false" onAction="#EditProveedor" prefHeight="32.0" prefWidth="83.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="Actualizar" textFill="#eed09d">
                                  <font>
                                     <Font name="Dubai Bold" size="14.0" />
                                  </font>
                               </Button>
-                              <ImageView fitHeight="43.0" fitWidth="51.0" layoutX="24.0" layoutY="411.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="43.0" fitWidth="51.0" layoutX="39.0" layoutY="424.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@iconos/actualizado.png" />
                                  </image>
                               </ImageView>
-                              <Button layoutX="78.0" layoutY="417.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="83.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="Registrar" textFill="#eed09d">
+                              <Button layoutX="82.0" layoutY="427.0" mnemonicParsing="false" onAction="#Add_proveedor" prefHeight="32.0" prefWidth="83.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="Registrar" textFill="#eed09d">
                                  <font>
                                     <Font name="Dubai Bold" size="14.0" />
                                  </font>
                               </Button>
-                              <ImageView fitHeight="42.0" fitWidth="52.0" layoutX="189.0" layoutY="415.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="42.0" fitWidth="52.0" layoutX="207.0" layoutY="424.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@iconos/portapapeles.png" />
                                  </image>
@@ -205,111 +206,109 @@
                         </AnchorPane>
                      </content>
                   </Tab>
-                  <Tab text="Informacion de Contacto">
+                  <Tab text="Contacto">
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="451.0" prefWidth="1000.0">
                            <children>
-                              <TextField layoutX="24.0" layoutY="293.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="336.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
-                              <Label alignment="CENTER" layoutX="24.0" layoutY="246.0" prefHeight="32.0" prefWidth="112.0" style="-fx-background-color: eed09d; -fx-background-radius: 3; -fx-border-color: black; -fx-border-radius: 3;" text="Detalles" textFill="#8d5910">
+                              <TextField fx:id="txt_cargoContacto" layoutX="14.0" layoutY="223.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="336.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
+                              <Label alignment="CENTER" layoutX="14.0" layoutY="184.0" prefHeight="32.0" prefWidth="112.0" style="-fx-background-color: eed09d; -fx-background-radius: 3; -fx-border-color: black; -fx-border-radius: 3;" text="Cargo" textFill="#8d5910">
                                  <font>
                                     <Font name="Dubai Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <TextField layoutX="25.0" layoutY="199.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="336.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
-                              <Label alignment="CENTER" layoutX="26.0" layoutY="155.0" prefHeight="32.0" prefWidth="112.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="Nombre" textFill="#8d5910">
+                              <TextField fx:id="txt_nombreContacto" layoutX="14.0" layoutY="151.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="336.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
+                              <Label alignment="CENTER" layoutX="14.0" layoutY="113.0" prefHeight="32.0" prefWidth="112.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="Nombre" textFill="#8d5910">
                                  <font>
                                     <Font name="Dubai Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <TextField layoutX="24.0" layoutY="108.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="336.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
-                              <Label alignment="CENTER" layoutX="24.0" layoutY="54.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="112.0" style="-fx-background-color: eed09d; -fx-background-radius: 3; -fx-border-color: black; -fx-border-radius: 3;" text="ID " textFill="#8d5910">
+                              <TextField fx:id="txt_IdContacto" editable="false" layoutX="14.0" layoutY="79.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="336.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
+                              <Label alignment="CENTER" layoutX="14.0" layoutY="42.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="112.0" style="-fx-background-color: eed09d; -fx-background-radius: 3; -fx-border-color: black; -fx-border-radius: 3;" text="ID " textFill="#8d5910">
                                  <font>
                                     <Font name="Dubai Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <TableView layoutX="383.0" layoutY="105.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="380.0" prefWidth="690.0" style="-fx-background-color: eed09d; -fx-border-color: a18262; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-width: 2;">
-                                 <columns>
-                                    <TableColumn prefWidth="141.0" text="ID" />
-                                    <TableColumn prefWidth="286.0" text="Nombre" />
-                                    <TableColumn prefWidth="259.0" text="Detalles" />
-                                 </columns>
-                              </TableView>
-                              <ImageView fitHeight="42.0" fitWidth="52.0" layoutX="41.0" layoutY="381.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="42.0" fitWidth="52.0" layoutX="39.0" layoutY="424.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@iconos/portapapeles.png" />
                                  </image>
                               </ImageView>
-                              <Button layoutX="86.0" layoutY="383.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="83.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="Registrar" textFill="#eed09d">
+                              <Button layoutX="82.0" layoutY="427.0" mnemonicParsing="false" onAction="#add_contacto" prefHeight="32.0" prefWidth="83.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="Registrar" textFill="#eed09d">
                                  <font>
                                     <Font name="Dubai Bold" size="14.0" />
                                  </font>
                               </Button>
-                              <ImageView fitHeight="43.0" fitWidth="51.0" layoutX="208.0" layoutY="381.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="43.0" fitWidth="51.0" layoutX="207.0" layoutY="424.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@iconos/actualizado.png" />
                                  </image>
                               </ImageView>
-                              <Button layoutX="256.0" layoutY="383.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="83.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="Actualizar" textFill="#eed09d">
+                              <Button layoutX="254.0" layoutY="427.0" mnemonicParsing="false" onAction="#EditContacto" prefHeight="32.0" prefWidth="83.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="Actualizar" textFill="#eed09d">
                                  <font>
                                     <Font name="Dubai Bold" size="14.0" />
                                  </font>
                               </Button>
-                              <ComboBox layoutX="429.0" layoutY="34.0" prefHeight="41.0" prefWidth="150.0" />
-                           </children>
-                        </AnchorPane>
-                     </content>
-                  </Tab>
-                  <Tab text="Telefonos de los contactos">
-                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="482.0" prefWidth="1079.0">
-                           <children>
-                              <TextField layoutX="24.0" layoutY="281.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="336.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
-                              <Label alignment="CENTER" layoutX="23.0" layoutY="230.0" prefHeight="32.0" prefWidth="112.0" style="-fx-background-color: eed09d; -fx-background-radius: 3; -fx-border-color: black; -fx-border-radius: 3;" text="Numero" textFill="#8d5910">
+                              <AnchorPane layoutX="365.0" layoutY="223.0">
+                                 <children>
+                                    <TableView fx:id="table_contacto" onMouseClicked="#getSelectedContacto" prefHeight="273.0" prefWidth="717.0" style="-fx-background-color: eed09d; -fx-border-color: a18262; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-width: 2;">
+                                       <columns>
+                                          <TableColumn fx:id="col_idContacto" prefWidth="65.0" text="ID" />
+                                          <TableColumn fx:id="col_nombreContactoContacto" prefWidth="136.0" text="Nombre" />
+                                          <TableColumn fx:id="col_cargoContacto" prefWidth="79.0" text="Cargo" />
+                                          <TableColumn fx:id="col_telefonoContacto" prefWidth="169.0" text="Telefono" />
+                                          <TableColumn fx:id="col_correoElectronicoContacto" prefWidth="190.0" text="Correo electronico" />
+                                       </columns>
+                                    </TableView>
+                                 </children>
+                              </AnchorPane>
+                              <Label alignment="CENTER" layoutX="14.0" layoutY="260.0" prefHeight="32.0" prefWidth="112.0" style="-fx-background-color: eed09d; -fx-background-radius: 3; -fx-border-color: black; -fx-border-radius: 3;" text="Telefono" textFill="#8d5910">
                                  <font>
                                     <Font name="Dubai Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <TextField layoutX="24.0" layoutY="174.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="336.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
-                              <Label alignment="CENTER" layoutX="25.0" layoutY="129.0" prefHeight="32.0" prefWidth="112.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="Descripcion" textFill="#8d5910">
+                              <Label alignment="CENTER" layoutX="14.0" layoutY="329.0" prefHeight="32.0" prefWidth="112.0" style="-fx-background-color: eed09d; -fx-background-radius: 3; -fx-border-color: black; -fx-border-radius: 3;" text="Correo" textFill="#8d5910">
                                  <font>
                                     <Font name="Dubai Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <TextField layoutX="23.0" layoutY="77.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="336.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
-                              <Label alignment="CENTER" layoutX="27.0" layoutY="33.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="112.0" style="-fx-background-color: eed09d; -fx-background-radius: 3; -fx-border-color: black; -fx-border-radius: 3;" text="ID " textFill="#8d5910">
-                                 <font>
-                                    <Font name="Dubai Bold" size="14.0" />
-                                 </font>
-                              </Label>
-                              <TableView layoutX="377.0" layoutY="121.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="362.0" prefWidth="694.0" style="-fx-background-color: eed09d; -fx-border-color: a18262; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-width: 2;">
-                                 <columns>
-                                    <TableColumn prefWidth="97.0" text="ID" />
-                                    <TableColumn prefWidth="289.0" text="Descripcion del telefono" />
-                                    <TableColumn minWidth="0.0" prefWidth="289.0" text="Numero de telefono" />
-                                 </columns>
-                              </TableView>
-                              <Button layoutX="261.0" layoutY="349.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="83.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="Actualizar" textFill="#eed09d">
-                                 <font>
-                                    <Font name="Dubai Bold" size="14.0" />
-                                 </font>
-                              </Button>
-                              <ImageView fitHeight="43.0" fitWidth="51.0" layoutX="208.0" layoutY="346.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@iconos/actualizado.png" />
-                                 </image>
-                              </ImageView>
-                              <Button layoutX="95.0" layoutY="349.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="83.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="Registrar" textFill="#eed09d">
-                                 <font>
-                                    <Font name="Dubai Bold" size="14.0" />
-                                 </font>
-                              </Button>
-                              <ImageView fitHeight="42.0" fitWidth="52.0" layoutX="47.0" layoutY="346.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@iconos/portapapeles.png" />
-                                 </image>
-                              </ImageView>
-                              <ComboBox layoutX="591.0" layoutY="49.0" prefHeight="41.0" prefWidth="150.0" />
-                              <ComboBox layoutX="425.0" layoutY="49.0" prefHeight="41.0" prefWidth="150.0" />
+                              <TextField fx:id="txt_telefonoContacto" layoutX="14.0" layoutY="299.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="336.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
+                              <TextField fx:id="txt_correoContacto" layoutX="14.0" layoutY="368.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="336.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
+                              <AnchorPane layoutX="367.0" layoutY="11.0" prefHeight="199.0" prefWidth="703.0" style="-fx-background-color: d5c5ae; -fx-border-color: ffc107; -fx-border-width: 2; -fx-border-radius: 5; -fx-background-radius: 5;">
+                                 <children>
+                                    <Label alignment="CENTER" layoutX="43.0" layoutY="56.0" prefHeight="29.0" prefWidth="280.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="Buscar " textFill="#8d5910">
+                                       <font>
+                                          <Font name="Dubai Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="txt_buscarContacto" layoutX="79.0" layoutY="93.0" prefHeight="27.0" prefWidth="244.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
+                                    <TextField fx:id="txt_eliminarContacto" layoutX="437.0" layoutY="93.0" prefHeight="27.0" prefWidth="244.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
+                                    <Label alignment="CENTER" layoutX="402.0" layoutY="56.0" prefHeight="29.0" prefWidth="280.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="Eliminar " textFill="#8d5910">
+                                       <font>
+                                          <Font name="Dubai Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <ImageView fitHeight="43.0" fitWidth="36.0" layoutX="32.0" layoutY="92.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../Rar$DIa8484.29514/iconos/buscar.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="43.0" fitWidth="36.0" layoutX="390.0" layoutY="92.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../Rar$DIa8484.29514/iconos/eliminar%20(1).png" />
+                                       </image>
+                                    </ImageView>
+                                    <Button layoutX="599.0" layoutY="143.0" mnemonicParsing="false" onAction="#deleteContacto" prefHeight="27.0" prefWidth="83.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="Eliminar" textFill="#eed09d">
+                                       <font>
+                                          <Font name="Dubai Bold" size="12.0" />
+                                       </font>
+                                    </Button>
+                                    <Label alignment="CENTER" layoutX="-1.0" layoutY="14.0" prefHeight="31.0" prefWidth="709.0" style="-fx-background-color: #ffc107; -fx-border-color: c29b61;" text="Ver datos del contacto">
+                                       <font>
+                                          <Font name="Dubai Bold" size="16.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
                            </children>
                         </AnchorPane>
                      </content>

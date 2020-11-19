@@ -2,20 +2,22 @@ package Controller;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ProductoController  extends MenuController implements Initializable {
-
 
     @FXML
     private TableView<producto> tablaProductos;
@@ -36,13 +38,13 @@ public class ProductoController  extends MenuController implements Initializable
     private TableColumn<producto, String> col_ubicacion;
 
     @FXML
-    private TableColumn<producto, Integer> col_precio;
+    private TableColumn<producto, Double> col_precio;
 
     @FXML
-    private TableColumn<producto, Integer> col_marca;
+    private TableColumn<producto, String> col_marca;
 
     @FXML
-    private TableColumn<producto, Integer> col_categoria;
+    private TableColumn<producto, String> col_categoria;
 
     private TextField txtID;
     @FXML
@@ -54,107 +56,117 @@ public class ProductoController  extends MenuController implements Initializable
     @FXML
     private TextField txtPrecio;
     @FXML
-    private ComboBox comMarca;
-    @FXML
     private ComboBox comCategoriaP;
     @FXML
+    private ComboBox comMarca;
+    @FXML
     private TextField txtStock;
+    @FXML
+    private TextField txtEliminar;
+
 
     ObservableList<producto> listP;
-    ObservableList<producto> dataList;
+    ObservableList<String> listmarca = connect.getdatamarca();
+    ObservableList<String> listcategoria = connect.getdatacategoria();
+
 
     int index = -1;
     Connection conn = null;
     ResultSet rs = null;
     PreparedStatement pst = null;
 
-    public ProductoController(){
-        try {
-            consultarMarca();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-    }
+
 
     public void addProducto() throws SQLException {
         conn = connect.conDB();
-        String sql = "insert into producto (nombreProducto,descripcionProducto,IDMarca,IDCategoria,IDPrecioHistorico) values (?,?,?,?,?) ";
-        String sql1 = "insert into inventario (stockActual, ubicacion) values (?,?)";
-        String marca = comMarca.getValue().toString();
-        Statement st2 = conn.createStatement();
-        String consulta = "Select IDMarca from producto where ";
+
         //if (validateFields() & validateDireccion() & validateEmail() & validateName() & validateNumber()){
-            try {
-                pst = conn.prepareStatement(sql);
+        try{
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO producto (nombre, descripcionProducto, precio, IDMarca, IDCategoria, IDPrecioHistorico ) VALUES (?,?,?,?,?,?)");
 
-                pst.setString(1, txtNombreP.getText());
-                pst.setString(2, txtDescrpcionP.getText());
-                //pst.setString(3, comMarca.toString());
-                pst.setString(5, txtPrecio.getText());
-                pst.execute();
+            ps.setString(1, txtNombreP.getText() );
+            ps.setString(3, txtDescrpcionP.getText());
+            ps.setString(5, txtPrecio.getText());
+            ps.setString(6, comMarca.getId());
+            ps.setString(7, comCategoriaP.getId());
+            ps.execute();
 
 
-                JOptionPane.showMessageDialog(null, "Agrego su producto con exito");
-                //clearFields();
+            ps = conn.prepareStatement("INSERT INTO inventario (stock, ubicacion, IDProducto) VALUES ((?,?, last_insert_id)");
 
-                //UpdateTable();
-                //Search_cliente();
+            ps.setString(2, txtStock.getText());
+            ps.setString(4, txtUbicacion.getText());
+            ps.execute();
 
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, e);
-            }
+        }catch(Exception e){
+            System.out.println(e);
+        }
         //}
-        String Marca = comMarca.getValue().toString();
-        String idMarca = " ";
-        Statement st = conn.createStatement();
-        String sql2 = ("SELECT nombreMarca FROM marca ORDER BY nombreMarca ASC");
-        ResultSet rs = null;
-        try {
-            rs = st.executeQuery(sql2);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-        if(rs.next()){
-            try {
-                idMarca = rs.getString("nombreMarca");
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-        }
 
     }
 
 
-    public void consultarMarca () throws SQLException {
-      String sql = ("SELECT nombreMarca FROM marca ORDER BY nombreMarca ASC");
-
-      try{
-          PreparedStatement pat = conn.prepareStatement(sql);
-          ResultSet resul = pat.executeQuery();
-
-
-          comMarca.setValue("Seleccione una marca");
-
-          while (resul.next()){
-              comMarca.setValue(resul.getString("nombreMarca"));
-          }
-
-      }catch (Exception e){
-            JOptionPane.showMessageDialog(null, e);
-      }finally {
-          if (conn != null){
-            conn.close();
-          }else{
-              JOptionPane.showMessageDialog(null, "Error");
-          }
-      }
-
+    public void intCombox (){
+        comMarca.setItems(listmarca);
+        comCategoriaP.setItems(listcategoria);
     }
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+       intCombox();
+       UpdateTable();
     }
+    public void UpdateTable(){
+        col_producto.setCellValueFactory(new PropertyValueFactory<producto,Integer>("idProducto"));
+        col_nombre.setCellValueFactory(new PropertyValueFactory<producto,String>("nombre"));
+        col_stock.setCellValueFactory(new PropertyValueFactory<producto, Integer>("stock"));
+        col_descripcion.setCellValueFactory(new PropertyValueFactory<producto,String>("descripcion"));
+        col_ubicacion.setCellValueFactory(new PropertyValueFactory<producto,String>("ubicacion"));
+        col_precio.setCellValueFactory(new PropertyValueFactory<producto,Double>("precio"));
+        col_marca.setCellValueFactory(new PropertyValueFactory<producto,String>("marca"));
+        col_categoria.setCellValueFactory(new PropertyValueFactory<producto,String>("categoria"));
+
+        listP = connect.getdataproducto();
+        tablaProductos.setItems(listP);
+    }
+    public void Delete(){
+        conn = connect.conDB();
+        String sql = "Delete from productos where IDProductos = ?";
+        try{
+            pst = conn.prepareStatement(sql);
+            pst.setString(1, txtEliminar.getText());
+            pst.execute();
+            JOptionPane.showMessageDialog(null, "Elimino su producto con exito");
+            UpdateTable();
+            //Search_cliente();
+            //clearFields();
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+    public void PrecioH (javafx.event.ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/Layout/pantallaPrecioHistoricoDeProductos.fxml"));
+        stage.setTitle("Precio Historico");
+        stage.setScene(new Scene(root, 1360, 768));
+        stage.show();
+    }
+    private boolean validateNumber(){
+        Pattern p = Pattern.compile("[0-9]");
+        Matcher m = p.matcher(txtPrecio.getText().trim());
+
+        if(m.find() && m.group().equals(txtPrecio.getText())){
+            return true;
+        } else{
+            Alert alert =new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Validar Número");
+            alert.setHeaderText(null);
+            alert.setContentText("En este campo debe dijitar un numero" +
+                    " y el campo no acepta espacios en blanco");
+            alert.showAndWait();
+
+            return false;
+        }
+    }
+
+
 }

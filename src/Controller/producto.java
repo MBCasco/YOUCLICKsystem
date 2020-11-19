@@ -2,11 +2,26 @@ package Controller;
 
 public class producto {
     int idProducto;
-    int marca;
+    double precio;
     int stock;
-    int categoria;
-    int precioHistorico;
-    String nombre, descripcion, ubicacion;
+    String nombre, descripcion, ubicacion, marca, categoria;
+
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
+    public String getUbicacion() {
+        return ubicacion;
+    }
+
+    public void setUbicacion(String ubicacion) {
+        this.ubicacion = ubicacion;
+    }
 
     public int getIdProducto() {
         return idProducto;
@@ -16,28 +31,20 @@ public class producto {
         this.idProducto = idProducto;
     }
 
-    public int getMarca() {
+    public String getMarca() {
         return marca;
     }
 
-    public void setMarca(int marca) {
+    public void setMarca(String marca) {
         this.marca = marca;
     }
 
-    public int getCategoria() {
+    public String getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(int categoria) {
+    public void setCategoria(String categoria) {
         this.categoria = categoria;
-    }
-
-    public int getPrecioHistorico() {
-        return precioHistorico;
-    }
-
-    public void setPrecioHistorico(int precioHistorico) {
-        this.precioHistorico = precioHistorico;
     }
 
     public String getNombre() {
@@ -55,29 +62,23 @@ public class producto {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-    public int getStock() {
-        return stock;
+
+    public double getPrecio() {
+        return precio;
     }
 
-    public void setStock(int stock) {
-        this.stock = stock;
+    public void setPrecio(double precio) {
+        this.precio = precio;
     }
 
-    public String getUbicacion() {
-        return ubicacion;
-    }
-
-    public void setUbicacion(String ubicacion) {
-        this.ubicacion = ubicacion;
-    }
-
-
-    public producto(int idProducto, String nombre, String descripcion, int marca, int categoria, int precioHistorico) {
+    public producto(int idProducto, String nombre, int stock, String descripcion, String ubicacion, double precio, String marca, String categoria) {
         this.idProducto = idProducto;
         this.nombre = nombre;
+        this.stock = stock;
         this.descripcion = descripcion;
+        this.ubicacion = ubicacion;
+        this.precio = precio;
         this.marca = marca;
         this.categoria = categoria;
-        this.precioHistorico = precioHistorico;
     }
 }

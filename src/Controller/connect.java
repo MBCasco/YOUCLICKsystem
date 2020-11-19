@@ -36,34 +36,70 @@ public class connect {
         return list;
     }
 
-    public static ObservableList<proveedores> getdataproveedor(){
-        Connection conn = conDB();
-        ObservableList<proveedores> list = FXCollections.observableArrayList();
-        try{
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM PROVEEDORES");
-            ResultSet rs = ps.executeQuery();
 
-            while(rs.next()){
-                list.add(new proveedores( Integer.parseInt(rs.getString("IDProveedor")), rs.getString("empresaProveedor"), rs.getString("correoProveedor"), rs.getString("direccionProveedor"), Integer.parseInt(rs.getString("IDContactoProveedor"))));
-            }
-        }catch(Exception e){
-        }
-        return list;
-    }
     public static ObservableList<producto> getdataproducto(){
         Connection conn = conDB();
         ObservableList<producto> list = FXCollections.observableArrayList();
         try{
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM producto");
+            PreparedStatement ps = conn.prepareStatement("SELECT p.IDProducto, p.nombre, i.stock, p.descripcionProducto, i.ubicacion, p.precio, m.nombreMarca, c.nombreCategoria FROM producto AS p INNER JOIN inventario AS i ON i.IDProducto = p.IDProducto INNER JOIN marca AS m ON m.IDMarca = p.IDMarca INNER JOIN categoria AS c ON p.IDCategoria = c.IDCategoria;");
             ResultSet rs = ps.executeQuery();
 
             while(rs.next()){
-                list.add(new producto( Integer.parseInt(rs.getString("IDProducto")), rs.getString("nombreProducto"), rs.getString("descripcionProducto"), Integer.parseInt(rs.getString("IDMarca")), Integer.parseInt(rs.getString("IDCategoria")), Integer.parseInt(rs.getString("IDPrecioHistorico"))));
+                list.add(new producto (Integer.parseInt(rs.getString("IDProducto")), rs.getString("nombre"), Integer.parseInt(rs.getString("stock")), rs.getString("descripcionProducto"), rs.getString("ubicacion"), Double.parseDouble(rs.getString("precio")), rs.getString("nombreMarca"), rs.getString("nombreCategoria")));
             }
         }catch(Exception e){
         }
         return list;
     }
+
+    public static ObservableList<precioHistorico> getdataprecioHistorico() {
+        Connection conn = conDB();
+        ObservableList<precioHistorico> list = FXCollections.observableArrayList();
+        try{
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM PRECIOHISTORICO");
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()){
+                list.add(new precioHistorico( Integer.parseInt(rs.getString("IDPrecioHistorico")), rs.getString("nombre"),Double.parseDouble(rs.getString("precio")) , rs.getString("FechaInicial"), rs.getString("FechaFinal")));
+            }
+        }catch(Exception e){
+        }
+        return list;
+
+    }
+
+    public static ObservableList<String> getdatamarca(){
+        Connection conn = conDB();
+        ObservableList<String> list = FXCollections.observableArrayList();
+        try{
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM marca");
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()){
+                list.add(new String(rs.getString("nombreMarca")));
+            }
+        }catch(Exception e){
+        }
+
+        return list;
+    }
+    public static ObservableList<String> getdatacategoria(){
+        Connection conn = conDB();
+        ObservableList<String> list = FXCollections.observableArrayList();
+        try{
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM categoria");
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()){
+                list.add(new String((rs.getString("nombreCategoria"))));
+            }
+        }catch(Exception e){
+        }
+        return list;
+    }
+
+
+
 
 }
 
