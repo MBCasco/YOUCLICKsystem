@@ -17,7 +17,7 @@ import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ProductoController  extends MenuController implements Initializable {
+public class ProductoController extends MenuController implements Initializable {
 
     @FXML
     private TableView<producto> tablaProductos;
@@ -41,10 +41,10 @@ public class ProductoController  extends MenuController implements Initializable
     private TableColumn<producto, Double> col_precio;
 
     @FXML
-    private TableColumn<producto, String> col_marca;
+    private TableColumn<producto, marca> col_marca;
 
     @FXML
-    private TableColumn<producto, String> col_categoria;
+    private TableColumn<producto, categoria> col_categoria;
 
     private TextField txtID;
     @FXML
@@ -56,9 +56,9 @@ public class ProductoController  extends MenuController implements Initializable
     @FXML
     private TextField txtPrecio;
     @FXML
-    private ComboBox comCategoriaP;
+    private ComboBox<categoria> comCategoria;
     @FXML
-    private ComboBox comMarca;
+    private ComboBox<marca>comMarca;
     @FXML
     private TextField txtStock;
     @FXML
@@ -66,8 +66,8 @@ public class ProductoController  extends MenuController implements Initializable
 
 
     ObservableList<producto> listP;
-    ObservableList<String> listmarca = connect.getdatamarca();
-    ObservableList<String> listcategoria = connect.getdatacategoria();
+    ObservableList<marca> listaMarca = marca.getdatamarca();
+    ObservableList<categoria> listcategoria = categoria.getdatacategoria();
 
 
     int index = -1;
@@ -76,39 +76,42 @@ public class ProductoController  extends MenuController implements Initializable
     PreparedStatement pst = null;
 
 
-
     public void addProducto() throws SQLException {
         conn = connect.conDB();
 
         //if (validateFields() & validateDireccion() & validateEmail() & validateName() & validateNumber()){
         try{
-            PreparedStatement ps = conn.prepareStatement("INSERT INTO producto (nombre, descripcionProducto, precio, IDMarca, IDCategoria, IDPrecioHistorico ) VALUES (?,?,?,?,?,?)");
+            assert conn != null;
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO producto (nombre,descripcionProducto,precio,IDMarca,IDCategoria) VALUES (?,?,?,?,?)");
 
-            ps.setString(1, txtNombreP.getText() );
-            ps.setString(3, txtDescrpcionP.getText());
-            ps.setString(5, txtPrecio.getText());
-            ps.setString(6, comMarca.getId());
-            ps.setString(7, comCategoriaP.getId());
-            ps.execute();
-
-
-            ps = conn.prepareStatement("INSERT INTO inventario (stock, ubicacion, IDProducto) VALUES ((?,?, last_insert_id)");
-
-            ps.setString(2, txtStock.getText());
-            ps.setString(4, txtUbicacion.getText());
+            ps.setString(1, txtNombreP.getText());
+            ps.setString(2, txtDescrpcionP.getText());
+            ps.setString(3, txtPrecio.getText());
+            ps.setString(4, String.valueOf(comMarca.getSelectionModel().getSelectedIndex()));
+            ps.setString(5, String.valueOf(comCategoria.getSelectionModel().getSelectedIndex()));
             ps.execute();
 
         }catch(Exception e){
             System.out.println(e);
         }
-        //}
+        try {
+            PreparedStatement ps1 = conn.prepareStatement("INSERT INTO inventario (stock,ubicacion, IDProducto) VALUES (?,?,LAST_INSERT_ID())");
 
+            ps1.setString(1, txtStock.getText());
+            ps1.setString(2, txtUbicacion.getText());
+            ps1.execute();
+
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        //}
+        UpdateTable();
     }
 
 
     public void intCombox (){
-        comMarca.setItems(listmarca);
-        comCategoriaP.setItems(listcategoria);
+        comMarca.setItems(listaMarca);
+        comCategoria.setItems(listcategoria);
     }
 
     @Override
@@ -123,23 +126,21 @@ public class ProductoController  extends MenuController implements Initializable
         col_descripcion.setCellValueFactory(new PropertyValueFactory<producto,String>("descripcion"));
         col_ubicacion.setCellValueFactory(new PropertyValueFactory<producto,String>("ubicacion"));
         col_precio.setCellValueFactory(new PropertyValueFactory<producto,Double>("precio"));
-        col_marca.setCellValueFactory(new PropertyValueFactory<producto,String>("marca"));
-        col_categoria.setCellValueFactory(new PropertyValueFactory<producto,String>("categoria"));
+        col_marca.setCellValueFactory(new PropertyValueFactory<producto,marca>("marca"));
+        col_categoria.setCellValueFactory(new PropertyValueFactory<producto,categoria>("categoria"));
 
         listP = connect.getdataproducto();
         tablaProductos.setItems(listP);
     }
     public void Delete(){
         conn = connect.conDB();
-        String sql = "Delete from productos where IDProductos = ?";
+        String sql = "Delete from producto where IDProducto = ?";
         try{
             pst = conn.prepareStatement(sql);
             pst.setString(1, txtEliminar.getText());
             pst.execute();
             JOptionPane.showMessageDialog(null, "Elimino su producto con exito");
             UpdateTable();
-            //Search_cliente();
-            //clearFields();
         }catch (Exception e){
             JOptionPane.showMessageDialog(null, e);
         }

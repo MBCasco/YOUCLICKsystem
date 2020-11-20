@@ -81,7 +81,7 @@
                            </font>
                         </Text>
                         <ComboBox fx:id="comMarca" prefHeight="39.0" prefWidth="394.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                        <ComboBox fx:id="comCategoriaP" prefHeight="39.0" prefWidth="394.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                        <ComboBox fx:id="comCategoria" prefHeight="39.0" prefWidth="394.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                      </children>
                   </GridPane>
                   <Text layoutX="103.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" underline="true">

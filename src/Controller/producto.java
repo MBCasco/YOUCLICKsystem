@@ -1,5 +1,7 @@
 package Controller;
 
+import javafx.beans.property.DoubleProperty;
+
 public class producto {
     int idProducto;
     double precio;

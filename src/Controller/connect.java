@@ -68,38 +68,6 @@ public class connect {
 
     }
 
-    public static ObservableList<String> getdatamarca(){
-        Connection conn = conDB();
-        ObservableList<String> list = FXCollections.observableArrayList();
-        try{
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM marca");
-            ResultSet rs = ps.executeQuery();
-
-            while(rs.next()){
-                list.add(new String(rs.getString("nombreMarca")));
-            }
-        }catch(Exception e){
-        }
-
-        return list;
-    }
-    public static ObservableList<String> getdatacategoria(){
-        Connection conn = conDB();
-        ObservableList<String> list = FXCollections.observableArrayList();
-        try{
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM categoria");
-            ResultSet rs = ps.executeQuery();
-
-            while(rs.next()){
-                list.add(new String((rs.getString("nombreCategoria"))));
-            }
-        }catch(Exception e){
-        }
-        return list;
-    }
-
-
-
 
 }
 
