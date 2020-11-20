@@ -5,10 +5,7 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import javax.swing.*;
@@ -17,8 +14,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public class EmpleadosController extends MenuController implements Initializable{
+public class EmpleadosController extends MenuController implements Initializable {
 
     @FXML
     private TableView<empleados> table_empleados;
@@ -64,13 +63,13 @@ public class EmpleadosController extends MenuController implements Initializable
     private TextField txt_eliminar;
 
     @FXML
-    private ComboBox Sexo;
-
-    @FXML
     private TextField txt_telefono;
 
     @FXML
-    private ComboBox Cargo;
+    private ComboBox<String> Cargo;
+
+    @FXML
+    private ComboBox<String> Sexo;
 
     @FXML
     private TextField txt_fechaInicio;
@@ -79,7 +78,7 @@ public class EmpleadosController extends MenuController implements Initializable
     private TextField txt_fechaFinal;
 
 
-    ObservableList<empleados> listM;
+    ObservableList<empleados> listE;
     ObservableList<empleados> dataList;
     ObservableList<String> listsexo = connect.getdatasexo();
     ObservableList<String> listcargo = connect.getdatacargo();
@@ -92,19 +91,40 @@ public class EmpleadosController extends MenuController implements Initializable
     public void Add_Empleados() {
         conn = connect.conDB();
 
-        String sql = "insert into empleado (nombreEmpleado,direccionEmpleado,correoEmpleado,telefonoEmpleado,IDCargo,IDSexo)values(?,?,?,?,?,?)";
+        String sql = "insert into empleado (IDEmpleado,nombreEmpleado,direccionEmpleado,telefonoEmpleado,correoEmpleado,IDCargo,IDSexo)values(NULL,?,?,?,?,?,?)";
+        int codS = 1;
+        int codC = 1;
 
+        
+        if( validateFields() & validateName() & validateDireccion() & validateNumber() & validateEmail()) {
             try {
                 pst = conn.prepareStatement(sql);
 
                 pst.setString(1, txt_nombre.getText());
                 pst.setString(2, txt_direccion.getText());
-                pst.setString(3, txt_correo.getText());
-                pst.setString(4, txt_telefono.getText());
-                pst.setString(5, Cargo.getValue().toString());
-                pst.setString(6, Sexo.getValue().toString());
-                pst.execute();
+                pst.setString(3, txt_telefono.getText());
+                pst.setString(4, txt_correo.getText());
 
+
+                if ( Sexo.getValue().equals("Femenino")){
+                    codS = 2;
+                }else if (Sexo.getValue().equals("Masculino")){
+                    codS = 1;
+                }
+
+                if(Cargo.getValue().equals("Gestor de inventario")){
+                    codC = 4;
+                }else if (Cargo.getValue().equals("Vendedor")){
+                    codC = 3;
+                }else if (Cargo.getValue().equals("Gerente")){
+                    codC = 2;
+                }else if (Cargo.getValue().equals("Cajero")){
+                    codC = 1;
+                }
+
+                pst.setInt(5, codC);
+                pst.setInt(6, codS);
+                pst.execute();
 
                 JOptionPane.showMessageDialog(null, "Agregado");
                 clearFields();
@@ -115,6 +135,98 @@ public class EmpleadosController extends MenuController implements Initializable
                 JOptionPane.showMessageDialog(null, e);
 
             }
+        }
+    }
+
+    private boolean validateNumber(){
+        Pattern p = Pattern.compile("[0-9]{8}");
+        Matcher m = p.matcher(txt_telefono.getText().trim());
+
+        if(m.find() && m.group().equals(txt_telefono.getText())){
+            return true;
+        } else{
+            Alert alert =new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Validar Número");
+            alert.setHeaderText(null);
+            alert.setContentText("El número debe contener máximo 8 digitos" +
+                    " y el campo no acepta espacios en blanco");
+            alert.showAndWait();
+
+            return false;
+        }
+    }
+
+    private boolean validateName(){
+        Pattern p = Pattern.compile("[A-Za-z ]+");
+        Matcher m = p.matcher(txt_nombre.getText());
+
+        if(m.find() && m.group().equals(txt_nombre.getText())){
+            return true;
+        } else{
+            Alert alert =new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Validar Nombre");
+            alert.setHeaderText(null);
+            alert.setContentText("Por favor ingresar un nombre válido");
+            alert.showAndWait();
+
+            return false;
+        }
+    }
+    private boolean validateDireccion(){
+        Pattern p = Pattern.compile("[A-Za-z ]+");
+        Matcher m = p.matcher(txt_direccion.getText());
+
+        if(m.find() && m.group().equals(txt_direccion.getText())){
+            return true;
+        } else{
+            Alert alert =new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Validar direción");
+            alert.setHeaderText(null);
+            alert.setContentText("Por favor ingresar una dirección válida");
+            alert.showAndWait();
+
+            return false;
+        }
+    }
+
+    private boolean validateEmail(){
+        Pattern p = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"+"[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+        Matcher m = p.matcher(txt_correo.getText());
+
+        if(m.find() && m.group().equals(txt_correo.getText())){
+            return true;
+        } else{
+            Alert alert =new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Validar Correo");
+            alert.setHeaderText(null);
+            alert.setContentText("Por favor ingresar un correo válido" +
+                    " ejemplo@gmail.com");
+            alert.showAndWait();
+
+            return false;
+        }
+    }
+
+    private boolean validateFields(){
+        if (txt_nombre.getText().isEmpty() | txt_direccion.getText().isEmpty() | txt_telefono.getText().isEmpty() | txt_correo.getText().isEmpty() ){
+
+            Alert alert =new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Espacios vacios!");
+            alert.setHeaderText(null);
+            alert.setContentText("Espacios vacíos, por favor ingresar datos");
+            alert.showAndWait();
+
+            return false;
+        }
+        if ( Sexo.getValue().equals("") | Cargo.getValue().equals("")){
+
+            Alert alert =new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Espacios vacios!");
+            alert.setHeaderText(null);
+            alert.setContentText("Espacios vacíos, por favor ingresar datos");
+            alert.showAndWait();
+        }
+        return true;
     }
 
     private void clearFields() {
@@ -124,7 +236,8 @@ public class EmpleadosController extends MenuController implements Initializable
         txt_telefono.clear();
         txt_id.clear();
         txt_eliminar.clear();
-        //Sexo.Items.clear();
+        Sexo.setValue(null);
+        Cargo.setValue(null);
     }
 
     public void Delete(){
@@ -152,13 +265,14 @@ public class EmpleadosController extends MenuController implements Initializable
         col_cargo.setCellValueFactory(new PropertyValueFactory<empleados,String>("cargoE"));
         col_sexo.setCellValueFactory(new PropertyValueFactory<empleados,String>("sexoE"));
 
-        listM = connect.getdataempleados();
-        table_empleados.setItems(listM);
+        listE = connect.getdataempleados();
+        table_empleados.setItems(listE);
     }
     @Override
     public void initialize(URL url, ResourceBundle rb){
-        Sexo.setItems(listsexo);
         Cargo.setItems(listcargo);
+        Sexo.setItems(listsexo);
+
 
 
         UpdateTable();
@@ -167,28 +281,50 @@ public class EmpleadosController extends MenuController implements Initializable
     }
 
     public void Edit(){
-        try{
-            conn = connect.conDB();
 
-            String value1 = txt_id.getText();
-            String value2 = txt_nombre.getText();
-            String value3 = txt_direccion.getText();
-            String value4 = txt_telefono.getText();
-            String value5 = txt_correo.getText();
-            String value6 = Cargo.getValue().toString();
-            String value7 = Sexo.getValue().toString();
+        int codS = 1;
+        int codC = 1;
 
-            String sql = "update empleados set nombreEmpleado= '"+value2+"', dirreccionEmpleado= '"+
-                    value3+"', telefonoEmpleado= '"+value4+"', correoEmpleado= '"+value5+", IDCargo= '"+value6+"', IDSexo= '"+value7+"' where IDEmpleado='"+value1+"' ";
+        if ( validateName() &validateDireccion() & validateNumber() &  validateEmail()) {
+            try {
+                conn = connect.conDB();
+                String value1 = txt_id.getText();
+                String value2 = txt_nombre.getText();
+                String value3 = txt_direccion.getText();
+                String value4 = txt_telefono.getText();
+                String value5 = txt_correo.getText();
 
-            pst = conn.prepareStatement(sql);
-            pst.execute();
-            JOptionPane.showMessageDialog(null, "Actualizado");
-            UpdateTable();
-            search_empleado();
-            clearFields();
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(null, e);
+                if ( Sexo.getValue().equals("Femenino")){
+                    codS = 2;
+                }else if (Sexo.getValue().equals("Masculino")){
+                    codS = 1;
+                }
+
+                if(Cargo.getValue().equals("Gestor de inventario")){
+                    codC = 4;
+                }else if (Cargo.getValue().equals("Vendedor")){
+                    codC = 3;
+                }else if (Cargo.getValue().equals("Gerente")){
+                    codC = 2;
+                }else if (Cargo.getValue().equals("Cajero")){
+                    codC = 1;
+                }
+
+                int value6 = codC;
+                int value7 = codS;
+
+                String sql = (" UPDATE empleado SET nombreEmpleado= '" + value2 + "', direccionEmpleado= '" +
+                        value3 + "', telefonoEmpleado= '" + value4 + "', correoEmpleado= '" + value5 + "', IDCargo= '" + value6 + "', IDSexo= '" + value7 + "' WHERE IDEmpleado='" + value1 + "' ");
+
+                pst = conn.prepareStatement(sql);
+                pst.execute();
+                JOptionPane.showMessageDialog(null, "Actualizado");
+                UpdateTable();
+                search_empleado();
+                clearFields();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
         }
     }
 

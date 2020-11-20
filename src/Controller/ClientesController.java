@@ -77,6 +77,14 @@ public class ClientesController extends MenuController implements Initializable 
     public void Add_clientes() {
         conn = connect.conDB();
         String sql = "insert into cliente (nombreCliente,dirreccionCliente,telefonoCLiente,correoCliente,IDSexo)values(?,?,?,?,?)";
+
+        int codS = 1;
+        if ( Sexo.getValue().equals("Femenino")){
+            codS = 2;
+        }else if (Sexo.getValue().equals("Masculino")){
+            codS = 1;
+        }
+
         if (validateFields() &validateName() & validateDireccion()  & validateNumber() & validateEmail()  ){
             try {
                 pst = conn.prepareStatement(sql);
@@ -85,7 +93,7 @@ public class ClientesController extends MenuController implements Initializable 
                 pst.setString(2, txt_direccion.getText());
                 pst.setString(3, txt_telefono.getText());
                 pst.setString(4, txt_correo.getText());
-                pst.setString(5, Sexo.getValue().toString());
+                pst.setInt(5, codS);
                 pst.execute();
 
 
@@ -113,8 +121,8 @@ public class ClientesController extends MenuController implements Initializable 
             Alert alert =new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Validar Número");
             alert.setHeaderText(null);
-            alert.setContentText("El número debe contener maximo 8 digitos" +
-                    " Y el campo no acepta espacios en blanco");
+            alert.setContentText("El número debe contener máximo 8 digitos" +
+                    " y el campo no acepta espacios en blanco");
             alert.showAndWait();
 
             return false;
@@ -145,7 +153,7 @@ public class ClientesController extends MenuController implements Initializable 
             return true;
         } else{
             Alert alert =new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Validar direcion");
+            alert.setTitle("Validar direción");
             alert.setHeaderText(null);
             alert.setContentText("Por favor ingresar una direccion válida");
             alert.showAndWait();
@@ -193,7 +201,7 @@ public class ClientesController extends MenuController implements Initializable 
         txt_correo.clear();
         txt_telefono.clear();
         txt_eliminar.clear();
-        //Sexo.Items.clear();
+        Sexo.setValue(null);
     }
 
     public void Delete(){
@@ -232,6 +240,13 @@ public class ClientesController extends MenuController implements Initializable 
     }
 
     public void Edit(){
+
+        int codS = 1;
+        if ( Sexo.getValue().equals("Femenino")){
+            codS = 2;
+        }else if (Sexo.getValue().equals("Masculino")){
+            codS = 1;
+        }
         try{
             conn = connect.conDB();
 
@@ -241,10 +256,10 @@ public class ClientesController extends MenuController implements Initializable 
             String value3 = txt_direccion.getText();
             String value4 = txt_telefono.getText();
             String value5 = txt_correo.getText();
-            String value6 = Sexo.getValue().toString();
+            int value6 = codS;
 
-            String sql = "update cliente set nombreCliente= '"+value2+"', dirreccionCliente= '"+
-                    value3+"', telefonoCliente= '"+value4+"', correoCliente= '"+value5+", descripcionSexo= '"+value6+" ' where IDCliente='"+value1+"' ";
+            String sql = ("update cliente set nombreCliente= '"+value2+"', dirreccionCliente= '"+
+                    value3+"', telefonoCliente= '"+value4+"', correoCliente= '"+value5+"', IDSexo= '"+value6+" ' where IDCliente='"+value1+"' ");
 
             pst = conn.prepareStatement(sql);
             pst.execute();

@@ -16,12 +16,12 @@
       </Label>
       <ImageView fitHeight="97.0" fitWidth="89.0" layoutX="332.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@iconos/woman.png" />
+            <Image url="@../Imagenes/iconos/Iconos/woman.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="89.0" fitWidth="89.0" layoutX="1113.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@iconos/man.png" />
+            <Image url="@../Imagenes/iconos/Iconos/man.png" />
          </image>
       </ImageView>
       <AnchorPane layoutX="256.0" layoutY="156.0" prefHeight="587.0" prefWidth="415.0" style="-fx-background-color: d5c5ae; -fx-border-color: ffc107; -fx-border-width: 2; -fx-border-radius: 5; -fx-background-radius: 5;">
@@ -31,10 +31,9 @@
                   <Font name="Dubai Bold" size="12.0" />
                </font>
             </Label>
-            <TextField fx:id="txt_id" editable="false" layoutX="71.0" layoutY="99.0" prefHeight="27.0" prefWidth="299.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
-            <ImageView fitHeight="43.0" fitWidth="36.0" layoutX="33.0" layoutY="86.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="43.0" fitWidth="36.0" layoutX="33.0" layoutY="89.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@iconos/carne-de-identidad.png" />
+                  <Image url="@../Imagenes/iconos/Iconos/carne-de-identidad.png" />
                </image>
             </ImageView>
             <Label alignment="CENTER" layoutX="4.0" layoutY="13.0" prefHeight="32.0" prefWidth="406.0" style="-fx-background-color: #ffc107; -fx-border-color: c29b61;" text="Datos del cliente">
@@ -58,19 +57,19 @@
                   <Font name="Dubai Bold" size="12.0" />
                </font>
             </Label>
-            <ImageView fitHeight="43.0" fitWidth="36.0" layoutX="34.0" layoutY="389.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="43.0" fitWidth="36.0" layoutX="34.0" layoutY="393.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@iconos/email.png" />
+                  <Image url="@../Imagenes/iconos/Iconos/email.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="43.0" fitWidth="36.0" layoutX="36.0" layoutY="319.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="43.0" fitWidth="36.0" layoutX="34.0" layoutY="319.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@iconos/phone-call.png" />
+                  <Image url="@../Imagenes/iconos/Iconos/phone-call.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="43.0" fitWidth="36.0" layoutX="33.0" layoutY="245.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="43.0" fitWidth="36.0" layoutX="32.0" layoutY="245.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@iconos/directional-sign.png" />
+                  <Image url="@../Imagenes/iconos/Iconos/directional-sign.png" />
                </image>
             </ImageView>
             <Label alignment="CENTER" layoutX="33.0" layoutY="292.0" prefHeight="25.0" prefWidth="162.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="Teléfono" textFill="#8d5910">
@@ -85,9 +84,9 @@
                </font>
             </Label>
             <TextField fx:id="txt_direccion" layoutX="71.0" layoutY="253.0" prefHeight="27.0" prefWidth="299.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
-            <ImageView fitHeight="43.0" fitWidth="36.0" layoutX="36.0" layoutY="166.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="43.0" fitWidth="36.0" layoutX="33.0" layoutY="166.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@iconos/employees%20(1).png" />
+                  <Image url="@../Imagenes/iconos/Iconos/employees%20(1).png" />
                </image>
             </ImageView>
             <TextField fx:id="txt_nombre" layoutX="71.0" layoutY="172.0" prefHeight="27.0" prefWidth="299.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
@@ -98,22 +97,22 @@
             </Label>
             <ImageView fitHeight="43.0" fitWidth="36.0" layoutX="215.0" layoutY="530.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@iconos/actualizado.png" />
+                  <Image url="@../Imagenes/iconos/Iconos/actualizado.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="43.0" fitWidth="36.0" layoutX="55.0" layoutY="530.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@iconos/portapapeles.png" />
+                  <Image url="@../Imagenes/iconos/Iconos/portapapeles.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="32.0" fitWidth="36.0" layoutX="55.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@iconos/formulario-de-registro.png" />
+                  <Image url="@../Imagenes/iconos/Iconos/formulario-de-registro.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="32.0" fitWidth="36.0" layoutX="319.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@iconos/formulario-de-registro.png" />
+                  <Image url="@../Imagenes/iconos/Iconos/formulario-de-registro.png" />
                </image>
             </ImageView>
             <Label alignment="CENTER" layoutX="33.0" layoutY="432.0" prefHeight="25.0" prefWidth="162.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="ID Sexo" textFill="#8d5910">
@@ -121,12 +120,13 @@
                   <Font name="Dubai Bold" size="12.0" />
                </font>
             </Label>
-            <ComboBox fx:id="Sexo" layoutX="71.0" layoutY="469.0" prefHeight="25.0" prefWidth="299.0" promptText="Elija" />
+            <ComboBox fx:id="Sexo" layoutX="71.0" layoutY="469.0" prefHeight="25.0" prefWidth="299.0" promptText="Seleccionar" />
             <ImageView fitHeight="43.0" fitWidth="36.0" layoutX="34.0" layoutY="460.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@iconos/employees%20(1).png" />
+                  <Image url="@../Imagenes/iconos/Iconos/employees%20(1).png" />
                </image>
             </ImageView>
+            <TextField fx:id="txt_id" editable="false" layoutX="69.0" layoutY="94.0" prefHeight="27.0" prefWidth="299.0" style="-fx-background-color: #f4ecbf; -fx-border-color: ffc107;" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="695.0" layoutY="155.0" prefHeight="588.0" prefWidth="626.0" style="-fx-background-color: d5c5ae; -fx-border-color: ffc107; -fx-border-width: 2; -fx-border-radius: 5; -fx-background-radius: 5;">
@@ -136,8 +136,8 @@
                   <Font name="Dubai Bold" size="12.0" />
                </font>
             </Label>
-            <TextField fx:id="filterField" layoutX="74.0" layoutY="108.0" prefHeight="27.0" prefWidth="278.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
-            <TextField fx:id="txt_eliminar" layoutX="74.0" layoutY="185.0" prefHeight="27.0" prefWidth="278.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
+            <TextField fx:id="filterField" layoutX="74.0" layoutY="108.0" prefHeight="27.0" prefWidth="278.0" promptText="Ingrese ID o nombre del cliente" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
+            <TextField fx:id="txt_eliminar" layoutX="74.0" layoutY="185.0" prefHeight="27.0" prefWidth="278.0" promptText="Ingrese ID del cliente" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
             <Label alignment="CENTER" layoutX="36.0" layoutY="150.0" prefHeight="25.0" prefWidth="162.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="Eliminar cliente por" textFill="#8d5910">
                <font>
                   <Font name="Dubai Bold" size="12.0" />
@@ -145,12 +145,12 @@
             </Label>
             <ImageView fitHeight="43.0" fitWidth="36.0" layoutX="36.0" layoutY="104.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@iconos/buscar.png" />
+                  <Image url="@../Imagenes/iconos/Iconos/buscar.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="43.0" fitWidth="36.0" layoutX="36.0" layoutY="181.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@iconos/eliminar%20(1).png" />
+                  <Image url="@../Imagenes/iconos/Iconos/eliminar%20(1).png" />
                </image>
             </ImageView>
             <Button layoutX="372.0" layoutY="184.0" mnemonicParsing="false" onAction="#Delete" prefHeight="24.0" prefWidth="83.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="Eliminar" textFill="#eed09d">
@@ -175,12 +175,12 @@
             </TableView>
             <ImageView fitHeight="32.0" fitWidth="36.0" layoutX="90.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@iconos/formulario-de-registro.png" />
+                  <Image url="@../Imagenes/iconos/Iconos/formulario-de-registro.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="32.0" fitWidth="36.0" layoutX="475.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@iconos/formulario-de-registro.png" />
+                  <Image url="@../Imagenes/iconos/Iconos/formulario-de-registro.png" />
                </image>
             </ImageView>
          </children>

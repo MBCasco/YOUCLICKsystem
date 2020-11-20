@@ -60,7 +60,7 @@ public class connect {
             ResultSet rs = ps.executeQuery();
 
             while(rs.next()){
-                list.add(new empleados(Integer.parseInt(rs.getString("IDEmpleado")),  rs.getString("nombreEmpleado"),rs.getString("direccionEmpleado"),Integer.parseInt(rs.getString("telefonoEmpleado")), rs.getString("correoEmpleado"), rs.getString("IDCargo"), rs.getString("IDSexo")));
+                list.add(new empleados(Integer.parseInt(rs.getString("IDEmpleado")),  rs.getString("nombreEmpleado"),rs.getString("direccionEmpleado"),Integer.parseInt(rs.getString("telefonoEmpleado")), rs.getString("correoEmpleado"), rs.getString("nombreCargo"), rs.getString("descripcionSexo")));
             }
         }catch(Exception e){
         }
