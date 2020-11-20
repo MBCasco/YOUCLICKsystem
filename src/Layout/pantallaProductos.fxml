@@ -89,7 +89,7 @@
                         <Font size="24.0" />
                      </font>
                   </Text>
-                  <Button layoutX="351.0" layoutY="273.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="111.0" style="-fx-border-color: ffc107; -fx-background-color: a18262;" text="Actualizar" textFill="#eed09d">
+                  <Button layoutX="351.0" layoutY="273.0" mnemonicParsing="false" onAction="#Edit" prefHeight="41.0" prefWidth="111.0" style="-fx-border-color: ffc107; -fx-background-color: a18262;" text="Actualizar" textFill="#eed09d">
                      <font>
                         <Font size="18.0" />
                      </font>

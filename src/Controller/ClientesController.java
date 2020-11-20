@@ -1,4 +1,5 @@
 package Controller;
+import Models.clientes;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;

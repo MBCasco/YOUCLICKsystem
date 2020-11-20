@@ -24,7 +24,7 @@ public class MenuController implements GlobalConstans {
         stage.setScene(new Scene(root, 1360, 768));
         stage.show();
     }
-    public  void proveedor(javafx.event.ActionEvent actionEvent) throws IOException {
+    public  void proveedor() throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/Layout/pantallaProveedores.fxml"));
         stage.setTitle("Proveedor");
         stage.setScene(new Scene(root, 1360, 768));
@@ -45,6 +45,12 @@ public class MenuController implements GlobalConstans {
     public  void factura(javafx.event.ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/Layout/pantallaFactura.fxml"));
         stage.setTitle("Factura");
+        stage.setScene(new Scene(root, 1360, 768));
+        stage.show();
+    }
+    public  void contactos() throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/Layout/pantallaProveedoresContacto.fxml"));
+        stage.setTitle("Contactos");
         stage.setScene(new Scene(root, 1360, 768));
         stage.show();
     }

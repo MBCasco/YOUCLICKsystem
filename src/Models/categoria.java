@@ -1,4 +1,4 @@
-package Controller;
+package Models;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -10,7 +10,7 @@ import java.sql.*;
 import static Controller.connect.conDB;
 
 
-public class categoria {
+public class categoria{
     private IntegerProperty IDCategoria;
     private StringProperty nombreCategoria;
 
@@ -43,6 +43,7 @@ public class categoria {
     public void setnombreCategoria(String nombreCategoria) {
         this.nombreCategoria.set(nombreCategoria);
     }
+
 
     public static ObservableList<categoria> getdatacategoria(){
         Connection conn = conDB();

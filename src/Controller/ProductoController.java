@@ -1,5 +1,8 @@
 package Controller;
 
+import Models.categoria;
+import Models.marca;
+import Models.producto;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,8 +17,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class ProductoController extends MenuController implements Initializable {
 
@@ -68,6 +69,7 @@ public class ProductoController extends MenuController implements Initializable 
     ObservableList<producto> listP;
     ObservableList<marca> listaMarca = marca.getdatamarca();
     ObservableList<categoria> listcategoria = categoria.getdatacategoria();
+    ObservableList<producto> dataListP;
 
 
     int index = -1;
@@ -145,29 +147,48 @@ public class ProductoController extends MenuController implements Initializable 
             JOptionPane.showMessageDialog(null, e);
         }
     }
+    public void Edit(){
+        try{
+            conn = connect.conDB();
+
+            String value1 = txtID.getText();
+            String value2 = txtNombreP.getText();
+            String value3 = txtDescrpcionP.getText();
+            String value4 = txtPrecio.getText();
+            String value5 = String.valueOf(comMarca.getSelectionModel().getSelectedIndex());
+            String value6 = String.valueOf(comCategoria.getSelectionModel().getSelectedIndex());
+
+            String sql = "update productos set nombre= '"+value2+"', dirreccionCliente= '"+
+                    value3+"', telefonoCliente= '"+value4+"', correoCliente= '"+value5+", IDSexo= '"+value6+" ' where IDProducto='"+value1+"' ";
+
+            pst = conn.prepareStatement(sql);
+            pst.execute();
+            JOptionPane.showMessageDialog(null, "Se actualizo con exito");
+            UpdateTable();
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        try{
+            conn = connect.conDB();
+                    String value1 =txtID.getText();
+                    String value7 = txtStock.getText();
+                    String value8 = txtUbicacion.getText();
+            String sql = "update inventario set stock= '"+value7+"' , ubicacio= '"+value8+"' where IDProducto = '"+value1+"'";
+
+            UpdateTable();
+
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
     public void PrecioH (javafx.event.ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/Layout/pantallaPrecioHistoricoDeProductos.fxml"));
         stage.setTitle("Precio Historico");
         stage.setScene(new Scene(root, 1360, 768));
         stage.show();
     }
-    private boolean validateNumber(){
-        Pattern p = Pattern.compile("[0-9]");
-        Matcher m = p.matcher(txtPrecio.getText().trim());
 
-        if(m.find() && m.group().equals(txtPrecio.getText())){
-            return true;
-        } else{
-            Alert alert =new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Validar Número");
-            alert.setHeaderText(null);
-            alert.setContentText("En este campo debe dijitar un numero" +
-                    " y el campo no acepta espacios en blanco");
-            alert.showAndWait();
 
-            return false;
-        }
-    }
 
 
 }

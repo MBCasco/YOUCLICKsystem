@@ -1,5 +1,6 @@
 
 package Controller;
+import Models.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javax.swing.*;
@@ -66,6 +67,38 @@ public class connect {
         }
         return list;
 
+    }
+    public static ObservableList<proveedores> getdataproveedor(){
+        Connection conn = conDB();
+        ObservableList<proveedores> list = FXCollections.observableArrayList();
+        try{
+            PreparedStatement psp = conn.prepareStatement("select * from proveedores");
+            ResultSet rsP = psp.executeQuery();
+            while(rsP.next()){
+                list.add(new proveedores(rsP.getInt("IDProveedor"),rsP.getString("empresaProveedor"), rsP.getString("correoProveedor"), rsP.getString("direccionProveedor")));
+            }
+        }catch(Exception e){
+        }
+        return list;
+    }
+
+
+    public static ObservableList<contacto> getdatacontacto(){
+        Connection conn = conDB();
+        ObservableList<contacto> list = FXCollections.observableArrayList();
+        try{
+            PreparedStatement psc = conn.prepareStatement("select * from contactoproveedor;");
+            ResultSet rsP = psc.executeQuery();
+
+            while(rsP.next()){
+                list.add(new contacto( rsP.getInt("IDContactoProveedor"), rsP.getInt("IDProveedor") ,rsP.getString("nombreDeContacto"),
+                        rsP.getString("Detalles"), rsP.getInt("Telefono"), rsP.getString("Correo")));
+
+
+            }
+        }catch(Exception e){
+        }
+        return list;
     }
 
 

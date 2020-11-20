@@ -1,5 +1,6 @@
 package Controller;
 
+import Models.precioHistorico;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -14,7 +15,6 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.Date;
 import java.util.ResourceBundle;
 
 public class PrecioHistoricoController extends MenuController implements Initializable {

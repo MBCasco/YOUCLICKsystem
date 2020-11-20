@@ -1,4 +1,4 @@
-package Controller;
+package Models;
 
 import javafx.beans.property.DoubleProperty;
 

@@ -1,4 +1,4 @@
-package Controller;
+package Models;
 
 public class precioHistorico {
     int ID;

@@ -24,7 +24,7 @@
       </Button>
       <Pane layoutX="30.0" layoutY="15.0" prefHeight="71.0" prefWidth="572.0" style="-fx-background-color: #FFC107; -fx-background-radius: 10; -fx-border-color: c29b61; -fx-border-radius: 5; -fx-border-style: solid; -fx-border-width: 4;">
          <children>
-            <Label layoutX="110.0" layoutY="11.0" prefHeight="42.0" prefWidth="403.0" text="Ferreteria Alonso/Toño " textAlignment="CENTER">
+            <Label layoutX="110.0" layoutY="11.0" prefHeight="42.0" prefWidth="403.0" text="Ferretería Alonso/Toño " textAlignment="CENTER">
                <font>
                   <Font name="Elephant" size="32.0" />
                </font>
