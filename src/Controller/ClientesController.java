@@ -38,7 +38,7 @@ public class ClientesController extends MenuController implements Initializable 
     private TableColumn<clientes, String> col_correo;
 
     @FXML
-    private TableColumn<clientes, Integer> col_Sexo;
+    private TableColumn<clientes, String> col_Sexo;
 
 
     @FXML
@@ -63,21 +63,26 @@ public class ClientesController extends MenuController implements Initializable 
     private TextField txt_eliminar;
 
     @FXML
-    private ComboBox Sexo;
+    private ComboBox<String> Sexo;
 
 
     ObservableList<clientes> listM;
     ObservableList<clientes> dataList;
+    ObservableList<String> listsexo = connect.getdatasexo();
 
     int index = -1;
     Connection conn = null;
     ResultSet rs = null;
     PreparedStatement pst = null;
 
+
     public void Add_clientes() {
+
         conn = connect.conDB();
         String sql = "insert into cliente (nombreCliente,dirreccionCliente,telefonoCLiente,correoCliente,IDSexo)values(?,?,?,?,?)";
-        if (validateFields() & validateDireccion() & validateEmail() & validateName() & validateNumber()){
+
+        int codS = 1;
+        if (validateFields() &validateName() & validateDireccion()  & validateNumber() & validateEmail()  ){
             try {
                 pst = conn.prepareStatement(sql);
 
@@ -85,12 +90,18 @@ public class ClientesController extends MenuController implements Initializable 
                 pst.setString(2, txt_direccion.getText());
                 pst.setString(3, txt_telefono.getText());
                 pst.setString(4, txt_correo.getText());
-                pst.setString(5, Sexo.getValue().toString());
+
+                if ( Sexo.getValue().equals("Femenino")){
+                    codS = 1;
+                }else if (Sexo.getValue().equals("Masculino")){
+                    codS = 2;
+                }
+                pst.setInt(5, codS);
                 pst.execute();
 
 
-                    JOptionPane.showMessageDialog(null, "Agregado");
-                    clearFields();
+                JOptionPane.showMessageDialog(null, "Agregado");
+                clearFields();
 
                 UpdateTable();
                 Search_cliente();
@@ -104,8 +115,8 @@ public class ClientesController extends MenuController implements Initializable 
     }
 
     private boolean validateNumber(){
-        Pattern p = Pattern.compile("[0-9]");
-        Matcher m = p.matcher(txt_telefono.getText());
+        Pattern p = Pattern.compile("[0-9]{8}");
+        Matcher m = p.matcher(txt_telefono.getText().trim());
 
         if(m.find() && m.group().equals(txt_telefono.getText())){
             return true;
@@ -113,7 +124,8 @@ public class ClientesController extends MenuController implements Initializable 
             Alert alert =new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Validar Número");
             alert.setHeaderText(null);
-            alert.setContentText("Por favor ingresar un número válido");
+            alert.setContentText("El número debe contener máximo 8 digitos" +
+                    " y el campo no acepta espacios en blanco");
             alert.showAndWait();
 
             return false;
@@ -121,7 +133,7 @@ public class ClientesController extends MenuController implements Initializable 
     }
 
     private boolean validateName(){
-        Pattern p = Pattern.compile("[A-Za-z]");
+        Pattern p = Pattern.compile("[A-Za-z ]+");
         Matcher m = p.matcher(txt_nombre.getText());
 
         if(m.find() && m.group().equals(txt_nombre.getText())){
@@ -137,14 +149,14 @@ public class ClientesController extends MenuController implements Initializable 
         }
     }
     private boolean validateDireccion(){
-        Pattern p = Pattern.compile("[A-Za-z]");
+        Pattern p = Pattern.compile("[A-Za-z ]+");
         Matcher m = p.matcher(txt_direccion.getText());
 
         if(m.find() && m.group().equals(txt_direccion.getText())){
             return true;
         } else{
             Alert alert =new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Validar direcion");
+            alert.setTitle("Validar direción");
             alert.setHeaderText(null);
             alert.setContentText("Por favor ingresar una direccion válida");
             alert.showAndWait();
@@ -163,7 +175,8 @@ public class ClientesController extends MenuController implements Initializable 
             Alert alert =new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Validar Correo");
             alert.setHeaderText(null);
-            alert.setContentText("Por favor ingresar un correo válido");
+            alert.setContentText("Por favor ingresar un correo válido" +
+                    " ejemplo@gmail.com");
             alert.showAndWait();
 
             return false;
@@ -176,7 +189,7 @@ public class ClientesController extends MenuController implements Initializable 
             Alert alert =new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Espacios vacios!");
             alert.setHeaderText(null);
-            alert.setContentText("Espacio vacío, por favor ingresar datos");
+            alert.setContentText("Espacios vacíos, por favor ingresar datos");
             alert.showAndWait();
 
             return false;
@@ -191,7 +204,7 @@ public class ClientesController extends MenuController implements Initializable 
         txt_correo.clear();
         txt_telefono.clear();
         txt_eliminar.clear();
-        //Sexo.Items.clear();
+        Sexo.setValue(null);
     }
 
     public void Delete(){
@@ -213,23 +226,26 @@ public class ClientesController extends MenuController implements Initializable 
     public void UpdateTable(){
         col_cliente.setCellValueFactory(new PropertyValueFactory<clientes,Integer>("idCliente"));
         col_nombre.setCellValueFactory(new PropertyValueFactory<clientes,String>("nombre"));
-        col_direccion.setCellValueFactory(new PropertyValueFactory<clientes,String>("direccion"));
         col_telefono.setCellValueFactory(new PropertyValueFactory<clientes,Integer>("telefono"));
+        col_direccion.setCellValueFactory(new PropertyValueFactory<clientes,String>("direccion"));
         col_correo.setCellValueFactory(new PropertyValueFactory<clientes,String>("correo"));
-        col_Sexo.setCellValueFactory(new PropertyValueFactory<clientes,Integer>("Sexo"));
+        col_Sexo.setCellValueFactory(new PropertyValueFactory<clientes,String>("sexo"));
 
         listM = connect.getdataclientes();
         table_clientes.setItems(listM);
     }
     @Override
     public void initialize(URL url, ResourceBundle rb){
-        Sexo.getItems().addAll("1","2");
+        Sexo.setItems(listsexo);
         UpdateTable();
         Search_cliente();
         clearFields();
     }
 
     public void Edit(){
+
+        int codS = 1;
+
         try{
             conn = connect.conDB();
 
@@ -239,14 +255,20 @@ public class ClientesController extends MenuController implements Initializable 
             String value3 = txt_direccion.getText();
             String value4 = txt_telefono.getText();
             String value5 = txt_correo.getText();
-            String value6 = Sexo.getValue().toString();
 
-            String sql = "update cliente set nombreCliente= '"+value2+"', dirreccionCliente= '"+
-                    value3+"', telefonoCliente= '"+value4+"', correoCliente= '"+value5+", IDSexo= '"+value6+" ' where IDCliente='"+value1+"' ";
+            if ( Sexo.getValue().equals("Femenino")){
+                codS = 1;
+            }else if (Sexo.getValue().equals("Masculino")){
+                codS = 2;
+            }
+            int value6 = codS;
+
+            String sql = ("update cliente set nombreCliente= '"+value2+"', dirreccionCliente= '"+
+                    value3+"', telefonoCliente= '"+value4+"', correoCliente= '"+value5+"', IDSexo= '"+value6+" ' where IDCliente='"+value1+"' ");
 
             pst = conn.prepareStatement(sql);
             pst.execute();
-            JOptionPane.showMessageDialog(null, "Update");
+            JOptionPane.showMessageDialog(null, "Actualizado");
             UpdateTable();
             Search_cliente();
             clearFields();

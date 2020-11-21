@@ -17,7 +17,7 @@
       <Line endX="100.0" layoutX="312.0" layoutY="211.0" rotate="90.0" startX="-130.0" stroke="#ffc107" />
       <TextField fx:id="usuarioTextField" layoutX="326.0" layoutY="137.0" prefHeight="40.0" prefWidth="248.0" promptText="Usuario" style="-fx-border-color: #FFC107;" />
       <PasswordField fx:id="contraseñaField" layoutX="326.0" layoutY="193.0" prefHeight="40.0" prefWidth="248.0" promptText="Contraseña" style="-fx-border-color: #FFC107;" />
-      <Button fx:id="loginButton" layoutX="390.0" layoutY="249.0" mnemonicParsing="false" onMouseClicked="#handleButtonAction" prefHeight="36.0" prefWidth="121.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="Iniciar Sesion">
+      <Button fx:id="loginButton" layoutX="390.0" layoutY="249.0" mnemonicParsing="false" onMouseClicked="#handleButtonAction" prefHeight="36.0" prefWidth="121.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="Iniciar Sesión">
          <font>
             <Font size="14.0" />
          </font>
