@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1360.0" style="-fx-background-color: #616161; -fx-border-color: c29b61; -fx-border-width: 3;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ClientesController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1360.0" style="-fx-background-color: #616161; -fx-border-color: c29b61; -fx-border-width: 3;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ClientesController">
    <children>
       <Label alignment="CENTER" layoutX="257.0" layoutY="22.0" prefHeight="113.0" prefWidth="1067.0" style="-fx-background-color: #ffc107; -fx-background-radius: 10; -fx-border-color: c29b61; -fx-border-radius: 5; -fx-border-style: solid; -fx-border-width: 4;" text="CLIENTES">
          <font>
@@ -51,7 +50,7 @@
                </font>
             </Button>
             <TextField fx:id="txt_correo" layoutX="71.0" layoutY="395.0" prefHeight="27.0" prefWidth="299.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
-            <Label alignment="CENTER" layoutX="33.0" layoutY="363.0" prefHeight="25.0" prefWidth="162.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="Correo" textFill="#8d5910">
+            <Label alignment="CENTER" layoutX="33.0" layoutY="363.0" prefHeight="25.0" prefWidth="162.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="Correo electrónico" textFill="#8d5910">
                <font>
                   <Font name="Dubai Bold" size="12.0" />
                </font>
@@ -94,9 +93,9 @@
                   <Font name="Dubai Bold" size="12.0" />
                </font>
             </Label>
-            <ImageView fitHeight="43.0" fitWidth="36.0" layoutX="215.0" layoutY="530.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="43.0" fitWidth="36.0" layoutX="213.0" layoutY="530.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../Imagenes/iconos/Iconos/actualizado.png" />
+                  <Image url="@../Imagenes/iconos/Iconos/actualizar.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="43.0" fitWidth="36.0" layoutX="55.0" layoutY="530.0" pickOnBounds="true" preserveRatio="true">
@@ -120,9 +119,9 @@
                </font>
             </Label>
             <ComboBox fx:id="Sexo" layoutX="71.0" layoutY="469.0" prefHeight="25.0" prefWidth="299.0" promptText="Seleccionar" />
-            <ImageView fitHeight="43.0" fitWidth="36.0" layoutX="34.0" layoutY="460.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="43.0" fitWidth="36.0" layoutX="34.0" layoutY="463.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../Imagenes/iconos/Iconos/employees (1).png" />
+                  <Image url="@../Imagenes/iconos/Iconos/genero.png" />
                </image>
             </ImageView>
             <TextField fx:id="txt_id" alignment="CENTER" editable="false" layoutX="71.0" layoutY="94.0" prefHeight="27.0" prefWidth="299.0" promptText="Este campo solo muestra" style="-fx-background-color: beige; -fx-border-color: #8d5910;" />
@@ -168,8 +167,8 @@
                   <TableColumn fx:id="col_nombre" prefWidth="97.33331298828125" text="Nombre" />
                   <TableColumn fx:id="col_direccion" prefWidth="92.66668701171875" text="Dirección" />
                   <TableColumn fx:id="col_telefono" prefWidth="80.333251953125" text="Teléfono" />
-                  <TableColumn fx:id="col_correo" prefWidth="139.666748046875" text="Correo" />
-                  <TableColumn fx:id="col_Sexo" prefWidth="84.66668701171875" text="Sexo" />
+                  <TableColumn fx:id="col_correo" prefWidth="139.666748046875" text="Correo electrónico" />
+                  <TableColumn fx:id="col_Sexo" prefWidth="100.0" text="Género" />
                </columns>
             </TableView>
             <ImageView fitHeight="32.0" fitWidth="36.0" layoutX="90.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">

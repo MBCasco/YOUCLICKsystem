@@ -47,6 +47,7 @@ public class ProductoController extends MenuController implements Initializable 
     @FXML
     private TableColumn<producto, categoria> col_categoria;
 
+    @FXML
     private TextField txtID;
     @FXML
     private TextField txtNombreP;
@@ -57,7 +58,7 @@ public class ProductoController extends MenuController implements Initializable 
     @FXML
     private TextField txtPrecio;
     @FXML
-    private ComboBox<categoria> comCategoria;
+    private ComboBox<categoria> comCat;
     @FXML
     private ComboBox<marca>comMarca;
     @FXML
@@ -89,8 +90,8 @@ public class ProductoController extends MenuController implements Initializable 
             ps.setString(1, txtNombreP.getText());
             ps.setString(2, txtDescrpcionP.getText());
             ps.setString(3, txtPrecio.getText());
-            ps.setString(4, String.valueOf(comMarca.getSelectionModel().getSelectedIndex()));
-            ps.setString(5, String.valueOf(comCategoria.getSelectionModel().getSelectedIndex()));
+            ps.setString(4, String.valueOf(comMarca.getSelectionModel().getSelectedItem().getIDMarca()));
+            ps.setString(5, String.valueOf(comCat.getSelectionModel().getSelectedItem().getIDCategoria()));
             ps.execute();
 
         }catch(Exception e){
@@ -113,23 +114,23 @@ public class ProductoController extends MenuController implements Initializable 
 
     public void intCombox (){
         comMarca.setItems(listaMarca);
-        comCategoria.setItems(listcategoria);
+        comCat.setItems(listcategoria);
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-       intCombox();
-       UpdateTable();
+        intCombox();
+        UpdateTable();
     }
     public void UpdateTable(){
-        col_producto.setCellValueFactory(new PropertyValueFactory<producto,Integer>("idProducto"));
-        col_nombre.setCellValueFactory(new PropertyValueFactory<producto,String>("nombre"));
-        col_stock.setCellValueFactory(new PropertyValueFactory<producto, Integer>("stock"));
-        col_descripcion.setCellValueFactory(new PropertyValueFactory<producto,String>("descripcion"));
-        col_ubicacion.setCellValueFactory(new PropertyValueFactory<producto,String>("ubicacion"));
-        col_precio.setCellValueFactory(new PropertyValueFactory<producto,Double>("precio"));
-        col_marca.setCellValueFactory(new PropertyValueFactory<producto,marca>("marca"));
-        col_categoria.setCellValueFactory(new PropertyValueFactory<producto,categoria>("categoria"));
+        col_producto.setCellValueFactory(new PropertyValueFactory<>("idProducto"));
+        col_nombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        col_stock.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        col_descripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
+        col_ubicacion.setCellValueFactory(new PropertyValueFactory<>("ubicacion"));
+        col_precio.setCellValueFactory(new PropertyValueFactory<>("precio"));
+        col_marca.setCellValueFactory(new PropertyValueFactory<>("marca"));
+        col_categoria.setCellValueFactory(new PropertyValueFactory<>("categoria"));
 
         listP = connect.getdataproducto();
         tablaProductos.setItems(listP);
@@ -148,39 +149,65 @@ public class ProductoController extends MenuController implements Initializable 
         }
     }
     public void Edit(){
+
+        String value1 = txtID.getText();
+        assert conn != null;
+
         try{
             conn = connect.conDB();
 
-            String value1 = txtID.getText();
             String value2 = txtNombreP.getText();
             String value3 = txtDescrpcionP.getText();
             String value4 = txtPrecio.getText();
-            String value5 = String.valueOf(comMarca.getSelectionModel().getSelectedIndex());
-            String value6 = String.valueOf(comCategoria.getSelectionModel().getSelectedIndex());
+            String value5 = String.valueOf(comMarca.getSelectionModel().getSelectedItem().getIDMarca());
+            String value6 = String.valueOf(comCat.getSelectionModel().getSelectedItem().getIDCategoria());
 
-            String sql = "update productos set nombre= '"+value2+"', dirreccionCliente= '"+
-                    value3+"', telefonoCliente= '"+value4+"', correoCliente= '"+value5+", IDSexo= '"+value6+" ' where IDProducto='"+value1+"' ";
+            String sql =  "UPDATE producto SET nombre= '" + value2 + "', descripcionProducto= '" + value3 + "', precio= '" + value4 + "',IDMarca= '" + value5 + "', IDCategoria= '" + value6 + "' WHERE IDProducto='" + value1 + "' ";
 
             pst = conn.prepareStatement(sql);
             pst.execute();
+
             JOptionPane.showMessageDialog(null, "Se actualizo con exito");
-            UpdateTable();
+
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, e);
         }
         try{
             conn = connect.conDB();
-                    String value1 =txtID.getText();
-                    String value7 = txtStock.getText();
-                    String value8 = txtUbicacion.getText();
-            String sql = "update inventario set stock= '"+value7+"' , ubicacio= '"+value8+"' where IDProducto = '"+value1+"'";
+            String value8 = txtStock.getText();
+            String value9 = txtUbicacion.getText();
 
-            UpdateTable();
+            String sql1 = "UPDATE inventario SET stock= '"+value8+"', ubicacion= '"+value9+"' WHERE IDProducto = '"+value1+"'";
+
+            pst = conn.prepareStatement(sql1);
+            pst.execute();
 
         }catch (Exception e){
             JOptionPane.showMessageDialog(null, e);
         }
+
+        UpdateTable();
+
     }
+    public void getSelected (javafx.scene.input.MouseEvent event) {
+
+        index = tablaProductos.getSelectionModel().getSelectedIndex();
+
+        if(index <= -1){
+            return;
+        }
+
+        txtID.setText(col_producto.getCellData(index).toString());
+        txtNombreP.setText(col_nombre.getCellData(index));
+        txtStock.setText(col_stock.getCellData(index).toString());
+        txtUbicacion.setText(col_ubicacion.getCellData(index));
+        txtDescrpcionP.setText(col_descripcion.getCellData(index));
+        txtPrecio.setText(col_precio.getCellData(index).toString());
+        comMarca.setValue(col_marca.getCellData(index));
+        comCat.setValue(col_categoria.getCellData(index));
+
+    }
+
     public void PrecioH (javafx.event.ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/Layout/pantallaPrecioHistoricoDeProductos.fxml"));
         stage.setTitle("Precio Historico");

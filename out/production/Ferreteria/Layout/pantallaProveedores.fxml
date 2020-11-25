@@ -24,12 +24,12 @@
          </children>
       </Pane>
       <Separator layoutX="238.0" layoutY="200.0" prefHeight="37.0" prefWidth="377.0" />
-      <TableView fx:id="table_proveedores" layoutX="641.0" layoutY="244.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onContextMenuRequested="#prueba" onMouseClicked="#getSelected" prefHeight="497.0" prefWidth="687.0" style="-fx-background-color: eed09d; -fx-border-color: a18262; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-width: 2;">
+      <TableView fx:id="table_proveedores" layoutX="641.0" layoutY="245.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onContextMenuRequested="#prueba" onMouseClicked="#getSelected" prefHeight="497.0" prefWidth="687.0" style="-fx-background-color: eed09d; -fx-border-color: a18262; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-width: 2;">
          <columns>
             <TableColumn fx:id="col_id" prefWidth="100.66668701171875" text="ID" />
             <TableColumn fx:id="col_nombre" prefWidth="170.0" text="Empresa" />
-            <TableColumn fx:id="col_correo" prefWidth="114.0" text="Correo" />
-            <TableColumn fx:id="col_direccion" prefWidth="175.0" text="Direccion" />
+            <TableColumn fx:id="col_correo" prefWidth="222.0" text="Correo eletrónico" />
+            <TableColumn fx:id="col_direccion" prefWidth="191.0" text="Direccion" />
          </columns>
       </TableView>
       <HBox layoutX="641.0" layoutY="155.0" minWidth="-Infinity" prefHeight="36.0" prefWidth="708.0">
@@ -122,13 +122,13 @@
             </Button>
          </children>
       </VBox>
-      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="1026.0" layoutY="198.0" mnemonicParsing="false" onAction="#Delete" prefHeight="32.0" prefWidth="95.0" style="-fx-border-color: ffc107; -fx-background-color: a18262;" text="ELIMINAR" textFill="#eed09d" />
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="1026.0" layoutY="199.0" mnemonicParsing="false" onAction="#Delete" prefHeight="32.0" prefWidth="95.0" style="-fx-border-color: ffc107; -fx-background-color: a18262;" text="ELIMINAR" textFill="#eed09d" />
       <ImageView fitHeight="39.0" fitWidth="38.0" layoutX="641.0" layoutY="195.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@iconos/eliminar%20(1).png" />
          </image>
       </ImageView>
-      <TextField fx:id="txt_eliminar" layoutX="679.0" layoutY="201.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="331.0" promptText="ID de la empresa proveedora" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
+      <TextField fx:id="txt_eliminar" layoutX="687.0" layoutY="200.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="331.0" promptText="ID de la empresa proveedora" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
       <TabPane layoutX="238.0" layoutY="243.0" prefHeight="500.0" prefWidth="381.0" style="-fx-background-color: d5c5ae; -fx-border-color: ffc107; -fx-border-width: 2; -fx-border-radius: 5; -fx-background-radius: 5;" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Información general">
@@ -142,18 +142,18 @@
                            </font>
                         </Label>
                         <TextField fx:id="txt_correo" layoutX="4.0" layoutY="200.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="368.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
-                        <Label alignment="CENTER" layoutX="4.0" layoutY="163.0" prefHeight="32.0" prefWidth="256.0" style="-fx-background-color: eed09d; -fx-background-radius: 3; -fx-border-color: black; -fx-border-radius: 3;" text="Correo ">
+                        <Label alignment="CENTER" layoutX="4.0" layoutY="163.0" prefHeight="32.0" prefWidth="256.0" style="-fx-background-color: eed09d; -fx-background-radius: 3; -fx-border-color: black; -fx-border-radius: 3;" text="Correo electrónico">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </Label>
                         <TextField fx:id="txt_nombre" layoutX="3.0" layoutY="122.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="370.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
-                        <Label alignment="CENTER" layoutX="5.0" layoutY="89.0" prefHeight="29.0" prefWidth="253.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="Nombre">
+                        <Label alignment="CENTER" layoutX="5.0" layoutY="89.0" prefHeight="29.0" prefWidth="253.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="Nombre de la Empresa">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="txt_idProveedor" editable="false" layoutX="4.0" layoutY="47.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="368.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
+                        <TextField fx:id="txt_idProveedor" alignment="CENTER" editable="false" layoutX="4.0" layoutY="47.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="368.0" promptText="Este campo solo muestra" style="-fx-background-color: beige; -fx-border-color: #8d5910;" />
                         <Label alignment="CENTER" layoutX="4.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="28.0" prefWidth="165.0" style="-fx-background-color: eed09d; -fx-background-radius: 3; -fx-border-color: black; -fx-border-radius: 3;" text="ID ">
                            <font>
                               <Font size="13.0" />
