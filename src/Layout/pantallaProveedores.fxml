@@ -148,7 +148,7 @@
                            </font>
                         </Label>
                         <TextField fx:id="txt_nombre" layoutX="3.0" layoutY="122.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="370.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
-                        <Label alignment="CENTER" layoutX="5.0" layoutY="89.0" prefHeight="29.0" prefWidth="253.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="Nombre">
+                        <Label alignment="CENTER" layoutX="5.0" layoutY="89.0" prefHeight="29.0" prefWidth="253.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="Nombre de la Empresa">
                            <font>
                               <Font size="14.0" />
                            </font>

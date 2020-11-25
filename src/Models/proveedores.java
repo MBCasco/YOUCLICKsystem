@@ -20,7 +20,6 @@ public class proveedores {
         return correoP;
     }
 
-
     public void setIdProveedor(int idProveedor) {
         this.idProveedor = idProveedor;
     }
