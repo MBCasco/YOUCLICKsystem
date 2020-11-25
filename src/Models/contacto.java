@@ -1,69 +1,67 @@
 package Models;
 
 public class contacto {
+    int IdContacto;
+    int TelefonoContacto;
+    String Detalles;
+    int IProveedor;
+    String NombreContacto, CorreoContacto;
 
-    int mIdContacto;
-    int mTelefonoContacto;
-    String mDetalles;
-    int mIProveedor;
-    String mNombreContacto, mCorreoContacto;
-
-    public int getmIProveedor() {
-        return mIProveedor;
+    public int getIProveedor() {
+        return IProveedor;
     }
 
-    public void setmIProveedor(int mIProveedor) {
-        this.mIProveedor = mIProveedor;
+    public void setIProveedor(int IProveedor) {
+        this.IProveedor = IProveedor;
     }
 
-
-    public int getmIdContacto() {
-        return mIdContacto;
+    public int getIdContacto() {
+        return IdContacto;
     }
 
-    public void setmIdContacto(int mIdContacto) {
-        this.mIdContacto = mIdContacto;
+    public void setIdContacto(int idContacto) {
+        this.IdContacto = idContacto;
     }
 
-    public int getmTelefonoContacto() {
-        return mTelefonoContacto;
+    public int getTelefonoContacto() {
+        return TelefonoContacto;
     }
 
-    public void setmTelefonoContacto(int mTelefonoContacto) {
-        this.mTelefonoContacto = mTelefonoContacto;
+    public void setTelefonoContacto(int telefonoContacto) {
+        this.TelefonoContacto = telefonoContacto;
     }
 
-    public String getmNombreContacto() {
-        return mNombreContacto;
+    public String getNombreContacto() {
+        return NombreContacto;
     }
 
-    public void setmNombreContacto(String mNombreContacto) {
-        this.mNombreContacto = mNombreContacto;
+    public void setNombreContacto(String nombreContacto) {
+        this.NombreContacto = nombreContacto;
     }
 
-    public String getmCorreoContacto() {
-        return mCorreoContacto;
+    public String getCorreoContacto() {
+        return CorreoContacto;
     }
 
-    public void setmCorreoContacto(String mCorreoContacto) {
-        this.mCorreoContacto = mCorreoContacto;
+    public void setCorreoContacto(String correoContacto) {
+        this.CorreoContacto = correoContacto;
     }
 
-    public String getmDetalles() {
-        return mDetalles;
+    public String getDetalles() {
+        return Detalles;
     }
 
-    public void setmDetalles(String mDetalles) {
-        this.mDetalles = mDetalles;
+    public void setDetalles(String detalles) {
+        this.Detalles = detalles;
     }
 
-    public contacto(int mIdContacto, int mIProveedor, String mNombreContacto, String mDetalles, int mTelefonoContacto, String mCorreoContacto) {
-        this.mIdContacto = mIdContacto;
-        this.mIProveedor = mIProveedor;
-        this.mTelefonoContacto = mTelefonoContacto;
-        this.mDetalles = mDetalles;
-        this.mNombreContacto = mNombreContacto;
-        this.mCorreoContacto = mCorreoContacto;
+    public contacto(int IdContacto, int IProveedor,  String NombreContacto, String Detalles, int TelefonoContacto, String CorreoContacto) {
+        this.IdContacto = IdContacto;
+        this.IProveedor = IProveedor;
+        this.NombreContacto = NombreContacto;
+        this.Detalles = Detalles;
+        this.TelefonoContacto = TelefonoContacto;
+        this.CorreoContacto = CorreoContacto;
     }
 }
 

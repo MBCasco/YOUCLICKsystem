@@ -1,5 +1,4 @@
 package Controller;
-import Controller.connect;
 import Models.contacto;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -8,6 +7,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
+
 import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
@@ -92,12 +93,12 @@ public class ProveedoresContactoController extends MenuController implements Ini
     }
 
     public void UpdateTableContacto(){
-        col_idContacto.setCellValueFactory(new PropertyValueFactory<>("mIdContacto"));
-        col_idProveedor.setCellValueFactory(new PropertyValueFactory<>("mIProveedor"));
-        col_nombreContacto.setCellValueFactory(new PropertyValueFactory<>("mNombreContacto"));
-        col_detallesContacto.setCellValueFactory(new PropertyValueFactory<>("mDetalles"));
-        col_telefonoContacto.setCellValueFactory(new PropertyValueFactory<>("mTelefonoContacto"));
-        col_correoElectronicoContacto.setCellValueFactory(new PropertyValueFactory<>("mCorreoContacto"));
+        col_idContacto.setCellValueFactory(new PropertyValueFactory<>("IdContacto"));
+        col_idProveedor.setCellValueFactory(new PropertyValueFactory<>("IProveedor"));
+        col_nombreContacto.setCellValueFactory(new PropertyValueFactory<>("NombreContacto"));
+        col_detallesContacto.setCellValueFactory(new PropertyValueFactory<>("Detalles"));
+        col_telefonoContacto.setCellValueFactory(new PropertyValueFactory<>("TelefonoContacto"));
+        col_correoElectronicoContacto.setCellValueFactory(new PropertyValueFactory<>("CorreoContacto"));
 
 
         listC = connect.getdatacontacto();
@@ -118,8 +119,8 @@ public class ProveedoresContactoController extends MenuController implements Ini
     @FXML
     void Search_contacto(){
         /// modelo
-        col_idContacto.setCellValueFactory(new PropertyValueFactory<>("mIdContacto"));
-        col_nombreContacto.setCellValueFactory(new PropertyValueFactory<>("mNombreContacto"));
+        col_idContacto.setCellValueFactory(new PropertyValueFactory<>("IdContacto"));
+        col_nombreContacto.setCellValueFactory(new PropertyValueFactory<>("NombreContacto"));
 
         dataListC = connect.getdatacontacto();
         table_contacto.setItems(dataListC);
@@ -131,9 +132,9 @@ public class ProveedoresContactoController extends MenuController implements Ini
                 }
                 String lowerCaseFilter = newValue.toLowerCase();
 
-                if (person.getmNombreContacto().toLowerCase().contains(lowerCaseFilter)) {
+                if (person.getNombreContacto().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
-                }else if (String.valueOf(person.getmIdContacto()).contains(lowerCaseFilter))
+                }else if (String.valueOf(person.getIdContacto()).contains(lowerCaseFilter))
                     return true;
 
                 else
@@ -194,7 +195,7 @@ public class ProveedoresContactoController extends MenuController implements Ini
     }
 
     @FXML
-    public void getSelectedContacto(javafx.scene.input.MouseEvent event) {
+    public void getSelectedContacto(MouseEvent event) {
         index = table_contacto.getSelectionModel().getSelectedIndex();
         if(index <= -1){
             return;

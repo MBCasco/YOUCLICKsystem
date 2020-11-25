@@ -181,15 +181,15 @@
             <Font name="Dubai Bold" size="16.0" />
          </font>
       </Label>
-      <TableView fx:id="table_contacto" layoutX="635.0" layoutY="288.0" onMouseClicked="#getSelectedContacto" prefHeight="455.0" prefWidth="716.0" style="-fx-background-color: eed09d; -fx-border-color: a18262; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-width: 2;">
-         <columns>
-            <TableColumn fx:id="col_idContacto" prefWidth="65.0" text="ID" />
-            <TableColumn fx:id="col_idProveedor" prefWidth="79.0" text="ID Contacto" />
-            <TableColumn fx:id="col_nombreContacto" prefWidth="136.0" text="Nombre" />
-            <TableColumn fx:id="col_detallesContacto" prefWidth="79.0" text="Detalles" />
-            <TableColumn fx:id="col_telefonoContacto" prefWidth="169.0" text="Telefono" />
-            <TableColumn fx:id="col_correoElectronicoContacto" prefWidth="143.0" text="Correo electronico" />
-         </columns>
+      <TableView fx:id="table_contacto" layoutX="641.0" layoutY="249.0" onMouseClicked="#getSelectedContacto" prefHeight="324.0" prefWidth="670.0">
+        <columns>
+          <TableColumn fx:id="col_idContacto" prefWidth="110.0" text="ID Contacto" />
+          <TableColumn fx:id="col_idProveedor" prefWidth="91.0" text="ID Proveedor" />
+            <TableColumn fx:id="col_nombreContacto" prefWidth="108.0" text="Nombre" />
+            <TableColumn fx:id="col_detallesContacto" prefWidth="101.0" text="Detalles" />
+            <TableColumn fx:id="col_telefonoContacto" prefWidth="115.0" text="Telefono" />
+            <TableColumn fx:id="col_correoElectronicoContacto" prefWidth="144.0" text="Correo" />
+        </columns>
       </TableView>
    </children>
 </AnchorPane>

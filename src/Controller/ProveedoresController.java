@@ -23,34 +23,25 @@ public class ProveedoresController extends MenuController implements Initializab
 
     @FXML
     private TableView<proveedores> table_proveedores;
-
     @FXML
     private TableColumn<proveedores, Integer> col_id;
-
     @FXML
     private TableColumn<proveedores, String> col_nombre;
-
     @FXML
     private TableColumn<proveedores, String> col_correo;
-
     @FXML
     private TableColumn<proveedores, String> col_direccion;
 
     @FXML
     private TextField txt_nombre;
-
     @FXML
     private TextField txt_correo;
-
     @FXML
     private TextField txt_direccion;
-
     @FXML
     private TextField txt_idProveedor;
-
     @FXML
     private TextField filterField;
-
     @FXML
     private TextField txt_eliminar;
 
