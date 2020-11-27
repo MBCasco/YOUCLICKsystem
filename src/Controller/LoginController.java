@@ -19,6 +19,7 @@ import java.util.ResourceBundle;
 import javafx.scene.input.MouseEvent;
 
 
+
 public class LoginController implements GlobalConstans {
 
     @FXML
@@ -46,6 +47,7 @@ public class LoginController implements GlobalConstans {
                 try{
 
                     Scene scene = new Scene (FXMLLoader.load(getClass().getResource("/Layout/pantallaPrincipal.fxml")));
+                    stage.setTitle("Pantalla Principal");
                     stage.setScene(scene);
                     stage.show();
 
@@ -63,15 +65,15 @@ public class LoginController implements GlobalConstans {
     ResultSet resultSet = null;
 
     private String LogIn() {
-        String email = usuarioTextField.getText();
-        String password = contraseñaField.getText();
+        String usuario = usuarioTextField.getText();
+        String contraseña = contraseñaField.getText();
 
-        String sql = "SELECT * FROM admins Where email = ? and password = ?";
+        String sql = "SELECT * FROM admins Where usuario = ? and contraseña = ?";
 
         try {
             preparedStatement = con.prepareStatement(sql);
-            preparedStatement.setString(1, email);
-            preparedStatement.setString(2, password);
+            preparedStatement.setString(1, usuario);
+            preparedStatement.setString(2, contraseña);
             resultSet = preparedStatement.executeQuery();
             if (!resultSet.next()) {
 
@@ -92,4 +94,5 @@ public class LoginController implements GlobalConstans {
             return "Exception";
         }
     }
+
 }

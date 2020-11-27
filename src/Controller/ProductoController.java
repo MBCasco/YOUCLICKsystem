@@ -17,6 +17,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ProductoController extends MenuController implements Initializable {
 
@@ -82,7 +84,7 @@ public class ProductoController extends MenuController implements Initializable 
     public void addProducto() throws SQLException {
         conn = connect.conDB();
 
-        //if (validateFields() & validateDireccion() & validateEmail() & validateName() & validateNumber()){
+        if (validateFields() & limite() & validateName()& validateDescripcion() & validateNumberprecio() & validateNumberStock() & validateUbicacion()){
         try{
             assert conn != null;
             PreparedStatement ps = conn.prepareStatement("INSERT INTO producto (nombre,descripcionProducto,precio,IDMarca,IDCategoria) VALUES (?,?,?,?,?)");
@@ -105,9 +107,19 @@ public class ProductoController extends MenuController implements Initializable 
             ps1.execute();
 
         }catch(Exception e){
-            System.out.println(e);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Por favor revise que los campos estén llenos correctamente y vuelva a intentar.");
+            alert.showAndWait();
         }
-        //}
+        }
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Confirmacion");
+        alert.setHeaderText(null);
+        alert.setContentText("Se agrego el producto exitosamente");
+        alert.showAndWait();
+
         UpdateTable();
     }
 
@@ -136,17 +148,35 @@ public class ProductoController extends MenuController implements Initializable 
         tablaProductos.setItems(listP);
     }
     public void Delete(){
-        conn = connect.conDB();
-        String sql = "Delete from producto where IDProducto = ?";
-        try{
-            pst = conn.prepareStatement(sql);
-            pst.setString(1, txtEliminar.getText());
-            pst.execute();
-            JOptionPane.showMessageDialog(null, "Elimino su producto con exito");
-            UpdateTable();
-        }catch (Exception e){
-            JOptionPane.showMessageDialog(null, e);
-        }
+        Alert alert =new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmar");
+        alert.setHeaderText(null);
+        alert.setContentText("Estás seguro ¿Qué quieres eliminar este producto?");
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                conn = connect.conDB();
+                try {
+                    String Ssql = "DELETE FROM producto WHERE IDProducto = ?";
+                    PreparedStatement prest = conn.prepareStatement(Ssql);
+                    prest.setString(1, txtEliminar.getText());
+
+                    if (prest.executeUpdate() > 0){
+                        Alert alert1 =new Alert(Alert.AlertType.INFORMATION);
+                        alert1.setTitle("Informacion");
+                        alert1.setHeaderText(null);
+                        alert1.setContentText("Se elimino con éxito");
+                        alert1.showAndWait();
+                        UpdateTable();
+                    }
+                }catch (Exception e){
+                    Alert alert2 = new Alert(Alert.AlertType.ERROR);
+                    alert2.setTitle("Error");
+                    alert2.setHeaderText(null);
+                    alert2.setContentText("Hubo un error al eliminar." +
+                    "\n Este campo solo elimina por ID");
+                }
+            }
+        });
     }
     public void Edit(){
 
@@ -167,10 +197,11 @@ public class ProductoController extends MenuController implements Initializable 
             pst = conn.prepareStatement(sql);
             pst.execute();
 
-            JOptionPane.showMessageDialog(null, "Se actualizo con exito");
-
         }catch(Exception e){
-            JOptionPane.showMessageDialog(null, e);
+            Alert alert2 = new Alert(Alert.AlertType.ERROR);
+            alert2.setTitle("Error");
+            alert2.setHeaderText(null);
+            alert2.setContentText("Hubo un error al actualizar, por favor vuelva a intentar.");
         }
         try{
             conn = connect.conDB();
@@ -185,6 +216,12 @@ public class ProductoController extends MenuController implements Initializable 
         }catch (Exception e){
             JOptionPane.showMessageDialog(null, e);
         }
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Confirmacion");
+        alert.setHeaderText(null);
+        alert.setContentText("Se actualizó exitosamente");
+        alert.showAndWait();
 
         UpdateTable();
 
@@ -205,6 +242,7 @@ public class ProductoController extends MenuController implements Initializable 
         txtPrecio.setText(col_precio.getCellData(index).toString());
         comMarca.setValue(col_marca.getCellData(index));
         comCat.setValue(col_categoria.getCellData(index));
+        txtEliminar.setText(col_producto.getCellData(index).toString());
 
     }
 
@@ -214,7 +252,138 @@ public class ProductoController extends MenuController implements Initializable 
         stage.setScene(new Scene(root, 1360, 768));
         stage.show();
     }
+    private boolean validateNumberprecio(){
+        Pattern p = Pattern.compile("[0-9]+(\\.[0-9])");
+        Matcher m = p.matcher(txtPrecio.getText().trim());
 
+        if(m.find() && m.group().equals(txtPrecio.getText())){
+            return true;
+        } else{
+            Alert alert =new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Validar Precio");
+            alert.setHeaderText(null);
+            alert.setContentText("Verifique la siguiente informacion: " +
+                    " \n Acepta decimales.");
+            alert.showAndWait();
+            return false;
+        }
+    }
+
+    private boolean validateName(){
+        Pattern p = Pattern.compile("[A-Za-z ]+");
+        Matcher m = p.matcher(txtNombreP.getText());
+
+        if(m.find() && m.group().equals(txtNombreP.getText())){
+            return true;
+        } else{
+            Alert alert =new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Validar Nombre");
+            alert.setHeaderText(null);
+            alert.setContentText("Por favor ingresar un nombre válido." +
+                    "\n Ej: Alambre");
+            alert.showAndWait();
+
+            return false;
+        }
+    }
+    private boolean validateDescripcion(){
+        Pattern p = Pattern.compile("[A-Za-z ]+");
+        Matcher m = p.matcher(txtDescrpcionP.getText());
+
+        if(m.find() && m.group().equals(txtDescrpcionP.getText())){
+            return true;
+        } else{
+            Alert alert =new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Validar direción");
+            alert.setHeaderText(null);
+            alert.setContentText("Por favor ingresar una descripcion válida." +
+                    "\n Ej: Alambre de amarre");
+            alert.showAndWait();
+
+
+            return false;
+        }
+    }
+    private boolean validateUbicacion(){
+        Pattern p = Pattern.compile("[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)");
+        Matcher m = p.matcher(txtDescrpcionP.getText());
+
+        if(m.find() && m.group().equals(txtDescrpcionP.getText())){
+            return true;
+        } else{
+            Alert alert =new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Validar direción");
+            alert.setHeaderText(null);
+            alert.setContentText("Por favor ingresar una ubicacion válida." +
+                    "\n Ej: Pasillo 4");
+            alert.showAndWait();
+
+
+            return false;
+        }
+    }
+    private boolean validateNumberStock(){
+        Pattern p = Pattern.compile("[0-9]");
+        Matcher m = p.matcher(txtStock.getText().trim());
+
+        if(m.find() && m.group().equals(txtStock.getText())){
+            return true;
+        } else{
+            Alert alert =new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Validar Stock");
+            alert.setHeaderText(null);
+            alert.setContentText("Verifique la siguiente informacion: " +
+                    " \n Ingrese un numero entero.");
+            alert.showAndWait();
+            return false;
+        }
+    }
+
+
+    private boolean validateFields(){
+        if (txtNombreP.getText().isEmpty() | txtDescrpcionP.getText().isEmpty() | txtStock.getText().isEmpty() | txtUbicacion.getText().isEmpty()  | txtPrecio.getText().isEmpty() ){
+
+            Alert alert =new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Espacios vacios!");
+            alert.setHeaderText(null);
+            alert.setContentText("Espacios vacíos, por favor ingresar datos");
+            alert.showAndWait();
+
+            return false;
+        }
+        return true;
+    }
+    private boolean limite(){
+        if(txtNombreP.getText().length() >= 35){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Supera Limite Permitido");
+            alert.setHeaderText("Error");
+            alert.setContentText("Supero el Limite de caracteres.+" +
+                    " \n El limite de caracteres es de 35");
+            alert.showAndWait();
+            return false;
+        }
+        if(txtDescrpcionP.getText().length() >= 50){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Supera Limite Permitido");
+            alert.setHeaderText("Error");
+            alert.setContentText("Supero el Limite de caracteres.+" +
+                    " \n El limite de caracteres es de 50");
+            alert.showAndWait();
+            return false;
+        }
+        if(txtUbicacion.getText().length() >= 50){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Supera Limite Permitido");
+            alert.setHeaderText("Error");
+            alert.setContentText("Supero el Limite de caracteres.+" +
+                    " \n El limite de caracteres es de 50");
+            alert.showAndWait();
+            return false;
+        }
+        return true;
+
+    }
 
 
 

@@ -61,7 +61,7 @@ public class ProveedoresController extends MenuController implements Initializab
     public void Add_proveedor(){
         conn = connect.conDB();
         String sql = "insert into proveedores(empresaProveedor,correoProveedor,direccionProveedor)values(?,?,?)";
-        if (validateFields() &validateName() & validateEmail() & validateDireccion()) {
+        if (validateFields() & limite() & validateName() & validateEmail() & validateDireccion()) {
             try {
                 pst = conn.prepareStatement(sql);
                 pst.setString(1, txt_nombre.getText());
@@ -69,12 +69,23 @@ public class ProveedoresController extends MenuController implements Initializab
                 pst.setString(3, txt_direccion.getText());
                 pst.execute();
 
-                JOptionPane.showMessageDialog(null, "Proveedor agregado exitosamente");
+                Alert alert =new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Se agregó exitosamente");
+                alert.showAndWait();
+
                 UpdateTable();
                 Search_proveedor();
                 clearFields();
+
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, e);
+                Alert alert =new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("El correo debe ser único." +
+                        "\n Revise que su correo sea único y vuelva a intentarlo.");
+                alert.showAndWait();
             }
         }
     }
@@ -87,19 +98,36 @@ public class ProveedoresController extends MenuController implements Initializab
     }
 
     public void Delete(){
-        conn = connect.conDB();
-        String sql = "delete from PROVEEDORES where IDProveedor = ?";
-        try{
-            pst = conn.prepareStatement(sql);
-            pst.setString(1, txt_eliminar.getText());
-            pst.execute();
-            JOptionPane.showMessageDialog(null, "Eliminado");
-            UpdateTable();
-            Search_proveedor();
-            clearFields();
-        }catch (Exception e){
-            JOptionPane.showMessageDialog(null, e);
-        }
+        Alert alert =new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmar");
+        alert.setHeaderText(null);
+        alert.setContentText("Estás seguro ¿Qué quieres eliminar este proveedor?");
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                conn = connect.conDB();
+                try {
+                    String Ssql = "DELETE FROM PROVEEDORES WHERE IDProveedor = ?";
+                    PreparedStatement prest = conn.prepareStatement(Ssql);
+                    prest.setString(1, txt_eliminar.getText());
+
+                    if (prest.executeUpdate() > 0){
+                        Alert alert1 =new Alert(Alert.AlertType.INFORMATION);
+                        alert1.setTitle("Informacion");
+                        alert1.setHeaderText(null);
+                        alert1.setContentText("Se elimino con éxito");
+                        alert1.showAndWait();
+                        UpdateTable();
+
+                    }
+                }catch (Exception e){
+                    Alert alert2 = new Alert(Alert.AlertType.WARNING);
+                    alert2.setTitle("Error");
+                    alert2.setHeaderText(null);
+                    alert2.setContentText("Hubo un error al eliminar,  por favor inténtelo de nuevo." +
+                            "\nEste campo solo permite eliminar por ID.");
+                }
+            }
+        });
     }
 
     public void UpdateTable(){
@@ -120,7 +148,7 @@ public class ProveedoresController extends MenuController implements Initializab
     }
 
     public void Edit(){
-        if (validateFields() &validateName() & validateEmail() & validateDireccion()) {
+        if (validateFields() & limite() & validateName() & validateEmail() & validateDireccion()) {
             try {
                 conn = connect.conDB();
                 String value1 = txt_idProveedor.getText();
@@ -131,12 +159,23 @@ public class ProveedoresController extends MenuController implements Initializab
                 String sql = "update PROVEEDORES set empresaProveedor= '" + value2 + "', correoProveedor= '" + value3 + "', direccionProveedor= '" + value4 + "' where IDProveedor='" + value1 + "' ";
                 pst = conn.prepareStatement(sql);
                 pst.execute();
-                JOptionPane.showMessageDialog(null, "Actualizado");
+
+                Alert alert =new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Informacion");
+                alert.setHeaderText(null);
+                alert.setContentText("Se actualizó exitosamente");
+                alert.showAndWait();
+
                 UpdateTable();
                 Search_proveedor();
                 clearFields();
+
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, e);
+                Alert alert =new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Hubo un error al actualizar, revise que todos los campos estén llenados correctamente");
+                alert.showAndWait();
             }
         }
     }
@@ -180,9 +219,10 @@ public class ProveedoresController extends MenuController implements Initializab
         ProveedoresContactoController.value(col_id.getCellData(index));
 
         txt_idProveedor.setText(col_id.getCellData(index).toString());
-        txt_nombre.setText(col_nombre.getCellData(index).toString());
-        txt_correo.setText(col_correo.getCellData(index).toString());
-        txt_direccion.setText(col_direccion.getCellData(index).toString());
+        txt_nombre.setText(col_nombre.getCellData(index));
+        txt_correo.setText(col_correo.getCellData(index));
+        txt_direccion.setText(col_direccion.getCellData(index));
+        txt_eliminar.setText(col_id.getCellData(index).toString());
     }
     /*
         ////////////
@@ -254,5 +294,27 @@ public class ProveedoresController extends MenuController implements Initializab
             return false;
         }
         return true;
+    }
+    private boolean limite(){
+        if(txt_nombre.getText().length() >= 35){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Supera Limite Permitido");
+            alert.setHeaderText("Error");
+            alert.setContentText("Supero el Limite de caracteres.+" +
+                    " \n El limite de caracteres es de 35");
+            alert.showAndWait();
+            return false;
+        }
+        if(txt_direccion.getText().length() >= 50){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Supera Limite Permitido");
+            alert.setHeaderText("Error");
+            alert.setContentText("Supero el Limite de caracteres.+" +
+                    " \n El limite de caracteres es de 50");
+            alert.showAndWait();
+            return false;
+        }
+        return true;
+
     }
 }

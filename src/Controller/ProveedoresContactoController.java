@@ -10,6 +10,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
 import javax.swing.*;
+import java.awt.event.KeyAdapter;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -72,7 +73,7 @@ public class ProveedoresContactoController extends MenuController implements Ini
     public void add_contacto(){
         conn = connect.conDB();
         String sql = "insert into contactoproveedor (IDProveedor, nombreDeContacto, Detalles, Telefono, Correo)values(?,?,?,?,?)";
-        if (validateFields() & validateName() & validateDetalles()  & validateNumber() & validateEmail() ) {
+        if (validateFields() & limite() & validateName() & validateDetalles()  & validateNumber() & validateEmail() ) {
             try {
                 pst = conn.prepareStatement(sql);
                 pst.setString(1, txt_IDProveedor.toString());
@@ -82,12 +83,23 @@ public class ProveedoresContactoController extends MenuController implements Ini
                 pst.setString(5, txt_correoContacto.getText());
                 pst.execute();
 
-                JOptionPane.showMessageDialog(null, "Agregado");
+                Alert alert =new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Se agregó exitosamente");
+                alert.showAndWait();
+
                 UpdateTableContacto();
                 Search_contacto();
                 clearFieldsContacto();
+
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, e);
+                Alert alert =new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("El correo debe ser único." +
+                        "\n Revise que su correo sea único y vuelva a intentarlo. ");
+                alert.showAndWait();
             }
         }
     }
@@ -100,7 +112,6 @@ public class ProveedoresContactoController extends MenuController implements Ini
         col_telefonoContacto.setCellValueFactory(new PropertyValueFactory<>("TelefonoContacto"));
         col_correoElectronicoContacto.setCellValueFactory(new PropertyValueFactory<>("CorreoContacto"));
 
-
         listC = connect.getdatacontacto();
         table_contacto.setItems(listC);
 
@@ -109,7 +120,6 @@ public class ProveedoresContactoController extends MenuController implements Ini
 
     @Override
     public void initialize(URL url, ResourceBundle rb){
-
         UpdateTableContacto();
         clearFieldsContacto();
         Search_contacto();
@@ -157,22 +167,41 @@ public class ProveedoresContactoController extends MenuController implements Ini
     }
 
     public void deleteContacto(){
-        conn = connect.conDB();
-        String sql = "Delete from contactoproveedor where IDContactoProveedor = ?";
-        try{
-            pst = conn.prepareStatement(sql);
-            pst.setString(1, txt_eliminarContacto.getText());
-            pst.execute();
-            JOptionPane.showMessageDialog(null, "Eliminado");
-            UpdateTableContacto();
-            Search_contacto();
-        }catch (Exception e){
-            JOptionPane.showMessageDialog(null, e);
-        }
+        Alert alert =new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmar");
+        alert.setHeaderText(null);
+        alert.setContentText("Estás seguro ¿Qué quieres eliminar este proveedor?");
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                conn = connect.conDB();
+                try {
+                    String Ssql = "DELETE FROM contactoproveedor WHERE IDContactoProveedor = ?";
+                    PreparedStatement prest = conn.prepareStatement(Ssql);
+                    prest.setString(1, txt_eliminarContacto.getText());
+
+                    if (prest.executeUpdate() > 0){
+                        Alert alert1 =new Alert(Alert.AlertType.INFORMATION);
+                        alert1.setTitle("Informacion");
+                        alert1.setHeaderText(null);
+                        alert1.setContentText("Se elimino con éxito");
+                        alert1.showAndWait();
+                        UpdateTableContacto();
+
+                    }else{
+                        Alert alert2 = new Alert(Alert.AlertType.ERROR);
+                        alert2.setTitle("Error");
+                        alert2.setHeaderText(null);
+                        alert2.setContentText("Hubo un error al eliminar");
+                    }
+                }catch (Exception e){
+                    JOptionPane.showMessageDialog(null, "Error, por favor vuelva a intentarlo");
+                }
+            }
+        });
     }
 
     public void EditContacto(){
-        if (validateFields() & validateName() & validateDetalles()  & validateNumber() & validateEmail()){
+        if (validateFields() & limite() & validateName() & validateDetalles()  & validateNumber() & validateEmail()){
             try {
                 conn = connect.conDB();
                 String value1 = txt_IdContacto.getText();
@@ -185,11 +214,22 @@ public class ProveedoresContactoController extends MenuController implements Ini
 
                 pst = conn.prepareStatement(sql);
                 pst.execute();
-                JOptionPane.showMessageDialog(null, "Actualizado");
+
+                Alert alert =new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Informacion");
+                alert.setHeaderText(null);
+                alert.setContentText("Se actualizó exitosamente");
+                alert.showAndWait();
+
                 UpdateTableContacto();
                 Search_contacto();
+
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, e);
+                Alert alert =new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Hubo un error al actualizar, revise que todos los campos estén llenados correctamente");
+                alert.showAndWait();
             }
         }
     }
@@ -205,6 +245,7 @@ public class ProveedoresContactoController extends MenuController implements Ini
         txt_detallesContacto.setText(col_detallesContacto.getCellData(index).toString());
         txt_telefonoContacto.setText(col_telefonoContacto.getCellData(index).toString());
         txt_correoContacto.setText(col_correoElectronicoContacto.getCellData(index));
+        txt_eliminarContacto.setText(col_idContacto.getCellData(index).toString());
     }
 
     /*
@@ -249,17 +290,20 @@ public class ProveedoresContactoController extends MenuController implements Ini
     private boolean validateNumber(){
         Pattern p = Pattern.compile("[0-9]{8}");
         Matcher m = p.matcher(txt_telefonoContacto.getText().trim());
+        Pattern  pp = Pattern.compile("[23789]");
+        Matcher  mm = pp.matcher(txt_telefonoContacto.getText().substring(0,1));
 
-        if(m.find() && m.group().equals(txt_telefonoContacto.getText())){
+        if(m.find() && m.group().equals(txt_telefonoContacto.getText()) &&  mm.matches()){
             return true;
         } else{
             Alert alert =new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Validar Número");
             alert.setHeaderText(null);
-            alert.setContentText("El número debe contener maximo 8 digitos" +
-                    " y el campo no acepta espacios en blanco");
+            alert.setContentText("Verifique la siguiente informacion: " +
+                    " \nQue el telefono comience con: 2,3,7,8 o 9 " +
+                    " \nQue el telefono contenga maximo 8 digitos " +
+                    " \nY el campo no este vacio");
             alert.showAndWait();
-
             return false;
         }
     }
@@ -294,5 +338,27 @@ public class ProveedoresContactoController extends MenuController implements Ini
             return false;
         }
         return true;
+    }
+    private boolean limite(){
+        if(txt_nombreContacto.getText().length() >= 35){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Supera Limite Permitido");
+            alert.setHeaderText("Error");
+            alert.setContentText("Supero el Limite de caracteres.+" +
+                    " \n El limite de caracteres es de 35");
+            alert.showAndWait();
+            return false;
+        }
+        if(txt_detallesContacto.getText().length() >= 20){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Supera Limite Permitido");
+            alert.setHeaderText("Error");
+            alert.setContentText("Supero el Limite de caracteres.+" +
+                    " \n El limite de caracteres es de 20");
+            alert.showAndWait();
+            return false;
+        }
+        return true;
+
     }
 }

@@ -15,7 +15,7 @@ public class connect {
     public static Connection conDB(){
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/ferreteria","root","");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/ferreteria1","root","140120101305");
             return conn;
         }catch (Exception e){
             JOptionPane.showMessageDialog(null, e);
@@ -106,6 +106,20 @@ public class connect {
 
             while(rs.next()){
                 list.add(new empleados(Integer.parseInt(rs.getString("IDEmpleado")),  rs.getString("nombreEmpleado"),rs.getString("direccionEmpleado"),Integer.parseInt(rs.getString("telefonoEmpleado")), rs.getString("correoEmpleado"), rs.getString("nombreCargo"), rs.getString("descripcionSexo")));
+            }
+        }catch(Exception e){
+        }
+        return list;
+    }
+    public static ObservableList<inventario> getdatainventario(){
+        Connection conn = conDB();
+        ObservableList<inventario> list = FXCollections.observableArrayList();
+        try{
+            PreparedStatement ps = conn.prepareStatement("SELECT p.IDProducto, p.nombre, i.stock, p.descripcionProducto, i.ubicacion, p.precio, m.nombreMarca, c.nombreCategoria FROM producto AS p INNER JOIN inventario AS i ON i.IDProducto = p.IDProducto INNER JOIN marca AS m ON m.IDMarca = p.IDMarca INNER JOIN categoria AS c ON p.IDCategoria = c.IDCategoria;");
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()){
+                list.add(new inventario (Integer.parseInt(rs.getString("IDProducto")), rs.getString("nombre"), Integer.parseInt(rs.getString("stock")), rs.getString("descripcionProducto"), rs.getString("ubicacion"), Double.parseDouble(rs.getString("precio")), rs.getString("nombreMarca"), rs.getString("nombreCategoria")));
             }
         }catch(Exception e){
         }
