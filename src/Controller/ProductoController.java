@@ -283,7 +283,7 @@ public class ProductoController extends MenuController implements Initializable 
     }
 
     private boolean validateName(){
-        Pattern p = Pattern.compile("[A-Za-z ]+");
+        Pattern p = Pattern.compile("^([A-Z]{1}[a-z]+[ ]*)$");
         Matcher m = p.matcher(txtNombreP.getText());
 
         if(m.find() && m.group().equals(txtNombreP.getText())){
@@ -293,7 +293,9 @@ public class ProductoController extends MenuController implements Initializable 
             alert.setTitle("Validar Nombre");
             alert.setHeaderText(null);
             alert.setContentText("Por favor ingresar un nombre válido." +
-                    "\n Ej: Alambre");
+                    " Deberá escribir un nombre que contenga:\n" +
+                    " - Primera letra mayúscula\n" +
+                    " ejemplo: Alambre");
             alert.showAndWait();
 
             return false;
@@ -336,7 +338,7 @@ public class ProductoController extends MenuController implements Initializable 
         }
     }
     private boolean validateNumberStock(){
-        Pattern p = Pattern.compile("[0-9]");
+        Pattern p = Pattern.compile("[0-9]+");
         Matcher m = p.matcher(txtStock.getText().trim());
 
         if(m.find() && m.group().equals(txtStock.getText())){
@@ -345,8 +347,8 @@ public class ProductoController extends MenuController implements Initializable 
             Alert alert =new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Validar Stock");
             alert.setHeaderText(null);
-            alert.setContentText("Verifique la siguiente informacion: " +
-                    " \n Ingrese un numero entero.");
+            alert.setContentText("Verifique la siguiente información: " +
+                    " \n Ingrese un número entero.");
             alert.showAndWait();
             return false;
         }
@@ -371,7 +373,7 @@ public class ProductoController extends MenuController implements Initializable 
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Supera Limite Permitido");
             alert.setHeaderText("Error");
-            alert.setContentText("Supero el Limite de caracteres.+" +
+            alert.setContentText("Superó el Limite de caracteres.+" +
                     " \n El limite de caracteres es de 35");
             alert.showAndWait();
             return false;
@@ -389,7 +391,7 @@ public class ProductoController extends MenuController implements Initializable 
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Supera Limite Permitido");
             alert.setHeaderText("Error");
-            alert.setContentText("Supero el Limite de caracteres.+" +
+            alert.setContentText("Superó el Limite de caracteres.+" +
                     " \n El limite de caracteres es de 50");
             alert.showAndWait();
             return false;
