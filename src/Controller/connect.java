@@ -15,7 +15,7 @@ public class connect {
     public static Connection conDB(){
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/ferreteria1","root","140120101305");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/ferreteria","root","qwerty123456789");
             return conn;
         }catch (Exception e){
             JOptionPane.showMessageDialog(null, e);
@@ -83,11 +83,12 @@ public class connect {
     }
 
 
-    public static ObservableList<contacto> getdatacontacto(){
+    public static ObservableList<contacto> getdatacontacto(int value){
         Connection conn = conDB();
         ObservableList<contacto> list = FXCollections.observableArrayList();
         try{
-            PreparedStatement psc = conn.prepareStatement("SELECT * FROM contactoproveedor");
+            PreparedStatement psc = conn.prepareStatement("SELECT * FROM contactoproveedor where IDProveedor = ?");
+            psc.setInt(1,value);
             ResultSet rsP = psc.executeQuery();
 
             while(rsP.next()){

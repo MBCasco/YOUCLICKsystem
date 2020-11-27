@@ -112,7 +112,7 @@ public class ProveedoresContactoController extends MenuController implements Ini
         col_telefonoContacto.setCellValueFactory(new PropertyValueFactory<>("TelefonoContacto"));
         col_correoElectronicoContacto.setCellValueFactory(new PropertyValueFactory<>("CorreoContacto"));
 
-        listC = connect.getdatacontacto();
+        listC = connect.getdatacontacto((Integer) txt_IDProveedor);
         table_contacto.setItems(listC);
 
 
@@ -132,7 +132,7 @@ public class ProveedoresContactoController extends MenuController implements Ini
         col_idContacto.setCellValueFactory(new PropertyValueFactory<>("IdContacto"));
         col_nombreContacto.setCellValueFactory(new PropertyValueFactory<>("NombreContacto"));
 
-        dataListC = connect.getdatacontacto();
+        dataListC = connect.getdatacontacto((Integer) txt_IDProveedor);
         table_contacto.setItems(dataListC);
         FilteredList<contacto> filteredDataContacto = new FilteredList<>(dataListC, b -> true);
         txt_buscarContacto.textProperty().addListener((observable, oldValue, newValue) -> {
