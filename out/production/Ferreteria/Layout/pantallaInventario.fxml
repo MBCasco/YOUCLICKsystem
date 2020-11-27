@@ -1,24 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.text.*?>
-<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
-<?import java.lang.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1360.0" style="-fx-background-color: #616161; -fx-border-color: c29b61; -fx-border-width: 3;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.InventarioController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1360.0" style="-fx-background-color: #616161; -fx-border-color: c29b61; -fx-border-width: 3;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.InventarioController">
    <children>
-      <TableView layoutX="225.0" layoutY="321.0" prefHeight="435.0" prefWidth="1119.0" style="-fx-background-color: eed09d; -fx-border-color: a18262; -fx-border-radius: 5; -fx-background-radius: 5; -fx-border-width: 2;">
+      <TableView fx:id="tablaInventario" layoutX="225.0" layoutY="321.0" prefHeight="435.0" prefWidth="1119.0" style="-fx-background-color: eed09d; -fx-border-color: a18262; -fx-border-radius: 5; -fx-background-radius: 5; -fx-border-width: 2;">
         <columns>
-          <TableColumn prefWidth="76.33331298828125" text="ID " />
-            <TableColumn minWidth="0.0" prefWidth="127.66668701171875" text="Nombre " />
-          <TableColumn prefWidth="73.33331298828125" text="Stock" />
-            <TableColumn minWidth="0.0" prefWidth="96.33331298828125" text="Descripción" />
-            <TableColumn prefWidth="102.66668701171875" text="Ubicación" />
-            <TableColumn minWidth="0.0" prefWidth="65.0" text="Precio" />
-            <TableColumn minWidth="0.0" prefWidth="76.0" text="Marca" />
-            <TableColumn minWidth="0.0" prefWidth="119.0" text="Categoría" />
+          <TableColumn fx:id="ColID" prefWidth="76.33331298828125" text="ID " />
+            <TableColumn fx:id="ColNombre" minWidth="0.0" prefWidth="127.66668701171875" text="Nombre " />
+          <TableColumn fx:id="ColStock" prefWidth="73.33331298828125" text="Stock" />
+            <TableColumn fx:id="ColDescrip" minWidth="0.0" prefWidth="96.33331298828125" text="Descripción" />
+            <TableColumn fx:id="ColUbicacion" prefWidth="102.66668701171875" text="Ubicación" />
+            <TableColumn fx:id="ColPrecio" minWidth="0.0" prefWidth="65.0" text="Precio" />
+            <TableColumn fx:id="ColMarca" minWidth="0.0" prefWidth="76.0" text="Marca" />
+            <TableColumn fx:id="ColCategoria" minWidth="0.0" prefWidth="119.0" text="Categoría" />
         </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

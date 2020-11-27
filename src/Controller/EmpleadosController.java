@@ -158,6 +158,7 @@ public class EmpleadosController extends MenuController implements Initializable
         txt_eliminar.clear();
         Sexo.setValue(null);
         Cargo.setValue(null);
+        txt_eliminar.clear();
     }
 
     public void Delete(){
@@ -180,6 +181,7 @@ public class EmpleadosController extends MenuController implements Initializable
                         alert1.setContentText("Se elimino con éxito");
                         alert1.showAndWait();
                         UpdateTable();
+                        clearFields();
                     }
 
                 }catch (Exception e){

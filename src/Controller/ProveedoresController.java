@@ -95,6 +95,7 @@ public class ProveedoresController extends MenuController implements Initializab
         txt_nombre.clear();
         txt_correo.clear();
         txt_direccion.clear();
+        txt_eliminar.clear();
     }
 
     public void Delete(){
@@ -117,7 +118,7 @@ public class ProveedoresController extends MenuController implements Initializab
                         alert1.setContentText("Se elimino con éxito");
                         alert1.showAndWait();
                         UpdateTable();
-
+                        clearFields();
                     }
                 }catch (Exception e){
                     Alert alert2 = new Alert(Alert.AlertType.WARNING);

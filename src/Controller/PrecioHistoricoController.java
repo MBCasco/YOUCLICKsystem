@@ -67,12 +67,11 @@ public class PrecioHistoricoController extends MenuController implements Initial
 
     @FXML
     void Search_precioHistorico(){
-        col_ID.setCellValueFactory(new PropertyValueFactory<precioHistorico,Integer>("ID"));
-        col_Nombre.setCellValueFactory(new PropertyValueFactory<precioHistorico,String>("Nombre"));
-        col_Precio.setCellValueFactory(new PropertyValueFactory<precioHistorico, Double>("Precio"));
-        col_FechaInicial.setCellValueFactory(new PropertyValueFactory<precioHistorico,String>("FechaInicial"));
-        col_FechaFinal.setCellValueFactory(new PropertyValueFactory<precioHistorico, String>("FechaFinal"));
-
+        col_ID.setCellValueFactory(new PropertyValueFactory<>("ID"));
+        col_Nombre.setCellValueFactory(new PropertyValueFactory<>("Nombre"));
+        col_Precio.setCellValueFactory(new PropertyValueFactory<>("Precio"));
+        col_FechaInicial.setCellValueFactory(new PropertyValueFactory<>("FechaInicial"));
+        col_FechaFinal.setCellValueFactory(new PropertyValueFactory<>("FechaFinal"));
 
         dataList = connect.getdataprecioHistorico();
         table_precioHistorico.setItems(dataList);

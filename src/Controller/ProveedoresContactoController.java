@@ -164,6 +164,7 @@ public class ProveedoresContactoController extends MenuController implements Ini
         txt_detallesContacto.clear();
         txt_IdContacto.clear();
         txt_buscarContacto.clear();
+        txt_eliminarContacto.clear();
     }
 
     public void deleteContacto(){
@@ -186,6 +187,7 @@ public class ProveedoresContactoController extends MenuController implements Ini
                         alert1.setContentText("Se elimino con éxito");
                         alert1.showAndWait();
                         UpdateTableContacto();
+                        clearFieldsContacto();
 
                     }else{
                         Alert alert2 = new Alert(Alert.AlertType.ERROR);

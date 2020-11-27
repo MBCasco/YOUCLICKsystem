@@ -121,6 +121,7 @@ public class ProductoController extends MenuController implements Initializable 
         alert.showAndWait();
 
         UpdateTable();
+        clearFields();
     }
 
 
@@ -167,6 +168,7 @@ public class ProductoController extends MenuController implements Initializable 
                         alert1.setContentText("Se elimino con éxito");
                         alert1.showAndWait();
                         UpdateTable();
+                        clearFields();
                     }
                 }catch (Exception e){
                     Alert alert2 = new Alert(Alert.AlertType.ERROR);
@@ -224,6 +226,7 @@ public class ProductoController extends MenuController implements Initializable 
         alert.showAndWait();
 
         UpdateTable();
+        clearFields();
 
     }
     public void getSelected (javafx.scene.input.MouseEvent event) {
@@ -251,6 +254,16 @@ public class ProductoController extends MenuController implements Initializable 
         stage.setTitle("Precio Historico");
         stage.setScene(new Scene(root, 1360, 768));
         stage.show();
+    }
+    private void clearFields() {
+        txtID.clear();
+        txtNombreP.clear();
+        txtDescrpcionP.clear();
+        txtStock.clear();
+        txtUbicacion.clear();
+        comMarca.setValue(null);
+        comCat.setValue(null);
+        txtEliminar.clear();
     }
     private boolean validateNumberprecio(){
         Pattern p = Pattern.compile("[0-9]+(\\.[0-9])");

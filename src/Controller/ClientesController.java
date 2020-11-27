@@ -66,6 +66,7 @@ public class ClientesController extends MenuController implements Initializable 
 
     private JTextField jTextFieldName =new JTextField();
     private int limite  = 8;
+    int value;
 
 
     ObservableList<clientes> listM;
@@ -131,6 +132,7 @@ public class ClientesController extends MenuController implements Initializable 
         txt_telefono.clear();
         txt_eliminar.clear();
         Sexo.setValue(null);
+        txt_eliminar.clear();
     }
 
     //Eliminar Cliente
@@ -154,6 +156,7 @@ public class ClientesController extends MenuController implements Initializable 
                         alert1.setContentText("Se elimino con éxito");
                         alert1.showAndWait();
                         UpdateTable();
+                        clearFields();
                     }
 
                 }catch (Exception e){
@@ -274,13 +277,15 @@ public class ClientesController extends MenuController implements Initializable 
         if(index <= -1){
             return;
         }
+
         txt_id.setText(col_cliente.getCellData(index).toString());
         txt_nombre.setText(col_nombre.getCellData(index));
         txt_direccion.setText(col_direccion.getCellData(index));
         txt_telefono.setText(col_telefono.getCellData(index).toString());
         txt_correo.setText(col_correo.getCellData(index));
         Sexo.setValue(col_Sexo.getCellData(index));
-        txt_eliminar.setText(col_cliente.getCellData(index).toString());
+        value= col_cliente.getCellData(index);
+        txt_eliminar.setText(String.valueOf(value));
     }
 
     //Validaciones
