@@ -265,7 +265,7 @@ public class ProveedoresController extends MenuController implements Initializab
      */
 
     private boolean validateName(){
-        Pattern p = Pattern.compile("[A-Za-z ]+");
+        Pattern p = Pattern.compile("([A-Z]{1}[A-Za-z ]+)");
         Matcher m = p.matcher(txt_nombre.getText());
 
         if(m.find() && m.group().equals(txt_nombre.getText())){
@@ -274,7 +274,9 @@ public class ProveedoresController extends MenuController implements Initializab
             Alert alert =new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Validar Nombre");
             alert.setHeaderText(null);
-            alert.setContentText("Por favor ingresar un nombre válido");
+            alert.setContentText("Por favor ingresar un nombre válido" +
+                    " Deberá escribir un nombre que contenga:\n" +
+                    " - Primera letra mayúscula\n");
             alert.showAndWait();
 
             return false;

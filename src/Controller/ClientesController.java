@@ -338,16 +338,20 @@ public class ClientesController extends MenuController implements Initializable 
     }
 
     private boolean validateName(){
-        Pattern p = Pattern.compile("[A-Za-z ]+");
+        Pattern p = Pattern.compile("^([A-Z]{1}[a-z]+[ ]*){2,4}$");
         Matcher m = p.matcher(txt_nombre.getText());
+
 
         if(m.find() && m.group().equals(txt_nombre.getText())){
             return true;
         } else{
             Alert alert =new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Validar Nombre");
+            alert.setTitle("Validar nombre");
             alert.setHeaderText(null);
-            alert.setContentText("Por favor ingresar un nombre válido");
+            alert.setContentText("Por favor ingresar un nombre válido \n" +
+                    " Deberá escribir un nombre que contenga:\n" +
+                    " - Primera letra mayúscula\n" +
+                    " - Al menos un apellido");
             alert.showAndWait();
 
             return false;
