@@ -10,7 +10,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
 import javax.swing.*;
-import java.awt.event.KeyAdapter;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -51,6 +50,14 @@ public class ProveedoresContactoController extends MenuController implements Ini
     private TextField txt_IdContacto;
     @FXML
     private TextField txt_nombreContacto;
+    @FXML
+    private Button btn_registrar;
+    @FXML
+    private Button btn_eliminar;
+    @FXML
+    private Button btn_actualizar;
+    @FXML
+    private Button btn_clear;
 
     private ObservableList<contacto> listC;
     private ObservableList<contacto> dataListC;
@@ -91,7 +98,7 @@ public class ProveedoresContactoController extends MenuController implements Ini
 
                 UpdateTableContacto();
                 Search_contacto();
-                clearFieldsContacto();
+                clearFields();
 
             } catch (Exception e) {
                 Alert alert =new Alert(Alert.AlertType.WARNING);
@@ -121,8 +128,9 @@ public class ProveedoresContactoController extends MenuController implements Ini
     @Override
     public void initialize(URL url, ResourceBundle rb){
         UpdateTableContacto();
-        clearFieldsContacto();
+        clearFields();
         Search_contacto();
+        checkBtnStatus(0);
 
     }
 
@@ -156,7 +164,8 @@ public class ProveedoresContactoController extends MenuController implements Ini
         table_contacto.setItems(sortedData);
     }
 
-    private void clearFieldsContacto() {
+    @FXML
+    private void clearFields() {
 
         txt_nombreContacto.clear();
         txt_telefonoContacto.clear();
@@ -165,6 +174,22 @@ public class ProveedoresContactoController extends MenuController implements Ini
         txt_IdContacto.clear();
         txt_buscarContacto.clear();
         txt_eliminarContacto.clear();
+        checkBtnStatus(0);
+    }
+
+    private void checkBtnStatus(int check) {
+        if (check == 1){
+            btn_registrar.setDisable(true);
+            btn_actualizar.setDisable(false);
+            btn_eliminar.setDisable(false);
+
+        }
+        if (check == 0){
+            btn_registrar.setDisable(false);
+            btn_actualizar.setDisable(true);
+            btn_eliminar.setDisable(true);
+
+        }
     }
 
     public void deleteContacto(){
@@ -187,7 +212,7 @@ public class ProveedoresContactoController extends MenuController implements Ini
                         alert1.setContentText("Se elimino con éxito");
                         alert1.showAndWait();
                         UpdateTableContacto();
-                        clearFieldsContacto();
+                        clearFields();
 
                     }else{
                         Alert alert2 = new Alert(Alert.AlertType.ERROR);
@@ -248,6 +273,7 @@ public class ProveedoresContactoController extends MenuController implements Ini
         txt_telefonoContacto.setText(col_telefonoContacto.getCellData(index).toString());
         txt_correoContacto.setText(col_correoElectronicoContacto.getCellData(index));
         txt_eliminarContacto.setText(col_idContacto.getCellData(index).toString());
+        checkBtnStatus(1);
     }
 
     /*

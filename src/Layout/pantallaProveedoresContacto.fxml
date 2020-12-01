@@ -114,7 +114,7 @@
             </Button>
          </children>
       </VBox>
-      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="1026.0" layoutY="199.0" mnemonicParsing="false" onAction="#deleteContacto" prefHeight="32.0" prefWidth="95.0" style="-fx-border-color: ffc107; -fx-background-color: a18262;" text="ELIMINAR" textFill="#eed09d" />
+      <Button fx:id="btn_eliminar" alignment="CENTER" contentDisplay="CENTER" layoutX="1026.0" layoutY="199.0" mnemonicParsing="false" onAction="#deleteContacto" prefHeight="32.0" prefWidth="95.0" style="-fx-border-color: ffc107; -fx-background-color: a18262;" text="ELIMINAR" textFill="#eed09d" />
       <ImageView fitHeight="39.0" fitWidth="38.0" layoutX="641.0" layoutY="195.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Imagenes/iconos/Iconos/eliminar%20(1).png" />
@@ -151,18 +151,18 @@
                               <Font size="13.0" />
                            </font>
                         </Label>
-                        <Button layoutX="84.0" layoutY="415.0" mnemonicParsing="false" onAction="#add_contacto" prefHeight="37.0" prefWidth="95.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="REGISTRAR" textFill="#eed09d" />
-                        <ImageView fitHeight="42.0" fitWidth="52.0" layoutX="41.0" layoutY="413.0" pickOnBounds="true" preserveRatio="true">
+                        <Button fx:id="btn_registrar" layoutX="40.0" layoutY="416.0" mnemonicParsing="false" onAction="#add_contacto" prefHeight="37.0" prefWidth="95.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="REGISTRAR" textFill="#eed09d" />
+                        <ImageView fitHeight="42.0" fitWidth="52.0" layoutY="413.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../Imagenes/iconos/Iconos/portapapeles.png" />
                            </image>
                         </ImageView>
-                        <ImageView fitHeight="43.0" fitWidth="51.0" layoutX="195.0" layoutY="412.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="43.0" fitWidth="51.0" layoutX="237.0" layoutY="412.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../Imagenes/iconos/Iconos/actualizar.png" />
                            </image>
                         </ImageView>
-                        <Button layoutX="240.0" layoutY="415.0" mnemonicParsing="false" onAction="#EditContacto" prefHeight="37.0" prefWidth="91.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="ACTUALIZAR" textFill="#eed09d" />
+                        <Button fx:id="btn_actualizar" layoutX="282.0" layoutY="415.0" mnemonicParsing="false" onAction="#EditContacto" prefHeight="37.0" prefWidth="91.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="ACTUALIZAR" textFill="#eed09d" />
                         <Label alignment="CENTER" layoutX="5.0" layoutY="318.0" prefHeight="28.0" prefWidth="255.0" style="-fx-background-color: eed09d; -fx-background-radius: 3; -fx-border-color: black; -fx-border-radius: 3;" text="Correo electrónico">
                            <font>
                               <Font size="14.0" />
@@ -194,6 +194,7 @@
                               <Image url="@../Imagenes/iconos/Iconos/email.png" />
                            </image>
                         </ImageView>
+                        <Button fx:id="btn_clear" layoutX="141.0" layoutY="416.0" mnemonicParsing="false" onAction="#clearFields" prefHeight="37.0" prefWidth="95.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="LIMPIAR" textFill="#eed09d" />
                      </children>
                   </AnchorPane>
                </content>

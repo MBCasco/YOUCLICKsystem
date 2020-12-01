@@ -122,7 +122,7 @@
             </Button>
          </children>
       </VBox>
-      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="1026.0" layoutY="199.0" mnemonicParsing="false" onAction="#Delete" prefHeight="32.0" prefWidth="95.0" style="-fx-border-color: ffc107; -fx-background-color: a18262;" text="ELIMINAR" textFill="#eed09d" />
+      <Button fx:id="btn_eliminar" alignment="CENTER" contentDisplay="CENTER" layoutX="1026.0" layoutY="199.0" mnemonicParsing="false" onAction="#Delete" prefHeight="32.0" prefWidth="95.0" style="-fx-border-color: ffc107; -fx-background-color: a18262;" text="ELIMINAR" textFill="#eed09d" />
       <ImageView fitHeight="39.0" fitWidth="38.0" layoutX="641.0" layoutY="195.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Imagenes/iconos/Iconos/eliminar%20(1).png" />
@@ -159,7 +159,7 @@
                               <Font size="13.0" />
                            </font>
                         </Label>
-                        <Button layoutX="79.0" layoutY="395.0" mnemonicParsing="false" onAction="#Add_proveedor" prefHeight="37.0" prefWidth="95.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="REGISTRAR" textFill="#eed09d" />
+                        <Button fx:id="btn_registrar" layoutX="79.0" layoutY="395.0" mnemonicParsing="false" onAction="#Add_proveedor" prefHeight="37.0" prefWidth="95.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="REGISTRAR" textFill="#eed09d" />
                         <ImageView fitHeight="42.0" fitWidth="52.0" layoutX="37.0" layoutY="393.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../Imagenes/iconos/Iconos/portapapeles.png" />
@@ -170,7 +170,7 @@
                               <Image url="@../Imagenes/iconos/Iconos/actualizar.png" />
                            </image>
                         </ImageView>
-                        <Button layoutX="239.0" layoutY="396.0" mnemonicParsing="false" onAction="#Edit" prefHeight="37.0" prefWidth="91.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="ACTUALIZAR" textFill="#eed09d" />
+                        <Button fx:id="btn_actualizar" layoutX="239.0" layoutY="396.0" mnemonicParsing="false" onAction="#Edit" prefHeight="37.0" prefWidth="91.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="ACTUALIZAR" textFill="#eed09d" />
                         <ImageView fitHeight="39.0" fitWidth="32.0" layoutX="5.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../Imagenes/iconos/Iconos/carne-de-identidad.png" />
@@ -191,11 +191,12 @@
                               <Image url="@../Imagenes/iconos/Iconos/directional-sign.png" />
                            </image>
                         </ImageView>
+                        <Button fx:id="btn_clear" layoutX="141.0" layoutY="333.0" mnemonicParsing="false" onAction="#clearFields" prefHeight="37.0" prefWidth="118.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="LIMPIAR CAMPOS" textFill="#eed09d" />
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
-            <Tab onSelectionChanged="#prueba" text="Contacto">
+            <Tab fx:id="tab_contacto" onSelectionChanged="#prueba" text="Contacto">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
               </content>

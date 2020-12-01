@@ -67,6 +67,14 @@ public class ProductoController extends MenuController implements Initializable 
     private TextField txtStock;
     @FXML
     private TextField txtEliminar;
+    @FXML
+    private Button btn_registrar;
+    @FXML
+    private Button btn_actualizar;
+    @FXML
+    private Button btn_eliminar;
+    @FXML
+    private Button btn_clear;
 
 
     ObservableList<producto> listP;
@@ -134,6 +142,19 @@ public class ProductoController extends MenuController implements Initializable 
     public void initialize(URL location, ResourceBundle resources) {
         intCombox();
         UpdateTable();
+        checkBtnStatus(0);
+    }
+    private void checkBtnStatus(int check) {
+        if (check == 1){
+            btn_registrar.setDisable(true);
+            btn_actualizar.setDisable(false);
+            btn_eliminar.setDisable(false);
+        }
+        if (check == 0){
+            btn_registrar.setDisable(false);
+            btn_actualizar.setDisable(true);
+            btn_eliminar.setDisable(true);
+        }
     }
     public void UpdateTable(){
         col_producto.setCellValueFactory(new PropertyValueFactory<>("idProducto"));
@@ -246,6 +267,7 @@ public class ProductoController extends MenuController implements Initializable 
         comMarca.setValue(col_marca.getCellData(index));
         comCat.setValue(col_categoria.getCellData(index));
         txtEliminar.setText(col_producto.getCellData(index).toString());
+        checkBtnStatus(1);
 
     }
 
@@ -264,6 +286,7 @@ public class ProductoController extends MenuController implements Initializable 
         comMarca.setValue(null);
         comCat.setValue(null);
         txtEliminar.clear();
+        checkBtnStatus(0);
     }
     private boolean validateNumberprecio(){
         Pattern p = Pattern.compile("[0-9]+(\\.[0-9])");

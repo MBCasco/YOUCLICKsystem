@@ -44,6 +44,17 @@ public class ProveedoresController extends MenuController implements Initializab
     private TextField filterField;
     @FXML
     private TextField txt_eliminar;
+    @FXML
+    private Button btn_registrar;
+    @FXML
+    private Button btn_actualizar;
+    @FXML
+    private Button btn_eliminar;
+    @FXML
+    private Button btn_clearFields;
+    @FXML
+    private Tab tab_contacto;
+
 
     ObservableList<proveedores> listM;
     ObservableList<proveedores> dataList;
@@ -52,6 +63,7 @@ public class ProveedoresController extends MenuController implements Initializab
     Connection conn = null;
     ResultSet rs = null;
     PreparedStatement pst = null;
+
 
     public void prueba() throws IOException {
         contactos();
@@ -90,12 +102,15 @@ public class ProveedoresController extends MenuController implements Initializab
         }
     }
 
+    @FXML
     private void clearFields() {
         txt_idProveedor.clear();
         txt_nombre.clear();
         txt_correo.clear();
         txt_direccion.clear();
         txt_eliminar.clear();
+        checkBtnStatus(0);
+
     }
 
     public void Delete(){
@@ -146,6 +161,22 @@ public class ProveedoresController extends MenuController implements Initializab
         UpdateTable();
         Search_proveedor();
         clearFields();
+        checkBtnStatus(0);
+    }
+
+    private void checkBtnStatus(int check) {
+        if (check == 1){
+            btn_registrar.setDisable(true);
+            btn_actualizar.setDisable(false);
+            btn_eliminar.setDisable(false);
+            tab_contacto.setDisable(true);
+        }
+        if (check == 0){
+            btn_registrar.setDisable(false);
+            btn_actualizar.setDisable(true);
+            btn_eliminar.setDisable(true);
+            tab_contacto.setDisable(true);
+        }
     }
 
     public void Edit(){
@@ -224,6 +255,8 @@ public class ProveedoresController extends MenuController implements Initializab
         txt_correo.setText(col_correo.getCellData(index));
         txt_direccion.setText(col_direccion.getCellData(index));
         txt_eliminar.setText(col_id.getCellData(index).toString());
+        checkBtnStatus(1);
+
     }
     /*
         ////////////

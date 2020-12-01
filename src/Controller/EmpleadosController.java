@@ -78,6 +78,15 @@ public class EmpleadosController extends MenuController implements Initializable
     @FXML
     private TextField txt_fechaFinal;
 
+    @FXML
+    private Button btn_registrar;
+    @FXML
+    private Button btn_actualizar;
+    @FXML
+    private Button btn_eliminar;
+    @FXML
+    private Button btn_clear;
+
 
     ObservableList<empleados> listE;
     ObservableList<empleados> dataList;
@@ -149,6 +158,7 @@ public class EmpleadosController extends MenuController implements Initializable
 
 
 
+    @FXML
     private void clearFields() {
         txt_nombre.clear();
         txt_direccion.clear();
@@ -159,6 +169,7 @@ public class EmpleadosController extends MenuController implements Initializable
         Sexo.setValue(null);
         Cargo.setValue(null);
         txt_eliminar.clear();
+        checkBtnStatus(0);
     }
 
     public void Delete(){
@@ -213,6 +224,19 @@ public class EmpleadosController extends MenuController implements Initializable
         UpdateTable();
         search_empleado();
         clearFields();
+        checkBtnStatus(0);
+    }
+    private void checkBtnStatus(int check) {
+        if (check == 1){
+            btn_registrar.setDisable(true);
+            btn_actualizar.setDisable(false);
+            btn_eliminar.setDisable(false);
+        }
+        if (check == 0){
+            btn_registrar.setDisable(false);
+            btn_actualizar.setDisable(true);
+            btn_eliminar.setDisable(true);
+        }
     }
 
     public void CMBBOX(){
@@ -315,6 +339,7 @@ public class EmpleadosController extends MenuController implements Initializable
         Cargo.setValue(col_cargo.getCellData(index));
         Sexo.setValue(col_sexo.getCellData(index));
         txt_eliminar.setText(col_id.getCellData(index).toString());
+        checkBtnStatus(1);
     }
     private boolean validateNumber(){
         Pattern p = Pattern.compile("[0-9]{8}");

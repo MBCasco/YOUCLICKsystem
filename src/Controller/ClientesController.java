@@ -64,6 +64,15 @@ public class ClientesController extends MenuController implements Initializable 
     @FXML
     private ComboBox<String> Sexo;
 
+    @FXML
+    private Button btn_registrar;
+    @FXML
+    private Button btn_actualizar;
+    @FXML
+    private Button btn_eliminar;
+    @FXML
+    private Button btn_clear;
+
     private JTextField jTextFieldName =new JTextField();
     private int limite  = 8;
     int value;
@@ -124,6 +133,7 @@ public class ClientesController extends MenuController implements Initializable 
     }
 
     //Limpiar los campos
+    @FXML
     private void clearFields() {
         txt_id.clear();
         txt_nombre.clear();
@@ -133,6 +143,20 @@ public class ClientesController extends MenuController implements Initializable 
         txt_eliminar.clear();
         Sexo.setValue(null);
         txt_eliminar.clear();
+        checkBtnStatus(0);
+    }
+
+    private void checkBtnStatus(int check) {
+        if (check == 1){
+            btn_registrar.setDisable(true);
+            btn_actualizar.setDisable(false);
+            btn_eliminar.setDisable(false);
+        }
+        if (check == 0){
+            btn_registrar.setDisable(false);
+            btn_actualizar.setDisable(true);
+            btn_eliminar.setDisable(true);
+        }
     }
 
     //Eliminar Cliente
@@ -192,6 +216,7 @@ public class ClientesController extends MenuController implements Initializable 
         UpdateTable();
         Search_cliente();
         clearFields();
+        checkBtnStatus(0);
     }
 
     //Editar Clientes
@@ -286,6 +311,7 @@ public class ClientesController extends MenuController implements Initializable 
         Sexo.setValue(col_Sexo.getCellData(index));
         value= col_cliente.getCellData(index);
         txt_eliminar.setText(String.valueOf(value));
+        checkBtnStatus(1);
     }
 
     //Validaciones
