@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1360.0" style="-fx-background-color: #616161; -fx-border-color: c29b61; -fx-border-width: 3;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ClientesController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1360.0" style="-fx-background-color: #616161; -fx-border-color: c29b61; -fx-border-width: 3;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ClientesController">
    <children>
       <Label alignment="CENTER" layoutX="257.0" layoutY="22.0" prefHeight="113.0" prefWidth="1067.0" style="-fx-background-color: #ffc107; -fx-background-radius: 10; -fx-border-color: c29b61; -fx-border-radius: 5; -fx-border-style: solid; -fx-border-width: 4;" text="CLIENTES">
          <font>
@@ -40,12 +39,12 @@
                   <Font name="Dubai Bold" size="16.0" />
                </font>
             </Label>
-            <Button fx:id="btn_actualizar" alignment="CENTER" layoutX="301.0" layoutY="532.0" mnemonicParsing="false" onAction="#Edit" prefHeight="32.0" prefWidth="83.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="Actualizar" textFill="#eed09d">
+            <Button fx:id="btn_actualizar" alignment="CENTER" layoutX="319.0" layoutY="532.0" mnemonicParsing="false" onAction="#Edit" prefHeight="32.0" prefWidth="83.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="Actualizar" textFill="#eed09d">
                <font>
                   <Font name="Dubai Bold" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="btn_registrar" layoutX="62.0" layoutY="532.0" mnemonicParsing="false" onAction="#Add_clientes" prefHeight="32.0" prefWidth="83.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="Registrar" textFill="#eed09d">
+            <Button fx:id="btn_registrar" layoutX="52.0" layoutY="532.0" mnemonicParsing="false" onAction="#Add_clientes" prefHeight="32.0" prefWidth="83.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="Registrar" textFill="#eed09d">
                <font>
                   <Font name="Dubai Bold" size="12.0" />
                </font>
@@ -94,12 +93,12 @@
                   <Font name="Dubai Bold" size="12.0" />
                </font>
             </Label>
-            <ImageView fitHeight="43.0" fitWidth="36.0" layoutX="265.0" layoutY="530.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="43.0" fitWidth="36.0" layoutX="282.0" layoutY="530.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../Imagenes/iconos/Iconos/actualizar.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="43.0" fitWidth="36.0" layoutX="16.0" layoutY="530.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="43.0" fitWidth="36.0" layoutX="12.0" layoutY="530.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../Imagenes/iconos/Iconos/portapapeles.png" />
                </image>
@@ -126,7 +125,7 @@
                </image>
             </ImageView>
             <TextField fx:id="txt_id" alignment="CENTER" editable="false" layoutX="71.0" layoutY="94.0" prefHeight="27.0" prefWidth="299.0" promptText="Este campo solo muestra" style="-fx-background-color: beige; -fx-border-color: #8d5910;" />
-            <Button fx:id="btn_clear" layoutX="160.0" layoutY="530.0" mnemonicParsing="false" onAction="#clearFields" prefHeight="37.0" prefWidth="95.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="LIMPIAR" textFill="#eed09d" />
+            <Button fx:id="btn_clear" layoutX="185.0" layoutY="532.0" mnemonicParsing="false" onAction="#clearFields" prefHeight="32.0" prefWidth="89.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="LIMPIAR" textFill="#eed09d" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="695.0" layoutY="155.0" prefHeight="588.0" prefWidth="626.0" style="-fx-background-color: d5c5ae; -fx-border-color: ffc107; -fx-border-width: 2; -fx-border-radius: 5; -fx-background-radius: 5;">
