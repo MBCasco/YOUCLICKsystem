@@ -1,5 +1,7 @@
 package Controller;
 
+import ComboBoxController.categoria;
+import ComboBoxController.marca;
 import Models.*;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -50,7 +52,7 @@ public class InventarioController extends MenuController implements Initializabl
     ObservableList<inventario> listI;
     ObservableList<inventario> dataList;
 
-    public void pruebaI() throws IOException {
+    public void pruebaI(javafx.event.ActionEvent actionEvent) throws IOException {
         compra();
     }
 

@@ -1,7 +1,7 @@
 package Controller;
 
-import Models.categoria;
-import Models.marca;
+import ComboBoxController.categoria;
+import ComboBoxController.marca;
 import Models.producto;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

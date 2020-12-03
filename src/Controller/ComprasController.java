@@ -1,18 +1,15 @@
 package Controller;
 
+import ComboBoxController.productos;
+import ComboBoxController.proveedor;
 import Models.compras;
-import Models.producto;
-import Models.proveedores;
-import Models.pago;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-
-import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -35,24 +32,28 @@ public class ComprasController  extends MenuController implements Initializable 
     private TableColumn<compras, String> col_fechaP;
     @FXML
     private TableColumn<compras, String> col_fechaR;
+
     @FXML
-    private TextField txt_ID;
+    private TextField txtiD;
     @FXML
-    private ComboBox<proveedores> CBXProveedor;
+    private TextField txtcantidad;
     @FXML
-    private ComboBox<producto> CBXProducto;
+    private TextField txtfechaP;
     @FXML
-    private TextField txtCantidad;
+    private TextField txtfechaR;
     @FXML
-    private TextField txtFechaPedido;
+    private ComboBox<proveedor> CBXProveedor;
     @FXML
-    private TextField txtFechaLlego;
-    @FXML
-    private TextField fieldFilter;
+    private ComboBox<productos> CBXProducto;
     @FXML
     private TextField txtEliminar;
+    @FXML
+    private TextField filterField;
 
     ObservableList<compras> ListaCompra;
+    ObservableList<proveedor> listCPV = proveedor.getproveedor();
+    ObservableList<productos> listCPR = productos.getproductos();
+    ObservableList<compras> dataList;
 
     int index = -1;
     Connection conn = null;
@@ -62,6 +63,49 @@ public class ComprasController  extends MenuController implements Initializable 
 
     public void prueba() throws IOException {
         pago();
+    }
+    public void InComboBox(){
+        CBXProducto.setItems(listCPR);
+        CBXProveedor.setItems(listCPV);
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        InComboBox();
+        UpdateTable();
+    }
+
+    public void AddCompra(){
+        conn = connect.conDB();
+        String sql = "insert into compra (cantidad,FechaPedido, FechaLlegada, IDProveedor, IDProducto)values(?,?,?,?,?)";
+        //if (validateFields() & limite() & validateName() & validateEmail() & validateDireccion()) {
+            try {
+                pst = conn.prepareStatement(sql);
+                pst.setString(1, txtcantidad.getText());
+                pst.setString(2, txtfechaP.getText());
+                pst.setString(3, txtfechaR.getText());
+                pst.setString(4, String.valueOf(CBXProveedor.getSelectionModel().getSelectedItem().getIDProveedor()));
+                pst.setString(5, String.valueOf(CBXProducto.getSelectionModel().getSelectedItem().getIDProducto()));
+                pst.execute();
+
+                Alert alert =new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Información");
+                alert.setHeaderText(null);
+                alert.setContentText("Se agregó exitosamente");
+                alert.showAndWait();
+
+                UpdateTable();
+                Search_compra();
+
+            } catch (Exception e) {
+                Alert alert =new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("El correo debe ser único." +
+                        "\n Revise que su correo sea único y vuelva a intentarlo.");
+                alert.showAndWait();
+            }
+        //}
     }
 
     public void UpdateTable(){
@@ -75,11 +119,65 @@ public class ComprasController  extends MenuController implements Initializable 
         ListaCompra = connect.getdatacompras();
         tablaCompras.setItems(ListaCompra);
     }
+    public void Delete(){
+        Alert alert =new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Confirmar");
+        alert.setHeaderText(null);
+        alert.setContentText("Estás seguro ¿Qué quieres eliminar esta compra?");
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                conn = connect.conDB();
+                try {
+                    String Ssql = "DELETE FROM compra WHERE IDCompra = ?";
+                    PreparedStatement prest = conn.prepareStatement(Ssql);
+                    prest.setString(1, txtEliminar.getText());
 
-
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
+                    if (prest.executeUpdate() > 0){
+                        Alert alert1 =new Alert(Alert.AlertType.INFORMATION);
+                        alert1.setTitle("Informacion");
+                        alert1.setHeaderText(null);
+                        alert1.setContentText("Se elimino con éxito");
+                        alert1.showAndWait();
+                        UpdateTable();
+                    }
+                }catch (Exception e){
+                    Alert alert2 = new Alert(Alert.AlertType.WARNING);
+                    alert2.setTitle("Error");
+                    alert2.setHeaderText(null);
+                    alert2.setContentText("Hubo un error al eliminar,  por favor inténtelo de nuevo." +
+                            "\nEste campo solo permite eliminar por ID.");
+                }
+            }
+        });
     }
+
+    void Search_compra(){
+        col_IDCompra.setCellValueFactory(new PropertyValueFactory<compras,Integer>("idCompra"));
+        col_proveedor.setCellValueFactory(new PropertyValueFactory<compras,String>("empresaProveedor"));
+
+        dataList = connect.getdatacompras();
+        tablaCompras.setItems(dataList);
+        FilteredList<compras> filteredData = new FilteredList<>(dataList, b -> true);
+        filterField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(person -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (person.getempresaProveedor().toLowerCase().indexOf(lowerCaseFilter) != -1) {
+                    return true;
+                }else if (String.valueOf(person.getIdCompra()).indexOf(lowerCaseFilter)!=-1)
+                    return true;
+
+                else
+                    return false;
+            });
+        });
+        SortedList<compras> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(tablaCompras.comparatorProperty());
+        tablaCompras.setItems(sortedData);
+    }
+
+
 }
