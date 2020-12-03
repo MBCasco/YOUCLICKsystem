@@ -131,12 +131,12 @@
             <TextField fx:id="filterField" layoutX="61.0" layoutY="74.0" prefHeight="31.0" prefWidth="562.0" promptText="ID o nombre" />
          </children>
       </Pane>
-      <Button alignment="CENTER_RIGHT" layoutX="1109.0" layoutY="267.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="231.0" style="-fx-background-color: #616161; -fx-border-color: #ffdb58; -fx-border-radius: 5;" text="Hacer compras" textFill="WHITE">
+      <Button alignment="CENTER_RIGHT" layoutX="1098.0" layoutY="189.0" mnemonicParsing="false" onAction="#compra" prefHeight="88.0" prefWidth="231.0" style="-fx-background-color: #616161; -fx-border-color: #ffdb58; -fx-border-radius: 5;" text="Hacer compras" textFill="WHITE">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
       </Button>
-      <ImageView fitHeight="61.0" fitWidth="103.0" layoutX="1124.0" layoutY="281.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="61.0" fitWidth="103.0" layoutX="1110.0" layoutY="202.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Imagenes/iconos/Iconos/compra.png" />
          </image>

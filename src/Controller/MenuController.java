@@ -54,6 +54,18 @@ public class MenuController implements GlobalConstans {
         stage.setScene(new Scene(root, 1360, 768));
         stage.show();
     }
+    public  void pago() throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/Layout/pantallaPago.fxml"));
+        stage.setTitle("Contactos");
+        stage.setScene(new Scene(root, 1360, 768));
+        stage.show();
+    }
+    public  void compra() throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/Layout/pantallaCompras.fxml"));
+        stage.setTitle("Compras");
+        stage.setScene(new Scene(root, 1360, 768));
+        stage.show();
+    }
 
 
 }

@@ -5,9 +5,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1360.0" style="-fx-background-color: #616161; -fx-border-color: c29b61; -fx-border-width: 3;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1360.0" style="-fx-background-color: #616161; -fx-border-color: c29b61; -fx-border-width: 3;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ComprasController">
    <children>
-      <Label alignment="CENTER" layoutX="246.0" layoutY="24.0" prefHeight="113.0" prefWidth="1086.0" style="-fx-background-color: FFC107; -fx-border-color: C29B61; -fx-background-radius: 10; -fx-border-radius: 5; -fx-border-style: solid; -fx-border-width: 4;" text="COMPRAS" textAlignment="CENTER">
+      <Label alignment="CENTER" layoutX="246.0" layoutY="24.0" prefHeight="113.0" prefWidth="1102.0" style="-fx-background-color: FFC107; -fx-border-color: C29B61; -fx-background-radius: 10; -fx-border-radius: 5; -fx-border-style: solid; -fx-border-width: 4;" text="COMPRAS" textAlignment="CENTER">
          <font>
             <Font name="Elephant" size="36.0" />
          </font>
@@ -100,13 +100,14 @@
       </ImageView>
       <AnchorPane layoutX="669.0" layoutY="161.0" prefHeight="585.0" prefWidth="671.0" style="-fx-background-color: d5c5ae; -fx-border-color: ffc107; -fx-border-width: 2; -fx-border-radius: 5; -fx-background-radius: 5;">
          <children>
-            <TableView layoutX="9.0" layoutY="240.0" prefHeight="338.0" prefWidth="657.0">
+            <TableView fx:id="tablaCompras" layoutX="9.0" layoutY="240.0" prefHeight="338.0" prefWidth="657.0">
               <columns>
-                <TableColumn prefWidth="116.0" text="ID Producto" />
-                <TableColumn prefWidth="93.0" text="Nombre" />
-                  <TableColumn prefWidth="75.0" text="Stock" />
-                  <TableColumn prefWidth="190.0" text="Descripcion" />
-                  <TableColumn prefWidth="182.0" text="Precio" />
+                <TableColumn fx:id="col_IDCompra" prefWidth="72.0" text="ID " />
+                <TableColumn fx:id="col_proveedor" prefWidth="122.4000244140625" text="Empresa proveedor" />
+                  <TableColumn fx:id="col_producto" prefWidth="85.0" text="Producto" />
+                  <TableColumn fx:id="col_cantidad" prefWidth="97.19989013671875" text="Cantidad" />
+                  <TableColumn fx:id="col_fechaP" prefWidth="145.0" text="Fecha Pedido" />
+                  <TableColumn fx:id="col_fechaR" prefWidth="136.5999755859375" text="Fecha Recibido" />
               </columns>
             </TableView>
             <TextField fx:id="fieldFilter" alignment="CENTER" layoutX="80.0" layoutY="113.0" prefHeight="31.0" prefWidth="454.0" promptText="Busca por ID " style="-fx-background-color: beige;" />
@@ -165,23 +166,23 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="txtID" alignment="CENTER" editable="false" layoutX="41.0" layoutY="47.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="331.0" promptText="Este campo solo muestra" style="-fx-background-color: beige; -fx-border-color: #8d5910;" />
+                        <TextField fx:id="txt_ID" alignment="CENTER" editable="false" layoutX="41.0" layoutY="47.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="331.0" promptText="Este campo solo muestra" style="-fx-background-color: beige; -fx-border-color: #8d5910;" />
                         <Label alignment="CENTER" layoutX="4.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="28.0" prefWidth="165.0" style="-fx-background-color: eed09d; -fx-background-radius: 3; -fx-border-color: black; -fx-border-radius: 3;" text="ID ">
                            <font>
                               <Font size="13.0" />
                            </font>
                         </Label>
-                        <ImageView fitHeight="42.0" fitWidth="52.0" layoutX="41.0" layoutY="413.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="42.0" fitWidth="52.0" layoutX="14.0" layoutY="490.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../Imagenes/iconos/Iconos/shopping-cart.png" />
                            </image>
                         </ImageView>
-                        <Label alignment="CENTER" layoutX="5.0" layoutY="318.0" prefHeight="28.0" prefWidth="255.0" style="-fx-background-color: eed09d; -fx-background-radius: 3; -fx-border-color: black; -fx-border-radius: 3;" text="Fecha">
+                        <Label alignment="CENTER" layoutX="5.0" layoutY="318.0" prefHeight="28.0" prefWidth="255.0" style="-fx-background-color: eed09d; -fx-background-radius: 3; -fx-border-color: black; -fx-border-radius: 3;" text="Fecha Pedido">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="txtFecha" layoutX="42.0" layoutY="357.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="331.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
+                        <TextField fx:id="txtFechaPedido" layoutX="42.0" layoutY="357.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="331.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
                         <ImageView fitHeight="39.0" fitWidth="32.0" layoutX="6.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../Imagenes/iconos/Iconos/carne-de-identidad.png" />
@@ -207,70 +208,39 @@
                               <Image url="@../Imagenes/iconos/Iconos/calendar.png" />
                            </image>
                         </ImageView>
-                        <Button layoutX="87.0" layoutY="416.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="141.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="Registrar" textFill="#eed09d">
+                        <Button layoutX="66.0" layoutY="492.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="131.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="Registrar" textFill="#eed09d">
                            <font>
                               <Font name="Dubai Bold" size="14.0" />
                            </font>
                         </Button>
-                        <Button layoutX="87.0" layoutY="475.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="141.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="LImpiar campos" textFill="#eed09d">
+                        <Button layoutX="262.0" layoutY="492.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="128.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="LImpiar campos" textFill="#eed09d">
                            <font>
                               <Font name="Dubai Bold" size="14.0" />
                            </font>
                         </Button>
                         <ComboBox fx:id="CBXProveedor" layoutX="43.0" layoutY="121.0" prefHeight="35.0" prefWidth="331.0" />
                         <ComboBox fx:id="CBXProducto" layoutX="43.0" layoutY="200.0" prefHeight="35.0" prefWidth="331.0" />
-                        <ImageView fitHeight="42.0" fitWidth="52.0" layoutX="41.0" layoutY="471.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="42.0" fitWidth="52.0" layoutX="209.0" layoutY="490.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../Imagenes/iconos/Iconos/clean.png" />
                            </image>
                         </ImageView>
-                     </children>
-                  </AnchorPane>
-               </content>
-            </Tab>
-            <Tab text="Tipo Pago">
-               <content>
-                  <AnchorPane prefHeight="459.0" prefWidth="404.0">
-                     <children>
-                        <Label alignment="CENTER" layoutX="25.0" layoutY="35.0" prefHeight="28.0" prefWidth="165.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="ID" />
-                        <TextField fx:id="TxtIDTP" layoutX="45.0" layoutY="71.0" prefHeight="35.0" prefWidth="331.0" style="-fx-background-color: beige; -fx-border-color: #8d5910;" />
-                        <Label alignment="CENTER" layoutX="25.0" layoutY="126.0" prefHeight="28.0" prefWidth="165.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="Tipo de pago" />
-                        <ComboBox fx:id="CBXTP" layoutX="45.0" layoutY="164.0" prefHeight="35.0" prefWidth="331.0" />
-                        <Label alignment="CENTER" layoutX="25.0" layoutY="217.0" prefHeight="28.0" prefWidth="165.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="Cantidad pagada" />
-                        <TextField fx:id="txtCantidadPagada" layoutX="45.0" layoutY="258.0" prefHeight="35.0" prefWidth="331.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
-                        <Label alignment="CENTER" layoutX="25.0" layoutY="307.0" prefHeight="28.0" prefWidth="165.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="Porcentaje pagado" />
-                        <TextField fx:id="txtPorcentaje" layoutX="45.0" layoutY="349.0" prefHeight="35.0" prefWidth="331.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
-                        <ImageView fitHeight="38.0" fitWidth="40.0" layoutX="6.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true">
+                        <Label alignment="CENTER" layoutX="4.0" layoutY="398.0" prefHeight="28.0" prefWidth="255.0" style="-fx-background-color: eed09d; -fx-background-radius: 3; -fx-border-color: black; -fx-border-radius: 3;" text="Fecha Recibido">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="txtFechaLlego" layoutX="43.0" layoutY="434.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="331.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
+                        <ImageView fitHeight="37.0" fitWidth="32.0" layoutX="6.0" layoutY="436.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../Imagenes/iconos/Iconos/carne-de-identidad.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fitHeight="38.0" fitWidth="40.0" layoutX="6.0" layoutY="163.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../Imagenes/iconos/Iconos/compra.png" />
-                           </image>
-                        </ImageView>
-                        <Label alignment="CENTER" layoutX="25.0" layoutY="401.0" prefHeight="28.0" prefWidth="165.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="Total" />
-                        <TextField fx:id="txtTotal" layoutX="45.0" layoutY="439.0" prefHeight="35.0" prefWidth="331.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
-                        <ImageView fitHeight="38.0" fitWidth="40.0" layoutX="6.0" layoutY="257.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../Imagenes/iconos/Iconos/money.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fitHeight="38.0" fitWidth="40.0" layoutX="6.0" layoutY="348.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../Imagenes/iconos/Iconos/porcentaje.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fitHeight="38.0" fitWidth="40.0" layoutX="6.0" layoutY="438.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../Imagenes/iconos/Iconos/salary.png" />
+                              <Image url="@../Imagenes/iconos/Iconos/calendar.png" />
                            </image>
                         </ImageView>
                      </children>
                   </AnchorPane>
                </content>
             </Tab>
+            <Tab onSelectionChanged="#prueba" text="Pago" />
          </tabs>
       </TabPane>
    </children>

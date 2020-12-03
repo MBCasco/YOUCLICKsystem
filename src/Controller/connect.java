@@ -15,7 +15,7 @@ public class connect {
     public static Connection conDB(){
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/ferreteria","root","");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/ferreteria1","root","140120101305");
             return conn;
         }catch (Exception e){
             JOptionPane.showMessageDialog(null, e);
@@ -126,6 +126,22 @@ public class connect {
         }
         return list;
     }
+    public static ObservableList<compras> getdatacompras(){
+        Connection conn = conDB();
+        ObservableList<compras> list = FXCollections.observableArrayList();
+        try{
+            PreparedStatement ps = conn.prepareStatement("SELECT c.IDCompra, p.empresaProveedor, pr.nombre ,c.cantidad, c.FechaPedido, c.FechaLlegada FROM compra AS c INNER JOIN proveedores AS p ON p.IDProveedor = c.IDProveedor INNER JOIN producto AS pr ON pr.IDProducto = c.IDProducto;");
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()){
+                list.add(new compras (Integer.parseInt(rs.getString("IDCompra")), rs.getString("empresaProveedor"), rs.getString("nombre"), Integer.parseInt(rs.getString("cantidad")), rs.getString("fechaPedido"), rs.getString("fechaLlegada")));
+            }
+        }catch(Exception e){
+        }
+        return list;
+    }
+
+
 
     public static ObservableList<String> getdatasexo(){
         Connection conn = conDB();

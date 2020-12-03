@@ -11,6 +11,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -48,6 +49,11 @@ public class InventarioController extends MenuController implements Initializabl
 
     ObservableList<inventario> listI;
     ObservableList<inventario> dataList;
+
+    public void pruebaI() throws IOException {
+        compra();
+    }
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
