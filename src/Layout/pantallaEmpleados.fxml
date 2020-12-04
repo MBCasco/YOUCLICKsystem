@@ -224,6 +224,7 @@
                   <Image url="@../Imagenes/iconos/Iconos/formulario-de-registro.png" />
                </image>
             </ImageView>
+            <Button layoutX="506.0" layoutY="123.0" mnemonicParsing="false" onAction="#CargoH" style="-fx-background-color: a18262;" text="Ver Cargo Històrico" />
          </children>
       </AnchorPane>
       <ImageView fitHeight="89.0" fitWidth="89.0" layoutX="360.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true">

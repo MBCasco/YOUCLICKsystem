@@ -192,6 +192,11 @@
                            </image>
                         </ImageView>
                         <Button fx:id="btn_clear" layoutX="141.0" layoutY="333.0" mnemonicParsing="false" onAction="#clearFields" prefHeight="37.0" prefWidth="118.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="LIMPIAR CAMPOS" textFill="#eed09d" />
+                        <ImageView fitHeight="42.0" fitWidth="52.0" layoutX="91.0" layoutY="331.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Imagenes/iconos/Iconos/clean.png" />
+                           </image>
+                        </ImageView>
                      </children>
                   </AnchorPane>
             </content>

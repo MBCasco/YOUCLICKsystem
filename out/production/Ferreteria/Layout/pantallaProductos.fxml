@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1360.0" style="-fx-background-color: #616161; -fx-border-width: 3; -fx-border-color: c29b61;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ProductoController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1360.0" style="-fx-background-color: #616161; -fx-border-width: 3; -fx-border-color: c29b61;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ProductoController">
    <children>
       <Label alignment="CENTER" layoutX="233.0" layoutY="18.0" prefHeight="118.0" prefWidth="1114.0" style="-fx-background-color: FFC107; -fx-background-radius: 10; -fx-border-color: c29b61; -fx-border-radius: 5; -fx-border-style: solid; -fx-border-width: 4;" text="PRODUCTOS">
          <font>
@@ -56,7 +57,7 @@
                            </font>
                         </Text>
                         <TextField fx:id="txtDescrpcionP" style="-fx-background-color: beige; -fx-border-color: ffc107;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ubicacion" GridPane.rowIndex="4">
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Pasillo" GridPane.rowIndex="4">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -130,7 +131,7 @@
                   <TableColumn fx:id="col_nombre" minWidth="0.0" prefWidth="177.0" text="Nombre " />
                 <TableColumn fx:id="col_stock" prefWidth="108.0" text="Stock " />
                   <TableColumn fx:id="col_descripcion" minWidth="0.0" prefWidth="219.0" text="Descripción" />
-                  <TableColumn fx:id="col_ubicacion" prefWidth="144.0" text="Ubicación" />
+                  <TableColumn fx:id="col_ubicacion" prefWidth="144.0" text="Pasillo" />
                   <TableColumn fx:id="col_precio" minWidth="0.0" prefWidth="109.0" text="Precio" />
                   <TableColumn fx:id="col_marca" minWidth="0.0" prefWidth="76.0" text="Marca" />
                   <TableColumn fx:id="col_categoria" minWidth="0.0" prefWidth="119.0" text="Categoría" />

@@ -1,7 +1,7 @@
 package Controller;
 
-import Models.categoria;
-import Models.marca;
+import ComboBoxController.categoria;
+import ComboBoxController.marca;
 import Models.producto;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -104,9 +104,9 @@ public class ProductoController extends MenuController implements Initializable 
                 ps.setString(5, String.valueOf(comCat.getSelectionModel().getSelectedItem().getIDCategoria()));
                 ps.execute();
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Confirmacion");
+                alert.setTitle("Confirmación");
                 alert.setHeaderText(null);
-                alert.setContentText("Se agrego el producto exitosamente");
+                alert.setContentText("Se agregó el producto exitosamente");
                 alert.showAndWait();
 
             } catch (Exception e) {
@@ -284,6 +284,7 @@ public class ProductoController extends MenuController implements Initializable 
         stage.show();
     }
 
+    @FXML
     private void clearFields() {
         txtID.clear();
         txtNombreP.clear();
@@ -363,10 +364,10 @@ public class ProductoController extends MenuController implements Initializable 
 
     private boolean validateUbicacion(){
         Pattern p = Pattern.compile("[0-9]{1,8}");
-        Matcher m = p.matcher(txtDescrpcionP.getText().trim());
+        Matcher m = p.matcher(txtUbicacion.getText().trim());
 
 
-        if(m.find() && m.group().equals(txtDescrpcionP.getText())){
+        if(m.find() && m.group().equals(txtUbicacion.getText())){
             return true;
         } else{
             Alert alert =new Alert(Alert.AlertType.WARNING);

@@ -5,11 +5,15 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import javax.swing.*;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -137,7 +141,7 @@ public class EmpleadosController extends MenuController implements Initializable
                 pst.execute();
 
                 Alert alert =new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Error");
+                alert.setTitle("Exito");
                 alert.setHeaderText(null);
                 alert.setContentText("Se agregó empleado exitosamente");
                 alert.showAndWait();
@@ -461,4 +465,10 @@ public class EmpleadosController extends MenuController implements Initializable
 
     }
 
+    public void CargoH (javafx.event.ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/Layout/pantallaCargoHistorico.fxml"));
+        stage.setTitle("Cargo Histórico");
+        stage.setScene(new Scene(root, 1360, 768));
+        stage.show();
+    }
 }
