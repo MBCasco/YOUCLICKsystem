@@ -13,11 +13,11 @@ int cantidad;
         this.idCompra = idCompra;
     }
 
-    public String getempresaProveedor() {
+    public String getEmpresaProveedor() {
         return empresaProveedor;
     }
 
-    public void setempresaProveedor(String empresaProveedor) {
+    public void setEmpresaProveedor(String empresaProveedor) {
         this.empresaProveedor = empresaProveedor;
     }
 
@@ -53,13 +53,13 @@ int cantidad;
         this.cantidad = cantidad;
     }
 
-    public compras(int idCompra, String empresaProveedor, String nombreProducto, int cantidad, String fechaP, String fechaR ) {
+    public compras(int idCompra, int cantidad, String fechaP, String fechaR ,String empresaProveedor, String nombreProducto) {
         this.idCompra = idCompra;
-        this.empresaProveedor = empresaProveedor;
-        this.nombreProducto = nombreProducto;
         this.cantidad = cantidad;
         this.fechaP = fechaP;
         this.fechaR = fechaR;
+        this.empresaProveedor = empresaProveedor;
+        this.nombreProducto = nombreProducto;
 
     }
 }

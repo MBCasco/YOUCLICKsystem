@@ -130,11 +130,11 @@ public class connect {
         Connection conn = conDB();
         ObservableList<compras> list = FXCollections.observableArrayList();
         try{
-            PreparedStatement ps = conn.prepareStatement("SELECT c.IDCompra, p.empresaProveedor, pr.nombre ,c.cantidad, c.FechaPedido, c.FechaLlegada FROM compra AS c INNER JOIN proveedores AS p ON p.IDProveedor = c.IDProveedor INNER JOIN producto AS pr ON pr.IDProducto = c.IDProducto;");
+            PreparedStatement ps = conn.prepareStatement("SELECT c.IDCompra, c.cantidad, c.FechaPedido, c.FechaLlegada, p.empresaProveedor, pr.nombre FROM compra AS c INNER JOIN proveedores AS p ON p.IDProveedor = c.IDProveedor INNER JOIN producto AS pr ON pr.IDProducto = c.IDProducto");
             ResultSet rs = ps.executeQuery();
 
             while(rs.next()){
-                list.add(new compras (Integer.parseInt(rs.getString("IDCompra")), rs.getString("empresaProveedor"), rs.getString("nombre"), Integer.parseInt(rs.getString("cantidad")), rs.getString("fechaPedido"), rs.getString("fechaLlegada")));
+                list.add(new compras (Integer.parseInt(rs.getString("IDCompra")), Integer.parseInt(rs.getString("cantidad")), rs.getString("fechaPedido"), rs.getString("fechaLlegada"), rs.getString("empresaProveedor"), rs.getString("nombre")));
             }
         }catch(Exception e){
         }

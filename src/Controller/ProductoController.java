@@ -1,7 +1,7 @@
 package Controller;
 
-import ComboBoxController.categoria;
-import ComboBoxController.marca;
+import Models.categoria;
+import Models.marca;
 import Models.producto;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -92,45 +92,46 @@ public class ProductoController extends MenuController implements Initializable 
     public void addProducto() throws SQLException {
         conn = connect.conDB();
 
-        if (validateFields() & limite() & validateName()& validateDescripcion() & validateNumberprecio() & validateNumberStock() & validateUbicacion()){
-        try{
-            assert conn != null;
-            PreparedStatement ps = conn.prepareStatement("INSERT INTO producto (nombre,descripcionProducto,precio,IDMarca,IDCategoria) VALUES (?,?,?,?,?)");
+        if (validateFields() & validateName() & validateNumberStock() & validateDescripcion() & validateUbicacion() & validateNumberprecio()) {
+            try {
+                assert conn != null;
+                PreparedStatement ps = conn.prepareStatement("INSERT INTO producto (nombre,descripcionProducto,precio,IDMarca,IDCategoria) VALUES (?,?,?,?,?)");
 
-            ps.setString(1, txtNombreP.getText());
-            ps.setString(2, txtDescrpcionP.getText());
-            ps.setString(3, txtPrecio.getText());
-            ps.setString(4, String.valueOf(comMarca.getSelectionModel().getSelectedItem().getIDMarca()));
-            ps.setString(5, String.valueOf(comCat.getSelectionModel().getSelectedItem().getIDCategoria()));
-            ps.execute();
+                ps.setString(1, txtNombreP.getText());
+                ps.setString(2, txtDescrpcionP.getText());
+                ps.setString(3, txtPrecio.getText());
+                ps.setString(4, String.valueOf(comMarca.getSelectionModel().getSelectedItem().getIDMarca()));
+                ps.setString(5, String.valueOf(comCat.getSelectionModel().getSelectedItem().getIDCategoria()));
+                ps.execute();
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Confirmacion");
+                alert.setHeaderText(null);
+                alert.setContentText("Se agrego el producto exitosamente");
+                alert.showAndWait();
 
-        }catch(Exception e){
-            System.out.println(e);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+            try {
+                PreparedStatement ps1 = conn.prepareStatement("INSERT INTO inventario (stock,ubicacion, IDProducto) VALUES (?,?,LAST_INSERT_ID())");
+
+                ps1.setString(1, txtStock.getText());
+                ps1.setString(2, txtUbicacion.getText());
+                ps1.execute();
+
+                UpdateTable();
+                clearFields();
+
+            } catch (Exception e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Por favor revise que los campos estén llenos correctamente y vuelva a intentar.");
+                alert.showAndWait();
+            }
         }
-        try {
-            PreparedStatement ps1 = conn.prepareStatement("INSERT INTO inventario (stock,ubicacion, IDProducto) VALUES (?,?,LAST_INSERT_ID())");
-
-            ps1.setString(1, txtStock.getText());
-            ps1.setString(2, txtUbicacion.getText());
-            ps1.execute();
-
-        }catch(Exception e){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText(null);
-            alert.setContentText("Por favor revise que los campos estén llenos correctamente y vuelva a intentar.");
-            alert.showAndWait();
-        }
-        }
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Confirmacion");
-        alert.setHeaderText(null);
-        alert.setContentText("Se agrego el producto exitosamente");
-        alert.showAndWait();
-
-        UpdateTable();
-        clearFields();
     }
+
 
 
     public void intCombox (){
@@ -144,6 +145,7 @@ public class ProductoController extends MenuController implements Initializable 
         UpdateTable();
         checkBtnStatus(0);
     }
+
     private void checkBtnStatus(int check) {
         if (check == 1){
             btn_registrar.setDisable(true);
@@ -156,6 +158,7 @@ public class ProductoController extends MenuController implements Initializable 
             btn_eliminar.setDisable(true);
         }
     }
+
     public void UpdateTable(){
         col_producto.setCellValueFactory(new PropertyValueFactory<>("idProducto"));
         col_nombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
@@ -169,6 +172,7 @@ public class ProductoController extends MenuController implements Initializable 
         listP = connect.getdataproducto();
         tablaProductos.setItems(listP);
     }
+
     public void Delete(){
         Alert alert =new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmar");
@@ -201,6 +205,7 @@ public class ProductoController extends MenuController implements Initializable 
             }
         });
     }
+
     public void Edit(){
 
         String value1 = txtID.getText();
@@ -219,6 +224,15 @@ public class ProductoController extends MenuController implements Initializable 
 
             pst = conn.prepareStatement(sql);
             pst.execute();
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Confirmacion");
+            alert.setHeaderText(null);
+            alert.setContentText("Se actualizó exitosamente");
+            alert.showAndWait();
+
+            UpdateTable();
+            clearFields();
 
         }catch(Exception e){
             Alert alert2 = new Alert(Alert.AlertType.ERROR);
@@ -240,16 +254,8 @@ public class ProductoController extends MenuController implements Initializable 
             JOptionPane.showMessageDialog(null, e);
         }
 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Confirmacion");
-        alert.setHeaderText(null);
-        alert.setContentText("Se actualizó exitosamente");
-        alert.showAndWait();
-
-        UpdateTable();
-        clearFields();
-
     }
+
     public void getSelected (javafx.scene.input.MouseEvent event) {
 
         index = tablaProductos.getSelectionModel().getSelectedIndex();
@@ -267,7 +273,7 @@ public class ProductoController extends MenuController implements Initializable 
         comMarca.setValue(col_marca.getCellData(index));
         comCat.setValue(col_categoria.getCellData(index));
         txtEliminar.setText(col_producto.getCellData(index).toString());
-        checkBtnStatus(1);
+        checkBtnStatus(0);
 
     }
 
@@ -277,33 +283,25 @@ public class ProductoController extends MenuController implements Initializable 
         stage.setScene(new Scene(root, 1360, 768));
         stage.show();
     }
+
     private void clearFields() {
         txtID.clear();
         txtNombreP.clear();
         txtDescrpcionP.clear();
         txtStock.clear();
         txtUbicacion.clear();
+        txtPrecio.clear();
         comMarca.setValue(null);
         comCat.setValue(null);
         txtEliminar.clear();
         checkBtnStatus(0);
     }
-    private boolean validateNumberprecio(){
-        Pattern p = Pattern.compile("[0-9]+(\\.[0-9])");
-        Matcher m = p.matcher(txtPrecio.getText().trim());
 
-        if(m.find() && m.group().equals(txtPrecio.getText())){
-            return true;
-        } else{
-            Alert alert =new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Validar Precio");
-            alert.setHeaderText(null);
-            alert.setContentText("Verifique la siguiente informacion: " +
-                    " \n Acepta decimales.");
-            alert.showAndWait();
-            return false;
-        }
-    }
+    /*
+        ////////////
+        VALIDACIONES
+        ////////////
+     */
 
     private boolean validateName(){
         Pattern p = Pattern.compile("^([A-Z]{1}[a-z]+[ ]*)$");
@@ -315,53 +313,18 @@ public class ProductoController extends MenuController implements Initializable 
             Alert alert =new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Validar Nombre");
             alert.setHeaderText(null);
-            alert.setContentText("Por favor ingresar un nombre válido." +
-                    " Deberá escribir un nombre que contenga:\n" +
-                    " - Primera letra mayúscula\n" +
-                    " ejemplo: Alambre");
+            alert.setContentText("Verifique la siguiente informacion: " +
+                    " \n-Este campo solo acepta letras" +
+                    " \n-El nombre escrito debe llevar la primera letra en mayuscula " +
+                    " \nEj: Alambre");
             alert.showAndWait();
 
             return false;
         }
     }
-    private boolean validateDescripcion(){
-        Pattern p = Pattern.compile("[A-Za-z ]+");
-        Matcher m = p.matcher(txtDescrpcionP.getText());
 
-        if(m.find() && m.group().equals(txtDescrpcionP.getText())){
-            return true;
-        } else{
-            Alert alert =new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Validar direción");
-            alert.setHeaderText(null);
-            alert.setContentText("Por favor ingresar una descripcion válida." +
-                    "\n Ej: Alambre de amarre");
-            alert.showAndWait();
-
-
-            return false;
-        }
-    }
-    private boolean validateUbicacion(){
-        Pattern p = Pattern.compile("[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)");
-        Matcher m = p.matcher(txtDescrpcionP.getText());
-
-        if(m.find() && m.group().equals(txtDescrpcionP.getText())){
-            return true;
-        } else{
-            Alert alert =new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Validar direción");
-            alert.setHeaderText(null);
-            alert.setContentText("Por favor ingresar una ubicacion válida." +
-                    "\n Ej: Pasillo 4");
-            alert.showAndWait();
-
-
-            return false;
-        }
-    }
     private boolean validateNumberStock(){
-        Pattern p = Pattern.compile("[0-9]+");
+        Pattern p = Pattern.compile("[0-9]{1,8}");
         Matcher m = p.matcher(txtStock.getText().trim());
 
         if(m.find() && m.group().equals(txtStock.getText())){
@@ -370,16 +333,75 @@ public class ProductoController extends MenuController implements Initializable 
             Alert alert =new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Validar Stock");
             alert.setHeaderText(null);
-            alert.setContentText("Verifique la siguiente información: " +
-                    " \n Ingrese un número entero.");
+            alert.setContentText("Verifique la siguiente informacion: " +
+                    " \n-Este campo solo acepta numeros" +
+                    " \n-Que el numero que ingreso sea entero" +
+                    " \n-Y el numero que ingreso contenga maximo 8 digitos");
             alert.showAndWait();
             return false;
         }
     }
 
+    private boolean validateDescripcion(){
+        Pattern p = Pattern.compile("[A-Za-z ]+");
+        Matcher m = p.matcher(txtDescrpcionP.getText());
+
+        if(m.find() && m.group().equals(txtDescrpcionP.getText())){
+            return true;
+        } else{
+            Alert alert =new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Validar Descripcion");
+            alert.setHeaderText(null);
+            alert.setContentText("Verifique la siguiente informacion: " +
+                    " \n-Este campo solo acepta letras" +
+                    " \n-Ingresar una descripcion válida" +
+                    " \nEj: Alambre de amarre");
+            alert.showAndWait();
+            return false;
+        }
+    }
+
+    private boolean validateUbicacion(){
+        Pattern p = Pattern.compile("[0-9]{1,8}");
+        Matcher m = p.matcher(txtDescrpcionP.getText().trim());
+
+
+        if(m.find() && m.group().equals(txtDescrpcionP.getText())){
+            return true;
+        } else{
+            Alert alert =new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Validar Pasillo");
+            alert.setHeaderText(null);
+            alert.setContentText("Verifique la siguiente informacion: " +
+                    " \n-Ingrese solo el numero del pasillo" +
+                    " \n-Este campo solo acepta numeros" +
+                    " \n-El numero que ingreso debe contener maximo 2 digitos");
+            alert.showAndWait();
+
+
+            return false;
+        }
+    }
+
+    private boolean validateNumberprecio(){
+        Pattern p = Pattern.compile("[0-9]+(.[0-9]+)");
+        Matcher m = p.matcher(txtPrecio.getText().trim());
+
+        if(m.find() && m.group().equals(txtPrecio.getText())){
+            return true;
+        } else{
+            Alert alert =new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Validar Precio");
+            alert.setHeaderText(null);
+            alert.setContentText("Verifique la siguiente informacion: " +
+                    " \n-Este campo solo numeros decimales");
+            alert.showAndWait();
+            return false;
+        }
+    }
 
     private boolean validateFields(){
-        if (txtNombreP.getText().isEmpty() | txtDescrpcionP.getText().isEmpty() | txtStock.getText().isEmpty() | txtUbicacion.getText().isEmpty()  | txtPrecio.getText().isEmpty() ){
+        if (txtNombreP.getText().isEmpty() | txtStock.getText().isEmpty()  | txtDescrpcionP.getText().isEmpty() | txtUbicacion.getText().isEmpty() | txtPrecio.getText().isEmpty()){
 
             Alert alert =new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Espacios vacios!");
@@ -391,6 +413,8 @@ public class ProductoController extends MenuController implements Initializable 
         }
         return true;
     }
+
+    /*
     private boolean limite(){
         if(txtNombreP.getText().length() >= 35){
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -423,6 +447,5 @@ public class ProductoController extends MenuController implements Initializable 
 
     }
 
-
-
+     */
 }

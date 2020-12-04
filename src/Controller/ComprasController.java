@@ -10,11 +10,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+
+import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class ComprasController  extends MenuController implements Initializable {
@@ -38,9 +41,9 @@ public class ComprasController  extends MenuController implements Initializable 
     @FXML
     private TextField txtcantidad;
     @FXML
-    private TextField txtfechaP;
+    private DatePicker DataFechaP;
     @FXML
-    private TextField txtfechaR;
+    private DatePicker DataFechaR;
     @FXML
     private ComboBox<proveedor> CBXProveedor;
     @FXML
@@ -59,6 +62,7 @@ public class ComprasController  extends MenuController implements Initializable 
     Connection conn = null;
     ResultSet rs = null;
     PreparedStatement pst = null;
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yy");
 
 
     public void prueba() throws IOException {
@@ -77,13 +81,13 @@ public class ComprasController  extends MenuController implements Initializable 
 
     public void AddCompra(){
         conn = connect.conDB();
-        String sql = "insert into compra (cantidad,FechaPedido, FechaLlegada, IDProveedor, IDProducto)values(?,?,?,?,?)";
+        String sql = "INSERT INTO compra (cantidad, FechaPedido, FechaLlegada, IDProveedor, IDProducto) VALUES (?,?,?,?,?)";
         //if (validateFields() & limite() & validateName() & validateEmail() & validateDireccion()) {
             try {
                 pst = conn.prepareStatement(sql);
                 pst.setString(1, txtcantidad.getText());
-                pst.setString(2, txtfechaP.getText());
-                pst.setString(3, txtfechaR.getText());
+                pst.setString(2, DataFechaP.getValue().format(formatter));
+                pst.setString(3, DataFechaR.getValue().format(formatter));
                 pst.setString(4, String.valueOf(CBXProveedor.getSelectionModel().getSelectedItem().getIDProveedor()));
                 pst.setString(5, String.valueOf(CBXProducto.getSelectionModel().getSelectedItem().getIDProducto()));
                 pst.execute();
@@ -98,11 +102,10 @@ public class ComprasController  extends MenuController implements Initializable 
                 Search_compra();
 
             } catch (Exception e) {
-                Alert alert =new Alert(Alert.AlertType.WARNING);
+                Alert alert =new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText(null);
-                alert.setContentText("El correo debe ser único." +
-                        "\n Revise que su correo sea único y vuelva a intentarlo.");
+                alert.setContentText("Por favor revise los campos que esten llenos correctamente");
                 alert.showAndWait();
             }
         //}
@@ -165,7 +168,7 @@ public class ComprasController  extends MenuController implements Initializable 
                 }
                 String lowerCaseFilter = newValue.toLowerCase();
 
-                if (person.getempresaProveedor().toLowerCase().indexOf(lowerCaseFilter) != -1) {
+                if (person.getEmpresaProveedor().toLowerCase().indexOf(lowerCaseFilter) != -1) {
                     return true;
                 }else if (String.valueOf(person.getIdCompra()).indexOf(lowerCaseFilter)!=-1)
                     return true;
