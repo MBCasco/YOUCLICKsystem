@@ -1,77 +1,90 @@
 package Models;
 
-public class empleados {
-    int idEmpleado;
-    int telefonoE;
-    String sexoE;
-    String cargoE;
-    String nombreE;
-    String direccionE;
-    String correoE;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 
+public class empleados {
+    public int getIdEmpleado() {
+        return idEmpleado;
+    }
 
     public void setIdEmpleado(int idEmpleado) {
         this.idEmpleado = idEmpleado;
+    }
+
+    public int getTelefonoE() {
+        return telefonoE;
     }
 
     public void setTelefonoE(int telefonoE) {
         this.telefonoE = telefonoE;
     }
 
-    public void setNombreE(String nombreE) {
-        this.nombreE = nombreE;
+    public String getSexoE() {
+        return sexoE;
     }
 
-
-    public void setDireccionE(String direccionE) {
-        this.direccionE = direccionE;
+    public void setSexoE(String sexoE) {
+        this.sexoE = sexoE;
     }
 
-    public void setCorreoE(String correoE) {
-        this.correoE = correoE;
-    }
-
-    public void setSexoE(String SexoE) {
-        this.sexoE = SexoE;
+    public String getCargoE() {
+        return cargoE;
     }
 
     public void setCargoE(String cargoE) {
         this.cargoE = cargoE;
     }
 
-    public int getIdEmpleado() { return idEmpleado; }
-
-    public int getTelefonoE() {
-        return telefonoE;
+    public String getNombreE() {
+        return nombreE.get();
     }
 
-    public String getNombreE() {
+    public SimpleStringProperty nombreEProperty() {
         return nombreE;
+    }
+
+    public void setNombreE(String nombreE) {
+        this.nombreE.set(nombreE);
     }
 
     public String getDireccionE() {
         return direccionE;
     }
 
+    public void setDireccionE(String direccionE) {
+        this.direccionE = direccionE;
+    }
+
     public String getCorreoE() {
         return correoE;
     }
 
-    public String getSexoE() {
-        return sexoE;
+    public void setCorreoE(String correoE) {
+        this.correoE = correoE;
     }
-    public String getCargoE() {
-        return cargoE;
-    }
+
+    int idEmpleado;
+    int telefonoE;
+    String sexoE;
+    String cargoE;
+    SimpleStringProperty nombreE;
+    String direccionE;
+    String correoE;
 
 
     public empleados( int idEmpleado, String nombreE, String direccionE , int telefonoE, String correoE ,String cargoE, String sexoE ) {
         this.idEmpleado = idEmpleado;
         this.cargoE = cargoE;
-        this.nombreE = nombreE;
+        this.nombreE = new SimpleStringProperty(nombreE);
         this.direccionE = direccionE;
         this.correoE = correoE;
         this.sexoE = sexoE;
         this.telefonoE = telefonoE;
+    }
+
+    @Override
+    public String toString(){
+        return nombreE.get();
     }
 }

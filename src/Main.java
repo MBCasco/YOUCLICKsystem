@@ -16,12 +16,6 @@ public class Main extends Application implements GlobalConstans {
 
     //Estas son las variables de la conexion a la BD
 
-    private static Connection con;
-    private static final String driver="com.mysql.cj.jdbc.Driver";
-    private static final String user="uzarfsc6tdyihxyb";
-    private static final String pass="emPtsIbZlNSpWdC6dfcx";
-    private static final String url="jdbc:mysql://uzarfsc6tdyihxyb:emPtsIbZlNSpWdC6dfcx@bn5ipqznij2ib3blk0ie-mysql.services.clever-cloud.com:3306/bn5ipqznij2ib3blk0ie";
-
 
     public static void main(String[] args) {
         launch(args);

@@ -15,7 +15,7 @@ public class connect {
     public static Connection conDB(){
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/ferreteria","root","");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/ferreteria","root","qwerty123456789");
             return conn;
         }catch (Exception e){
             JOptionPane.showMessageDialog(null, e);
@@ -189,5 +189,27 @@ public class connect {
 
     }
 
+    public static ObservableList<factura> getDataFactura() {
+
+        Connection conn = conDB();
+        ObservableList<factura> list = FXCollections.observableArrayList();
+        try{
+            PreparedStatement ps = conn.prepareStatement(  "SELECT  t2.IDProducto,t1.IDDetalleFactura,t2.nombre,t2.precio,t1.cantidad\n" +
+                    "FROM\n" +
+                    "    detallefactura as t1\n" +
+                    "INNER JOIN producto as t2 \n" +
+                    "    ON t1.IDProducto = t2.IDProducto;");
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()){
+                list.add(new factura(rs.getInt("IDProducto"),rs.getInt("IDDetalleFactura"),rs.getString("nombre"),rs.getDouble("precio"),rs.getInt("cantidad") ));
+            }
+        }catch(Exception e){
+        }
+        return list;
+
+
+
+    }
 }
 

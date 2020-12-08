@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
@@ -8,27 +9,26 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1360.0" style="-fx-background-color: #616161; -fx-border-color: c29b61; -fx-border-width: 3;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.FacturaController">
    <children>
-      <TableView layoutX="248.0" layoutY="408.0" prefHeight="289.0" prefWidth="1076.0" style="-fx-background-color: eed09d;">
+      <TableView fx:id="tablaFactura" layoutX="860.0" layoutY="408.0" onMouseClicked="#getSelectedF" prefHeight="289.0" prefWidth="464.0" style="-fx-background-color: eed09d;">
         <columns>
-          <TableColumn editable="false" minWidth="0.0" prefWidth="223.66665649414062" text="Producto" />
-            <TableColumn editable="false" prefWidth="244.3333740234375" text="Precio actual" />
-            <TableColumn editable="false" prefWidth="272.6666259765625" text="Cantidad" />
-            <TableColumn editable="false" prefWidth="200.0" text="SubTotal" />
+            <TableColumn fx:id="ColIDP" editable="false" minWidth="0.0" prefWidth="85.6666259765625" text="ID" />
+          <TableColumn fx:id="ColProcducto" editable="false" minWidth="0.0" prefWidth="85.6666259765625" text="Producto" />
+            <TableColumn fx:id="ColPrecioF" editable="false" minWidth="0.0" prefWidth="123.0" text="Precio" />
+            <TableColumn fx:id="ColCantidad" editable="false" prefWidth="72.0" text="Cantidad" />
+            <TableColumn fx:id="ColIDF" editable="false" minWidth="0.0" prefWidth="103.0" text="IDF" visible="false" />
+            <TableColumn fx:id="colSubTotal1" editable="false" minWidth="0.0" prefWidth="103.0" />
         </columns>
       </TableView>
-      <TextField editable="false" layoutX="622.0" layoutY="707.0" prefHeight="44.0" prefWidth="221.0" promptText="SubTotal" style="-fx-border-color: ffc107;" />
-      <TextField editable="false" layoutX="856.0" layoutY="707.0" prefHeight="44.0" prefWidth="224.0" promptText="Impuesto I.S.V" style="-fx-border-color: ffc107;" />
-      <TextField editable="false" layoutX="1088.0" layoutY="707.0" prefHeight="44.0" prefWidth="224.0" promptText="Total" style="-fx-border-color: ffc107;" />
-      <AnchorPane layoutX="250.0" layoutY="143.0" prefHeight="247.0" prefWidth="712.0" style="-fx-background-color: d5c5ae; -fx-border-color: ffc107; -fx-border-width: 2; -fx-background-radius: 5; -fx-border-radius: 5;">
+      <TextField fx:id="txt_subTotal" editable="false" layoutX="622.0" layoutY="707.0" prefHeight="44.0" prefWidth="221.0" promptText="SubTotal" style="-fx-border-color: ffc107;" />
+      <TextField fx:id="txt_isv" editable="false" layoutX="856.0" layoutY="707.0" prefHeight="44.0" prefWidth="224.0" promptText="Impuesto I.S.V" style="-fx-border-color: ffc107;" />
+      <TextField fx:id="txt_total" editable="false" layoutX="1088.0" layoutY="707.0" prefHeight="44.0" prefWidth="224.0" promptText="Total" style="-fx-border-color: ffc107;" />
+      <AnchorPane layoutX="255.0" layoutY="144.0" prefHeight="247.0" prefWidth="712.0" style="-fx-background-color: d5c5ae; -fx-border-color: ffc107; -fx-border-width: 2; -fx-background-radius: 5; -fx-border-radius: 5;">
          <children>
-            <TextField editable="false" layoutX="42.0" layoutY="23.0" prefHeight="39.0" prefWidth="224.0" promptText="ID Factura" style="-fx-border-color: ffc107;" />
-            <TextField layoutX="368.0" layoutY="23.0" prefHeight="39.0" prefWidth="246.0" promptText="Fecha" style="-fx-border-color: ffc107;" />
-            <TextField editable="false" layoutX="420.0" layoutY="183.0" prefHeight="39.0" prefWidth="129.0" promptText="Precio Unitario" style="-fx-border-color: FFC107;" />
-            <TextField editable="false" layoutX="558.0" layoutY="183.0" prefHeight="39.0" prefWidth="139.0" promptText="Stock Actual" style="-fx-border-color: ffc107;" />
-            <ComboBox layoutX="42.0" layoutY="183.0" prefHeight="39.0" prefWidth="224.0" promptText="Nombre del producto" style="-fx-background-color: eed09d; -fx-border-color: a18262; -fx-border-width: 2;" />
-            <ComboBox layoutX="42.0" layoutY="97.0" prefHeight="39.0" prefWidth="224.0" promptText="Nombre del cliente" style="-fx-background-color: eed09d; -fx-border-color: a18262; -fx-border-width: 2;" />
-            <TextField layoutX="288.0" layoutY="183.0" prefHeight="39.0" prefWidth="122.0" promptText="Cantidad" style="-fx-border-color: ffc107;" />
-            <ComboBox layoutX="369.0" layoutY="97.0" prefHeight="39.0" prefWidth="246.0" promptText="Nombre del empleado" style="-fx-background-color: eed09d; -fx-border-color: a18262; -fx-border-width: 2;" />
+            <TextField fx:id="txt_IDFactura" editable="false" layoutX="42.0" layoutY="23.0" prefHeight="39.0" prefWidth="224.0" promptText="ID Factura" style="-fx-border-color: ffc107;" />
+            <TextField fx:id="txt_precio" editable="false" layoutX="474.0" layoutY="180.0" prefHeight="39.0" prefWidth="100.0" promptText="Precio Unitario" style="-fx-border-color: FFC107;" />
+            <TextField fx:id="txt_stock" editable="false" layoutX="596.0" layoutY="180.0" prefHeight="39.0" prefWidth="88.0" promptText="Stock Actual" style="-fx-border-color: ffc107;" />
+            <TextField fx:id="txt_cantidad" layoutX="378.0" layoutY="180.0" prefHeight="39.0" prefWidth="82.0" promptText="Cantidad" style="-fx-border-color: ffc107;" />
+            <ComboBox fx:id="comEmpleados" layoutX="369.0" layoutY="97.0" prefHeight="39.0" prefWidth="246.0" promptText="Nombre del empleado" style="-fx-background-color: eed09d; -fx-border-color: a18262; -fx-border-width: 2;" />
             <ImageView fitHeight="44.0" fitWidth="29.0" layoutX="335.0" layoutY="99.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../Imagenes/iconos/Iconos/employee.png" />
@@ -54,34 +54,40 @@
                   <Image url="@../Imagenes/iconos/Iconos/calendar.png" />
                </image>
             </ImageView>
+            <TextField fx:id="txt_IDP" editable="false" layoutX="282.0" layoutY="180.0" prefHeight="39.0" prefWidth="82.0" promptText="ID Producto" style="-fx-border-color: ffc107;" />
+            <DatePicker fx:id="dp" layoutX="373.0" layoutY="26.0" />
+            <Button fx:id="btn_seleccionarCliente" layoutX="42.0" layoutY="95.0" mnemonicParsing="false" onAction="#selectCliente" prefHeight="37.0" prefWidth="224.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="SELECCIONAR CLIENTE" textFill="#eed09d" />
+            <TextField fx:id="txt_search" layoutX="42.0" layoutY="180.0" prefHeight="39.0" prefWidth="224.0" promptText="Buscar producto" style="-fx-border-color: ffc107;" />
+            <TextField fx:id="txt_IDCliente" editable="false" layoutX="42.0" layoutY="94.0" prefHeight="39.0" prefWidth="72.0" promptText="ID Cliente" style="-fx-border-color: ffc107;" />
+            <Label alignment="CENTER" layoutX="279.0" layoutY="147.0" prefHeight="25.0" prefWidth="88.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="ID PRODUCTO" textFill="#8d5910">
+               <font>
+                  <Font name="Dubai Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="375.0" layoutY="147.0" prefHeight="25.0" prefWidth="88.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="CANTIDAD" textFill="#8d5910">
+               <font>
+                  <Font name="Dubai Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="471.0" layoutY="147.0" prefHeight="25.0" prefWidth="106.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="PRECIO UNITARIO" textFill="#8d5910">
+               <font>
+                  <Font name="Dubai Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelStock" alignment="CENTER" layoutX="590.0" layoutY="147.0" prefHeight="25.0" prefWidth="100.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="STOCK ACTUAL" textFill="#8d5910">
+               <font>
+                  <Font name="Dubai Bold" size="12.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txt_nombreCliente" editable="false" layoutX="114.0" layoutY="94.0" prefHeight="39.0" prefWidth="151.0" promptText="Nombre" style="-fx-border-color: ffc107;" />
          </children>
       </AnchorPane>
-      <Button layoutX="1234.0" layoutY="246.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="114.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="Imprimir" textFill="#eed09d">
-         <font>
-            <Font name="Dubai Bold" size="18.0" />
-         </font>
-      </Button>
-      <Button layoutX="1235.0" layoutY="161.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="114.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="Quitar" textFill="#eed09d">
-         <font>
-            <Font name="Dubai Bold" size="18.0" />
-         </font>
-      </Button>
-      <Button layoutX="1015.0" layoutY="159.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="159.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="Agregar articulo" textFill="#eed09d">
-         <font>
-            <Font name="Dubai Bold" size="18.0" />
-         </font>
-      </Button>
-      <ImageView fitHeight="51.0" fitWidth="37.0" layoutX="968.0" layoutY="161.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="51.0" fitWidth="37.0" layoutX="968.0" layoutY="293.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Imagenes/iconos/Iconos/shopping-cart.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="39.0" fitWidth="37.0" layoutX="1193.0" layoutY="248.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../Imagenes/iconos/Iconos/impresion.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="52.0" fitWidth="37.0" layoutX="1194.0" layoutY="163.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="52.0" fitWidth="37.0" layoutX="1125.0" layoutY="338.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Imagenes/iconos/Iconos/eliminar2.png" />
          </image>
@@ -176,25 +182,40 @@
             </VBox>
          </children>
       </VBox>
-      <Button layoutX="1011.0" layoutY="246.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="167.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="Agregar factura" textFill="#eed09d">
-         <font>
-            <Font name="Dubai Bold" size="18.0" />
-         </font>
-      </Button>
-      <ImageView fitHeight="51.0" fitWidth="37.0" layoutX="968.0" layoutY="248.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="51.0" fitWidth="37.0" layoutX="966.0" layoutY="169.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Imagenes/iconos/Iconos/receipt.png" />
          </image>
       </ImageView>
-      <Button layoutX="1100.0" layoutY="319.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="147.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="Limpiar" textFill="#eed09d">
-         <font>
-            <Font name="Dubai Bold" size="18.0" />
-         </font>
-      </Button>
-      <ImageView fitHeight="51.0" fitWidth="37.0" layoutX="1058.0" layoutY="321.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="51.0" fitWidth="37.0" layoutX="968.0" layoutY="216.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Imagenes/iconos/Iconos/clean.png" />
          </image>
       </ImageView>
+      <Button fx:id="btn_agregar" layoutX="1020.0" layoutY="295.0" mnemonicParsing="false" onAction="#AddProducto" prefHeight="37.0" prefWidth="95.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="AGREGAR" textFill="#eed09d" />
+      <Button fx:id="btn_eliminar" layoutX="1162.0" layoutY="338.0" mnemonicParsing="false" onAction="#Delete" prefHeight="37.0" prefWidth="95.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="ELIMINAR" textFill="#eed09d" />
+      <Button fx:id="btn_facturar" layoutX="1018.0" layoutY="169.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="95.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="FACTURAR" textFill="#eed09d" />
+      <Button fx:id="btn_clean" layoutX="1019.0" layoutY="216.0" mnemonicParsing="false" onAction="#clearfields" prefHeight="37.0" prefWidth="95.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="LIMPIAR" textFill="#eed09d" />
+      <Button fx:id="btn_actualizar" layoutX="1020.0" layoutY="338.0" mnemonicParsing="false" onAction="#Edit" prefHeight="37.0" prefWidth="95.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="ACTUALIZAR" textFill="#eed09d" />
+      <TableView fx:id="tableInventario" layoutX="255.0" layoutY="408.0" onMouseClicked="#getSelected" prefHeight="289.0" prefWidth="598.0" style="-fx-background-color: eed09d; -fx-border-color: a18262; -fx-border-radius: 5; -fx-background-radius: 5; -fx-border-width: 2;">
+         <columns>
+            <TableColumn fx:id="ColID" prefWidth="28.0" text="ID " />
+            <TableColumn fx:id="ColNombre" minWidth="0.0" prefWidth="115.0" text="Nombre " />
+            <TableColumn fx:id="ColStock" prefWidth="85.0" text="Stock" />
+            <TableColumn fx:id="ColDescrip" minWidth="0.0" prefWidth="109.0" text="Descripción" />
+            <TableColumn fx:id="ColPrecio" minWidth="0.0" prefWidth="105.0" text="Precio" />
+            <TableColumn fx:id="ColMarca" minWidth="0.0" prefWidth="95.0" text="Marca" />
+         </columns>
+      </TableView>
+      <TableView fx:id="table_clientes" fixedCellSize="0.0" layoutX="253.0" layoutY="408.0" onMouseClicked="#getSelectedC" prefHeight="289.0" prefWidth="598.0" style="-fx-background-color: eed09d; -fx-border-color: a18262; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-width: 2;">
+         <columns>
+            <TableColumn fx:id="col_cliente" prefWidth="80.333251953125" text="ID" />
+            <TableColumn fx:id="col_nombre" prefWidth="97.33331298828125" text="Nombre" />
+            <TableColumn fx:id="col_direccion" prefWidth="92.66668701171875" text="Dirección" />
+            <TableColumn fx:id="col_telefono" prefWidth="80.333251953125" text="Teléfono" />
+            <TableColumn fx:id="col_correo" prefWidth="139.666748046875" text="Correo electrónico" />
+            <TableColumn fx:id="col_Sexo" prefWidth="100.0" text="Género" />
+         </columns>
+      </TableView>
    </children>
 </AnchorPane>

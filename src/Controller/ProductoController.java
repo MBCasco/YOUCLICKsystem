@@ -273,7 +273,7 @@ public class ProductoController extends MenuController implements Initializable 
         comMarca.setValue(col_marca.getCellData(index));
         comCat.setValue(col_categoria.getCellData(index));
         txtEliminar.setText(col_producto.getCellData(index).toString());
-        checkBtnStatus(0);
+        checkBtnStatus(1);
 
     }
 
