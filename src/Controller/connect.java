@@ -15,7 +15,7 @@ public class connect {
     public static Connection conDB(){
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/ferreteria","root","qwerty123456789");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/ferreteria1","root","140120101305");
             return conn;
         }catch (Exception e){
             JOptionPane.showMessageDialog(null, e);
@@ -135,6 +135,21 @@ public class connect {
 
             while(rs.next()){
                 list.add(new compras (Integer.parseInt(rs.getString("IDCompra")), Integer.parseInt(rs.getString("cantidad")), rs.getString("fechaPedido"), rs.getString("fechaLlegada"), rs.getString("empresaProveedor"), rs.getString("nombre")));
+            }
+        }catch(Exception e){
+        }
+        return list;
+    }
+    public static ObservableList<pago> getdatapago(int value){
+        Connection conn = conDB();
+        ObservableList<pago> list = FXCollections.observableArrayList();
+        try{
+            PreparedStatement ps = conn.prepareStatement("SELECT p.IDPago, c.IDCompra, tp.desTipoPago, d.cantidadPagada, d.porcentajePagado, p.totalPago FROM pago AS p INNER JOIN compra AS c ON c.IDCompra = p.IDCompra INNER JOIN detalledepago AS d ON d.IDDetalleDePago = p.IDDetalleDePago INNER JOIN tipopago AS tp ON tp.IDTipoPago = d.IDTipoPago WHERE c.IDCompra = ?");
+            ps.setInt(1, value);
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()){
+                list.add(new pago(Integer.parseInt(rs.getString("IDPago")), Integer.parseInt(rs.getString("IDCompra")), rs.getString("desTipoPago"), Double.parseDouble(rs.getString("cantidadPagada")), Double.parseDouble(rs.getString("porcentajePagado")), Double.parseDouble(rs.getString("totalPago"))));
             }
         }catch(Exception e){
         }
