@@ -255,15 +255,23 @@ public class FacturaController extends MenuController implements Initializable {
                 CrearFactura();
                 factura = connect.getDataFacturat();
                 int n = factura.size();
-                ID = factura.get(n-1).getIDFactura();
+                if (n <1 ){
+                    ID = 1;
+                }else {
+                    ID = factura.get(n-1).getIDFactura();
+                }
+
                 exist = 1;
                 Integer value1 = ID;
 
                 String sqls = "update facturat set IDDetalleFactura= '" + value1 + "  'where IDFactura='" + value1 + "' ";
+                String sqls2 = "update facturat set IDPago= '" + value1 + "  'where IDFactura='" + value1 + "' ";
 
                 pst = conn.prepareStatement(sqls);
                 pst.execute();
-                System.out.println("exist cambio" + exist);
+                pst = conn.prepareStatement(sqls2);
+                pst.execute();
+
 
             }
 
@@ -305,19 +313,7 @@ public class FacturaController extends MenuController implements Initializable {
 
     public void trasferir() throws SQLException {
 
-       String sql1 = "insert into factura select * from facturat where IDFactura = ?;";
-        try {
-            pst = conn.prepareStatement(sql1);
-            pst.setInt(1,ID);
-            pst.execute();
-
-        } catch (Exception e) {
-            Alert alert =new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Error");
-        }
-
-
-       String sql2 = "insert into detallefactura select * from detallefacturat where IDFactura = ?;";
+        String sql2 = "insert into detallefactura select * from detallefacturat where IDFactura = ?;";
         try {
             pst = conn.prepareStatement(sql2);
             pst.setInt(1,ID);
@@ -327,6 +323,19 @@ public class FacturaController extends MenuController implements Initializable {
             Alert alert =new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Error");
         }
+
+       String sql1 = "insert into factura select * from facturat where IDFactura = ?;";
+        try {
+            pst = conn.prepareStatement(sql1);
+            pst.setInt(1,ID);
+            pst.execute();
+            System.out.println("entrada");
+        } catch (Exception e) {
+            Alert alert =new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Error");
+
+        }
+
 
     }
 
@@ -338,9 +347,11 @@ public class FacturaController extends MenuController implements Initializable {
             pst.setString(1, dp.getValue().format(formatterF));
             pst.setInt(2, Integer.parseInt(txt_IDCliente.getText()));
             pst.setInt(3, comEmpleados.getSelectionModel().getSelectedItem().getIdEmpleado());
-            pst.setDouble(4,12.0 );
-            pst.setDouble(5, 12.0);
-            pst.setDouble(6, 12.0);
+            pst.setDouble(4,0.0);
+            pst.setDouble(5, 0.0);
+            pst.setDouble(6, 0.0);
+
+
 
             pst.execute();
             Alert alert =new Alert(Alert.AlertType.INFORMATION);

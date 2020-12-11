@@ -344,12 +344,12 @@
                                     <Image url="@../Imagenes/iconos/Iconos/csc.png" />
                                  </image>
                               </ImageView>
-                              <Button fx:id="btnRegistar" layoutX="822.0" layoutY="254.0" mnemonicParsing="false" onAction="#add_pago" prefHeight="31.0" prefWidth="85.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="Registrar" textFill="#eed09d">
+                              <Button fx:id="btnRegistar" layoutX="771.0" layoutY="254.0" mnemonicParsing="false" onAction="#add_pago" prefHeight="31.0" prefWidth="85.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="Registrar" textFill="#eed09d">
                                  <font>
                                     <Font name="Dubai Bold" size="15.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="btn_limpiar" layoutX="974.0" layoutY="254.0" mnemonicParsing="false" onAction="#clearFields" prefHeight="31.0" prefWidth="85.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="Limpiar" textFill="#eed09d">
+                              <Button fx:id="btn_limpiar" layoutX="888.0" layoutY="254.0" mnemonicParsing="false" onAction="#clearFields" prefHeight="31.0" prefWidth="85.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="Limpiar" textFill="#eed09d">
                                  <font>
                                     <Font name="Dubai Bold" size="15.0" />
                                  </font>
@@ -376,16 +376,21 @@
                                     <Image url="@../Imagenes/iconos/Iconos/man.png" />
                                  </image>
                               </ImageView>
-                              <ImageView fitHeight="30.0" fitWidth="31.0" layoutX="781.0" layoutY="259.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="30.0" fitWidth="31.0" layoutX="735.0" layoutY="259.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../Imagenes/iconos/Iconos/moneyperder.png" />
                                  </image>
                               </ImageView>
-                              <ImageView fitHeight="30.0" fitWidth="31.0" layoutX="930.0" layoutY="259.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="30.0" fitWidth="31.0" layoutX="856.0" layoutY="259.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../Imagenes/iconos/Iconos/clean.png" />
                                  </image>
                               </ImageView>
+                              <Button fx:id="btn_finalizarFactura" layoutX="982.0" layoutY="254.0" mnemonicParsing="false" onAction="#trasferir" prefHeight="40.0" prefWidth="133.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="Finalizar Factura" textFill="#eed09d">
+                                 <font>
+                                    <Font name="Dubai Bold" size="15.0" />
+                                 </font>
+                              </Button>
                            </children>
                         </AnchorPane>
                      </children>
