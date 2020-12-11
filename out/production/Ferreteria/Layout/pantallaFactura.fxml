@@ -194,7 +194,7 @@
       </ImageView>
       <Button fx:id="btn_agregar" layoutX="1020.0" layoutY="295.0" mnemonicParsing="false" onAction="#AddProducto" prefHeight="37.0" prefWidth="95.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="AGREGAR" textFill="#eed09d" />
       <Button fx:id="btn_eliminar" layoutX="1162.0" layoutY="338.0" mnemonicParsing="false" onAction="#Delete" prefHeight="37.0" prefWidth="95.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="ELIMINAR" textFill="#eed09d" />
-      <Button fx:id="btn_facturar" layoutX="1018.0" layoutY="169.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="95.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="FACTURAR" textFill="#eed09d" />
+      <Button fx:id="btn_facturar" layoutX="1018.0" layoutY="169.0" mnemonicParsing="false" onAction="#trasferir" prefHeight="37.0" prefWidth="95.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="FACTURAR" textFill="#eed09d" />
       <Button fx:id="btn_clean" layoutX="1019.0" layoutY="216.0" mnemonicParsing="false" onAction="#clearfields" prefHeight="37.0" prefWidth="95.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="LIMPIAR" textFill="#eed09d" />
       <Button fx:id="btn_actualizar" layoutX="1020.0" layoutY="338.0" mnemonicParsing="false" onAction="#Edit" prefHeight="37.0" prefWidth="95.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="ACTUALIZAR" textFill="#eed09d" />
       <TableView fx:id="tableInventario" layoutX="255.0" layoutY="408.0" onMouseClicked="#getSelected" prefHeight="289.0" prefWidth="598.0" style="-fx-background-color: eed09d; -fx-border-color: a18262; -fx-border-radius: 5; -fx-background-radius: 5; -fx-border-width: 2;">

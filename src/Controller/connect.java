@@ -204,27 +204,41 @@ public class connect {
 
     }
 
-    public static ObservableList<factura> getDataFactura() {
+    public static ObservableList<detallefactura> getDataDetalleFacturat(int x) {
 
         Connection conn = conDB();
-        ObservableList<factura> list = FXCollections.observableArrayList();
+        ObservableList<detallefactura> list = FXCollections.observableArrayList();
         try{
             PreparedStatement ps = conn.prepareStatement(  "SELECT  t2.IDProducto,t1.IDDetalleFactura,t2.nombre,t2.precio,t1.cantidad\n" +
                     "FROM\n" +
-                    "    detallefactura as t1\n" +
+                    "    detallefacturat as t1\n" +
                     "INNER JOIN producto as t2 \n" +
-                    "    ON t1.IDProducto = t2.IDProducto;");
+                    "    ON t1.IDProducto = t2.IDProducto where IDFactura = ?; ");
+            ps.setInt(1, x);
             ResultSet rs = ps.executeQuery();
 
             while(rs.next()){
-                list.add(new factura(rs.getInt("IDProducto"),rs.getInt("IDDetalleFactura"),rs.getString("nombre"),rs.getDouble("precio"),rs.getInt("cantidad") ));
+                list.add(new detallefactura(rs.getInt("IDProducto"),rs.getInt("IDDetalleFactura"),rs.getString("nombre"),rs.getDouble("precio"),rs.getInt("cantidad") ));
             }
         }catch(Exception e){
         }
         return list;
+    }
 
+    public static ObservableList<factura> getDataFacturat() {
 
+        Connection conn = conDB();
+        ObservableList<factura> list = FXCollections.observableArrayList();
+        try{
+            PreparedStatement ps = conn.prepareStatement(  "select * from facturat");
+            ResultSet rs = ps.executeQuery();
 
+            while(rs.next()){
+                list.add(new factura(rs.getInt("IDFactura"), rs.getString("fechaFactura"), rs.getInt("IDDetalleFactura"), rs.getInt("IDCliente"), rs.getInt("IDEmpleado"), rs.getDouble("totalFactura"), rs.getDouble("impuesto"), rs.getDouble("subtotalFactura"), rs.getInt("IDPago")));
+            }
+        }catch(Exception e){
+        }
+        return list;
     }
 }
 

@@ -1,17 +1,21 @@
 package Models;
 
-
 public class factura {
 
-    int IDProducto;
-    int IDDetalleFactura;
-
-    public int getIDProducto() {
-        return IDProducto;
+    public int getIDFactura() {
+        return IDFactura;
     }
 
-    public void setIDProducto(int IDProducto) {
-        this.IDProducto = IDProducto;
+    public void setIDFactura(int IDFactura) {
+        this.IDFactura = IDFactura;
+    }
+
+    public String getFechaFactura() {
+        return fechaFactura;
+    }
+
+    public void setFechaFactura(String fechaFactura) {
+        this.fechaFactura = fechaFactura;
     }
 
     public int getIDDetalleFactura() {
@@ -22,43 +26,76 @@ public class factura {
         this.IDDetalleFactura = IDDetalleFactura;
     }
 
-    public String getNombre() {
-        return nombre;
+    public int getIDCliente() {
+        return IDCliente;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setIDCliente(int IDCliente) {
+        this.IDCliente = IDCliente;
     }
 
-    public double getPrecio() {
-        return precio;
+    public int getIDEmpleado() {
+        return IDEmpleado;
     }
 
-    public void setPrecio(double precio) {
-        this.precio = precio;
+    public void setIDEmpleado(int IDEmpleado) {
+        this.IDEmpleado = IDEmpleado;
     }
 
-    public int getCantidad() {
-        return cantidad;
+    public double getTotalFactura() {
+        return totalFactura;
     }
 
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
+    public void setTotalFactura(double totalFactura) {
+        this.totalFactura = totalFactura;
     }
 
-    String nombre;
-    double precio;
-    int cantidad;
+    public double getImpuesto() {
+        return impuesto;
+    }
+
+    public void setImpuesto(double impuesto) {
+        this.impuesto = impuesto;
+    }
+
+    public double getSubtotalFactura() {
+        return subtotalFactura;
+    }
+
+    public void setSubtotalFactura(double subtotalFactura) {
+        this.subtotalFactura = subtotalFactura;
+    }
+
+    public int getIDPago() {
+        return IDPago;
+    }
+
+    public void setIDPago(int IDPago) {
+        this.IDPago = IDPago;
+    }
+
+    int IDFactura;
+    String fechaFactura;
+    int IDDetalleFactura;
+    int IDCliente;
+    int IDEmpleado;
+    double totalFactura;
+    double impuesto;
+    double subtotalFactura;
+    int IDPago;
 
 
 
-     public factura( int IDProducto,int IDDetalleFactura,String nombre,double precio,int cantidad){
+    public factura( int IDFactura, String fechaFactura, int IDDetalleFactura, int IDCliente, int IDEmpleado, double totalFactura, double impuesto, double subtotalFactura, int IDPago){
+        this.IDFactura = IDFactura;
+        this.fechaFactura = fechaFactura;
+        this.IDDetalleFactura = IDDetalleFactura;
+        this.IDCliente = IDCliente;
+        this.IDEmpleado = IDEmpleado;
+        this.totalFactura = totalFactura;
+        this.impuesto = impuesto;
+        this.subtotalFactura = subtotalFactura;
+        this.IDPago = IDPago;
+    }
 
-         this.IDProducto = IDProducto;
-         this.IDDetalleFactura = IDDetalleFactura;
-         this.nombre = nombre;
-         this.precio = precio;
-         this.cantidad = cantidad;
-
-     }
 }
