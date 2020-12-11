@@ -103,6 +103,7 @@ public class ComprasController  extends MenuController implements Initializable 
         UpdateTable();
         checkBtnStatus(0);
         txtStatus(0);
+        Search_compra();
     }
 
     public void AddCompra(){
@@ -152,18 +153,18 @@ public class ComprasController  extends MenuController implements Initializable 
     }
     private void txtStatus(int checkT){
         if (checkT == 1){
-            txtcantidad.setVisible(false);
-            DataFechaP.setVisible(false);
-            DataFechaR.setVisible(true);
-            CBXProveedor.setVisible(false);
-            CBXProducto.setVisible(false);
+            txtcantidad.setDisable(true);
+            DataFechaP.setDisable(true);
+            DataFechaR.setDisable(false);
+            CBXProveedor.setDisable(true);
+            CBXProducto.setDisable(true);
         }
         if (checkT == 0){
-            txtcantidad.setVisible(true);
-            DataFechaP.setVisible(true);
-            DataFechaR.setVisible(true);
-            CBXProveedor.setVisible(true);
-            CBXProducto.setVisible(true);
+            txtcantidad.setDisable(false);
+            DataFechaP.setDisable(false);
+            DataFechaR.setDisable(false);
+            CBXProveedor.setDisable(false);
+            CBXProducto.setDisable(false);
         }
     }
     @FXML
