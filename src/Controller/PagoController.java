@@ -98,7 +98,7 @@ public class PagoController extends MenuController implements Initializable {
     public void add_pago() {
         conn = connect.conDB();
         if (CBXTP.getValue().getIDTipoPago() == 2) {
-            if (validateFields() /*& limite()*/ & validateCantidad() & validatePorcentaje() & validateTotal() & validateCodTarjeta() & validateNumeroTarjeta() & validateName()) {
+            if (validateFieldsPT() /*& limite()*/ & validateCantidad() & validatePorcentaje() & validateTotal() & validateCodTarjeta() & validateNumeroTarjeta() & validateName()) {
                 try {
                     pst = conn.prepareStatement("insert into tarjeta (CODSEGTARJETA, numeroDeTarjeta, nombrePropietarioTarjeta, fechaExpiracion) values (?,?,?,?)");
                     pst.setString(1, txtCodST.getText());
@@ -142,7 +142,7 @@ public class PagoController extends MenuController implements Initializable {
         }
 
         if (CBXTP.getValue().getIDTipoPago() == 1) {
-            if (validateFields() /*& limite()*/ & validateCantidad() & validatePorcentaje() & validateTotal()) {
+            if (validateFieldsPE() /*& limite()*/ & validateCantidad() & validatePorcentaje() & validateTotal()) {
                 try {
                     pst3 = conn.prepareStatement("insert into detalledepago (cantidadPagada, porcentajePagado, IDTipoPago) values (?,?,?)");
                     pst3.setString(1, txtCantidadPagada.getText());
@@ -352,8 +352,21 @@ public class PagoController extends MenuController implements Initializable {
         }
     }
 
-    private boolean validateFields() {
+    private boolean validateFieldsPT() {
         if (CBXTP.getSelectionModel().isEmpty() | txtCantidadPagada.getText().isEmpty() | txtProcentajeP.getText().isEmpty() | txtTotal.getText().isEmpty() | txtCodST.getText().isEmpty() | txtNumTarje.getText().isEmpty() | txtNPT.getText().isEmpty()) {
+
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Espacios vacios!");
+            alert.setHeaderText(null);
+            alert.setContentText("Espacios vacíos, por favor ingresar datos");
+            alert.showAndWait();
+
+            return false;
+        }
+        return true;
+    }
+    private boolean validateFieldsPE() {
+        if (CBXTP.getSelectionModel().isEmpty() | txtCantidadPagada.getText().isEmpty() | txtProcentajeP.getText().isEmpty() | txtTotal.getText().isEmpty()) {
 
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Espacios vacios!");
