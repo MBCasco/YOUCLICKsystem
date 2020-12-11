@@ -169,36 +169,7 @@ public class PagoController extends MenuController implements Initializable {
         }
 
     }
-        /*if(CBXTP.getValue().equals("Efectivo")){
-            try {
-                pst3 = conn.prepareStatement("insert into detalledepago(cantidadPagada, porcentajePagado, IDTipoPago, CODSEGTARJETA) values (?,?,?,?)");
-                pst3.setString(1, txtCantidadPagada.getText());
-                pst3.setString(2, txtProcentajeP.getText());
-                pst3.setString(3, String.valueOf(CBXTP.getSelectionModel().getSelectedItem().getIDTipoPago()));
-                pst3.setString(4, txtCodST.getText());
-                pst3.execute();
 
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-            try {
-                pst4 = conn.prepareStatement("insert into pago (IDCompra, totalPago, IDDetalleDePago) values(?,?,LAST_INSERT_ID())");
-                pst4.setString(1, TxtIDCompra.toString());
-                pst4.setString(2, txtTotal.getText());
-                pst4.execute();
-
-                Alert alert =new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Informacion");
-                alert.setHeaderText(null);
-                alert.setContentText("Se agregó exitosamente");
-                alert.showAndWait();
-                Search_pago();
-                UpdateTable();
-
-            }catch (Exception e) {
-                JOptionPane.showMessageDialog(null, e);
-            }
-        }*/
 
     public void UpdateTable(){
         col_IDPago.setCellValueFactory(new PropertyValueFactory<>("IDPago"));

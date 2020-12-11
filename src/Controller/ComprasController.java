@@ -11,6 +11,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
+
 import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.net.URL;
@@ -24,6 +26,7 @@ import java.util.ResourceBundle;
 
 
 public class ComprasController  extends MenuController implements Initializable {
+    private static Object txtStock;
     @FXML
     private TableView<compras> tablaCompras;
     @FXML
@@ -66,7 +69,6 @@ public class ComprasController  extends MenuController implements Initializable 
     @FXML
     private Tab tab_pago;
 
-
     ObservableList<compras> ListaCompra;
     ObservableList<proveedor> listCPV = proveedor.getproveedor();
     ObservableList<productos> listCPR = productos.getproductos();
@@ -76,11 +78,18 @@ public class ComprasController  extends MenuController implements Initializable 
     Connection conn = null;
     ResultSet rs = null;
     PreparedStatement pst = null;
+    PreparedStatement pst1 = null;
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yy");
 
 
     public void prueba() throws IOException {
         pago();
+    }
+
+    public static int value (int value){
+        txtStock = value;
+        System.out.println(txtStock);
+        return value;
     }
 
     public void InComboBox(){
@@ -93,6 +102,7 @@ public class ComprasController  extends MenuController implements Initializable 
         InComboBox();
         UpdateTable();
         checkBtnStatus(0);
+        txtStatus(0);
     }
 
     public void AddCompra(){
@@ -140,6 +150,22 @@ public class ComprasController  extends MenuController implements Initializable 
             tab_pago.setDisable(true);
         }
     }
+    private void txtStatus(int checkT){
+        if (checkT == 1){
+            txtcantidad.setVisible(false);
+            DataFechaP.setVisible(false);
+            DataFechaR.setVisible(true);
+            CBXProveedor.setVisible(false);
+            CBXProducto.setVisible(false);
+        }
+        if (checkT == 0){
+            txtcantidad.setVisible(true);
+            DataFechaP.setVisible(true);
+            DataFechaR.setVisible(true);
+            CBXProveedor.setVisible(true);
+            CBXProducto.setVisible(true);
+        }
+    }
     @FXML
     private void clearFields() {
         txtiD.clear();
@@ -150,6 +176,7 @@ public class ComprasController  extends MenuController implements Initializable 
         DataFechaR.setValue(null);
         txtEliminar.clear();
         checkBtnStatus(0);
+        txtStatus(0);
 
     }
 
@@ -255,7 +282,7 @@ public class ComprasController  extends MenuController implements Initializable 
     }
 
     @FXML
-    public void getSelected(javafx.scene.input.MouseEvent event) {
+    public void getSelected(MouseEvent event) {
         index = tablaCompras.getSelectionModel().getSelectedIndex();
         if(index <= -1){
             return;
@@ -266,10 +293,9 @@ public class ComprasController  extends MenuController implements Initializable 
         CBXProveedor.setValue(col_proveedor.getCellData(index));
         CBXProducto.setValue(col_producto.getCellData(index));
         txtcantidad.setText(col_cantidad.getCellData(index).toString());
-        //DataFechaP.;
-       // DataFechaR.setValue();
         txtEliminar.setText(col_IDCompra.getCellData(index).toString());
         checkBtnStatus(1);
+        txtStatus(1);
 
     }
 
