@@ -23,6 +23,8 @@ import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class ComprasController  extends MenuController implements Initializable {
@@ -109,7 +111,7 @@ public class ComprasController  extends MenuController implements Initializable 
     public void AddCompra(){
         conn = connect.conDB();
         String sql = "INSERT INTO compra (cantidad, FechaPedido, FechaLlegada, IDProveedor, IDProducto) VALUES (?,?,?,?,?)";
-        //if (validateFields() & limite() & validateName() & validateEmail() & validateDireccion()) {
+        if (validateFields() & validateCantidad()) {
             try {
                 pst = conn.prepareStatement(sql);
                 pst.setString(1, txtcantidad.getText());
@@ -135,7 +137,7 @@ public class ComprasController  extends MenuController implements Initializable 
                 alert.setContentText("Por favor revise los campos que esten llenos correctamente");
                 alert.showAndWait();
             }
-        //}
+        }
     }
     private void checkBtnStatus(int check) {
         if (check == 1){
@@ -298,6 +300,40 @@ public class ComprasController  extends MenuController implements Initializable 
         checkBtnStatus(1);
         txtStatus(1);
 
+    }
+
+    //Validaciones
+    private boolean validateCantidad(){
+        Pattern p = Pattern.compile("[0-9]{1,8}");
+        Matcher m = p.matcher(txtcantidad.getText().trim());
+
+        if(m.find() && m.group().equals(txtcantidad.getText())){
+            return true;
+        } else{
+            Alert alert =new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Validar Cantidad");
+            alert.setHeaderText(null);
+            alert.setContentText("Verifique la siguiente informacion: " +
+                    " \n-Este campo solo acepta numeros" +
+                    " \n-Que el numero que ingreso sea entero" +
+                    " \n-Y el numero que ingreso contenga maximo 8 digitos");
+            alert.showAndWait();
+            return false;
+        }
+    }
+
+    private boolean validateFields(){
+        if (txtcantidad.getText().isEmpty() | CBXProveedor.getSelectionModel().isEmpty() | CBXProducto.getSelectionModel().isEmpty()){
+
+            Alert alert =new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Espacios vacios!");
+            alert.setHeaderText(null);
+            alert.setContentText("Espacios vacíos, por favor ingresar datos");
+            alert.showAndWait();
+
+            return false;
+        }
+        return true;
     }
 
 }
