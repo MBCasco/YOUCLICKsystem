@@ -15,7 +15,7 @@ public class connect {
     public static Connection conDB(){
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/ferreteria1","root","140120101305");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/ferreteria","root","qwerty123456789");
             return conn;
         }catch (Exception e){
             JOptionPane.showMessageDialog(null, e);
@@ -145,6 +145,29 @@ public class connect {
         ObservableList<pago> list = FXCollections.observableArrayList();
         try{
             PreparedStatement ps = conn.prepareStatement("SELECT p.IDPago, c.IDCompra, tp.desTipoPago, d.cantidadPagada, d.porcentajePagado, p.totalPago FROM pago AS p INNER JOIN compra AS c ON c.IDCompra = p.IDCompra INNER JOIN detalledepago AS d ON d.IDDetalleDePago = p.IDDetalleDePago INNER JOIN tipopago AS tp ON tp.IDTipoPago = d.IDTipoPago WHERE c.IDCompra = ?");
+            ps.setInt(1, value);
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()){
+                list.add(new pago(Integer.parseInt(rs.getString("IDPago")), Integer.parseInt(rs.getString("IDCompra")), rs.getString("desTipoPago"), Double.parseDouble(rs.getString("cantidadPagada")), Double.parseDouble(rs.getString("porcentajePagado")), Double.parseDouble(rs.getString("totalPago"))));
+            }
+        }catch(Exception e){
+        }
+        return list;
+    }
+
+    public static ObservableList<pago> getdatapagoF(int value){
+        Connection conn = conDB();
+        ObservableList<pago> list = FXCollections.observableArrayList();
+        try{
+            PreparedStatement ps = conn.prepareStatement("SELECT p.IDPago, c.IDFactura as IDCompra, tp.desTipoPago, d.cantidadPagada, d.porcentajePagado, p.totalPago \n" +
+                    "FROM pago AS p \n" +
+                    "INNER JOIN facturat AS c \n" +
+                    "ON c.IDFactura = p.IDCompra \n" +
+                    "INNER JOIN detalledepago AS d \n" +
+                    "ON d.IDDetalleDePago = p.IDDetalleDePago \n" +
+                    "INNER JOIN tipopago AS tp \n" +
+                    "ON tp.IDTipoPago = d.IDTipoPago WHERE c.IDFactura = ?");
             ps.setInt(1, value);
             ResultSet rs = ps.executeQuery();
 
