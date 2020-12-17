@@ -42,24 +42,25 @@ public class factura {
         this.IDEmpleado = IDEmpleado;
     }
 
-    public double getTotalFactura() {
-        return totalFactura;
+    public String getTotalFactura() {
+        return  String.valueOf(totalFactura);
     }
 
     public void setTotalFactura(double totalFactura) {
         this.totalFactura = totalFactura;
     }
 
-    public double getImpuesto() {
-        return impuesto;
+    public String getImpuesto() {
+        return  String.valueOf(impuesto);
     }
 
     public void setImpuesto(double impuesto) {
         this.impuesto = impuesto;
     }
 
-    public double getSubtotalFactura() {
-        return subtotalFactura;
+    public String getSubtotalFactura() {
+
+        return  String.valueOf(subtotalFactura);
     }
 
     public void setSubtotalFactura(double subtotalFactura) {

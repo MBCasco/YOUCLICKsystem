@@ -144,12 +144,12 @@ public class connect {
         Connection conn = conDB();
         ObservableList<pago> list = FXCollections.observableArrayList();
         try{
-            PreparedStatement ps = conn.prepareStatement("SELECT p.IDPago, c.IDCompra, tp.desTipoPago, d.cantidadPagada, d.porcentajePagado, p.totalPago FROM pago AS p INNER JOIN compra AS c ON c.IDCompra = p.IDCompra INNER JOIN detalledepago AS d ON d.IDDetalleDePago = p.IDDetalleDePago INNER JOIN tipopago AS tp ON tp.IDTipoPago = d.IDTipoPago WHERE c.IDCompra = ?");
+            PreparedStatement ps = conn.prepareStatement("SELECT p.IDPago, tp.desTipoPago, d.cantidadPagada, d.porcentajePagado, p.totalPago FROM pago AS p INNER JOIN compra AS c ON c.IDCompra = p.IDCompra INNER JOIN detalledepago AS d ON d.IDDetalleDePago = p.IDDetalleDePago INNER JOIN tipopago AS tp ON tp.IDTipoPago = d.IDTipoPago WHERE c.IDCompra = ?");
             ps.setInt(1, value);
             ResultSet rs = ps.executeQuery();
 
             while(rs.next()){
-                list.add(new pago(Integer.parseInt(rs.getString("IDPago")), Integer.parseInt(rs.getString("IDCompra")), rs.getString("desTipoPago"), Double.parseDouble(rs.getString("cantidadPagada")), Double.parseDouble(rs.getString("porcentajePagado")), Double.parseDouble(rs.getString("totalPago"))));
+                list.add(new pago(Integer.parseInt(rs.getString("IDPago")), rs.getString("desTipoPago"), Double.parseDouble(rs.getString("cantidadPagada")), Double.parseDouble(rs.getString("porcentajePagado")), Double.parseDouble(rs.getString("totalPago"))));
             }
         }catch(Exception e){
         }
@@ -160,19 +160,17 @@ public class connect {
         Connection conn = conDB();
         ObservableList<pago> list = FXCollections.observableArrayList();
         try{
-            PreparedStatement ps = conn.prepareStatement("SELECT p.IDPago, c.IDFactura as IDCompra, tp.desTipoPago, d.cantidadPagada, d.porcentajePagado, p.totalPago \n" +
-                    "FROM pago AS p \n" +
-                    "INNER JOIN facturat AS c \n" +
-                    "ON c.IDFactura = p.IDCompra \n" +
-                    "INNER JOIN detalledepago AS d \n" +
-                    "ON d.IDDetalleDePago = p.IDDetalleDePago \n" +
-                    "INNER JOIN tipopago AS tp \n" +
-                    "ON tp.IDTipoPago = d.IDTipoPago WHERE c.IDFactura = ?");
+            PreparedStatement ps = conn.prepareStatement("select d.IDDetalleDePago as IDPago, tp.desTipoPago as desTipoPago, d.cantidadPagada as cantidadPagada, d.porcentajePagado as porcentajePagado, p.totalPago as totalPago\n" +
+                    "                    from facturat as f\n" +
+                    "                    inner join detalledepagofacturat as d on d.IDPago = f.IDFactura\n" +
+                    "                    inner join tipopago as tp on tp.IDTipoPago = d.IDTipoPago\n" +
+                    "                    inner join pagofacturat as p on p.IDFactura = f.IDFactura\n" +
+                    "                    where f.IDFactura = ?");
             ps.setInt(1, value);
             ResultSet rs = ps.executeQuery();
 
             while(rs.next()){
-                list.add(new pago(Integer.parseInt(rs.getString("IDPago")), Integer.parseInt(rs.getString("IDCompra")), rs.getString("desTipoPago"), Double.parseDouble(rs.getString("cantidadPagada")), Double.parseDouble(rs.getString("porcentajePagado")), Double.parseDouble(rs.getString("totalPago"))));
+                list.add(new pago(rs.getInt("IDPago"),rs.getString("desTipoPago"),rs.getDouble("cantidadPagada"),rs.getDouble("porcentajePagado"),rs.getDouble("totalPago")));
             }
         }catch(Exception e){
         }
@@ -258,6 +256,23 @@ public class connect {
 
             while(rs.next()){
                 list.add(new factura(rs.getInt("IDFactura"), rs.getString("fechaFactura"), rs.getInt("IDDetalleFactura"), rs.getInt("IDCliente"), rs.getInt("IDEmpleado"), rs.getDouble("totalFactura"), rs.getDouble("impuesto"), rs.getDouble("subtotalFactura"), rs.getInt("IDPago")));
+            }
+        }catch(Exception e){
+        }
+        return list;
+    }
+
+    public static ObservableList<String> pagoAcumulado(int x) {
+
+        Connection conn = conDB();
+        ObservableList<String> list = FXCollections.observableArrayList();
+        try{
+            PreparedStatement ps = conn.prepareStatement(  "select sum(cantidadPagada) from detalledepagofacturat where IDpago = ?");
+            ps.setInt(1, x);
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()){
+                list.add(String.valueOf(new Double (rs.getDouble("sum(cantidadPagada)"))));
             }
         }catch(Exception e){
         }

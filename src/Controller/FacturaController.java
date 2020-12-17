@@ -3,12 +3,16 @@ package Controller;
 import ComboBoxController.TipoPago;
 import ComboBoxController.marca;
 import Models.*;
+import com.sun.org.apache.bcel.internal.generic.I2D;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
@@ -49,8 +53,6 @@ public class FacturaController extends MenuController implements Initializable {
     @FXML
     private TableColumn<inventario, marca> ColMarca;
 
-    @FXML
-    private DatePicker dp;
 
     ///////////////////////////////////////////////////////////
 
@@ -131,6 +133,14 @@ public class FacturaController extends MenuController implements Initializable {
     private Label labelStock;
     @FXML
     private TextField txt_search;
+    @FXML
+    private TextField txt_subTotal;
+    @FXML
+    private TextField txt_isv;
+    @FXML
+    private TextField txt_total;
+    @FXML
+    private TextField txt_fecha;
 
     int indexF = -1;
     Connection conn = null;
@@ -138,6 +148,7 @@ public class FacturaController extends MenuController implements Initializable {
     PreparedStatement pst = null;
     String id4Delete = null;
     boolean x = false;
+    String productselected ;
 
     ObservableList<inventario> listI;
     ObservableList<inventario> dataListI;
@@ -148,6 +159,8 @@ public class FacturaController extends MenuController implements Initializable {
     DateTimeFormatter formatterF = DateTimeFormatter.ofPattern("MM/dd/yy");
     int exist = 0;
     ObservableList<factura> factura;
+    ObservableList<factura> factura2;
+
     int ID;
 
 
@@ -162,10 +175,11 @@ public class FacturaController extends MenuController implements Initializable {
         exist = 0;
         tableInventario.setDisable(true);
         ID = 0;
-
         //////////////
         intCombox();
         pago.setDisable(true);
+        prueba4();
+        int generado = 0;
 
 
     }
@@ -197,7 +211,7 @@ public class FacturaController extends MenuController implements Initializable {
         txt_IDP.clear();
         txt_nombreCliente.clear();
         txt_IDCliente.clear();
-        dp.setValue(null);
+        txt_fecha.clear();
         checkBtnStatus(0);
         txt_IDCliente.setVisible(false);
         txt_nombreCliente.setVisible(false);
@@ -216,6 +230,33 @@ public class FacturaController extends MenuController implements Initializable {
 
     public void Edit(){
 
+
+        try{
+            conn = connect.conDB();
+
+            String value1 = id4Delete;
+            String value2 = txt_cantidad.getText();
+
+            String sql = ("update detallefacturat set Cantidad= '"+value2+"' where IDDetalleFactura='"+value1+"' ");
+
+            pst = conn.prepareStatement(sql);
+            pst.execute();
+
+            Alert alert =new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Informacion");
+            alert.setHeaderText(null);
+            alert.setContentText("Se actualizó exitosamente");
+            alert.showAndWait();
+            UpdateTableF();
+            clearmini();
+
+        }catch(Exception e){
+            Alert alert =new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Hubo un error al actualizar, revise que todos los campos estén llenos correctamente");
+            alert.showAndWait();
+        }
     }
 
     public void intComboxF(){
@@ -243,11 +284,18 @@ public class FacturaController extends MenuController implements Initializable {
     }
 
 
+    public void updatecampos(){
+        factura2 = connect.getDataFacturat();
+        txt_subTotal.setText(factura2.get(ID-1).getSubtotalFactura());
+        txt_isv.setText(factura2.get(ID-1).getImpuesto());
+        txt_total.setText(factura2.get(ID-1).getTotalFactura());
+        txt_fecha.setText(factura2.get(ID-1).getFechaFactura());
 
+    }
 
     public void AddProducto() throws SQLException {
 
-        if ((txt_IDCliente.getText() != null && comEmpleados.getValue() !=null & dp.getValue() != null)){
+        if ((txt_IDCliente.getText() != null && comEmpleados.getValue() !=null)){
 
             conn = connect.conDB();
 
@@ -271,26 +319,26 @@ public class FacturaController extends MenuController implements Initializable {
                 pst.execute();
                 pst = conn.prepareStatement(sqls2);
                 pst.execute();
-
-
             }
-
 
             try {
 
-                String sql = "insert into detallefacturat (IDFactura,Cantidad, IDProducto)values(?,?,?)";
+                String sql = "insert into detallefacturat (IDFactura,Cantidad,IDProducto)values(?,?,?)";
                 pst = conn.prepareStatement(sql);
                 pst.setInt(1, ID);
                 pst.setString(2, txt_cantidad.getText());
                 pst.setString(3, txt_IDP.getText());
                 pst.execute();
+
                 Alert alert =new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Error");
+                alert.setTitle("Agregado");
                 alert.setHeaderText(null);
                 alert.setContentText("Se agregó exitosamente");
                 alert.showAndWait();
+
                 UpdateTableI();
                 UpdateTableF();
+                updatecampos();
                 clearmini();
 
             } catch (Exception e) {
@@ -305,13 +353,14 @@ public class FacturaController extends MenuController implements Initializable {
 
     public void realizarPago() throws IOException {
         pago.setDisable(false);
-        txtIDTP.setText(String.valueOf(ID));
         value(ID);
         UpdateTable();
+        txtTotal.setText(txt_total.getText());
+        txt_totalpagar.setText(txt_total.getText());
 
     }
 
-    public void trasferir() throws SQLException {
+    public void trasferir() throws SQLException, IOException {
 
         String sql2 = "insert into detallefactura select * from detallefacturat where IDFactura = ?;";
         try {
@@ -329,7 +378,28 @@ public class FacturaController extends MenuController implements Initializable {
             pst = conn.prepareStatement(sql1);
             pst.setInt(1,ID);
             pst.execute();
-            System.out.println("entrada");
+        } catch (Exception e) {
+            Alert alert =new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Error");
+
+        }
+
+        String sql3 = "insert into pagofactura select * from pagofacturat where IDFactura = ?;";
+        try {
+            pst = conn.prepareStatement(sql3);
+            pst.setInt(1,ID);
+            pst.execute();
+
+        } catch (Exception e) {
+            Alert alert =new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Error");
+        }
+
+        String sql4 = "insert into detalledepagofactura select * from detalledepagofacturat where IDPago = ?;";
+        try {
+            pst = conn.prepareStatement(sql4);
+            pst.setInt(1,ID);
+            pst.execute();
         } catch (Exception e) {
             Alert alert =new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Error");
@@ -337,21 +407,32 @@ public class FacturaController extends MenuController implements Initializable {
         }
 
 
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Factura Completa");
+        alert.setHeaderText(null);
+        alert.setContentText("Factura procesada correctamente");
+        alert.showAndWait();
+
+
+        Parent root = FXMLLoader.load(getClass().getResource("/Layout/pantallaFactura.fxml"));
+        stage.setTitle("Factura");
+        stage.setScene(new Scene(root, 1360, 768));
+        stage.show();
+
     }
+
+
 
     public void CrearFactura(){
         conn = connect.conDB();
-        String sql = "insert into facturat (fechaFactura, IDCliente, IDEmpleado, totalFactura, impuesto, subtotalFactura)values(?,?,?,?,?,?)";
+        String sql = "insert into facturat(fechaFactura, IDCliente, IDEmpleado, totalFactura, impuesto, subtotalFactura)values(now(),?,?,?,?,?)";
         try {
             pst = conn.prepareStatement(sql);
-            pst.setString(1, dp.getValue().format(formatterF));
-            pst.setInt(2, Integer.parseInt(txt_IDCliente.getText()));
-            pst.setInt(3, comEmpleados.getSelectionModel().getSelectedItem().getIdEmpleado());
-            pst.setDouble(4,0.0);
+            pst.setInt(1, Integer.parseInt(txt_IDCliente.getText()));
+            pst.setInt(2, comEmpleados.getSelectionModel().getSelectedItem().getIdEmpleado());
+            pst.setDouble(3, 0.0);
+            pst.setDouble(4, 0.0);
             pst.setDouble(5, 0.0);
-            pst.setDouble(6, 0.0);
-
-
 
             pst.execute();
             Alert alert =new Alert(Alert.AlertType.INFORMATION);
@@ -375,6 +456,8 @@ public class FacturaController extends MenuController implements Initializable {
             PreparedStatement pst = conn.prepareStatement(sql);
             pst.setString(1, id4Delete);
             pst.execute();
+            updatecampos();
+            clearmini();
 
         }catch (Exception e){
         }
@@ -403,7 +486,6 @@ public class FacturaController extends MenuController implements Initializable {
         ColProcducto.setCellValueFactory(new PropertyValueFactory<detallefactura,String>("nombre"));
         ColPrecioF.setCellValueFactory(new PropertyValueFactory<detallefactura,Double>("precio"));
         ColCantidad.setCellValueFactory(new PropertyValueFactory<detallefactura,Integer>("cantidad"));
-        System.out.println(ID);
         listF = connect.getDataDetalleFacturat(ID);
         tablaFactura.setItems(listF);
     }
@@ -430,7 +512,7 @@ public class FacturaController extends MenuController implements Initializable {
             return;
         }
 
-
+        productselected = ColID.getCellData(indexF).toString();
         txt_IDP.setText(ColID.getCellData(indexF).toString());
         txt_precio.setText(ColPrecio.getCellData(indexF).toString());
         txt_stock.setText(ColStock.getCellData(indexF).toString());
@@ -545,8 +627,6 @@ public class FacturaController extends MenuController implements Initializable {
     @FXML
     private TableColumn<pago, Integer> col_IDPago;
     @FXML
-    private TableColumn<pago, Integer> col_IDCompra;
-    @FXML
     private TableColumn<pago, TipoPago> col_desTipoPago;
     @FXML
     private TableColumn<pago, Double> col_cantidadPagada;
@@ -576,7 +656,17 @@ public class FacturaController extends MenuController implements Initializable {
     @FXML
     private TextField txtNPT;
     @FXML
+    private TextField txt_eliminarPago;
+    @FXML
+    private TextField txt_totalacumulado;
+    @FXML
+    private TextField txt_totalpagar;
+
+
+    @FXML
     private Tab pago;
+
+
 
 
     private ObservableList<pago> listPA;
@@ -590,6 +680,7 @@ public class FacturaController extends MenuController implements Initializable {
     PreparedStatement pst3 = null;
     PreparedStatement pst4 = null;
     int IDPago = 0;
+    int generado;
 
 
     public static int value(int value) {
@@ -603,8 +694,31 @@ public class FacturaController extends MenuController implements Initializable {
 
     public void add_pago() {
         conn = connect.conDB();
+
+        if(generado == 0 ){
+
+            try {
+                pst2 = conn.prepareStatement("insert into pagofacturat (IDFactura,totalPago) values(?,?)");
+                pst2.setInt(1, ID);
+                pst2.setString(2, txtTotal.getText());
+                pst2.execute();
+
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Informacion");
+                alert.setHeaderText(null);
+                alert.setContentText("Se agregó exitosamente");
+                alert.showAndWait();
+                UpdateTable();
+                generado = 1;
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }
+
+
         if (CBXTP.getValue().getIDTipoPago() == 2) {
-            if (validateFieldsPT() /*& limite()*/ & validateCantidad() & validatePorcentaje() & validateTotal() & validateCodTarjeta() & validateNumeroTarjeta() & validateName()) {
+            if (validateFieldsPT() /*& limite()*/ & validateCantidad() & validateTotal() & validateCodTarjeta() & validateNumeroTarjeta() & validateName()) {
                 try {
                     pst = conn.prepareStatement("insert into tarjeta (CODSEGTARJETA, numeroDeTarjeta, nombrePropietarioTarjeta, fechaExpiracion) values (?,?,?,?)");
                     pst.setString(1, txtCodST.getText());
@@ -612,69 +726,39 @@ public class FacturaController extends MenuController implements Initializable {
                     pst.setString(3, txtNPT.getText());
                     pst.setString(4, DataFT.getValue().format(formatter));
                     pst.execute();
+                    UpdateTable();
 
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
                 }
                 try {
-                    pst1 = conn.prepareStatement("insert into detalledepago(cantidadPagada, porcentajePagado, IDTipoPago, CODSEGTARJETA) values (?,?,?,?)");
-                    pst1.setString(1, txtCantidadPagada.getText());
-                    pst1.setString(2, txtProcentajeP.getText());
+                    pst1 = conn.prepareStatement("insert into detalledepagofacturat(IDPago,cantidadPagada, IDTipoPago, CODSEGTARJETA ) values (?,?,?,?)");
+                    pst1.setInt(1, ID);
+                    pst1.setString(2, txtCantidadPagada.getText());
                     pst1.setString(3, String.valueOf(CBXTP.getSelectionModel().getSelectedItem().getIDTipoPago()));
                     pst1.setString(4, txtCodST.getText());
                     pst1.execute();
+                    UpdateTable();
+                    updatecampospago();
 
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
-                }
-                try {
-                    pst2 = conn.prepareStatement("insert into pago (IDCompra, totalPago, IDDetalleDePago) values(?,?,LAST_INSERT_ID())");
-                    pst2.setString(1, TxtIDCompra.toString());
-                    pst2.setString(2, txtTotal.getText());
-                    pst2.execute();
-
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Informacion");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Se agregó exitosamente");
-                    alert.showAndWait();
-                    Search_pago();
-                    UpdateTable();
-
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, e);
                 }
             }
         }
 
         if (CBXTP.getValue().getIDTipoPago() == 1) {
-            if (validateFieldsPE() /*& limite()*/ & validateCantidad() & validatePorcentaje() & validateTotal()) {
+            if (validateFieldsPE() /*& limite()*/ & validateCantidad()  & validateTotal()) {
                 try {
-                    pst3 = conn.prepareStatement("insert into detalledepago (cantidadPagada, porcentajePagado, IDTipoPago) values (?,?,?)");
-                    pst3.setString(1, txtCantidadPagada.getText());
-                    pst3.setString(2, txtProcentajeP.getText());
+                    pst3 = conn.prepareStatement("insert into detalledepagofacturat (IDPago,cantidadPagada,IDTipoPago) values (?,?,?)");
+                    pst3.setInt(1, ID);
+                    pst3.setString(2, txtCantidadPagada.getText());
                     pst3.setString(3, String.valueOf(CBXTP.getSelectionModel().getSelectedItem().getIDTipoPago()));
                     pst3.execute();
-
+                    UpdateTable();
+                    updatecampospago();
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
-                }
-                try {
-                    pst4 = conn.prepareStatement("insert into pago (IDCompra, totalPago, IDDetalleDePago) values(?,?,LAST_INSERT_ID())");
-                    pst4.setString(1, TxtIDCompra.toString());
-                    pst4.setString(2, txtTotal.getText());
-                    pst4.execute();
-
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Informacion");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Se agregó exitosamente");
-                    alert.showAndWait();
-                    Search_pago();
-                    UpdateTable();
-
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, e);
                 }
             }
         }
@@ -683,13 +767,29 @@ public class FacturaController extends MenuController implements Initializable {
 
     public void UpdateTable() {
         col_IDPago.setCellValueFactory(new PropertyValueFactory<>("IDPago"));
-        col_IDCompra.setCellValueFactory(new PropertyValueFactory<>("IDCompra"));
         col_desTipoPago.setCellValueFactory(new PropertyValueFactory<>("desTipoPago"));
         col_cantidadPagada.setCellValueFactory(new PropertyValueFactory<>("cantidadPagada"));
         col_porcentajePagado.setCellValueFactory(new PropertyValueFactory<>("porcentajePagado"));
         col_totalPago.setCellValueFactory(new PropertyValueFactory<>("totalPago"));
-        listPA = connect.getdatapagoF((Integer) ID);
+        listPA = connect.getdatapagoF(ID);
         tablaPago.setItems(listPA);
+    }
+
+
+    public void DeleteDetallePago(){
+        conn = connect.conDB();
+        try {
+            String sql = "DELETE from detalledepagofacturat WHERE IDDetalleDePago = ?";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, txt_eliminarPago.getText());
+            pst.execute();
+            UpdateTable();
+            updatecampospago();
+
+        }catch (Exception e){
+        }
+
+
     }
 
 
@@ -735,12 +835,7 @@ public class FacturaController extends MenuController implements Initializable {
         if (index <= -1) {
             return;
         }
-
-        txtIDTP.setText(col_IDPago.getCellData(index).toString());
-        CBXTP.setValue(col_desTipoPago.getCellData(index));
-        txtCantidadPagada.setText(col_cantidadPagada.getCellData(index).toString());
-        txtProcentajeP.setText(col_porcentajePagado.getCellData(index).toString());
-        txtTotal.setText(col_totalPago.getCellData(index).toString());
+        txt_eliminarPago.setText(col_IDPago.getCellData(index).toString());
 
     }
     //Validaciones
@@ -858,7 +953,7 @@ public class FacturaController extends MenuController implements Initializable {
     }
 
     private boolean validateFieldsPT() {
-        if (CBXTP.getSelectionModel().isEmpty() | txtCantidadPagada.getText().isEmpty() | txtProcentajeP.getText().isEmpty() | txtTotal.getText().isEmpty() | txtCodST.getText().isEmpty() | txtNumTarje.getText().isEmpty() | txtNPT.getText().isEmpty()) {
+        if (CBXTP.getSelectionModel().isEmpty() | txtCantidadPagada.getText().isEmpty() | txtTotal.getText().isEmpty() | txtCodST.getText().isEmpty() | txtNumTarje.getText().isEmpty() | txtNPT.getText().isEmpty()) {
 
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Espacios vacios!");
@@ -871,7 +966,7 @@ public class FacturaController extends MenuController implements Initializable {
         return true;
     }
     private boolean validateFieldsPE() {
-        if (CBXTP.getSelectionModel().isEmpty() | txtCantidadPagada.getText().isEmpty() | txtProcentajeP.getText().isEmpty() | txtTotal.getText().isEmpty()) {
+        if (CBXTP.getSelectionModel().isEmpty() | txtCantidadPagada.getText().isEmpty() | txtTotal.getText().isEmpty()) {
 
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Espacios vacios!");
@@ -950,4 +1045,36 @@ public class FacturaController extends MenuController implements Initializable {
         }
         return true;
     }
+
+
+    public void prueba4(){
+
+        CBXTP.valueProperty().addListener((ov, p1, p2) -> {
+            if(p2.getIDTipoPago() == 1 ){
+                txtNumTarje.setDisable(true);
+                txtNPT.setDisable(true);
+                txtCodST.setDisable(true);
+                DataFT.setDisable(true);
+
+            }else{
+                txtNumTarje.setDisable(false);
+                txtNPT.setDisable(false);
+                txtCodST.setDisable(false);
+                DataFT.setDisable(false);
+            }
+        });
+    }
+
+    public void updatecampospago(){
+        factura2 = connect.getDataFacturat();
+        txt_subTotal.setText(factura2.get(ID-1).getSubtotalFactura());
+        txt_isv.setText(factura2.get(ID-1).getImpuesto());
+        txt_total.setText(factura2.get(ID-1).getTotalFactura());
+        txt_fecha.setText(factura2.get(ID-1).getFechaFactura());
+
+        ObservableList<String> hola = connect.pagoAcumulado(ID);
+        txt_totalacumulado.setText(hola.get(0));
+    }
 }
+
+

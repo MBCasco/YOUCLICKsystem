@@ -1,18 +1,7 @@
 package Models;
 
 public class pago {
-    int IDPago, IDCompra;
-    String desTipoPago;
-    double cantidadPagada, porcentajePagado, totalPago;
 
-    public pago(int IDPago, int IDCompra, String desTipoPago, double cantidadPagada, double porcentajePagado, double totalPago) {
-        this.IDPago = IDPago;
-        this.IDCompra = IDCompra;
-        this.desTipoPago = desTipoPago;
-        this.cantidadPagada = cantidadPagada;
-        this.porcentajePagado = porcentajePagado;
-        this.totalPago = totalPago;
-    }
 
     public int getIDPago() {
         return IDPago;
@@ -20,14 +9,6 @@ public class pago {
 
     public void setIDPago(int IDPago) {
         this.IDPago = IDPago;
-    }
-
-    public int getIDCompra() {
-        return IDCompra;
-    }
-
-    public void setIDCompra(int IDCompra) {
-        this.IDCompra = IDCompra;
     }
 
     public String getDesTipoPago() {
@@ -61,5 +42,20 @@ public class pago {
     public void setTotalPago(double totalPago) {
         this.totalPago = totalPago;
     }
+
+    int IDPago;
+    String desTipoPago;
+    double cantidadPagada;
+    double porcentajePagado;
+    double totalPago;
+
+    public pago(int IDPago, String desTipoPago, double cantidadPagada, double porcentajePagado, double totalPago) {
+        this.IDPago=IDPago;
+        this.desTipoPago=desTipoPago;
+        this.cantidadPagada=cantidadPagada;
+        this.porcentajePagado=porcentajePagado;
+        this.totalPago=totalPago;
+    }
+
 
 }
