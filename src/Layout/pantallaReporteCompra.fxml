@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1360.0" style="-fx-background-color: #616161; -fx-border-color: c29b61; -fx-border-width: 3;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ReporteController">
+   <children>
+      <Label alignment="CENTER" layoutX="13.0" layoutY="22.0" prefHeight="113.0" prefWidth="1335.0" style="-fx-background-color: FFC107; -fx-border-color: C29B61; -fx-background-radius: 10; -fx-border-radius: 5; -fx-border-style: solid; -fx-border-width: 4;" text="REPORTE COMPRAS" textAlignment="CENTER">
+         <font>
+            <Font name="Elephant" size="36.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="89.0" fitWidth="94.0" layoutX="317.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Imagenes/iconos/Iconos/report.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="btn_Salir" alignment="CENTER" layoutX="1175.0" layoutY="152.0" mnemonicParsing="false" onAction="#salir" prefHeight="89.0" prefWidth="163.0" style="-fx-background-color: #616161; -fx-border-color: FFdb58; -fx-border-radius: 2;" text="SALIR" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="54.0" fitWidth="49.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Imagenes/iconos/Iconos/log-out.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <ImageView fitHeight="106.0" fitWidth="163.0" layoutX="406.0" layoutY="135.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Imagenes/iconos/Iconos/Logo.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="541.0" layoutY="175.0" text="Ferretería Alonso/Toño " textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tableReporte" layoutX="11.0" layoutY="264.0" prefHeight="482.0" prefWidth="1335.0">
+         <columns>
+            <TableColumn fx:id="nCompraReporte" prefWidth="97.0" text="No. Compra" />
+            <TableColumn fx:id="empresaReporte" prefWidth="226.0" text="Empresa proveedor" />
+            <TableColumn fx:id="productoReporte" prefWidth="195.0" text="Producto" />
+            <TableColumn fx:id="totalReporte" prefWidth="132.0" text="Total" />
+            <TableColumn fx:id="cantidadReporte" prefWidth="144.0" text="Cantidad" />
+            <TableColumn fx:id="tPagoReporte" prefWidth="171.0" text="Tipo Pago" />
+            <TableColumn fx:id="fPedidoReporte" prefWidth="179.0" text="Fecha Pedido" />
+            <TableColumn fx:id="fLlegadaReporte" prefWidth="172.0" text="Fecha Llegada" />
+         </columns>
+      </TableView>
+   </children>
+</AnchorPane>
