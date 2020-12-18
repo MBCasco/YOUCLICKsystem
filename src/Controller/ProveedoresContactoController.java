@@ -331,10 +331,10 @@ public class ProveedoresContactoController extends MenuController implements Ini
             Alert alert =new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Validar Número");
             alert.setHeaderText(null);
-            alert.setContentText("Verifique la siguiente informacion: " +
+            alert.setContentText("Verifique la siguiente información: " +
                     " \nQue el telefono comience con: 2,3,7,8 o 9 " +
                     " \nQue el telefono contenga maximo 8 digitos " +
-                    " \nY el campo no este vacio");
+                    " \nEste campo solo acepta numeros");
             alert.showAndWait();
             return false;
         }

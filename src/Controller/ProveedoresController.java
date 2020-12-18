@@ -330,6 +330,8 @@ public class ProveedoresController extends MenuController implements Initializab
         }
         return true;
     }
+
+
     private boolean limite(){
         if(txt_nombre.getText().length() >= 35){
             Alert alert = new Alert(Alert.AlertType.WARNING);

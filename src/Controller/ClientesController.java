@@ -20,47 +20,34 @@ import java.util.regex.Pattern;
 public class ClientesController extends MenuController implements Initializable {
     @FXML
     private TableView<clientes> table_clientes;
-
     @FXML
     private TableColumn<clientes, Integer> col_cliente;
-
     @FXML
     private TableColumn<clientes, String> col_nombre;
-
     @FXML
     private TableColumn<clientes, String> col_direccion;
-
     @FXML
     private TableColumn<clientes, Integer> col_telefono;
-
     @FXML
     private TableColumn<clientes, String> col_correo;
-
     @FXML
     private TableColumn<clientes, String> col_Sexo;
 
 
     @FXML
     private TextField txt_nombre;
-
     @FXML
     private TextField txt_direccion;
-
     @FXML
     private TextField txt_telefono;
-
     @FXML
     private TextField txt_correo;
-
     @FXML
     private TextField txt_id;
-
     @FXML
     private TextField filterField;
-
     @FXML
     private TextField txt_eliminar;
-
     @FXML
     private ComboBox<String> Sexo;
 
@@ -110,8 +97,8 @@ public class ClientesController extends MenuController implements Initializable 
                     pst.setInt(5, codS);
                     pst.execute();
 
-                    Alert alert =new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Error");
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Confirmación");
                     alert.setHeaderText(null);
                     alert.setContentText("Se agregó exitosamente");
                     alert.showAndWait();
@@ -121,11 +108,12 @@ public class ClientesController extends MenuController implements Initializable 
                     Search_cliente();
 
                 } catch (Exception e) {
-                    Alert alert =new Alert(Alert.AlertType.WARNING);
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error");
                     alert.setHeaderText(null);
-                    alert.setContentText("El correo debe ser único." +
-                            "\n Revise que su correo sea único y vuelva a intentarlo. ");
+                    alert.setContentText("Verifique la siguiente información: " +
+                            " \nRevise que su correo sea único" +
+                            " \nQue todos los campos esten llenos correctamente");
                     alert.showAndWait();
                 }
 
@@ -161,8 +149,8 @@ public class ClientesController extends MenuController implements Initializable 
 
     //Eliminar Cliente
     public void Delete(){
-        Alert alert =new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirmar");
+        Alert alert =new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Confirmación");
         alert.setHeaderText(null);
         alert.setContentText("Estás seguro ¿Qué quieres eliminar este cliente?");
         alert.showAndWait().ifPresent(response -> {
@@ -175,7 +163,7 @@ public class ClientesController extends MenuController implements Initializable 
 
                     if (prest.executeUpdate() > 0){
                         Alert alert1 =new Alert(Alert.AlertType.INFORMATION);
-                        alert1.setTitle("Informacion");
+                        alert1.setTitle("Información");
                         alert1.setHeaderText(null);
                         alert1.setContentText("Se elimino con éxito");
                         alert1.showAndWait();
@@ -184,10 +172,10 @@ public class ClientesController extends MenuController implements Initializable 
                     }
 
                 }catch (Exception e){
-                    Alert alert2 = new Alert(Alert.AlertType.WARNING);
+                    Alert alert2 = new Alert(Alert.AlertType.ERROR);
                     alert2.setTitle("Error");
                     alert2.setHeaderText(null);
-                    alert2.setContentText("Hubo un error al eliminar,  por favor inténtelo de nuevo." +
+                    alert2.setContentText("Hubo un error al eliminar" +
                             "\nEste campo solo permite eliminar por ID.");
                 }
             }
@@ -221,47 +209,47 @@ public class ClientesController extends MenuController implements Initializable 
 
     //Editar Clientes
     public void Edit(){
-
         int codS = 1;
+        if (validateFields() & limite() & validateName() & validateDireccion()  & validateNumber() & validateEmail()) {
+            try {
+                conn = connect.conDB();
 
-        try{
-            conn = connect.conDB();
+                String value1 = txt_id.getText();
+                String value2 = txt_nombre.getText();
+                String value3 = txt_direccion.getText();
+                String value4 = txt_telefono.getText();
+                String value5 = txt_correo.getText();
 
-            String value1 = txt_id.getText();
-            String value2 = txt_nombre.getText();
-            String value3 = txt_direccion.getText();
-            String value4 = txt_telefono.getText();
-            String value5 = txt_correo.getText();
+                if (Sexo.getValue().equals("Femenino")) {
+                    codS = 1;
+                } else if (Sexo.getValue().equals("Masculino")) {
+                    codS = 2;
+                }
+                int value6 = codS;
 
-            if ( Sexo.getValue().equals("Femenino")){
-                codS = 1;
-            }else if (Sexo.getValue().equals("Masculino")){
-                codS = 2;
+                String sql = ("update cliente set nombreCliente= '" + value2 + "', dirreccionCliente= '" +
+                        value3 + "', telefonoCliente= '" + value4 + "', correoCliente= '" + value5 + "', IDSexo= '" + value6 + " ' where IDCliente='" + value1 + "' ");
+
+                pst = conn.prepareStatement(sql);
+                pst.execute();
+
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Información");
+                alert.setHeaderText(null);
+                alert.setContentText("Se actualizó exitosamente");
+                alert.showAndWait();
+
+                UpdateTable();
+                Search_cliente();
+                clearFields();
+
+            } catch (Exception e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Hubo un error al actualizar, revise que todos los campos estén llenados correctamente");
+                alert.showAndWait();
             }
-            int value6 = codS;
-
-            String sql = ("update cliente set nombreCliente= '"+value2+"', dirreccionCliente= '"+
-                    value3+"', telefonoCliente= '"+value4+"', correoCliente= '"+value5+"', IDSexo= '"+value6+" ' where IDCliente='"+value1+"' ");
-
-            pst = conn.prepareStatement(sql);
-            pst.execute();
-
-            Alert alert =new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Informacion");
-            alert.setHeaderText(null);
-            alert.setContentText("Se actualizó exitosamente");
-            alert.showAndWait();
-
-            UpdateTable();
-            Search_cliente();
-            clearFields();
-
-        }catch(Exception e){
-            Alert alert =new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Error");
-            alert.setHeaderText(null);
-            alert.setContentText("Hubo un error al actualizar, revise que todos los campos estén llenados correctamente");
-            alert.showAndWait();
         }
     }
 
@@ -316,6 +304,28 @@ public class ClientesController extends MenuController implements Initializable 
 
     //Validaciones
 
+    private boolean validateName(){
+        Pattern p = Pattern.compile("^([A-Z]{1}[a-z]+[ ]*){2,4}$");
+        Matcher m = p.matcher(txt_nombre.getText());
+
+
+        if(m.find() && m.group().equals(txt_nombre.getText())){
+            return true;
+        } else{
+            Alert alert =new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Validar nombre");
+            alert.setHeaderText(null);
+            alert.setContentText("Verifique la siguiente información: " +
+                    " \nDeberá escribir un nombre que contenga:" +
+                    " \nPrimera letra mayúscula" +
+                    " \nAl menos un apellido" +
+                    " \nEste campo solo letras");
+            alert.showAndWait();
+
+            return false;
+        }
+    }
+
     private boolean validateNumber(){
         Pattern p = Pattern.compile("[0-9]{8}");
         Matcher m = p.matcher(txt_telefono.getText().trim());
@@ -325,38 +335,18 @@ public class ClientesController extends MenuController implements Initializable 
         if(m.find() && m.group().equals(txt_telefono.getText()) &&  mm.matches()){
             return true;
         } else{
-            Alert alert =new Alert(Alert.AlertType.WARNING);
+            Alert alert =new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Validar Número");
             alert.setHeaderText(null);
-            alert.setContentText("Verifique la siguiente informacion: " +
+            alert.setContentText("Verifique la siguiente información: " +
                     " \nQue el telefono comience con: 2,3,7,8 o 9 " +
                     " \nQue el telefono contenga maximo 8 digitos " +
-                    " \nY el campo no este vacio");
+                    " \nEste campo solo acepta numeros");
             alert.showAndWait();
             return false;
         }
     }
 
-    private boolean validateName(){
-        Pattern p = Pattern.compile("^([A-Z]{1}[a-z]+[ ]*){2,4}$");
-        Matcher m = p.matcher(txt_nombre.getText());
-
-
-        if(m.find() && m.group().equals(txt_nombre.getText())){
-            return true;
-        } else{
-            Alert alert =new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Validar nombre");
-            alert.setHeaderText(null);
-            alert.setContentText("Por favor ingresar un nombre válido \n" +
-                    " Deberá escribir un nombre que contenga:\n" +
-                    " - Primera letra mayúscula\n" +
-                    " - Al menos un apellido");
-            alert.showAndWait();
-
-            return false;
-        }
-    }
     private boolean validateDireccion(){
         Pattern p = Pattern.compile("[A-Za-z ]+");
         Matcher m = p.matcher(txt_direccion.getText());
@@ -364,10 +354,11 @@ public class ClientesController extends MenuController implements Initializable 
         if(m.find() && m.group().equals(txt_direccion.getText())){
             return true;
         } else{
-            Alert alert =new Alert(Alert.AlertType.WARNING);
+            Alert alert =new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Validar direción");
             alert.setHeaderText(null);
-            alert.setContentText("Por favor ingresar una direccion válida");
+            alert.setContentText("Verifique la siguiente información: " +
+                    " \nEste campo solo letras");
             alert.showAndWait();
 
             return false;
@@ -381,11 +372,12 @@ public class ClientesController extends MenuController implements Initializable 
         if(m.find() && m.group().equals(txt_correo.getText())){
             return true;
         } else{
-            Alert alert =new Alert(Alert.AlertType.WARNING);
+            Alert alert =new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Validar Correo");
             alert.setHeaderText(null);
-            alert.setContentText("Por favor ingresar un correo válido" +
-                    " ejemplo@gmail.com");
+            alert.setContentText("Verifique la siguiente información: " +
+                    " \nIngresar un correo valido: " +
+                    " \nejemplo@gmail.com");
             alert.showAndWait();
 
             return false;
@@ -393,18 +385,58 @@ public class ClientesController extends MenuController implements Initializable 
     }
 
     private boolean validateFields(){
-        if (txt_nombre.getText().isEmpty() | txt_direccion.getText().isEmpty() | txt_telefono.getText().isEmpty() | txt_correo.getText().isEmpty() ){
+        if (txt_nombre.getText().isEmpty()){
 
             Alert alert =new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Espacios vacios!");
+            alert.setTitle("Espacio vacio!");
             alert.setHeaderText(null);
-            alert.setContentText("Espacios vacíos, por favor ingresar datos");
-            alert.showAndWait();
+            alert.setContentText("Espacio vacío, por favor ingresar un nombre");
+            alert.show();
+
+            return false;
+        }
+        if (txt_direccion.getText().isEmpty()){
+
+            Alert alert =new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Espacio vacio!");
+            alert.setHeaderText(null);
+            alert.setContentText("Espacio vacío, por favor ingresar una dirección");
+            alert.show();
+
+            return false;
+        }
+        if (txt_telefono.getText().isEmpty()){
+
+            Alert alert =new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Espacio vacio!");
+            alert.setHeaderText(null);
+            alert.setContentText("Espacio vacío, por favor ingresar un telefono");
+            alert.show();
+
+            return false;
+        }
+        if (txt_correo.getText().isEmpty()){
+
+            Alert alert =new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Espacio vacio!");
+            alert.setHeaderText(null);
+            alert.setContentText("Espacio vacío, por favor ingresar un correo");
+            alert.show();
+
+            return false;
+        }if ( Sexo.getSelectionModel().isEmpty()){
+
+            Alert alert =new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Espacio vacio!");
+            alert.setHeaderText(null);
+            alert.setContentText("Espacio vacío, por favor ingresar un género");
+            alert.show();
 
             return false;
         }
         return true;
     }
+
     private boolean limite(){
         if(txt_nombre.getText().length() >= 35){
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -427,16 +459,6 @@ public class ClientesController extends MenuController implements Initializable 
         return true;
 
     }
-    /*private boolean NombreKeyTyped (java.awt.event.KeyEvent evt) {
-        boolean max = txt_nombre.getText().length() > 4;
-        if ( max ){
-            evt.consume();
-            return false;
-        }
-        return true;
-    }*/
-
-
 }
 
 

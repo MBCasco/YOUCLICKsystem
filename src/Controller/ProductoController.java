@@ -151,11 +151,13 @@ public class ProductoController extends MenuController implements Initializable 
             btn_registrar.setDisable(true);
             btn_actualizar.setDisable(false);
             btn_eliminar.setDisable(false);
+            txtStock.setDisable(true);
         }
         if (check == 0){
             btn_registrar.setDisable(false);
             btn_actualizar.setDisable(true);
             btn_eliminar.setDisable(true);
+            txtStock.setDisable(false);
         }
     }
 
@@ -209,49 +211,48 @@ public class ProductoController extends MenuController implements Initializable 
     public void Edit(){
 
         String value1 = txtID.getText();
-        assert conn != null;
+        if (validateFields() & validateName() & validateNumberStock() & validateDescripcion() & validateUbicacion() & validateNumberprecio()) {
+            try {
+                conn = connect.conDB();
 
-        try{
-            conn = connect.conDB();
+                String value2 = txtNombreP.getText();
+                String value3 = txtDescrpcionP.getText();
+                String value4 = txtPrecio.getText();
+                String value5 = String.valueOf(comMarca.getSelectionModel().getSelectedItem().getIDMarca());
+                String value6 = String.valueOf(comCat.getSelectionModel().getSelectedItem().getIDCategoria());
 
-            String value2 = txtNombreP.getText();
-            String value3 = txtDescrpcionP.getText();
-            String value4 = txtPrecio.getText();
-            String value5 = String.valueOf(comMarca.getSelectionModel().getSelectedItem().getIDMarca());
-            String value6 = String.valueOf(comCat.getSelectionModel().getSelectedItem().getIDCategoria());
+                String sql = "UPDATE producto SET nombre= '" + value2 + "', descripcionProducto= '" + value3 + "', precio= '" + value4 + "',IDMarca= '" + value5 + "', IDCategoria= '" + value6 + "' WHERE IDProducto='" + value1 + "' ";
 
-            String sql =  "UPDATE producto SET nombre= '" + value2 + "', descripcionProducto= '" + value3 + "', precio= '" + value4 + "',IDMarca= '" + value5 + "', IDCategoria= '" + value6 + "' WHERE IDProducto='" + value1 + "' ";
+                pst = conn.prepareStatement(sql);
+                pst.execute();
 
-            pst = conn.prepareStatement(sql);
-            pst.execute();
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Confirmacion");
+                alert.setHeaderText(null);
+                alert.setContentText("Se actualizó exitosamente");
+                alert.showAndWait();
 
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Confirmacion");
-            alert.setHeaderText(null);
-            alert.setContentText("Se actualizó exitosamente");
-            alert.showAndWait();
+                UpdateTable();
+                clearFields();
 
-            UpdateTable();
-            clearFields();
+            } catch (Exception e) {
+                Alert alert2 = new Alert(Alert.AlertType.ERROR);
+                alert2.setTitle("Error");
+                alert2.setHeaderText(null);
+                alert2.setContentText("Hubo un error al actualizar, por favor vuelva a intentar.");
+            }
+            try {
+                conn = connect.conDB();
+                String value8 = txtUbicacion.getText();
 
-        }catch(Exception e){
-            Alert alert2 = new Alert(Alert.AlertType.ERROR);
-            alert2.setTitle("Error");
-            alert2.setHeaderText(null);
-            alert2.setContentText("Hubo un error al actualizar, por favor vuelva a intentar.");
-        }
-        try{
-            conn = connect.conDB();
-            String value8 = txtStock.getText();
-            String value9 = txtUbicacion.getText();
+                String sql1 = "UPDATE inventario SET  ubicacion= '" + value8 + "' WHERE IDProducto = '" + value1 + "'";
 
-            String sql1 = "UPDATE inventario SET stock= '"+value8+"', ubicacion= '"+value9+"' WHERE IDProducto = '"+value1+"'";
+                pst = conn.prepareStatement(sql1);
+                pst.execute();
 
-            pst = conn.prepareStatement(sql1);
-            pst.execute();
-
-        }catch (Exception e){
-            JOptionPane.showMessageDialog(null, e);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
         }
 
     }
@@ -270,8 +271,6 @@ public class ProductoController extends MenuController implements Initializable 
         txtUbicacion.setText(col_ubicacion.getCellData(index));
         txtDescrpcionP.setText(col_descripcion.getCellData(index));
         txtPrecio.setText(col_precio.getCellData(index).toString());
-        comMarca.setValue(col_marca.getCellData(index));
-        comCat.setValue(col_categoria.getCellData(index));
         txtEliminar.setText(col_producto.getCellData(index).toString());
         checkBtnStatus(1);
 
@@ -315,8 +314,8 @@ public class ProductoController extends MenuController implements Initializable 
             alert.setTitle("Validar Nombre");
             alert.setHeaderText(null);
             alert.setContentText("Verifique la siguiente informacion: " +
-                    " \n-Este campo solo acepta letras" +
-                    " \n-El nombre escrito debe llevar la primera letra en mayuscula " +
+                    " \nEste campo solo acepta letras" +
+                    " \nEl nombre escrito debe llevar la primera letra en mayuscula " +
                     " \nEj: Alambre");
             alert.showAndWait();
 
