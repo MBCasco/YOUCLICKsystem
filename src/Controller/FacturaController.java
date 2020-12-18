@@ -3,7 +3,6 @@ package Controller;
 import ComboBoxController.TipoPago;
 import ComboBoxController.marca;
 import Models.*;
-import com.sun.org.apache.bcel.internal.generic.I2D;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -78,6 +77,7 @@ public class FacturaController extends MenuController implements Initializable {
 
     @FXML
     private TableColumn<detallefactura, Double> colSubTotal;
+
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @FXML
@@ -350,14 +350,12 @@ public class FacturaController extends MenuController implements Initializable {
 
     }
 
-
     public void realizarPago() throws IOException {
         pago.setDisable(false);
         value(ID);
         UpdateTable();
         txtTotal.setText(txt_total.getText());
         txt_totalpagar.setText(txt_total.getText());
-
     }
 
     public void trasferir() throws SQLException, IOException {

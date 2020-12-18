@@ -263,7 +263,7 @@ public class ProductoController extends MenuController implements Initializable 
         if(index <= -1){
             return;
         }
-        ComprasController.value(col_stock.getCellData(index));
+
         txtID.setText(col_producto.getCellData(index).toString());
         txtNombreP.setText(col_nombre.getCellData(index));
         txtStock.setText(col_stock.getCellData(index).toString());

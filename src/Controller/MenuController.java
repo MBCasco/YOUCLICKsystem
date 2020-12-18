@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class MenuController implements GlobalConstans {
 
@@ -63,6 +64,12 @@ public class MenuController implements GlobalConstans {
     public  void compra() throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/Layout/pantallaCompras.fxml"));
         stage.setTitle("Compras");
+        stage.setScene(new Scene(root, 1360, 768));
+        stage.show();
+    }
+    public  void report() throws IOException, SQLException {
+        Parent root = FXMLLoader.load(getClass().getResource("/Layout/pantallaReporteCompra.fxml"));
+        stage.setTitle("Reporte");
         stage.setScene(new Scene(root, 1360, 768));
         stage.show();
     }

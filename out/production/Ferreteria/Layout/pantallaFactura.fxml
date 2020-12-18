@@ -267,7 +267,7 @@
                                     <Image url="@../Imagenes/iconos/Iconos/buscar.png" />
                                  </image>
                               </ImageView>
-                              <TableView fx:id="tablaPago" layoutX="417.0" layoutY="8.0" onMouseClicked="#getSelectedPago" prefHeight="217.0" prefWidth="677.0">
+                              <TableView fx:id="tablaPago" layoutX="417.0" layoutY="8.0" onMouseClicked="#getSelectedPago" prefHeight="223.0" prefWidth="677.0">
                                  <columns>
                                     <TableColumn fx:id="col_IDPago" prefWidth="75.0" text="ID" />
                                     <TableColumn fx:id="col_desTipoPago" prefWidth="141.0" text="Tipo pago" />
@@ -282,8 +282,8 @@
                                     <Font name="Dubai Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="txt_totalpagar" editable="false" layoutX="870.0" layoutY="229.0" prefHeight="44.0" prefWidth="224.0" promptText="Total" style="-fx-border-color: ffc107;" />
-                              <TextField fx:id="txt_totalacumulado" editable="false" layoutX="515.0" layoutY="229.0" prefHeight="44.0" prefWidth="224.0" promptText="Acumulado" style="-fx-border-color: ffc107;" />
+                              <TextField fx:id="txt_totalpagar" editable="false" layoutX="870.0" layoutY="236.0" prefHeight="31.0" prefWidth="224.0" promptText="Total" style="-fx-border-color: ffc107;" />
+                              <TextField fx:id="txt_totalacumulado" editable="false" layoutX="513.0" layoutY="236.0" prefHeight="31.0" prefWidth="224.0" promptText="Acumulado" style="-fx-border-color: ffc107;" />
                               <Label alignment="CENTER" layoutX="417.0" layoutY="239.0" prefHeight="25.0" prefWidth="88.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="Acumulado" textFill="#8d5910">
                                  <font>
                                     <Font name="Dubai Bold" size="12.0" />

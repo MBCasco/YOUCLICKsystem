@@ -1,65 +1,101 @@
 package Models;
 
 public class compras {
-int idCompra;
-String empresaProveedor, nombreProducto, fechaP, fechaR;
-int cantidad;
+    int IDCompra, IDProveedor, IDProducto, IDDetalleCompra, IDPago;
+    String FechaPedido, FechaLlegada;
+    double totalCompra, impuesto, subtotalCompra;
 
-    public int getIdCompra() {
-        return idCompra;
+
+    public int getIDCompra() {
+        return IDCompra;
     }
 
-    public void setIdCompra(int idCompra) {
-        this.idCompra = idCompra;
+    public void setIDCompra(int IDCompra) {
+        this.IDCompra = IDCompra;
     }
 
-    public String getEmpresaProveedor() {
-        return empresaProveedor;
+    public int getIDProveedor() {
+        return IDProveedor;
     }
 
-    public void setEmpresaProveedor(String empresaProveedor) {
-        this.empresaProveedor = empresaProveedor;
+    public void setIDProveedor(int IDProveedor) {
+        this.IDProveedor = IDProveedor;
     }
 
-    public String getNombreProducto() {
-        return nombreProducto;
+    public int getIDProducto() {
+        return IDProducto;
     }
 
-    public void setNombreProducto(String nombreProducto) {
-        this.nombreProducto = nombreProducto;
+    public void setIDProducto(int IDProducto) {
+        this.IDProducto = IDProducto;
     }
 
-    public String getFechaP() {
-        return fechaP;
+    public int getIDDetalleCompra() {
+        return IDDetalleCompra;
     }
 
-    public void setFechaP(String fechaP) {
-        this.fechaP = fechaP;
+    public void setIDDetalleCompra(int IDDetalleCompra) {
+        this.IDDetalleCompra = IDDetalleCompra;
     }
 
-    public String getFechaR() {
-        return fechaR;
+    public int getIDPago() {
+        return IDPago;
     }
 
-    public void setFechaR(String fechaR) {
-        this.fechaR = fechaR;
+    public void setIDPago(int IDPago) {
+        this.IDPago = IDPago;
     }
 
-    public int getCantidad() {
-        return cantidad;
+    public String getFechaPedido() {
+        return FechaPedido;
     }
 
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
+    public void setFechaPedido(String fechaPedido) {
+        this.FechaPedido = fechaPedido;
     }
 
-    public compras(int idCompra, int cantidad, String fechaP, String fechaR ,String empresaProveedor, String nombreProducto) {
-        this.idCompra = idCompra;
-        this.cantidad = cantidad;
-        this.fechaP = fechaP;
-        this.fechaR = fechaR;
-        this.empresaProveedor = empresaProveedor;
-        this.nombreProducto = nombreProducto;
+    public String getFechaLlegada() {
+        return FechaLlegada;
+    }
 
+    public void setFechaLlegada(String fechaLlegada) {
+        this.FechaLlegada = fechaLlegada;
+    }
+
+    public String getTotalCompra() {
+        return String.valueOf(totalCompra);
+    }
+
+    public void setTotalCompra(double totalCompra) {
+        this.totalCompra = totalCompra;
+    }
+
+    public String getImpuesto() {
+        return String.valueOf(impuesto);
+    }
+
+    public void setImpuesto(double impuesto) {
+        this.impuesto = impuesto;
+    }
+
+    public String getSubtotalCompra() {
+        return String.valueOf(subtotalCompra);
+    }
+
+    public void setSubtotalCompra(double subtotalCompra) {
+        this.subtotalCompra = subtotalCompra;
+    }
+
+    public compras(int IDCompra, String fechaPedido, String fechaLlegada, int IDProveedor, int IDProducto, int IDDetalleCompra, int IDPago,  double totalCompra, double impuesto, double subtotalCompra) {
+        this.IDCompra = IDCompra;
+        this.FechaPedido = fechaPedido;
+        this.FechaLlegada = fechaLlegada;
+        this.IDProveedor = IDProveedor;
+        this.IDProducto = IDProducto;
+        this.IDDetalleCompra = IDDetalleCompra;
+        this.IDPago = IDPago;
+        this.totalCompra = totalCompra;
+        this.impuesto = impuesto;
+        this.subtotalCompra = subtotalCompra;
     }
 }

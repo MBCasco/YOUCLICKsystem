@@ -16,7 +16,6 @@ public class Main extends Application implements GlobalConstans {
 
     //Estas son las variables de la conexion a la BD
 
-
     public static void main(String[] args) {
         launch(args);
     }
