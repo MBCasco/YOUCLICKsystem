@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1360.0" style="-fx-background-color: #616161; -fx-border-color: c29b61; -fx-border-width: 3;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.EmpleadosController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1360.0" style="-fx-background-color: #616161; -fx-border-color: c29b61; -fx-border-width: 3;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.EmpleadosController">
    <children>
       <VBox layoutX="6.0" layoutY="8.0" prefHeight="720.0" prefWidth="195.0" spacing="5.0" AnchorPane.topAnchor="8.0" />
       <Label alignment="CENTER" layoutX="257.0" layoutY="22.0" prefHeight="119.0" prefWidth="1058.0" style="-fx-background-color: #FFC107; -fx-background-radius: 10; -fx-border-color: c29b61; -fx-border-radius: 5; -fx-border-style: solid; -fx-border-width: 4;" text="EMPLEADOS">
@@ -89,7 +90,7 @@
                                     <Font name="Dubai Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <ComboBox fx:id="Sexo" layoutX="68.0" layoutY="295.0" prefHeight="25.0" prefWidth="268.0" promptText="Seleccionar" />
+                              <ComboBox fx:id="Sexo" layoutX="68.0" layoutY="295.0" prefHeight="25.0" prefWidth="268.0" promptText="Seleccionar " style="-fx-background-color: beige; -fx-border-color: FFC107; -fx-border-width: 2;" />
                            </children>
                         </AnchorPane>
                      </content>
@@ -160,7 +161,7 @@
                                     <Image url="@../Imagenes/iconos/Iconos/rango.png" />
                                  </image>
                               </ImageView>
-                              <ComboBox fx:id="Cargo" layoutX="59.0" layoutY="58.0" prefHeight="25.0" prefWidth="281.0" promptText="Seleccionar" />
+                              <ComboBox fx:id="Cargo" layoutX="59.0" layoutY="58.0" prefHeight="25.0" prefWidth="281.0" promptText="Seleccionar" style="-fx-background-color: beige; -fx-border-color: FFC107; -fx-border-width: 2;" />
                            </children>
                         </AnchorPane>
                      </content>
