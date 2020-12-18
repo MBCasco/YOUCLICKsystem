@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1360.0" style="-fx-background-color: #616161; -fx-border-color: c29b61; -fx-border-width: 3;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.PagoController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1360.0" style="-fx-background-color: #616161; -fx-border-color: c29b61; -fx-border-width: 3;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.PagoController">
    <children>
       <Label alignment="CENTER" layoutX="246.0" layoutY="24.0" prefHeight="113.0" prefWidth="1102.0" style="-fx-background-color: FFC107; -fx-border-color: C29B61; -fx-background-radius: 10; -fx-border-radius: 5; -fx-border-style: solid; -fx-border-width: 4;" text="COMPRAS" textAlignment="CENTER">
          <font>
@@ -121,7 +122,7 @@
                 <TableColumn fx:id="col_IDPago" prefWidth="75.0" text="ID" />
                   <TableColumn fx:id="col_desTipoPago" prefWidth="170.0" text="Tipo pago" />
                   <TableColumn fx:id="col_cantidadPagada" prefWidth="185.0" text="Cantidad" />
-                  <TableColumn fx:id="col_porcentajePagado" prefWidth="125.0" text="Porcentaje" />
+                  <TableColumn fx:id="col_porcentajePagado" prefWidth="125.0" text="Porcentaje" visible="false" />
                   <TableColumn fx:id="col_totalPago" prefWidth="113.0" text="Total" />
               </columns>
             </TableView>
@@ -160,17 +161,6 @@
                               <Image url="@../Imagenes/iconos/Iconos/cubes.png" />
                            </image>
                         </ImageView>
-                        <Label alignment="CENTER" layoutX="381.0" layoutY="14.0" prefHeight="30.0" prefWidth="195.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="Porcentaje pagado" textFill="#8d5910">
-                           <font>
-                              <Font name="Dubai Regular" size="15.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="txtProcentajeP" alignment="CENTER" layoutX="413.0" layoutY="56.0" prefHeight="31.0" prefWidth="272.0" style="-fx-background-color: beige; -fx-border-color: #FFC107;" />
-                        <ImageView fitHeight="30.0" fitWidth="31.0" layoutX="381.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../Imagenes/iconos/Iconos/porcentaje.png" />
-                           </image>
-                        </ImageView>
                         <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="30.0" prefWidth="195.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="Total" textFill="#8d5910">
                            <font>
                               <Font name="Dubai Regular" size="15.0" />
@@ -182,13 +172,13 @@
                               <Image url="@../Imagenes/iconos/Iconos/salary.png" />
                            </image>
                         </ImageView>
-                        <Label alignment="CENTER" layoutX="381.0" layoutY="98.0" prefHeight="30.0" prefWidth="195.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="Numero tarjeta" textFill="#8d5910">
+                        <Label alignment="CENTER" layoutX="381.0" layoutY="14.0" prefHeight="30.0" prefWidth="195.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="Numero tarjeta" textFill="#8d5910">
                            <font>
                               <Font name="Dubai Regular" size="15.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="txtNumTarje" alignment="CENTER" layoutX="411.0" layoutY="136.0" prefHeight="31.0" prefWidth="272.0" style="-fx-background-color: beige; -fx-border-color: #FFC107;" />
-                        <ImageView fitHeight="30.0" fitWidth="31.0" layoutX="381.0" layoutY="137.0" pickOnBounds="true" preserveRatio="true">
+                        <TextField fx:id="txtNumTarje" alignment="CENTER" layoutX="413.0" layoutY="56.0" prefHeight="31.0" prefWidth="272.0" style="-fx-background-color: beige; -fx-border-color: #FFC107;" />
+                        <ImageView fitHeight="30.0" fitWidth="31.0" layoutX="381.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../Imagenes/iconos/Iconos/debitCard.png" />
                            </image>
@@ -223,13 +213,13 @@
                            </image>
                         </ImageView>
                         <DatePicker fx:id="DataFT" layoutX="771.0" layoutY="136.0" prefHeight="31.0" prefWidth="272.0" style="-fx-background-color: beige; -fx-border-color: a18262; -fx-border-width: 2;" />
-                        <Label alignment="CENTER" layoutX="381.0" layoutY="178.0" prefHeight="30.0" prefWidth="195.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="Nombre propietario tarjeta" textFill="#8d5910">
+                        <Label alignment="CENTER" layoutX="381.0" layoutY="98.0" prefHeight="30.0" prefWidth="195.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="Nombre propietario tarjeta" textFill="#8d5910">
                            <font>
                               <Font name="Dubai Regular" size="15.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="txtNPT" alignment="CENTER" layoutX="413.0" layoutY="219.0" prefHeight="31.0" prefWidth="272.0" style="-fx-background-color: beige; -fx-border-color: #FFC107;" />
-                        <ImageView fitHeight="30.0" fitWidth="31.0" layoutX="381.0" layoutY="219.0" pickOnBounds="true" preserveRatio="true">
+                        <TextField fx:id="txtNPT" alignment="CENTER" layoutX="411.0" layoutY="139.0" prefHeight="31.0" prefWidth="272.0" style="-fx-background-color: beige; -fx-border-color: #FFC107;" />
+                        <ImageView fitHeight="30.0" fitWidth="31.0" layoutX="381.0" layoutY="136.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../Imagenes/iconos/Iconos/man.png" />
                            </image>

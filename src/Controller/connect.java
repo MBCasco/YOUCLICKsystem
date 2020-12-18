@@ -57,7 +57,8 @@ public class connect {
         Connection conn = conDB();
         ObservableList<precioHistorico> list = FXCollections.observableArrayList();
         try{
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM PRECIOHISTORICO");
+            PreparedStatement ps = conn.prepareStatement("SELECT ph.IDPrecioHistorico, p.nombre, ph.precio, ph.fechaInicial, ph.fechaFinal FROM PRECIOHISTORICO AS ph \n" +
+                    "INNER JOIN producto AS p ON p.IDProducto = ph.IDProducto;");
             ResultSet rs = ps.executeQuery();
 
             while(rs.next()){

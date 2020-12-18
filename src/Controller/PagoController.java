@@ -46,8 +46,6 @@ public class PagoController extends MenuController implements Initializable {
     private ComboBox<TipoPago> CBXTP;
     @FXML
     private TextField txtCantidadPagada;
-    @FXML
-    private TextField txtProcentajeP;
 
     private static Object txtTotal2;
     @FXML
@@ -63,9 +61,6 @@ public class PagoController extends MenuController implements Initializable {
     @FXML
     private TextField txtNPT;
 
-
-
-
     private ObservableList<pago> listPA;
     private ObservableList<TipoPago> listTP = TipoPago.getdataTP();
     private ObservableList<pago> dataListPA;
@@ -79,7 +74,7 @@ public class PagoController extends MenuController implements Initializable {
     PreparedStatement pst3 = null;
     PreparedStatement pst4 = null;
     String id4Delete = null;
-    String ID;
+    int ID;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -87,10 +82,16 @@ public class PagoController extends MenuController implements Initializable {
         UpdateTable();
         prueba4();
         updatetotal();
+        ID = 0;
     }
 
     public static String value2 (String value){
         txtTotal2 = value;
+        return value;
+    }
+
+    public static int value3 (int value){
+        TxtIDCompra = value;
         return value;
     }
 
@@ -115,7 +116,7 @@ public class PagoController extends MenuController implements Initializable {
     public void add_pago() {
         conn = connect.conDB();
         if (CBXTP.getValue().getIDTipoPago() == 2) {
-            if (validateFieldsPT() /*& limite()*/ & validateCantidad() & validatePorcentaje() & validateTotal() & validateCodTarjeta() & validateNumeroTarjeta() & validateName()) {
+            if (validateFieldsPT() /*& limite()*/ & validateCantidad() & validateTotal() & validateCodTarjeta() & validateNumeroTarjeta() & validateName()) {
                 try {
                     pst = conn.prepareStatement("insert into tarjeta (CODSEGTARJETA, numeroDeTarjeta, nombrePropietarioTarjeta, fechaExpiracion) values (?,?,?,?)");
                     pst.setString(1, txtCodST.getText());
@@ -128,20 +129,21 @@ public class PagoController extends MenuController implements Initializable {
                     throwables.printStackTrace();
                 }
                 try {
-                    pst1 = conn.prepareStatement("insert into pagocomprat (IDCompra,totalPago) values(?,?)");
-                    pst1.setString(1, TxtIDCompra.toString());
-                    pst1.setString(2, txtTotal.getText());
-                    pst1.execute();
+                    pst = conn.prepareStatement("insert into detalledepagocomprat (IDPago,cantidadPagada, porcentajePagado, IDTipoPago, CODSEGTARJETA) values (?,?,?,?,?)");
+                    pst.setString(1, TxtIDCompra.toString());
+                    pst.setString(2, txtCantidadPagada.getText());
+                    pst.setDouble(3, 0.0);
+                    pst.setString(4, String.valueOf(CBXTP.getSelectionModel().getSelectedItem().getIDTipoPago()));
+                    pst.setString(5, txtCodST.getText());
+                    pst.execute();
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
                 }
                 try {
-                    pst2 = conn.prepareStatement("insert into detalledepagocomprat (IDPago,cantidadPagada, porcentajePagado, IDTipoPago, CODSEGTARJETA) values (LAST_INSERT_ID(),?,?,?,?)");
-                    pst2.setString(1, txtCantidadPagada.getText());
-                    pst2.setString(2, txtProcentajeP.getText());
-                    pst2.setString(3, String.valueOf(CBXTP.getSelectionModel().getSelectedItem().getIDTipoPago()));
-                    pst2.setString(4, txtCodST.getText());
-                    pst2.execute();
+                    pst = conn.prepareStatement("insert into pagocomprat (IDCompra,totalPago) values(?,?)");
+                    pst.setString(1, TxtIDCompra.toString());
+                    pst.setString(2, txtTotal.getText());
+                    pst.execute();
 
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Informacion");
@@ -157,22 +159,23 @@ public class PagoController extends MenuController implements Initializable {
         }
 
         if (CBXTP.getValue().getIDTipoPago() == 1) {
-            if (validateFieldsPE() /*& limite()*/ & validateCantidad() & validatePorcentaje() & validateTotal()) {
+            if (validateFieldsPE() /*& limite()*/ & validateCantidad()  & validateTotal()) {
                 try {
-                    pst3 = conn.prepareStatement("insert into pagocomprat (IDCompra,totalPago) values(?,?)");
-                    pst3.setString(1, TxtIDCompra.toString());
-                    pst3.setString(2, txtTotal.getText());
-                    pst3.execute();
+                    pst = conn.prepareStatement("insert into detalledepagocomprat (IDPago,cantidadPagada, porcentajePagado, IDTipoPago) values (?,?,?,?)");
+                    pst.setString(1, TxtIDCompra.toString());
+                    pst.setString(2, txtCantidadPagada.getText());
+                    pst.setDouble(3, 0.0);
+                    pst.setString(4, String.valueOf(CBXTP.getSelectionModel().getSelectedItem().getIDTipoPago()));
+                    pst.execute();
 
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
                 }
                 try {
-                    pst4 = conn.prepareStatement("insert into detalledepagocomprat (IDPago,cantidadPagada, porcentajePagado, IDTipoPago) values (LAST_INSERT_ID(),?,?,?)");
-                    pst4.setString(1, txtCantidadPagada.getText());
-                    pst4.setString(2, txtProcentajeP.getText());
-                    pst4.setString(3, String.valueOf(CBXTP.getSelectionModel().getSelectedItem().getIDTipoPago()));
-                    pst4.execute();
+                    pst = conn.prepareStatement("insert into pagocomprat (IDCompra,totalPago) values(?,?)");
+                    pst.setString(1, TxtIDCompra.toString());
+                    pst.setString(2, txtTotal.getText());
+                    pst.execute();
 
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Informacion");
@@ -235,7 +238,7 @@ public class PagoController extends MenuController implements Initializable {
     @FXML
     private void clearFields() {
         txtCantidadPagada.clear();
-        txtProcentajeP.clear();
+        //txtProcentajeP.clear();
         txtTotal.clear();
         txtNumTarje.clear();
         txtCodST.clear();
@@ -250,12 +253,10 @@ public class PagoController extends MenuController implements Initializable {
         if (index <= -1) {
             return;
         }
-        ID = col_IDPago.getCellData(index).toString();
 
         id4Delete = col_IDPago.getCellData(index).toString();
 
         txtCantidadPagada.setText(col_cantidadPagada.getCellData(index).toString());
-        txtProcentajeP.setText(col_porcentajePagado.getCellData(index).toString());
         txtTotal.setText(col_totalPago.getCellData(index).toString());
     }
 
@@ -277,13 +278,13 @@ public class PagoController extends MenuController implements Initializable {
         });
     }
 
-    public void trasferirp() throws SQLException {
-
+    public void trasferirp(){
         String sql2 = "insert into detalledepagocompra select * from detalledepagocomprat where IDPago = ?";
         try {
             pst = conn.prepareStatement(sql2);
-            pst.setInt(1, Integer.parseInt(ID));
+            pst.setString(1, TxtIDCompra.toString());
             pst.execute();
+            System.out.println(TxtIDCompra.toString());
 
         } catch (Exception e) {
             Alert alert =new Alert(Alert.AlertType.WARNING);
@@ -293,13 +294,15 @@ public class PagoController extends MenuController implements Initializable {
         String sql1 = "insert into pagocompra select * from pagocomprat where IDPago = ?";
         try {
             pst = conn.prepareStatement(sql1);
-            pst.setInt(1, Integer.parseInt(ID));
+            pst.setString(1, TxtIDCompra.toString());
             pst.execute();
+            System.out.println(TxtIDCompra.toString());
             System.out.println("entrada");
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Confirmacion");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Información");
             alert.setContentText("Su pago fue terminado con exito");
-            alert.show();
+            alert.showAndWait();
+            compra();
 
         } catch (Exception e) {
             Alert alert =new Alert(Alert.AlertType.WARNING);
@@ -323,25 +326,6 @@ public class PagoController extends MenuController implements Initializable {
             alert.setHeaderText(null);
             alert.setContentText("Verifique la siguiente informacion: " +
                     " \n-Este campo solo acepta numeros decimales");
-            alert.showAndWait();
-            return false;
-        }
-    }
-
-    private boolean validatePorcentaje() {
-        Pattern p = Pattern.compile("[0-9]{1,3}");
-        Matcher m = p.matcher(txtProcentajeP.getText().trim());
-
-
-        if (m.find() && m.group().equals(txtProcentajeP.getText())) {
-            return true;
-        } else {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Validar Porcentaje");
-            alert.setHeaderText(null);
-            alert.setContentText("Verifique la siguiente informacion: " +
-                    " \nEste campo solo acepta enteros" +
-                    " \nQue el porcentaje contenga maximo 3 digitos ");
             alert.showAndWait();
             return false;
         }
@@ -424,7 +408,7 @@ public class PagoController extends MenuController implements Initializable {
     }
 
     private boolean validateFieldsPT() {
-        if (CBXTP.getSelectionModel().isEmpty() | txtCantidadPagada.getText().isEmpty() | txtProcentajeP.getText().isEmpty() | txtTotal.getText().isEmpty() | txtCodST.getText().isEmpty() | txtNumTarje.getText().isEmpty() | txtNPT.getText().isEmpty()) {
+        if (CBXTP.getSelectionModel().isEmpty() | txtCantidadPagada.getText().isEmpty() | txtTotal.getText().isEmpty() | txtCodST.getText().isEmpty() | txtNumTarje.getText().isEmpty() | txtNPT.getText().isEmpty()) {
 
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Espacios vacios!");
@@ -437,7 +421,7 @@ public class PagoController extends MenuController implements Initializable {
         return true;
     }
     private boolean validateFieldsPE() {
-        if (CBXTP.getSelectionModel().isEmpty() | txtCantidadPagada.getText().isEmpty() | txtProcentajeP.getText().isEmpty() | txtTotal.getText().isEmpty()) {
+        if (CBXTP.getSelectionModel().isEmpty() | txtCantidadPagada.getText().isEmpty() | txtTotal.getText().isEmpty()) {
 
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Espacios vacios!");
@@ -467,24 +451,7 @@ public class PagoController extends MenuController implements Initializable {
         }
     }
 
-    private boolean validatePorcentajeE() {
-        Pattern p = Pattern.compile("[0-9]{1,3}");
-        Matcher m = p.matcher(txtProcentajeP.getText().trim());
 
-
-        if (m.find() && m.group().equals(txtProcentajeP.getText())) {
-            return true;
-        } else {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Validar Porcentaje");
-            alert.setHeaderText(null);
-            alert.setContentText("Verifique la siguiente informacion: " +
-                    " \nEste campo solo acepta enteros" +
-                    " \nQue el porcentaje contenga maximo 3 digitos ");
-            alert.showAndWait();
-            return false;
-        }
-    }
 
     private boolean validateTotalE() {
         Pattern p = Pattern.compile("[0-9]+(.[0-9]+)");
@@ -504,7 +471,7 @@ public class PagoController extends MenuController implements Initializable {
     }
 
     private boolean validateFieldsE() {
-        if (txtCantidadPagada.getText().isEmpty() | txtProcentajeP.getText().isEmpty() | txtTotal.getText().isEmpty()) {
+        if (txtCantidadPagada.getText().isEmpty() | txtTotal.getText().isEmpty()) {
 
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Espacios vacios!");

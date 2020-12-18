@@ -140,10 +140,20 @@ public class ComprasController  extends MenuController implements Initializable 
         txtcantidad.clear();
     }
 
-    public void pagar() throws SQLException {
+    public void pagar(){
         PagoController.value2(txtTotal.getText());
         PagoController.value(ID);
-        trasferir();
+        PagoController.value3(ID);
+        try {
+            trasferir();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        try {
+            pago();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         tab_pago.setDisable(false);
     }
 
@@ -179,11 +189,6 @@ public class ComprasController  extends MenuController implements Initializable 
             pst.setString(3, txtIdPro.getText());
             pst.setString(4, String.valueOf(CBXProveedor.getSelectionModel().getSelectedItem().getIDProveedor()));
             pst.execute();
-            Alert alert =new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("tranza");
-            alert.setHeaderText(null);
-            alert.setContentText("Se agregó exitosamente");
-            alert.showAndWait();
             UpdateTableP();
             UpdateTableC();
             updatecampos();
@@ -239,7 +244,7 @@ public class ComprasController  extends MenuController implements Initializable 
                 pst.execute();
 
                 Alert alert =new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("hola");
+                alert.setTitle("Información");
                 alert.setHeaderText(null);
                 alert.setContentText("Se agregó exitosamente");
                 alert.showAndWait();

@@ -273,7 +273,7 @@
                                     <TableColumn fx:id="col_desTipoPago" prefWidth="141.0" text="Tipo pago" />
                                     <TableColumn fx:id="col_cantidadPagada" prefWidth="130.0" text="Cantidad abonada" />
                                     <TableColumn fx:id="col_totalPago" prefWidth="138.0" text="Total" />
-                                    <TableColumn fx:id="col_porcentajePagado" prefWidth="93.0" text="Porcentaje" />
+                                    <TableColumn fx:id="col_porcentajePagado" prefWidth="93.0" text="Porcentaje" visible="false" />
                                  </columns>
                               </TableView>
                               <Button layoutX="273.0" layoutY="126.0" mnemonicParsing="false" onAction="#DeleteDetallePago" prefHeight="37.0" prefWidth="95.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="ELIMINAR" textFill="#eed09d" />
