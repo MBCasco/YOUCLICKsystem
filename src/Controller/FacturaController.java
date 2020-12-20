@@ -318,6 +318,9 @@ public class FacturaController extends MenuController implements Initializable {
             }
 
             try {
+                if (Integer.parseInt(txt_cantidad.getText()) <= Integer.parseInt(txt_stock.getText())){
+
+
                     String sql = "insert into detallefacturat (IDFactura,Cantidad,IDProducto)values(?,?,?)";
                     pst = conn.prepareStatement(sql);
                     pst.setInt(1, ID);
@@ -335,6 +338,12 @@ public class FacturaController extends MenuController implements Initializable {
                     UpdateTableF();
                     updatecampos();
                     clearmini();
+
+                }else{ Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setContentText("No hay stock Suficiente");
+                    alert.showAndWait();}
+
+
 
                 } catch(Exception e){
                     Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -358,6 +367,12 @@ public class FacturaController extends MenuController implements Initializable {
     }
 
     public void trasferir() throws SQLException, IOException, ClassNotFoundException, JRException {
+
+        if(Double.parseDouble(txt_totalacumulado.getText()) != Double.parseDouble(txt_totalpagar.getText())){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setContentText("El valor a pagar no coincide con el valor pagado");
+            alert.show();
+        }else{
 
         String sql2 = "insert into detallefactura select * from detallefacturat where IDFactura = ?;";
         try {
@@ -415,7 +430,7 @@ public class FacturaController extends MenuController implements Initializable {
         stage.setTitle("Factura");
         stage.setScene(new Scene(root, 1360, 768));
         stage.show();
-
+        }
     }
 
 
@@ -1080,7 +1095,7 @@ public class FacturaController extends MenuController implements Initializable {
         try {
 
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/ferreteria", "root", "");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/ferreteria", "root", "qwerty123456789");
             reporte = JasperCompileManager.compileReport("src/Blank_Letter.jrxml");
             Map<String, Object> parameters = new HashMap<String, Object>();
             parameters.put("IDFacturaParameter", ID);
