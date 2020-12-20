@@ -23,62 +23,43 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class EmpleadosController extends MenuController implements Initializable {
-
     @FXML
     private TableView<empleados> table_empleados;
-
     @FXML
     private TableColumn<empleados, Integer> col_id;
-
     @FXML
     private TableColumn<empleados, String> col_nombre;
-
     @FXML
     private TableColumn<empleados, String> col_direccion;
-
     @FXML
     private TableColumn<empleados, Integer> col_telefono;
-
     @FXML
     private TableColumn<empleados, String> col_correo;
-
     @FXML
     private TableColumn<empleados, String> col_cargo;
-
     @FXML
     private TableColumn<empleados, String> col_sexo;
 
-
     @FXML
     private TextField txt_nombre;
-
     @FXML
     private TextField txt_direccion;
-
     @FXML
     private TextField txt_correo;
-
     @FXML
     private TextField txt_id;
-
     @FXML
     private TextField filterField;
-
     @FXML
     private TextField txt_eliminar;
-
     @FXML
     private TextField txt_telefono;
-
     @FXML
     private ComboBox<String> Cargo;
-
     @FXML
     private ComboBox<String> Sexo;
-
     @FXML
     private TextField txt_fechaInicio;
-
     @FXML
     private TextField txt_fechaFinal;
 
@@ -140,8 +121,8 @@ public class EmpleadosController extends MenuController implements Initializable
                 pst.setInt(6, codS);
                 pst.execute();
 
-                Alert alert =new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Exito");
+                Alert alert =new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmación");
                 alert.setHeaderText(null);
                 alert.setContentText("Se agregó empleado exitosamente");
                 alert.showAndWait();
@@ -150,17 +131,16 @@ public class EmpleadosController extends MenuController implements Initializable
                 search_empleado();
 
             } catch (Exception e) {
-                Alert alert =new Alert(Alert.AlertType.WARNING);
+                Alert alert =new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText(null);
-                alert.setContentText("El correo debe ser único." +
-                        "\n Revise que su correo sea único y vuelva a intentarlo. ");
+                alert.setContentText("Verifique la siguiente información: " +
+                        " \nRevise que su correo sea único" +
+                        " \nQue todos los campos esten llenos correctamente");
                 alert.showAndWait();
             }
         }
     }
-
-
 
     @FXML
     private void clearFields() {
@@ -177,8 +157,8 @@ public class EmpleadosController extends MenuController implements Initializable
     }
 
     public void Delete(){
-        Alert alert =new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirmar");
+        Alert alert =new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Información");
         alert.setHeaderText(null);
         alert.setContentText("Estás seguro ¿Qué quieres eliminar este empleado?");
         alert.showAndWait().ifPresent(response -> {
@@ -190,10 +170,10 @@ public class EmpleadosController extends MenuController implements Initializable
                     prest.setString(1, txt_eliminar.getText());
 
                     if (prest.executeUpdate() > 0){
-                        Alert alert1 =new Alert(Alert.AlertType.INFORMATION);
-                        alert1.setTitle("Informacion");
+                        Alert alert1 =new Alert(Alert.AlertType.CONFIRMATION);
+                        alert1.setTitle("Confirmación");
                         alert1.setHeaderText(null);
-                        alert1.setContentText("Se elimino con éxito");
+                        alert1.setContentText("Se elimino empleado con éxito");
                         alert1.showAndWait();
                         UpdateTable();
                         clearFields();
@@ -222,6 +202,7 @@ public class EmpleadosController extends MenuController implements Initializable
         listE = connect.getdataempleados();
         table_empleados.setItems(listE);
     }
+
     @Override
     public void initialize(URL url, ResourceBundle rb){
         CMBBOX();
@@ -230,6 +211,7 @@ public class EmpleadosController extends MenuController implements Initializable
         clearFields();
         checkBtnStatus(0);
     }
+
     private void checkBtnStatus(int check) {
         if (check == 1){
             btn_registrar.setDisable(true);
@@ -286,8 +268,8 @@ public class EmpleadosController extends MenuController implements Initializable
 
                 pst = conn.prepareStatement(sql);
                 pst.execute();
-                Alert alert =new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Error");
+                Alert alert =new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmación");
                 alert.setHeaderText(null);
                 alert.setContentText("Se actualizó el empleado exitosamente");
                 alert.showAndWait();
@@ -345,6 +327,31 @@ public class EmpleadosController extends MenuController implements Initializable
         txt_eliminar.setText(col_id.getCellData(index).toString());
         checkBtnStatus(1);
     }
+    /*
+        VALIDACIONES
+     */
+    private boolean validateName(){
+        Pattern p = Pattern.compile("^([A-Z]{1}[a-z]+[ ]*){2,4}$");
+        Matcher m = p.matcher(txt_nombre.getText());
+
+
+        if(m.find() && m.group().equals(txt_nombre.getText())){
+            return true;
+        } else{
+            Alert alert =new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Validar nombre");
+            alert.setHeaderText(null);
+            alert.setContentText("Verifique la siguiente información: " +
+                    " \nDeberá escribir un nombre que contenga:" +
+                    " \nPrimera letra mayúscula" +
+                    " \nAl menos un apellido" +
+                    " \nEste campo solo letras");
+            alert.showAndWait();
+
+            return false;
+        }
+    }
+
     private boolean validateNumber(){
         Pattern p = Pattern.compile("[0-9]{8}");
         Matcher m = p.matcher(txt_telefono.getText().trim());
@@ -354,38 +361,18 @@ public class EmpleadosController extends MenuController implements Initializable
         if(m.find() && m.group().equals(txt_telefono.getText()) &&  mm.matches()){
             return true;
         } else{
-            Alert alert =new Alert(Alert.AlertType.WARNING);
+            Alert alert =new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Validar Número");
             alert.setHeaderText(null);
-            alert.setContentText("Verifique la siguiente informacion: " +
+            alert.setContentText("Verifique la siguiente información: " +
                     " \nQue el telefono comience con: 2,3,7,8 o 9 " +
                     " \nQue el telefono contenga maximo 8 digitos " +
-                    " \nY el campo no este vacio");
+                    " \nEste campo solo acepta numeros");
             alert.showAndWait();
             return false;
         }
     }
 
-    private boolean validateName(){
-        Pattern p = Pattern.compile("^([A-Z]{1}[a-z]+[ ]*){2,4}$");
-        Matcher m = p.matcher(txt_nombre.getText());
-
-
-        if(m.find() && m.group().equals(txt_nombre.getText())){
-            return true;
-        } else{
-            Alert alert =new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Validar nombre");
-            alert.setHeaderText(null);
-            alert.setContentText("Por favor ingresar un nombre válido \n" +
-                    " Deberá escribir un nombre que contenga:\n" +
-                    " - Primera letra mayúscula\n" +
-                    " - Al menos un apellido");
-            alert.showAndWait();
-
-            return false;
-        }
-    }
     private boolean validateDireccion(){
         Pattern p = Pattern.compile("[A-Za-z ]+");
         Matcher m = p.matcher(txt_direccion.getText());
@@ -393,10 +380,11 @@ public class EmpleadosController extends MenuController implements Initializable
         if(m.find() && m.group().equals(txt_direccion.getText())){
             return true;
         } else{
-            Alert alert =new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Validar direción");
+            Alert alert =new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Validar dirección");
             alert.setHeaderText(null);
-            alert.setContentText("Por favor ingresar una dirección válida");
+            alert.setContentText("Verifique la siguiente información: " +
+                    " \nEste campo solo letras");
             alert.showAndWait();
 
             return false;
@@ -410,11 +398,12 @@ public class EmpleadosController extends MenuController implements Initializable
         if(m.find() && m.group().equals(txt_correo.getText())){
             return true;
         } else{
-            Alert alert =new Alert(Alert.AlertType.WARNING);
+            Alert alert =new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Validar Correo");
             alert.setHeaderText(null);
-            alert.setContentText("Por favor ingresar un correo válido" +
-                    " ejemplo@gmail.com");
+            alert.setContentText("Verifique la siguiente información: " +
+                    " \nIngresar un correo valido: " +
+                    " \nejemplo@gmail.com");
             alert.showAndWait();
 
             return false;
@@ -422,7 +411,7 @@ public class EmpleadosController extends MenuController implements Initializable
     }
 
     private boolean validateFields(){
-        if (txt_nombre.getText().isEmpty() | txt_direccion.getText().isEmpty() | txt_telefono.getText().isEmpty() | txt_correo.getText().isEmpty() ){
+        if (txt_nombre.getText().isEmpty() | txt_telefono.getText().isEmpty() | txt_direccion.getText().isEmpty()  | txt_correo.getText().isEmpty() ){
 
             Alert alert =new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Espacios vacios!");

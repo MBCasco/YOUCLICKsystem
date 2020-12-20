@@ -80,7 +80,7 @@ public class ClientesController extends MenuController implements Initializable 
         String sql = "insert into cliente (nombreCliente,dirreccionCliente,telefonoCLiente,correoCliente,IDSexo)values(?,?,?,?,?)";
 
         int codS = 1;
-        if (validateFields() & limite() & validateName() & validateDireccion()  & validateNumber() & validateEmail()){
+        if (validateName() & validateDireccion()  & validateNumber() & validateEmail() & validateFields() & limite()){
                 try {
                     pst = conn.prepareStatement(sql);
 
@@ -97,10 +97,10 @@ public class ClientesController extends MenuController implements Initializable 
                     pst.setInt(5, codS);
                     pst.execute();
 
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                     alert.setTitle("Confirmación");
                     alert.setHeaderText(null);
-                    alert.setContentText("Se agregó exitosamente");
+                    alert.setContentText("Se agregó cliente exitosamente");
                     alert.showAndWait();
 
                     clearFields();
@@ -150,7 +150,7 @@ public class ClientesController extends MenuController implements Initializable 
     //Eliminar Cliente
     public void Delete(){
         Alert alert =new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Confirmación");
+        alert.setTitle("Información");
         alert.setHeaderText(null);
         alert.setContentText("Estás seguro ¿Qué quieres eliminar este cliente?");
         alert.showAndWait().ifPresent(response -> {
@@ -162,10 +162,10 @@ public class ClientesController extends MenuController implements Initializable 
                     prest.setString(1, txt_eliminar.getText());
 
                     if (prest.executeUpdate() > 0){
-                        Alert alert1 =new Alert(Alert.AlertType.INFORMATION);
-                        alert1.setTitle("Información");
+                        Alert alert1 =new Alert(Alert.AlertType.CONFIRMATION);
+                        alert1.setTitle("Confirmación");
                         alert1.setHeaderText(null);
-                        alert1.setContentText("Se elimino con éxito");
+                        alert1.setContentText("Se elimino cliente con éxito");
                         alert1.showAndWait();
                         UpdateTable();
                         clearFields();
@@ -182,8 +182,6 @@ public class ClientesController extends MenuController implements Initializable 
         });
     }
 
-
-
     //Actualizar la tabla
     public void UpdateTable(){
         col_cliente.setCellValueFactory(new PropertyValueFactory<>("idCliente"));
@@ -196,7 +194,6 @@ public class ClientesController extends MenuController implements Initializable 
         listM = connect.getdataclientes();
         table_clientes.setItems(listM);
     }
-
 
     @Override
     public void initialize(URL url, ResourceBundle rb){
@@ -233,10 +230,10 @@ public class ClientesController extends MenuController implements Initializable 
                 pst = conn.prepareStatement(sql);
                 pst.execute();
 
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Información");
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmación");
                 alert.setHeaderText(null);
-                alert.setContentText("Se actualizó exitosamente");
+                alert.setContentText("Se actualizó el cliente exitosamente");
                 alert.showAndWait();
 
                 UpdateTable();
@@ -302,8 +299,9 @@ public class ClientesController extends MenuController implements Initializable 
         checkBtnStatus(1);
     }
 
-    //Validaciones
-
+    /*
+        VALIDACIONES
+     */
     private boolean validateName(){
         Pattern p = Pattern.compile("^([A-Z]{1}[a-z]+[ ]*){2,4}$");
         Matcher m = p.matcher(txt_nombre.getText());
@@ -355,7 +353,7 @@ public class ClientesController extends MenuController implements Initializable 
             return true;
         } else{
             Alert alert =new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Validar direción");
+            alert.setTitle("Validar dirección");
             alert.setHeaderText(null);
             alert.setContentText("Verifique la siguiente información: " +
                     " \nEste campo solo letras");
@@ -385,51 +383,12 @@ public class ClientesController extends MenuController implements Initializable 
     }
 
     private boolean validateFields(){
-        if (txt_nombre.getText().isEmpty()){
+        if (txt_nombre.getText().isEmpty() | txt_direccion.getText().isEmpty() | txt_telefono.getText().isEmpty() | txt_correo.getText().isEmpty() | Sexo.getSelectionModel().isEmpty()){
 
             Alert alert =new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Espacio vacio!");
+            alert.setTitle("Espacios vacios!");
             alert.setHeaderText(null);
-            alert.setContentText("Espacio vacío, por favor ingresar un nombre");
-            alert.show();
-
-            return false;
-        }
-        if (txt_direccion.getText().isEmpty()){
-
-            Alert alert =new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Espacio vacio!");
-            alert.setHeaderText(null);
-            alert.setContentText("Espacio vacío, por favor ingresar una dirección");
-            alert.show();
-
-            return false;
-        }
-        if (txt_telefono.getText().isEmpty()){
-
-            Alert alert =new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Espacio vacio!");
-            alert.setHeaderText(null);
-            alert.setContentText("Espacio vacío, por favor ingresar un telefono");
-            alert.show();
-
-            return false;
-        }
-        if (txt_correo.getText().isEmpty()){
-
-            Alert alert =new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Espacio vacio!");
-            alert.setHeaderText(null);
-            alert.setContentText("Espacio vacío, por favor ingresar un correo");
-            alert.show();
-
-            return false;
-        }if ( Sexo.getSelectionModel().isEmpty()){
-
-            Alert alert =new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Espacio vacio!");
-            alert.setHeaderText(null);
-            alert.setContentText("Espacio vacío, por favor ingresar un género");
+            alert.setContentText("Espacios vacíos, por favor ingresar datos");
             alert.show();
 
             return false;

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1360.0" style="-fx-background-color: #616161; -fx-border-color: c29b61; -fx-border-width: 3;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ClientesController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1360.0" style="-fx-background-color: #616161; -fx-border-color: c29b61; -fx-border-width: 3;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ClientesController">
    <children>
       <Label alignment="CENTER" layoutX="257.0" layoutY="22.0" prefHeight="113.0" prefWidth="1067.0" style="-fx-background-color: #ffc107; -fx-background-radius: 10; -fx-border-color: c29b61; -fx-border-radius: 5; -fx-border-style: solid; -fx-border-width: 4;" text="CLIENTES">
          <font>
@@ -118,7 +119,7 @@
                   <Font name="Dubai Bold" size="12.0" />
                </font>
             </Label>
-            <ComboBox fx:id="Sexo" layoutX="71.0" layoutY="469.0" prefHeight="25.0" prefWidth="299.0" promptText="Seleccionar" />
+            <ComboBox fx:id="Sexo" layoutX="71.0" layoutY="469.0" prefHeight="25.0" prefWidth="299.0" promptText="Seleccionar" style="-fx-background-color: beige; -fx-border-color: FFC107; -fx-border-width: 2;" />
             <ImageView fitHeight="43.0" fitWidth="36.0" layoutX="34.0" layoutY="463.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../Imagenes/iconos/Iconos/genero.png" />

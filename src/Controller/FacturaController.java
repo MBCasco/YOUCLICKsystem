@@ -15,16 +15,17 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.view.JasperViewer;
 
 import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -242,16 +243,16 @@ public class FacturaController extends MenuController implements Initializable {
             pst = conn.prepareStatement(sql);
             pst.execute();
 
-            Alert alert =new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Informacion");
+            Alert alert =new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmación");
             alert.setHeaderText(null);
-            alert.setContentText("Se actualizó exitosamente");
+            alert.setContentText("Se actualizó la factura exitosamente");
             alert.showAndWait();
             UpdateTableF();
             clearmini();
 
         }catch(Exception e){
-            Alert alert =new Alert(Alert.AlertType.WARNING);
+            Alert alert =new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText(null);
             alert.setContentText("Hubo un error al actualizar, revise que todos los campos estén llenos correctamente");
@@ -358,7 +359,7 @@ public class FacturaController extends MenuController implements Initializable {
         txt_totalpagar.setText(txt_total.getText());
     }
 
-    public void trasferir() throws SQLException, IOException {
+    public void trasferir() throws SQLException, IOException, ClassNotFoundException, JRException {
 
         String sql2 = "insert into detallefactura select * from detallefacturat where IDFactura = ?;";
         try {
@@ -405,11 +406,12 @@ public class FacturaController extends MenuController implements Initializable {
         }
 
 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Factura Completa");
         alert.setHeaderText(null);
         alert.setContentText("Factura procesada correctamente");
         alert.showAndWait();
+        FacturaImpresa();
 
 
         Parent root = FXMLLoader.load(getClass().getResource("/Layout/pantallaFactura.fxml"));
@@ -433,8 +435,8 @@ public class FacturaController extends MenuController implements Initializable {
             pst.setDouble(5, 0.0);
 
             pst.execute();
-            Alert alert =new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Error");
+            Alert alert =new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmación");
             alert.setHeaderText(null);
             alert.setContentText("Se genero");
             alert.showAndWait();
@@ -701,10 +703,10 @@ public class FacturaController extends MenuController implements Initializable {
                 pst2.setString(2, txtTotal.getText());
                 pst2.execute();
 
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Informacion");
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmación");
                 alert.setHeaderText(null);
-                alert.setContentText("Se agregó exitosamente");
+                alert.setContentText("Se agregó el pago exitosamente");
                 alert.showAndWait();
                 UpdateTable();
                 generado = 1;
@@ -716,7 +718,7 @@ public class FacturaController extends MenuController implements Initializable {
 
 
         if (CBXTP.getValue().getIDTipoPago() == 2) {
-            if (validateFieldsPT() /*& limite()*/ & validateCantidad() & validateTotal() & validateCodTarjeta() & validateNumeroTarjeta() & validateName()) {
+            if (validateFieldsPT()  & validateCantidad() & validateTotal() & validateCodTarjeta() & validateNumeroTarjeta() & validateName()) {
                 try {
                     pst = conn.prepareStatement("insert into tarjeta (CODSEGTARJETA, numeroDeTarjeta, nombrePropietarioTarjeta, fechaExpiracion) values (?,?,?,?)");
                     pst.setString(1, txtCodST.getText());
@@ -845,11 +847,11 @@ public class FacturaController extends MenuController implements Initializable {
         if (m.find() && m.group().equals(txtCantidadPagada.getText())) {
             return true;
         } else {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Validar Cantidad");
             alert.setHeaderText(null);
             alert.setContentText("Verifique la siguiente informacion: " +
-                    " \n-Este campo solo acepta numeros decimales");
+                    " \nEste campo solo acepta numeros decimales");
             alert.showAndWait();
             return false;
         }
@@ -881,11 +883,11 @@ public class FacturaController extends MenuController implements Initializable {
         if (m.find() && m.group().equals(txtTotal.getText())) {
             return true;
         } else {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Validar Total");
             alert.setHeaderText(null);
             alert.setContentText("Verifique la siguiente informacion: " +
-                    " \n-Este campo solo acepta numeros decimales");
+                    " \nEste campo solo acepta numeros decimales");
             alert.showAndWait();
             return false;
         }
@@ -899,7 +901,7 @@ public class FacturaController extends MenuController implements Initializable {
         if (m.find() && m.group().equals(txtCodST.getText())) {
             return true;
         } else {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Validar Codigo de tarjeta");
             alert.setHeaderText(null);
             alert.setContentText("Verifique la siguiente informacion: " +
@@ -918,7 +920,7 @@ public class FacturaController extends MenuController implements Initializable {
         if (m.find() && m.group().equals(txtNumTarje.getText())) {
             return true;
         } else {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Validar Numero de tarjeta");
             alert.setHeaderText(null);
             alert.setContentText("Verifique la siguiente informacion: " +
@@ -940,10 +942,11 @@ public class FacturaController extends MenuController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Validar nombre");
             alert.setHeaderText(null);
-            alert.setContentText("Por favor ingresar un nombre válido \n" +
-                    " Deberá escribir un nombre que contenga:\n" +
-                    " - Primera letra mayúscula\n" +
-                    " - Al menos un apellido");
+            alert.setContentText("Verifique la siguiente información: " +
+                    " \nDeberá escribir un nombre que contenga:" +
+                    " \nPrimera letra mayúscula" +
+                    " \nAl menos un apellido" +
+                    " \nEste campo solo letras");
             alert.showAndWait();
 
             return false;
@@ -1072,6 +1075,25 @@ public class FacturaController extends MenuController implements Initializable {
 
         ObservableList<String> hola = connect.pagoAcumulado(ID);
         txt_totalacumulado.setText(hola.get(0));
+    }
+
+    public void FacturaImpresa() throws JRException, ClassNotFoundException, SQLException {
+
+        JasperReport reporte;
+        try {
+
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/ferreteria", "root", "");
+            reporte = JasperCompileManager.compileReport("src/Blank_Letter.jrxml");
+            Map<String, Object> parameters = new HashMap<String, Object>();
+            parameters.put("IDFacturaParameter", ID);
+
+            JasperPrint jp = JasperFillManager.fillReport(reporte, parameters, conn);
+
+            JasperViewer.viewReport(jp, true);
+        }catch (ClassNotFoundException | SQLException | JRException e){
+            JOptionPane.showMessageDialog(null, "Ocurrio este error " + e.getMessage() );
+        }
     }
 }
 

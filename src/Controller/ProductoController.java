@@ -92,7 +92,7 @@ public class ProductoController extends MenuController implements Initializable 
     public void addProducto() throws SQLException {
         conn = connect.conDB();
 
-        if (validateFields() & validateName() & validateNumberStock() & validateDescripcion() & validateUbicacion() & validateNumberprecio()) {
+        if (validateFields() & validateName() & validateNumberStock() & validateDescripcion() & validateUbicacion() & validateNumberprecio() & limite()) {
             try {
                 assert conn != null;
                 PreparedStatement ps = conn.prepareStatement("INSERT INTO producto (nombre,descripcionProducto,precio,IDMarca,IDCategoria) VALUES (?,?,?,?,?)");
@@ -103,7 +103,7 @@ public class ProductoController extends MenuController implements Initializable 
                 ps.setString(4, String.valueOf(comMarca.getSelectionModel().getSelectedItem().getIDMarca()));
                 ps.setString(5, String.valueOf(comCat.getSelectionModel().getSelectedItem().getIDCategoria()));
                 ps.execute();
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Confirmación");
                 alert.setHeaderText(null);
                 alert.setContentText("Se agregó el producto exitosamente");
@@ -176,8 +176,8 @@ public class ProductoController extends MenuController implements Initializable 
     }
 
     public void Delete(){
-        Alert alert =new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirmar");
+        Alert alert =new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Información");
         alert.setHeaderText(null);
         alert.setContentText("Estás seguro ¿Qué quieres eliminar este producto?");
         alert.showAndWait().ifPresent(response -> {
@@ -189,10 +189,10 @@ public class ProductoController extends MenuController implements Initializable 
                     prest.setString(1, txtEliminar.getText());
 
                     if (prest.executeUpdate() > 0){
-                        Alert alert1 =new Alert(Alert.AlertType.INFORMATION);
-                        alert1.setTitle("Informacion");
+                        Alert alert1 =new Alert(Alert.AlertType.CONFIRMATION);
+                        alert1.setTitle("Confirmación");
                         alert1.setHeaderText(null);
-                        alert1.setContentText("Se elimino con éxito");
+                        alert1.setContentText("Se elimino producto con éxito");
                         alert1.showAndWait();
                         UpdateTable();
                         clearFields();
@@ -211,7 +211,7 @@ public class ProductoController extends MenuController implements Initializable 
     public void Edit(){
 
         String value1 = txtID.getText();
-        if (validateFields() & validateName() & validateNumberStock() & validateDescripcion() & validateUbicacion() & validateNumberprecio()) {
+        if (validateFields() & validateName() & validateNumberStock() & validateDescripcion() & validateUbicacion() & validateNumberprecio() & limite()) {
             try {
                 conn = connect.conDB();
 
@@ -226,10 +226,10 @@ public class ProductoController extends MenuController implements Initializable 
                 pst = conn.prepareStatement(sql);
                 pst.execute();
 
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Confirmacion");
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmación");
                 alert.setHeaderText(null);
-                alert.setContentText("Se actualizó exitosamente");
+                alert.setContentText("Se actualizó producto exitosamente");
                 alert.showAndWait();
 
                 UpdateTable();
@@ -310,7 +310,7 @@ public class ProductoController extends MenuController implements Initializable 
         if(m.find() && m.group().equals(txtNombreP.getText())){
             return true;
         } else{
-            Alert alert =new Alert(Alert.AlertType.WARNING);
+            Alert alert =new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Validar Nombre");
             alert.setHeaderText(null);
             alert.setContentText("Verifique la siguiente informacion: " +
@@ -330,13 +330,13 @@ public class ProductoController extends MenuController implements Initializable 
         if(m.find() && m.group().equals(txtStock.getText())){
             return true;
         } else{
-            Alert alert =new Alert(Alert.AlertType.WARNING);
+            Alert alert =new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Validar Stock");
             alert.setHeaderText(null);
             alert.setContentText("Verifique la siguiente informacion: " +
-                    " \n-Este campo solo acepta numeros" +
-                    " \n-Que el numero que ingreso sea entero" +
-                    " \n-Y el numero que ingreso contenga maximo 8 digitos");
+                    " \nEste campo solo acepta numeros" +
+                    " \nQue el numero que ingreso sea entero" +
+                    " \nY el numero que ingreso contenga maximo 8 digitos");
             alert.showAndWait();
             return false;
         }
@@ -349,12 +349,12 @@ public class ProductoController extends MenuController implements Initializable 
         if(m.find() && m.group().equals(txtDescrpcionP.getText())){
             return true;
         } else{
-            Alert alert =new Alert(Alert.AlertType.WARNING);
+            Alert alert =new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Validar Descripcion");
             alert.setHeaderText(null);
             alert.setContentText("Verifique la siguiente informacion: " +
-                    " \n-Este campo solo acepta letras" +
-                    " \n-Ingresar una descripcion válida" +
+                    " \nEste campo solo acepta letras" +
+                    " \nIngresar una descripcion válida" +
                     " \nEj: Alambre de amarre");
             alert.showAndWait();
             return false;
@@ -369,13 +369,13 @@ public class ProductoController extends MenuController implements Initializable 
         if(m.find() && m.group().equals(txtUbicacion.getText())){
             return true;
         } else{
-            Alert alert =new Alert(Alert.AlertType.WARNING);
+            Alert alert =new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Validar Pasillo");
             alert.setHeaderText(null);
             alert.setContentText("Verifique la siguiente informacion: " +
-                    " \n-Ingrese solo el numero del pasillo" +
-                    " \n-Este campo solo acepta numeros" +
-                    " \n-El numero que ingreso debe contener maximo 2 digitos");
+                    " \nIngrese solo el numero del pasillo" +
+                    " \nEste campo solo acepta numeros" +
+                    " \nEl numero que ingreso debe contener maximo 2 digitos");
             alert.showAndWait();
 
 
@@ -390,11 +390,11 @@ public class ProductoController extends MenuController implements Initializable 
         if(m.find() && m.group().equals(txtPrecio.getText())){
             return true;
         } else{
-            Alert alert =new Alert(Alert.AlertType.WARNING);
+            Alert alert =new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Validar Precio");
             alert.setHeaderText(null);
             alert.setContentText("Verifique la siguiente informacion: " +
-                    " \n-Este campo solo numeros decimales");
+                    " \nEste campo solo numeros decimales");
             alert.showAndWait();
             return false;
         }
@@ -414,7 +414,7 @@ public class ProductoController extends MenuController implements Initializable 
         return true;
     }
 
-    /*
+
     private boolean limite(){
         if(txtNombreP.getText().length() >= 35){
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -434,18 +434,7 @@ public class ProductoController extends MenuController implements Initializable 
             alert.showAndWait();
             return false;
         }
-        if(txtUbicacion.getText().length() >= 50){
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Supera Limite Permitido");
-            alert.setHeaderText("Error");
-            alert.setContentText("Superó el Limite de caracteres.+" +
-                    " \n El limite de caracteres es de 50");
-            alert.showAndWait();
-            return false;
-        }
         return true;
 
     }
-
-     */
 }

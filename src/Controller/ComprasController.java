@@ -243,10 +243,10 @@ public class ComprasController  extends MenuController implements Initializable 
                 pst.setDouble(7, 0.0);
                 pst.execute();
 
-                Alert alert =new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Información");
+                Alert alert =new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmación");
                 alert.setHeaderText(null);
-                alert.setContentText("Se agregó exitosamente");
+                alert.setContentText("Se agregó la compra exitosamente");
                 alert.showAndWait();
                 UpdateTableP();
                 UpdateTableC();
@@ -331,7 +331,7 @@ public class ComprasController  extends MenuController implements Initializable 
 
     public void DeleteC(){
         Alert alert =new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Confirmar");
+        alert.setTitle("Información");
         alert.setHeaderText(null);
         alert.setContentText("Estás seguro ¿Qué quieres eliminar esta compra?");
         alert.showAndWait().ifPresent(response -> {
@@ -343,10 +343,10 @@ public class ComprasController  extends MenuController implements Initializable 
                        prest.setString(1, id4Delete);
 
                         if (prest.executeUpdate() > 0) {
-                            Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
-                            alert1.setTitle("Informacion");
+                            Alert alert1 = new Alert(Alert.AlertType.CONFIRMATION);
+                            alert1.setTitle("Confirmación");
                             alert1.setHeaderText(null);
-                            alert1.setContentText("Se elimino con éxito");
+                            alert1.setContentText("Se elimino la compra con éxito");
                             alert1.showAndWait();
                             UpdateTableC();
                             updatecampos();
@@ -372,17 +372,17 @@ public class ComprasController  extends MenuController implements Initializable 
                 pst = conn.prepareStatement(sql);
                 pst.execute();
 
-                Alert alert =new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Informacion");
+                    Alert alert =new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmación");
                 alert.setHeaderText(null);
-                alert.setContentText("Se actualizó exitosamente");
+                alert.setContentText("Se actualizó la compra exitosamente");
                 alert.showAndWait();
 
                 UpdateTableC();
                 clearFields();
 
             } catch (Exception e) {
-                Alert alert =new Alert(Alert.AlertType.WARNING);
+                Alert alert =new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText(null);
                 alert.setContentText("Hubo un error al actualizar, revise que todos los campos estén llenados correctamente");
@@ -455,7 +455,9 @@ public class ComprasController  extends MenuController implements Initializable 
         txtSubTotal.setText((compras1.get(ID-1).getSubtotalCompra()));
     }
 
-    //Validaciones
+    /*
+        VALIDACIONES
+     */
     private boolean validateCantidad(){
         Pattern p = Pattern.compile("[0-9]{1,8}");
         Matcher m = p.matcher(txtcantidad.getText().trim());
@@ -463,13 +465,13 @@ public class ComprasController  extends MenuController implements Initializable 
         if(m.find() && m.group().equals(txtcantidad.getText())){
             return true;
         } else{
-            Alert alert =new Alert(Alert.AlertType.WARNING);
+            Alert alert =new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Validar Cantidad");
             alert.setHeaderText(null);
             alert.setContentText("Verifique la siguiente informacion: " +
-                    " \n-Este campo solo acepta numeros" +
-                    " \n-Que el numero que ingreso sea entero" +
-                    " \n-Y el numero que ingreso contenga maximo 8 digitos");
+                    " \nEste campo solo acepta numeros" +
+                    " \nQue el numero que ingreso sea entero" +
+                    " \nY el numero que ingreso contenga maximo 8 digitos");
             alert.showAndWait();
             return false;
         }

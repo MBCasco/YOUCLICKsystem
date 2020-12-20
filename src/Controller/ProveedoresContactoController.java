@@ -50,6 +50,7 @@ public class ProveedoresContactoController extends MenuController implements Ini
     private TextField txt_IdContacto;
     @FXML
     private TextField txt_nombreContacto;
+
     @FXML
     private Button btn_registrar;
     @FXML
@@ -77,6 +78,7 @@ public class ProveedoresContactoController extends MenuController implements Ini
         System.out.println(txt_IDProveedor);
         return value;
     }
+
     public void add_contacto(){
         conn = connect.conDB();
         String sql = "insert into contactoproveedor (IDProveedor, nombreDeContacto, Detalles, Telefono, Correo)values(?,?,?,?,?)";
@@ -90,8 +92,8 @@ public class ProveedoresContactoController extends MenuController implements Ini
                 pst.setString(5, txt_correoContacto.getText());
                 pst.execute();
 
-                Alert alert =new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Error");
+                Alert alert =new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmación");
                 alert.setHeaderText(null);
                 alert.setContentText("Se agregó exitosamente");
                 alert.showAndWait();
@@ -101,11 +103,12 @@ public class ProveedoresContactoController extends MenuController implements Ini
                 clearFields();
 
             } catch (Exception e) {
-                Alert alert =new Alert(Alert.AlertType.WARNING);
+                Alert alert =new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText(null);
-                alert.setContentText("El correo debe ser único." +
-                        "\n Revise que su correo sea único y vuelva a intentarlo. ");
+                alert.setContentText("Verifique la siguiente información: " +
+                        " \nRevise que su correo sea único" +
+                        " \nQue todos los campos esten llenos correctamente");
                 alert.showAndWait();
             }
         }
@@ -193,8 +196,8 @@ public class ProveedoresContactoController extends MenuController implements Ini
     }
 
     public void deleteContacto(){
-        Alert alert =new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirmar");
+        Alert alert =new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Información");
         alert.setHeaderText(null);
         alert.setContentText("Estás seguro ¿Qué quieres eliminar este proveedor?");
         alert.showAndWait().ifPresent(response -> {
@@ -206,10 +209,10 @@ public class ProveedoresContactoController extends MenuController implements Ini
                     prest.setString(1, txt_eliminarContacto.getText());
 
                     if (prest.executeUpdate() > 0){
-                        Alert alert1 =new Alert(Alert.AlertType.INFORMATION);
-                        alert1.setTitle("Informacion");
+                        Alert alert1 =new Alert(Alert.AlertType.CONFIRMATION);
+                        alert1.setTitle("Confirmación");
                         alert1.setHeaderText(null);
-                        alert1.setContentText("Se elimino con éxito");
+                        alert1.setContentText("Se elimino proveedor con éxito");
                         alert1.showAndWait();
                         UpdateTableContacto();
                         clearFields();
@@ -218,7 +221,8 @@ public class ProveedoresContactoController extends MenuController implements Ini
                         Alert alert2 = new Alert(Alert.AlertType.ERROR);
                         alert2.setTitle("Error");
                         alert2.setHeaderText(null);
-                        alert2.setContentText("Hubo un error al eliminar");
+                        alert2.setContentText("Hubo un error al eliminar" +
+                                "\nEste campo solo permite eliminar por ID.");
                     }
                 }catch (Exception e){
                     JOptionPane.showMessageDialog(null, "Error, por favor vuelva a intentarlo");
@@ -242,17 +246,17 @@ public class ProveedoresContactoController extends MenuController implements Ini
                 pst = conn.prepareStatement(sql);
                 pst.execute();
 
-                Alert alert =new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Informacion");
+                Alert alert =new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmación");
                 alert.setHeaderText(null);
-                alert.setContentText("Se actualizó exitosamente");
+                alert.setContentText("Se actualizó proveedor exitosamente");
                 alert.showAndWait();
 
                 UpdateTableContacto();
                 Search_contacto();
 
             } catch (Exception e) {
-                Alert alert =new Alert(Alert.AlertType.WARNING);
+                Alert alert =new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText(null);
                 alert.setContentText("Hubo un error al actualizar, revise que todos los campos estén llenados correctamente");
@@ -293,10 +297,11 @@ public class ProveedoresContactoController extends MenuController implements Ini
             Alert alert =new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Validar nombre");
             alert.setHeaderText(null);
-            alert.setContentText("Por favor ingresar un nombre válido \n" +
-                    " Deberá escribir un nombre que contenga:\n" +
-                    " - Primera letra mayúscula\n" +
-                    " - Al menos un apellido");
+            alert.setContentText("Verifique la siguiente información: " +
+                    " \nDeberá escribir un nombre que contenga:" +
+                    " \nPrimera letra mayúscula" +
+                    " \nAl menos un apellido" +
+                    " \nEste campo solo letras");
             alert.showAndWait();
 
             return false;
@@ -350,8 +355,9 @@ public class ProveedoresContactoController extends MenuController implements Ini
             Alert alert =new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Validar Correo");
             alert.setHeaderText(null);
-            alert.setContentText("Por favor ingresar un correo válido" +
-                    " ejemplo@gmail.com");
+            alert.setContentText("Verifique la siguiente información: " +
+                    " \nIngresar un correo valido: " +
+                    " \nejemplo@gmail.com");
             alert.showAndWait();
 
             return false;

@@ -80,10 +80,10 @@ public class ProveedoresController extends MenuController implements Initializab
                 pst.setString(3, txt_direccion.getText());
                 pst.execute();
 
-                Alert alert =new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Error");
+                Alert alert =new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmación");
                 alert.setHeaderText(null);
-                alert.setContentText("Se agregó exitosamente");
+                alert.setContentText("Se agregó proveedor exitosamente");
                 alert.showAndWait();
 
                 UpdateTable();
@@ -91,11 +91,12 @@ public class ProveedoresController extends MenuController implements Initializab
                 clearFields();
 
             } catch (Exception e) {
-                Alert alert =new Alert(Alert.AlertType.WARNING);
+                Alert alert =new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText(null);
-                alert.setContentText("El correo debe ser único." +
-                        "\n Revise que su correo sea único y vuelva a intentarlo.");
+                alert.setContentText("Verifique la siguiente información: " +
+                        " \nRevise que su correo sea único" +
+                        " \nQue todos los campos esten llenos correctamente");
                 alert.showAndWait();
             }
         }
@@ -113,8 +114,8 @@ public class ProveedoresController extends MenuController implements Initializab
     }
 
     public void Delete(){
-        Alert alert =new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirmar");
+        Alert alert =new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Información");
         alert.setHeaderText(null);
         alert.setContentText("Estás seguro ¿Qué quieres eliminar este proveedor?");
         alert.showAndWait().ifPresent(response -> {
@@ -126,19 +127,19 @@ public class ProveedoresController extends MenuController implements Initializab
                     prest.setString(1, txt_eliminar.getText());
 
                     if (prest.executeUpdate() > 0){
-                        Alert alert1 =new Alert(Alert.AlertType.INFORMATION);
-                        alert1.setTitle("Informacion");
+                        Alert alert1 =new Alert(Alert.AlertType.CONFIRMATION);
+                        alert1.setTitle("Confirmación");
                         alert1.setHeaderText(null);
-                        alert1.setContentText("Se elimino con éxito");
+                        alert1.setContentText("Se elimino proveedor con éxito");
                         alert1.showAndWait();
                         UpdateTable();
                         clearFields();
                     }
                 }catch (Exception e){
-                    Alert alert2 = new Alert(Alert.AlertType.WARNING);
+                    Alert alert2 = new Alert(Alert.AlertType.ERROR);
                     alert2.setTitle("Error");
                     alert2.setHeaderText(null);
-                    alert2.setContentText("Hubo un error al eliminar,  por favor inténtelo de nuevo." +
+                    alert2.setContentText("Hubo un error al eliminar" +
                             "\nEste campo solo permite eliminar por ID.");
                 }
             }
@@ -154,6 +155,7 @@ public class ProveedoresController extends MenuController implements Initializab
         listM = connect.getdataproveedor();
         table_proveedores.setItems(listM);
     }
+
     @Override
     public void initialize(URL url, ResourceBundle rb){
 
@@ -179,7 +181,7 @@ public class ProveedoresController extends MenuController implements Initializab
     }
 
     public void Edit(){
-        if (validateFields() & limite() & validateName() & validateEmail() & validateDireccion()) {
+        if (validateName() & validateEmail() & validateDireccion() & validateFields() & limite()) {
             try {
                 conn = connect.conDB();
                 String value1 = txt_idProveedor.getText();
@@ -191,10 +193,10 @@ public class ProveedoresController extends MenuController implements Initializab
                 pst = conn.prepareStatement(sql);
                 pst.execute();
 
-                Alert alert =new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Informacion");
+                Alert alert =new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmación");
                 alert.setHeaderText(null);
-                alert.setContentText("Se actualizó exitosamente");
+                alert.setContentText("Se actualizó proveedor exitosamente");
                 alert.showAndWait();
 
                 UpdateTable();
@@ -202,7 +204,7 @@ public class ProveedoresController extends MenuController implements Initializab
                 clearFields();
 
             } catch (Exception e) {
-                Alert alert =new Alert(Alert.AlertType.WARNING);
+                Alert alert =new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText(null);
                 alert.setContentText("Hubo un error al actualizar, revise que todos los campos estén llenados correctamente");
@@ -258,11 +260,8 @@ public class ProveedoresController extends MenuController implements Initializab
 
     }
     /*
-        ////////////
         VALIDACIONES
-        ////////////
      */
-
     private boolean validateName(){
         Pattern p = Pattern.compile("([A-Z]{1}[A-Za-z ]+)");
         Matcher m = p.matcher(txt_nombre.getText());
@@ -270,12 +269,14 @@ public class ProveedoresController extends MenuController implements Initializab
         if(m.find() && m.group().equals(txt_nombre.getText())){
             return true;
         } else{
-            Alert alert =new Alert(Alert.AlertType.WARNING);
+            Alert alert =new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Validar Nombre");
             alert.setHeaderText(null);
-            alert.setContentText("Por favor ingresar un nombre válido" +
-                    " Deberá escribir un nombre que contenga:\n" +
-                    " - Primera letra mayúscula\n");
+            alert.setContentText("Verifique la siguiente información: " +
+                    " \nDeberá escribir un nombre que contenga:" +
+                    " \nPrimera letra mayúscula" +
+                    " \nAl menos un apellido" +
+                    " \nEste campo solo letras");
             alert.showAndWait();
 
             return false;
@@ -289,11 +290,12 @@ public class ProveedoresController extends MenuController implements Initializab
         if(m.find() && m.group().equals(txt_correo.getText())){
             return true;
         } else{
-            Alert alert =new Alert(Alert.AlertType.WARNING);
+            Alert alert =new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Validar Correo");
             alert.setHeaderText(null);
-            alert.setContentText("Por favor ingresar un correo válido" +
-                    " ejemplo@gmail.com");
+            alert.setContentText("Verifique la siguiente información: " +
+                    " \nIngresar un correo valido: " +
+                    " \nejemplo@gmail.com");
             alert.showAndWait();
 
             return false;
@@ -307,10 +309,12 @@ public class ProveedoresController extends MenuController implements Initializab
         if(m.find() && m.group().equals(txt_direccion.getText())){
             return true;
         } else{
-            Alert alert =new Alert(Alert.AlertType.WARNING);
+            Alert alert =new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Validar direcion");
             alert.setHeaderText(null);
-            alert.setContentText("Por favor ingresar una direccion válida");
+            alert.setContentText("Verifique la siguiente información: " +
+                    " \nIngresar un correo valido: " +
+                    " \nejemplo@gmail.com");
             alert.showAndWait();
 
             return false;
@@ -330,7 +334,6 @@ public class ProveedoresController extends MenuController implements Initializab
         }
         return true;
     }
-
 
     private boolean limite(){
         if(txt_nombre.getText().length() >= 35){

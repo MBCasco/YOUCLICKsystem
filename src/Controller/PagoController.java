@@ -116,7 +116,7 @@ public class PagoController extends MenuController implements Initializable {
     public void add_pago() {
         conn = connect.conDB();
         if (CBXTP.getValue().getIDTipoPago() == 2) {
-            if (validateFieldsPT() /*& limite()*/ & validateCantidad() & validateTotal() & validateCodTarjeta() & validateNumeroTarjeta() & validateName()) {
+            if (validateFieldsPT()  & validateCantidad() & validateTotal() & validateCodTarjeta() & validateNumeroTarjeta() & validateName()) {
                 try {
                     pst = conn.prepareStatement("insert into tarjeta (CODSEGTARJETA, numeroDeTarjeta, nombrePropietarioTarjeta, fechaExpiracion) values (?,?,?,?)");
                     pst.setString(1, txtCodST.getText());
@@ -177,10 +177,10 @@ public class PagoController extends MenuController implements Initializable {
                     pst.setString(2, txtTotal.getText());
                     pst.execute();
 
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Informacion");
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Confirmación");
                     alert.setHeaderText(null);
-                    alert.setContentText("Se agregó exitosamente");
+                    alert.setContentText("Se agregó el pago exitosamente");
                     alert.showAndWait();
                     UpdateTable();
 
@@ -205,7 +205,7 @@ public class PagoController extends MenuController implements Initializable {
 
     public void deleteP(){
         Alert alert =new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Confirmar");
+        alert.setTitle("Información");
         alert.setHeaderText(null);
         alert.setContentText("Estás seguro ¿Qué quieres eliminar esta pago?");
         alert.showAndWait().ifPresent(response -> {
@@ -217,10 +217,10 @@ public class PagoController extends MenuController implements Initializable {
                     prest.setString(1, id4Delete);
 
                     if (prest.executeUpdate() > 0) {
-                        Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
-                        alert1.setTitle("Informacion");
+                        Alert alert1 = new Alert(Alert.AlertType.CONFIRMATION);
+                        alert1.setTitle("Confirmación");
                         alert1.setHeaderText(null);
-                        alert1.setContentText("Se elimino con éxito");
+                        alert1.setContentText("Se elimino el pago con éxito");
                         alert1.showAndWait();
                         UpdateTable();
                     }
@@ -298,8 +298,8 @@ public class PagoController extends MenuController implements Initializable {
             pst.execute();
             System.out.println(TxtIDCompra.toString());
             System.out.println("entrada");
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Información");
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmación");
             alert.setContentText("Su pago fue terminado con exito");
             alert.showAndWait();
             compra();
@@ -312,8 +312,9 @@ public class PagoController extends MenuController implements Initializable {
 
     }
 
-    //Validaciones
-
+    /*
+        VALIDACIONES
+     */
     private boolean validateCantidad() {
         Pattern p = Pattern.compile("[0-9]+(.[0-9]+)");
         Matcher m = p.matcher(txtCantidadPagada.getText().trim());
@@ -321,11 +322,11 @@ public class PagoController extends MenuController implements Initializable {
         if (m.find() && m.group().equals(txtCantidadPagada.getText())) {
             return true;
         } else {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Validar Cantidad");
             alert.setHeaderText(null);
             alert.setContentText("Verifique la siguiente informacion: " +
-                    " \n-Este campo solo acepta numeros decimales");
+                    " \nEste campo solo acepta numeros decimales");
             alert.showAndWait();
             return false;
         }
@@ -338,11 +339,11 @@ public class PagoController extends MenuController implements Initializable {
         if (m.find() && m.group().equals(txtTotal.getText())) {
             return true;
         } else {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Validar Total");
             alert.setHeaderText(null);
             alert.setContentText("Verifique la siguiente informacion: " +
-                    " \n-Este campo solo acepta numeros decimales");
+                    " \nEste campo solo acepta numeros decimales");
             alert.showAndWait();
             return false;
         }
@@ -356,7 +357,7 @@ public class PagoController extends MenuController implements Initializable {
         if (m.find() && m.group().equals(txtCodST.getText())) {
             return true;
         } else {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Validar Codigo de tarjeta");
             alert.setHeaderText(null);
             alert.setContentText("Verifique la siguiente informacion: " +
@@ -375,7 +376,7 @@ public class PagoController extends MenuController implements Initializable {
         if (m.find() && m.group().equals(txtNumTarje.getText())) {
             return true;
         } else {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Validar Numero de tarjeta");
             alert.setHeaderText(null);
             alert.setContentText("Verifique la siguiente informacion: " +
@@ -394,13 +395,14 @@ public class PagoController extends MenuController implements Initializable {
         if (m.find() && m.group().equals(txtNPT.getText())) {
             return true;
         } else {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Validar nombre");
             alert.setHeaderText(null);
-            alert.setContentText("Por favor ingresar un nombre válido \n" +
-                    " Deberá escribir un nombre que contenga:\n" +
-                    " - Primera letra mayúscula\n" +
-                    " - Al menos un apellido");
+            alert.setContentText("Verifique la siguiente información: " +
+                    " \nDeberá escribir un nombre que contenga:" +
+                    " \nPrimera letra mayúscula" +
+                    " \nAl menos un apellido" +
+                    " \nEste campo solo letras");
             alert.showAndWait();
 
             return false;

@@ -22,6 +22,7 @@ public class connect {
             return null;
         }
     }
+
     public static ObservableList<clientes> getdataclientes(){
         Connection conn = conDB();
         ObservableList<clientes> list = FXCollections.observableArrayList();
@@ -36,7 +37,6 @@ public class connect {
         }
         return list;
     }
-
 
     public static ObservableList<producto> getdataproducto(){
         Connection conn = conDB();
@@ -69,6 +69,7 @@ public class connect {
         return list;
 
     }
+
     public static ObservableList<proveedores> getdataproveedor(){
         Connection conn = conDB();
         ObservableList<proveedores> list = FXCollections.observableArrayList();
@@ -82,7 +83,6 @@ public class connect {
         }
         return list;
     }
-
 
     public static ObservableList<contacto> getdatacontacto(int value){
         Connection conn = conDB();
@@ -99,6 +99,7 @@ public class connect {
         }
         return list;
     }
+
     public static ObservableList<empleados> getdataempleados(){
         Connection conn = conDB();
         ObservableList<empleados> list = FXCollections.observableArrayList();
@@ -113,6 +114,7 @@ public class connect {
         }
         return list;
     }
+
     public static ObservableList<inventario> getdatainventario(){
         Connection conn = conDB();
         ObservableList<inventario> list = FXCollections.observableArrayList();
@@ -163,8 +165,6 @@ public class connect {
         }
         return list;
     }
-
-
 
     public static ObservableList<String> getdatasexo(){
         Connection conn = conDB();
@@ -338,7 +338,5 @@ public class connect {
         }
         return list;
     }
-
-
 }
 
