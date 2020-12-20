@@ -88,12 +88,15 @@ public class connect {
         Connection conn = conDB();
         ObservableList<contacto> list = FXCollections.observableArrayList();
         try{
-            PreparedStatement psc = conn.prepareStatement("SELECT * FROM contactoproveedor where IDProveedor = ?");
+            PreparedStatement psc = conn.prepareStatement(" SELECT c.IDContactoProveedor, p.empresaProveedor, c.nombreDeContacto, c.Detalles, c.Telefono, c.Correo FROM \n" +
+                    " contactoproveedor as c  \n" +
+                    " inner join proveedores as p on c.IDProveedor = p.IDProveedor\n" +
+                    "where  c.IDProveedor = ?");
             psc.setInt(1,value);
             ResultSet rsP = psc.executeQuery();
 
             while(rsP.next()){
-                list.add(new contacto( Integer.parseInt(rsP.getString("IDContactoProveedor")), Integer.parseInt(rsP.getString("IDProveedor")), rsP.getString("nombreDeContacto"), rsP.getString("Detalles"), Integer.parseInt(rsP.getString("Telefono")), rsP.getString("Correo")));
+                list.add(new contacto(rsP.getInt("IDContactoProveedor"), rsP.getString("empresaProveedor"),rsP.getString("nombreDeContacto"),rsP.getString("Detalles"), rsP.getInt("Telefono"),rsP.getString("Correo")));
             }
         }catch(Exception e){
         }

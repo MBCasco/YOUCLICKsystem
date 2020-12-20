@@ -214,9 +214,9 @@
       </Label>
       <TableView fx:id="table_contacto" layoutX="641.0" layoutY="249.0" onMouseClicked="#getSelectedContacto" prefHeight="493.0" prefWidth="692.0" style="-fx-background-color: eed09d; -fx-border-color: a18262; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-width: 2;">
         <columns>
-          <TableColumn fx:id="col_idContacto" prefWidth="110.0" text="ID Contacto" />
-          <TableColumn fx:id="col_idProveedor" prefWidth="91.0" text="ID Proveedor" />
-            <TableColumn fx:id="col_nombreContacto" prefWidth="108.0" text="Nombre" />
+          <TableColumn fx:id="col_idContacto" prefWidth="71.0" text="ID Contacto" />
+          <TableColumn fx:id="col_idProveedor" prefWidth="170.0" text="Nombre del proveedor" />
+            <TableColumn fx:id="col_nombreContacto" prefWidth="68.0" text="Nombre" />
             <TableColumn fx:id="col_detallesContacto" prefWidth="101.0" text="Detalles" />
             <TableColumn fx:id="col_telefonoContacto" prefWidth="115.0" text="Teléfono" />
             <TableColumn fx:id="col_correoElectronicoContacto" prefWidth="166.0" text="Correo electrónico" />

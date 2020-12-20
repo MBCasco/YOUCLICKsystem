@@ -116,7 +116,7 @@ public class ProveedoresContactoController extends MenuController implements Ini
 
     public void UpdateTableContacto(){
         col_idContacto.setCellValueFactory(new PropertyValueFactory<>("IdContacto"));
-        col_idProveedor.setCellValueFactory(new PropertyValueFactory<>("IProveedor"));
+        col_idProveedor.setCellValueFactory(new PropertyValueFactory<>("nombreproveedor"));
         col_nombreContacto.setCellValueFactory(new PropertyValueFactory<>("NombreContacto"));
         col_detallesContacto.setCellValueFactory(new PropertyValueFactory<>("Detalles"));
         col_telefonoContacto.setCellValueFactory(new PropertyValueFactory<>("TelefonoContacto"));

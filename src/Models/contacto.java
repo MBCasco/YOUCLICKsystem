@@ -4,15 +4,15 @@ public class contacto {
     int IdContacto;
     int TelefonoContacto;
     String Detalles;
-    int IProveedor;
+    String nombreproveedor;
     String NombreContacto, CorreoContacto;
 
-    public int getIProveedor() {
-        return IProveedor;
+    public String getNombreproveedor() {
+        return nombreproveedor;
     }
 
-    public void setIProveedor(int IProveedor) {
-        this.IProveedor = IProveedor;
+    public void setNombreproveedor(String nombreproveedor) {
+        this.nombreproveedor = nombreproveedor;
     }
 
     public int getIdContacto() {
@@ -55,9 +55,9 @@ public class contacto {
         this.Detalles = detalles;
     }
 
-    public contacto(int IdContacto, int IProveedor,  String NombreContacto, String Detalles, int TelefonoContacto, String CorreoContacto) {
+    public contacto(int IdContacto, String IProveedor, String NombreContacto, String Detalles, int TelefonoContacto, String CorreoContacto) {
         this.IdContacto = IdContacto;
-        this.IProveedor = IProveedor;
+        this.nombreproveedor = IProveedor;
         this.NombreContacto = NombreContacto;
         this.Detalles = Detalles;
         this.TelefonoContacto = TelefonoContacto;
