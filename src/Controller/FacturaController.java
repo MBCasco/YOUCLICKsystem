@@ -181,10 +181,7 @@ public class FacturaController extends MenuController implements Initializable {
         pago.setDisable(true);
         prueba4();
         int generado = 0;
-
-
     }
-
 
     private void checkBtnStatus(int check) {
         if (check == 0){
@@ -295,19 +292,17 @@ public class FacturaController extends MenuController implements Initializable {
     }
 
     public void AddProducto() throws SQLException {
-
-        if ((txt_IDCliente.getText() != null && comEmpleados.getValue() !=null)){
-
+        if ((txt_IDCliente.getText() != null && comEmpleados.getValue() !=null )) {
             conn = connect.conDB();
 
-            if(exist == 0){
+            if (exist == 0) {
                 CrearFactura();
                 factura = connect.getDataFacturat();
                 int n = factura.size();
-                if (n <1 ){
+                if (n < 1) {
                     ID = 1;
-                }else {
-                    ID = factura.get(n-1).getIDFactura();
+                } else {
+                    ID = factura.get(n - 1).getIDFactura();
                 }
 
                 exist = 1;
@@ -323,31 +318,34 @@ public class FacturaController extends MenuController implements Initializable {
             }
 
             try {
+                    String sql = "insert into detallefacturat (IDFactura,Cantidad,IDProducto)values(?,?,?)";
+                    pst = conn.prepareStatement(sql);
+                    pst.setInt(1, ID);
+                    pst.setString(2, txt_cantidad.getText());
+                    pst.setString(3, txt_IDP.getText());
+                    pst.execute();
 
-                String sql = "insert into detallefacturat (IDFactura,Cantidad,IDProducto)values(?,?,?)";
-                pst = conn.prepareStatement(sql);
-                pst.setInt(1, ID);
-                pst.setString(2, txt_cantidad.getText());
-                pst.setString(3, txt_IDP.getText());
-                pst.execute();
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Agregado");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Se agregó exitosamente");
+                    alert.showAndWait();
 
-                Alert alert =new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Agregado");
-                alert.setHeaderText(null);
-                alert.setContentText("Se agregó exitosamente");
-                alert.showAndWait();
+                    UpdateTableI();
+                    UpdateTableF();
+                    updatecampos();
+                    clearmini();
 
-                UpdateTableI();
-                UpdateTableF();
-                updatecampos();
-                clearmini();
+                } catch(Exception e){
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                }
 
-            } catch (Exception e) {
-                Alert alert =new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Error");
+            } else{
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setContentText("Falta agregar Empleado");
+                alert.show();
             }
-        }
-
 
     }
 
@@ -404,7 +402,6 @@ public class FacturaController extends MenuController implements Initializable {
             alert.setTitle("Error");
 
         }
-
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Factura Completa");
