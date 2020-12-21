@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1360.0" style="-fx-background-color: #616161; -fx-border-color: c29b61; -fx-border-width: 3;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.PagoController">
+   <children>
+      <Label alignment="CENTER" layoutX="246.0" layoutY="24.0" prefHeight="113.0" prefWidth="1102.0" style="-fx-background-color: FFC107; -fx-border-color: C29B61; -fx-background-radius: 10; -fx-border-radius: 5; -fx-border-style: solid; -fx-border-width: 4;" text="COMPRAS" textAlignment="CENTER">
+         <font>
+            <Font name="Elephant" size="36.0" />
+         </font>
+      </Label>
+      <VBox layoutX="24.0" layoutY="24.0" prefHeight="720.0" prefWidth="195.0" spacing="5.0">
+         <children>
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#cliente" prefHeight="120.0" prefWidth="200.0" style="-fx-background-color: #616161; -fx-border-color: FFdb58; -fx-border-radius: 2;" text="Clientes" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="83.0" fitWidth="73.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Imagenes/iconos/MenuLateral/Cliente.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#empleado" prefHeight="120.0" prefWidth="200.0" style="-fx-background-color: #616161; -fx-border-color: FFdb58; -fx-border-radius: 2;" text="Empleados" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="83.0" fitWidth="73.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Imagenes/iconos/MenuLateral/Empleado.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#proveedor" prefHeight="120.0" prefWidth="200.0" style="-fx-background-color: #616161; -fx-border-color: FFdb58; -fx-border-radius: 2;" text="Proveedores" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="62.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Imagenes/iconos/MenuLateral/proveedor.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button alignment="CENTER" layoutX="10.0" layoutY="135.0" mnemonicParsing="false" onAction="#producto" prefHeight="120.0" prefWidth="200.0" style="-fx-background-color: #616161; -fx-border-color: FFdb58; -fx-border-radius: 2;" text="Productos" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="66.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Imagenes/iconos/MenuLateral/producto.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#inventario" prefHeight="120.0" prefWidth="200.0" style="-fx-background-color: #616161; -fx-border-color: FFdb58; -fx-border-radius: 2;" text="Inventario" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="66.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Imagenes/iconos/MenuLateral/Inventario.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#factura" prefHeight="123.0" prefWidth="206.0" style="-fx-background-color: #616161; -fx-border-color: FFdb58; -fx-border-radius: 2;" text="Facturas" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="66.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Imagenes/iconos/MenuLateral/Factura.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+      </VBox>
+      <ImageView fitHeight="100.0" fitWidth="149.0" layoutX="367.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Imagenes/iconos/Iconos/compra.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="100.0" fitWidth="149.0" layoutX="1112.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Imagenes/iconos/Iconos/compra.png" />
+         </image>
+      </ImageView>
+      <AnchorPane layoutX="246.0" layoutY="514.0" prefHeight="254.0" prefWidth="1102.0" style="-fx-background-color: d5c5ae; -fx-border-color: ffc107; -fx-border-width: 2; -fx-border-radius: 5; -fx-background-radius: 5;">
+         <children>
+            <TextField fx:id="fieldDelete" alignment="CENTER" layoutX="56.0" layoutY="129.0" prefHeight="31.0" prefWidth="262.0" promptText="Eliminar por ID " style="-fx-background-color: beige; -fx-border-color: #FFC107;" />
+            <Label alignment="CENTER" layoutY="32.0" prefHeight="31.0" prefWidth="413.0" style="-fx-background-color: #FFC107; -fx-border-color: C29B61;" text="Ver datos pago">
+               <font>
+                  <Font name="Dubai Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="14.0" layoutY="87.0" prefHeight="30.0" prefWidth="237.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="Eliminar" textFill="#8d5910">
+               <font>
+                  <Font name="Dubai Regular" size="15.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="31.0" fitWidth="36.0" layoutX="14.0" layoutY="129.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Imagenes/iconos/Iconos/eliminar2.png" />
+               </image>
+            </ImageView>
+            <TableView fx:id="tablaPago" layoutX="417.0" layoutY="8.0" onMouseClicked="#getSelectedPago" prefHeight="236.0" prefWidth="678.0">
+              <columns>
+                <TableColumn fx:id="col_IDPago" prefWidth="75.0" text="ID" />
+                  <TableColumn fx:id="col_desTipoPago" prefWidth="170.0" text="Tipo pago" />
+                  <TableColumn fx:id="col_cantidadPagada" prefWidth="185.0" text="Cantidad" />
+                  <TableColumn fx:id="col_porcentajePagado" prefWidth="125.0" text="Porcentaje" visible="false" />
+                  <TableColumn fx:id="col_totalPago" prefWidth="113.0" text="Total" />
+              </columns>
+            </TableView>
+            <Button fx:id="btnDelete" layoutX="328.0" layoutY="125.0" mnemonicParsing="false" onAction="#deleteP" prefHeight="31.0" prefWidth="85.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="Eliminar" textFill="#eed09d">
+               <font>
+                  <Font name="Dubai Bold" size="15.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+      <TabPane layoutX="246.0" layoutY="155.0" prefHeight="341.0" prefWidth="1102.0" style="-fx-background-color: d5c5ae; -fx-border-color: ffc107; -fx-border-width: 2; -fx-border-radius: 5; -fx-background-radius: 5;" tabClosingPolicy="UNAVAILABLE">
+         <tabs>
+            <Tab text="Pago">
+               <content>
+                  <AnchorPane prefHeight="340.0" prefWidth="1098.0">
+                     <children>
+                        <Label alignment="CENTER" layoutX="14.0" layoutY="98.0" prefHeight="30.0" prefWidth="195.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="Tipo Pago" textFill="#8d5910">
+                           <font>
+                              <Font name="Dubai Regular" size="15.0" />
+                           </font>
+                        </Label>
+                        <ComboBox fx:id="CBXTP" layoutX="41.0" layoutY="135.0" onAction="#prueba4" prefHeight="31.0" prefWidth="272.0" promptText="Seleccione un tipo de pago" style="-fx-background-color: beige; -fx-border-color: a18262; -fx-border-width: 2;" />
+                        <ImageView fitHeight="30.0" fitWidth="31.0" layoutX="3.0" layoutY="136.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Imagenes/iconos/Iconos/compra.png" />
+                           </image>
+                        </ImageView>
+                        <Label alignment="CENTER" layoutX="14.0" layoutY="178.0" prefHeight="30.0" prefWidth="195.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="Cantidad pagada" textFill="#8d5910">
+                           <font>
+                              <Font name="Dubai Regular" size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="txtCantidadPagada" alignment="CENTER" layoutX="41.0" layoutY="218.0" prefHeight="31.0" prefWidth="272.0" style="-fx-background-color: beige; -fx-border-color: #FFC107;" />
+                        <ImageView fitHeight="30.0" fitWidth="31.0" layoutX="3.0" layoutY="219.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Imagenes/iconos/Iconos/cubes.png" />
+                           </image>
+                        </ImageView>
+                        <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="30.0" prefWidth="195.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="Total" textFill="#8d5910">
+                           <font>
+                              <Font name="Dubai Regular" size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="txtTotal" alignment="CENTER" layoutX="41.0" layoutY="58.0" prefHeight="31.0" prefWidth="272.0" style="-fx-background-color: beige; -fx-border-color: #FFC107;" />
+                        <ImageView fitHeight="30.0" fitWidth="31.0" layoutX="3.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Imagenes/iconos/Iconos/salary.png" />
+                           </image>
+                        </ImageView>
+                        <Label alignment="CENTER" layoutX="381.0" layoutY="14.0" prefHeight="30.0" prefWidth="195.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="Numero tarjeta" textFill="#8d5910">
+                           <font>
+                              <Font name="Dubai Regular" size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="txtNumTarje" alignment="CENTER" layoutX="413.0" layoutY="56.0" prefHeight="31.0" prefWidth="272.0" style="-fx-background-color: beige; -fx-border-color: #FFC107;" />
+                        <ImageView fitHeight="30.0" fitWidth="31.0" layoutX="381.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Imagenes/iconos/Iconos/debitCard.png" />
+                           </image>
+                        </ImageView>
+                        <Label alignment="CENTER" layoutX="735.0" layoutY="14.0" prefHeight="30.0" prefWidth="195.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="Codigo seguridad tarjeta" textFill="#8d5910">
+                           <font>
+                              <Font name="Dubai Regular" size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="txtCodST" alignment="CENTER" layoutX="771.0" layoutY="57.0" prefHeight="31.0" prefWidth="272.0" style="-fx-background-color: beige; -fx-border-color: #FFC107;" />
+                        <ImageView fitHeight="30.0" fitWidth="31.0" layoutX="735.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Imagenes/iconos/Iconos/cvv.png" />
+                           </image>
+                        </ImageView>
+                        <Button fx:id="btnRegistar" layoutX="822.0" layoutY="198.0" mnemonicParsing="false" onAction="#add_pago" prefHeight="31.0" prefWidth="85.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="Registrar" textFill="#eed09d">
+                           <font>
+                              <Font name="Dubai Bold" size="15.0" />
+                           </font></Button>
+                        <Button fx:id="btn_limpiar" layoutX="965.0" layoutY="198.0" mnemonicParsing="false" onAction="#clearFields" prefHeight="31.0" prefWidth="85.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="Limpiar" textFill="#eed09d">
+                           <font>
+                              <Font name="Dubai Bold" size="15.0" />
+                           </font></Button>
+                        <Label alignment="CENTER" layoutX="735.0" layoutY="98.0" prefHeight="30.0" prefWidth="195.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="Fecha tarjeta" textFill="#8d5910">
+                           <font>
+                              <Font name="Dubai Regular" size="15.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="30.0" fitWidth="31.0" layoutX="735.0" layoutY="136.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Imagenes/iconos/Iconos/calendar.png" />
+                           </image>
+                        </ImageView>
+                        <DatePicker fx:id="DataFT" layoutX="771.0" layoutY="136.0" prefHeight="31.0" prefWidth="272.0" style="-fx-background-color: beige; -fx-border-color: a18262; -fx-border-width: 2;" />
+                        <Label alignment="CENTER" layoutX="381.0" layoutY="98.0" prefHeight="30.0" prefWidth="195.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="Nombre propietario tarjeta" textFill="#8d5910">
+                           <font>
+                              <Font name="Dubai Regular" size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="txtNPT" alignment="CENTER" layoutX="411.0" layoutY="139.0" prefHeight="31.0" prefWidth="272.0" style="-fx-background-color: beige; -fx-border-color: #FFC107;" />
+                        <ImageView fitHeight="30.0" fitWidth="31.0" layoutX="381.0" layoutY="136.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Imagenes/iconos/Iconos/man.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="30.0" fitWidth="31.0" layoutX="783.0" layoutY="203.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Imagenes/iconos/Iconos/moneyperder.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="30.0" fitWidth="31.0" layoutX="925.0" layoutY="204.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Imagenes/iconos/Iconos/clean.png" />
+                           </image>
+                        </ImageView>
+                        <Button fx:id="btn_terminarPago" layoutX="930.0" layoutY="250.0" mnemonicParsing="false" onAction="#trasferirp" prefHeight="40.0" prefWidth="120.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="Terminar Pago" textFill="#eed09d">
+                           <font>
+                              <Font name="Dubai Bold" size="15.0" />
+                           </font>
+                        </Button>
+                        <ImageView fitHeight="30.0" fitWidth="31.0" layoutX="892.0" layoutY="255.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Imagenes/iconos/Iconos/completar.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </AnchorPane>
+               </content></Tab>
+            <Tab onSelectionChanged="#pruebaP" text="Compra" />
+         </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>

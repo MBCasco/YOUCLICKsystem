@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1360.0" style="-fx-background-color: #616161; -fx-border-color: c29b61; -fx-border-width: 3;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ProveedoresContactoController">
+   <children>
+      <Pane layoutX="235.0" layoutY="24.0" prefHeight="108.0" prefWidth="1099.0" style="-fx-background-color: #ffc107; -fx-border-color: c29b61; -fx-background-radius: 10; -fx-border-radius: 5; -fx-border-style: solid; -fx-border-width: 4;">
+         <children>
+            <Label layoutX="407.0" layoutY="22.0" prefHeight="61.0" prefWidth="358.0" text="PROVEEDORES">
+               <font>
+                  <Font name="Elephant" size="36.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="96.0" fitWidth="108.0" layoutX="182.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Imagenes/iconos/MenuLateral/proveedor.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Separator layoutX="238.0" layoutY="200.0" prefHeight="37.0" prefWidth="377.0" />
+      <HBox layoutX="641.0" layoutY="155.0" minWidth="-Infinity" prefHeight="36.0" prefWidth="708.0">
+         <children>
+            <ImageView fitHeight="36.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Imagenes/iconos/Iconos/buscar.png" />
+               </image>
+            </ImageView>
+            <TextField fx:id="txt_buscarContacto" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="34.0" prefWidth="519.0" promptText="Búsqueda por nombre o ID" style="-fx-background-color: beige; -fx-border-color: ffc107;">
+               <HBox.margin>
+                  <Insets left="6.0" />
+               </HBox.margin>
+            </TextField>
+         </children>
+      </HBox>
+      <VBox layoutX="14.0" layoutY="24.0" prefHeight="720.0" prefWidth="195.0" spacing="5.0">
+         <children>
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#cliente" prefHeight="120.0" prefWidth="200.0" style="-fx-background-color: #616161; -fx-border-color: FFdb58; -fx-border-radius: 2;" text="Clientes" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="83.0" fitWidth="73.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Imagenes/iconos/MenuLateral/Cliente.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#empleado" prefHeight="120.0" prefWidth="200.0" style="-fx-background-color: #616161; -fx-border-color: FFdb58; -fx-border-radius: 2;" text="Empleados" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="83.0" fitWidth="73.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Imagenes/iconos/MenuLateral/Empleado.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#proveedor" prefHeight="120.0" prefWidth="200.0" style="-fx-background-color: #616161; -fx-border-color: FFdb58; -fx-border-radius: 2;" text="Proveedores" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="62.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Imagenes/iconos/MenuLateral/proveedor.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button alignment="CENTER" layoutX="10.0" layoutY="135.0" mnemonicParsing="false" onAction="#producto" prefHeight="120.0" prefWidth="200.0" style="-fx-background-color: #616161; -fx-border-color: FFdb58; -fx-border-radius: 2;" text="Productos" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="66.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Imagenes/iconos/MenuLateral/producto.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#inventario" prefHeight="120.0" prefWidth="200.0" style="-fx-background-color: #616161; -fx-border-color: FFdb58; -fx-border-radius: 2;" text="Inventario" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="66.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Imagenes/iconos/MenuLateral/Inventario.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#factura" prefHeight="123.0" prefWidth="206.0" style="-fx-background-color: #616161; -fx-border-color: FFdb58; -fx-border-radius: 2;" text="Facturas" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="66.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Imagenes/iconos/MenuLateral/Factura.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+      </VBox>
+      <Button fx:id="btn_eliminar" alignment="CENTER" contentDisplay="CENTER" layoutX="1026.0" layoutY="199.0" mnemonicParsing="false" onAction="#deleteContacto" prefHeight="32.0" prefWidth="95.0" style="-fx-border-color: ffc107; -fx-background-color: a18262;" text="ELIMINAR" textFill="#eed09d" />
+      <ImageView fitHeight="39.0" fitWidth="38.0" layoutX="641.0" layoutY="195.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Imagenes/iconos/Iconos/eliminar%20(1).png" />
+         </image>
+      </ImageView>
+      <TextField fx:id="txt_eliminarContacto" layoutX="685.0" layoutY="199.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="331.0" promptText="ID  del contacto proveedor" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
+      <TabPane layoutX="238.0" layoutY="243.0" prefHeight="500.0" prefWidth="381.0" style="-fx-background-color: d5c5ae; -fx-border-color: ffc107; -fx-border-width: 2; -fx-border-radius: 5; -fx-background-radius: 5;" tabClosingPolicy="UNAVAILABLE">
+         <tabs>
+            <Tab text="Contacto">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="453.0" prefWidth="377.0">
+                     <children>
+                        <TextField fx:id="txt_telefonoContacto" layoutX="42.0" layoutY="274.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="331.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
+                        <Label alignment="CENTER" layoutX="5.0" layoutY="241.0" prefHeight="28.0" prefWidth="255.0" style="-fx-background-color: eed09d; -fx-background-radius: 3; -fx-border-color: black; -fx-border-radius: 3;" text="Teléfono">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="txt_detallesContacto" layoutX="41.0" layoutY="200.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="331.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
+                        <Label alignment="CENTER" layoutX="4.0" layoutY="163.0" prefHeight="32.0" prefWidth="256.0" style="-fx-background-color: eed09d; -fx-background-radius: 3; -fx-border-color: black; -fx-border-radius: 3;" text="Detalles">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="txt_nombreContacto" layoutX="42.0" layoutY="122.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="331.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
+                        <Label alignment="CENTER" layoutX="5.0" layoutY="89.0" prefHeight="29.0" prefWidth="253.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="Nombre">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="txt_IdContacto" alignment="CENTER" editable="false" layoutX="41.0" layoutY="47.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="331.0" promptText="Este campo solo muestra" style="-fx-background-color: beige; -fx-border-color: #8d5910;" />
+                        <Label alignment="CENTER" layoutX="4.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="28.0" prefWidth="165.0" style="-fx-background-color: eed09d; -fx-background-radius: 3; -fx-border-color: black; -fx-border-radius: 3;" text="ID ">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="btn_registrar" layoutX="37.0" layoutY="419.0" mnemonicParsing="false" onAction="#add_contacto" prefHeight="32.0" prefWidth="81.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="REGISTRAR" textFill="#eed09d" />
+                        <ImageView fitHeight="34.0" fitWidth="36.0" layoutX="1.0" layoutY="418.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Imagenes/iconos/Iconos/portapapeles.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="32.0" fitWidth="36.0" layoutX="244.0" layoutY="423.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Imagenes/iconos/Iconos/actualizar.png" />
+                           </image>
+                        </ImageView>
+                        <Button fx:id="btn_actualizar" layoutX="276.0" layoutY="421.0" mnemonicParsing="false" onAction="#EditContacto" prefHeight="32.0" prefWidth="95.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="ACTUALIZAR" textFill="#eed09d" />
+                        <Label alignment="CENTER" layoutX="5.0" layoutY="318.0" prefHeight="28.0" prefWidth="255.0" style="-fx-background-color: eed09d; -fx-background-radius: 3; -fx-border-color: black; -fx-border-radius: 3;" text="Correo electrónico">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="txt_correoContacto" layoutX="42.0" layoutY="357.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="331.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
+                        <ImageView fitHeight="39.0" fitWidth="32.0" layoutX="6.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Imagenes/iconos/Iconos/carne-de-identidad.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="34.0" fitWidth="36.0" layoutX="3.0" layoutY="122.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Imagenes/iconos/Iconos/employees%20(1).png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="39.0" fitWidth="32.0" layoutX="3.0" layoutY="202.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Imagenes/iconos/Iconos/rango.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="37.0" fitWidth="32.0" layoutX="5.0" layoutY="273.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Imagenes/iconos/Iconos/phone-call.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="37.0" fitWidth="32.0" layoutX="5.0" layoutY="360.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Imagenes/iconos/Iconos/email.png" />
+                           </image>
+                        </ImageView>
+                        <Button fx:id="btn_clear" layoutX="156.0" layoutY="421.0" mnemonicParsing="false" onAction="#clearFields" prefHeight="32.0" prefWidth="83.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="LIMPIAR" textFill="#eed09d" />
+                        <ImageView fitHeight="34.0" fitWidth="36.0" layoutX="120.0" layoutY="420.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Imagenes/iconos/Iconos/clean.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab onSelectionChanged="#prueba" text="Informacion General" />
+         </tabs>
+      </TabPane>
+      <Label alignment="CENTER" layoutX="234.0" layoutY="156.0" prefHeight="46.0" prefWidth="387.0" style="-fx-background-color: #FFC107; -fx-border-color: c29b61;" text="Datos del Contacto">
+         <font>
+            <Font name="Dubai Bold" size="16.0" />
+         </font>
+      </Label>
+      <TableView fx:id="table_contacto" layoutX="641.0" layoutY="249.0" onMouseClicked="#getSelectedContacto" prefHeight="493.0" prefWidth="692.0" style="-fx-background-color: eed09d; -fx-border-color: a18262; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-width: 2;">
+        <columns>
+          <TableColumn fx:id="col_idContacto" prefWidth="71.0" text="ID Contacto" />
+          <TableColumn fx:id="col_idProveedor" prefWidth="170.0" text="Nombre del proveedor" />
+            <TableColumn fx:id="col_nombreContacto" prefWidth="68.0" text="Nombre" />
+            <TableColumn fx:id="col_detallesContacto" prefWidth="101.0" text="Detalles" />
+            <TableColumn fx:id="col_telefonoContacto" prefWidth="115.0" text="Teléfono" />
+            <TableColumn fx:id="col_correoElectronicoContacto" prefWidth="166.0" text="Correo electrónico" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>
