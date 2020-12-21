@@ -127,9 +127,16 @@ public class FacturaController extends MenuController implements Initializable {
     @FXML
     private Button btn_eliminar;
     @FXML
+    private Button btnRegistar;
+    @FXML
     private Button btn_facturar;
     @FXML
     private Button btn_clean;
+
+    @FXML
+    private Button btn_finalizarFactura;
+    @FXML
+    private Button btn_limpiar;
     @FXML
     private Label labelStock;
     @FXML
@@ -142,6 +149,9 @@ public class FacturaController extends MenuController implements Initializable {
     private TextField txt_total;
     @FXML
     private TextField txt_fecha;
+    @FXML
+    private TextField txt_IDFactura;
+
 
     int indexF = -1;
     Connection conn = null;
@@ -179,12 +189,26 @@ public class FacturaController extends MenuController implements Initializable {
         }
         exist = 0;
         tableInventario.setDisable(true);
+        btn_actualizar.setDisable(true);
+        btn_eliminar.setDisable(true);
+        btn_facturar.setDisable(true);
+        btn_clean.setDisable(true);
         ID = 0;
         //////////////
         intCombox();
         pago.setDisable(true);
         prueba4();
+        txtNumTarje.setDisable(true);
+        txtNPT.setDisable(true);
+        txtCodST.setDisable(true);
+        DataFT.setDisable(true);
+        btnRegistar.setDisable(true);
+        btn_finalizarFactura.setDisable(true);
+        btn_limpiar.setDisable(true);
+        txtCantidadPagada.setDisable(true);
+
         int generado = 0;
+        btn_agregar.setDisable(true);
 
     }
 
@@ -195,6 +219,8 @@ public class FacturaController extends MenuController implements Initializable {
             btn_agregar.setDisable(false);
             txt_stock.setVisible(true);
             labelStock.setVisible(true);
+
+
         }
         if (check == 1){
             btn_actualizar.setDisable(false);
@@ -215,11 +241,12 @@ public class FacturaController extends MenuController implements Initializable {
         txt_nombreCliente.clear();
         txt_IDCliente.clear();
         txt_fecha.clear();
-        checkBtnStatus(0);
+
         txt_IDCliente.setVisible(false);
         txt_nombreCliente.setVisible(false);
         labelStock.setVisible(true);
         btn_seleccionarCliente.setVisible(true);
+
 
         pago.setDisable(true);
         if(exist != 0){ newlaunch();}
@@ -235,33 +262,36 @@ public class FacturaController extends MenuController implements Initializable {
 
     public void Edit(){
 
+        if (validatenumero()){
+            if ((txt_IDCliente.getText() != null && comEmpleados.getValue() !=null )) {
+                try{
+                    conn = connect.conDB();
 
-        try{
-            conn = connect.conDB();
+                    String value1 = id4Delete;
+                    String value2 = txt_cantidad.getText();
 
-            String value1 = id4Delete;
-            String value2 = txt_cantidad.getText();
+                    String sql = ("update detallefacturat set Cantidad= '"+value2+"' where IDDetalleFactura='"+value1+"' ");
 
-            String sql = ("update detallefacturat set Cantidad= '"+value2+"' where IDDetalleFactura='"+value1+"' ");
+                    pst = conn.prepareStatement(sql);
+                    pst.execute();
 
-            pst = conn.prepareStatement(sql);
-            pst.execute();
+                    Alert alert =new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Confirmación");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Se actualizó la factura exitosamente");
+                    alert.showAndWait();
+                    UpdateTableF();
+                    clearmini();
 
-            Alert alert =new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Confirmación");
-            alert.setHeaderText(null);
-            alert.setContentText("Se actualizó la factura exitosamente");
-            alert.showAndWait();
-            UpdateTableF();
-            clearmini();
-
-        }catch(Exception e){
-            Alert alert =new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText(null);
-            alert.setContentText("Hubo un error al actualizar, revise que todos los campos estén llenos correctamente");
-            alert.showAndWait();
+                }catch(Exception e){
+                    Alert alert =new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Hubo un error al actualizar, revise que todos los campos estén llenos correctamente");
+                    alert.showAndWait();
+                }}
         }
+
     }
 
     public void intComboxF(){
@@ -276,7 +306,7 @@ public class FacturaController extends MenuController implements Initializable {
         tablaFactura.setDisable(x);
         btn_actualizar.setDisable(x);
         btn_eliminar.setDisable(x);
-        btn_agregar.setDisable(x);
+        btn_agregar.setDisable(!x);
     }
 
 
@@ -311,6 +341,7 @@ public class FacturaController extends MenuController implements Initializable {
             alert.setContentText("Este campo solo permite numeros enteros");
             alert.showAndWait();
             clearmini();
+            btn_agregar.setDisable(true);
             return false;
 
         }
@@ -342,6 +373,10 @@ public class FacturaController extends MenuController implements Initializable {
                     pst.execute();
                     pst = conn.prepareStatement(sqls2);
                     pst.execute();
+                    txt_IDFactura.setText(String.valueOf(ID));
+                    btn_facturar.setDisable(false);
+                    btn_clean.setDisable(false);
+
                 }
 
                 try {
@@ -360,7 +395,7 @@ public class FacturaController extends MenuController implements Initializable {
                         alert.setHeaderText(null);
                         alert.setContentText("Se agregó exitosamente");
                         alert.showAndWait();
-
+                        btn_agregar.setDisable(true);
                         UpdateTableI();
                         UpdateTableF();
                         updatecampos();
@@ -590,6 +625,9 @@ public class FacturaController extends MenuController implements Initializable {
         txt_search.setPromptText("Buscar Producto");
         hideInventario(false);
         tableInventario.setDisable(false);
+        btn_agregar.setDisable(true);
+        btn_actualizar.setDisable(true);
+        btn_eliminar.setDisable(true);
 
     }
 
@@ -749,6 +787,7 @@ public class FacturaController extends MenuController implements Initializable {
                 alert.showAndWait();
                 UpdateTable();
                 generado = 1;
+                btn_finalizarFactura.setDisable(false);
 
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e);
@@ -779,6 +818,7 @@ public class FacturaController extends MenuController implements Initializable {
                     pst1.execute();
                     UpdateTable();
                     updatecampospago();
+                    btn_finalizarFactura.setDisable(false);
 
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
@@ -794,6 +834,7 @@ public class FacturaController extends MenuController implements Initializable {
                     pst3.setString(2, txtCantidadPagada.getText());
                     pst3.setString(3, String.valueOf(CBXTP.getSelectionModel().getSelectedItem().getIDTipoPago()));
                     pst3.execute();
+                    btn_finalizarFactura.setDisable(false);
                     UpdateTable();
                     updatecampospago();
                 } catch (SQLException throwables) {
@@ -859,12 +900,16 @@ public class FacturaController extends MenuController implements Initializable {
 
     @FXML
     private void clearFields() {
-        txtIDTP.clear();
+
+        prueba4();
+        txtNumTarje.clear();
+        txtNPT.clear();
+        txtCodST.clear();
+        DataFT.setDisable(true);
+        btnRegistar.setDisable(false);
+        btn_finalizarFactura.setDisable(false);
+        btn_limpiar.setDisable(true);
         txtCantidadPagada.clear();
-        txtProcentajeP.clear();
-        txtTotal.clear();
-        CBXTP.setValue(null);
-        fieldFilter.clear();
 
     }
 
@@ -1097,12 +1142,21 @@ public class FacturaController extends MenuController implements Initializable {
                 txtNPT.setDisable(true);
                 txtCodST.setDisable(true);
                 DataFT.setDisable(true);
+                txtCantidadPagada.setDisable(false);
+                btnRegistar.setDisable(false);
+
+                btn_limpiar.setDisable(false);
+
 
             }else{
                 txtNumTarje.setDisable(false);
                 txtNPT.setDisable(false);
                 txtCodST.setDisable(false);
                 DataFT.setDisable(false);
+                txtCantidadPagada.setDisable(false);
+                btnRegistar.setDisable(false);
+
+                btn_limpiar.setDisable(false);
             }
         });
     }
