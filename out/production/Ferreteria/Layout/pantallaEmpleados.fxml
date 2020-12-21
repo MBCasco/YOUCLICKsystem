@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1360.0" style="-fx-background-color: #616161; -fx-border-color: c29b61; -fx-border-width: 3;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.EmpleadosController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1360.0" style="-fx-background-color: #616161; -fx-border-color: c29b61; -fx-border-width: 3;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.EmpleadosController">
    <children>
       <VBox layoutX="6.0" layoutY="8.0" prefHeight="720.0" prefWidth="195.0" spacing="5.0" AnchorPane.topAnchor="8.0" />
       <Label alignment="CENTER" layoutX="257.0" layoutY="22.0" prefHeight="119.0" prefWidth="1058.0" style="-fx-background-color: #FFC107; -fx-background-radius: 10; -fx-border-color: c29b61; -fx-border-radius: 5; -fx-border-style: solid; -fx-border-width: 4;" text="EMPLEADOS">
@@ -144,24 +143,24 @@
                                     <Image url="@../Imagenes/iconos/Iconos/rango.png" />
                                  </image>
                               </ImageView>
-                              <TextField fx:id="txt_fechaInicio" layoutX="59.0" layoutY="145.0" prefHeight="27.0" prefWidth="281.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
                               <Label alignment="CENTER" layoutX="14.0" layoutY="104.0" prefHeight="25.0" prefWidth="162.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="Fecha de inicio" textFill="#8d5910">
                                  <font>
                                     <Font name="Dubai Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <Label alignment="CENTER" layoutX="17.0" layoutY="186.0" prefHeight="25.0" prefWidth="162.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="Fecha Final" textFill="#8d5910">
+                              <Label alignment="CENTER" layoutX="17.0" layoutY="186.0" prefHeight="25.0" prefWidth="162.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="Fecha Final Cargo Anterior" textFill="#8d5910">
                                  <font>
                                     <Font name="Dubai Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="txt_fechaFinal" layoutX="59.0" layoutY="228.0" prefHeight="27.0" prefWidth="280.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
                               <ImageView fitHeight="43.0" fitWidth="36.0" layoutX="17.0" layoutY="220.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../Imagenes/iconos/Iconos/rango.png" />
                                  </image>
                               </ImageView>
                               <ComboBox fx:id="Cargo" layoutX="59.0" layoutY="58.0" prefHeight="25.0" prefWidth="281.0" promptText="Seleccionar" style="-fx-background-color: beige; -fx-border-color: FFC107; -fx-border-width: 2;" />
+                              <DatePicker fx:id="date_inicio" editable="false" layoutX="61.0" layoutY="143.0" prefHeight="27.0" prefWidth="283.0" style="-fx-background-color: beige; -fx-border-color: FFC107; -fx-border-width: 2;" />
+                              <DatePicker fx:id="date_final" editable="false" layoutX="61.0" layoutY="225.0" prefHeight="27.0" prefWidth="283.0" style="-fx-background-color: beige; -fx-border-color: FFC107; -fx-border-width: 2;" />
                            </children>
                         </AnchorPane>
                      </content>
@@ -225,7 +224,7 @@
                   <Image url="@../Imagenes/iconos/Iconos/formulario-de-registro.png" />
                </image>
             </ImageView>
-            <Button layoutX="506.0" layoutY="123.0" mnemonicParsing="false" onAction="#CargoH" style="-fx-background-color: a18262;" text="Ver Cargo Històrico" />
+            <Button layoutX="482.0" layoutY="123.0" mnemonicParsing="false" onAction="#CargoH" prefHeight="32.0" prefWidth="144.0" style="-fx-background-color: a18262; -fx-border-color: FFC107;" text="Ver Cargo Histórico" textFill="#eed09d" />
          </children>
       </AnchorPane>
       <ImageView fitHeight="89.0" fitWidth="89.0" layoutX="360.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true">

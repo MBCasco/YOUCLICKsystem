@@ -18,6 +18,7 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -59,9 +60,9 @@ public class EmpleadosController extends MenuController implements Initializable
     @FXML
     private ComboBox<String> Sexo;
     @FXML
-    private TextField txt_fechaInicio;
+    private DatePicker date_inicio;
     @FXML
-    private TextField txt_fechaFinal;
+    private DatePicker date_final;
 
     @FXML
     private Button btn_registrar;
@@ -77,6 +78,7 @@ public class EmpleadosController extends MenuController implements Initializable
     ObservableList<empleados> dataList;
     ObservableList<String> listsexo = connect.getdatasexo();
     ObservableList<String> listcargo = connect.getdatacargo();
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd");
 
     int index = -1;
     Connection conn = null;
@@ -86,7 +88,7 @@ public class EmpleadosController extends MenuController implements Initializable
     public void Add_Empleados() {
         conn = connect.conDB();
 
-        String sql = "insert into empleado (IDEmpleado,nombreEmpleado,direccionEmpleado,telefonoEmpleado,correoEmpleado,IDCargo,IDSexo)values(NULL,?,?,?,?,?,?)";
+        String sql = "insert into empleado (IDEmpleado,nombreEmpleado,direccionEmpleado,telefonoEmpleado,correoEmpleado,fechaInicial,fechaFinal,IDCargo,IDSexo)values(NULL,?,?,?,?,?,NULL,?,?)";
         int codS = 1;
         int codC = 1;
 
@@ -99,6 +101,8 @@ public class EmpleadosController extends MenuController implements Initializable
                 pst.setString(2, txt_direccion.getText());
                 pst.setString(3, txt_telefono.getText());
                 pst.setString(4, txt_correo.getText());
+                pst.setString(5, date_inicio.getValue().format(formatter));
+
 
 
                 if ( Sexo.getValue().equals("Femenino")){
@@ -117,8 +121,8 @@ public class EmpleadosController extends MenuController implements Initializable
                     codC = 1;
                 }
 
-                pst.setInt(5, codC);
-                pst.setInt(6, codS);
+                pst.setInt(6, codC);
+                pst.setInt(7, codS);
                 pst.execute();
 
                 Alert alert =new Alert(Alert.AlertType.CONFIRMATION);
@@ -153,6 +157,8 @@ public class EmpleadosController extends MenuController implements Initializable
         Sexo.setValue(null);
         Cargo.setValue(null);
         txt_eliminar.clear();
+        date_inicio.setValue(null);
+        date_final.setValue(null);
         checkBtnStatus(0);
     }
 
@@ -217,8 +223,10 @@ public class EmpleadosController extends MenuController implements Initializable
             btn_registrar.setDisable(true);
             btn_actualizar.setDisable(false);
             btn_eliminar.setDisable(false);
+            date_final.setDisable(false);
         }
         if (check == 0){
+            date_final.setDisable(true);
             btn_registrar.setDisable(false);
             btn_actualizar.setDisable(true);
             btn_eliminar.setDisable(true);
@@ -243,6 +251,8 @@ public class EmpleadosController extends MenuController implements Initializable
                 String value3 = txt_direccion.getText();
                 String value4 = txt_telefono.getText();
                 String value5 = txt_correo.getText();
+                String value6 = date_inicio.getValue().format(formatter);
+                String value7 = date_final.getValue().format(formatter);
 
                 if ( Sexo.getValue().equals("Femenino")){
                     codS = 1;
@@ -260,11 +270,11 @@ public class EmpleadosController extends MenuController implements Initializable
                     codC = 1;
                 }
 
-                int value6 = codC;
-                int value7 = codS;
+                int value8 = codC;
+                int value9 = codS;
 
                 String sql = (" UPDATE empleado SET nombreEmpleado= '" + value2 + "', direccionEmpleado= '" +
-                        value3 + "', telefonoEmpleado= '" + value4 + "', correoEmpleado= '" + value5 + "', IDCargo= '" + value6 + "', IDSexo= '" + value7 + "' WHERE IDEmpleado='" + value1 + "' ");
+                        value3 + "', telefonoEmpleado= '" + value4 + "', correoEmpleado= '" + value5 + "', fechaInicial= '" + value6 + "', fechaFinal= '" + value7 + "', IDCargo= '" + value8 + "', IDSexo= '" + value9 + "' WHERE IDEmpleado='" + value1 + "' ");
 
                 pst = conn.prepareStatement(sql);
                 pst.execute();

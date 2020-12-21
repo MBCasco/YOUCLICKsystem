@@ -1178,7 +1178,7 @@ public class FacturaController extends MenuController implements Initializable {
         try {
 
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/ferreteria", "root", "qwerty123456789");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/ferreteria", "root", "");
             reporte = JasperCompileManager.compileReport("src/Blank_Letter.jrxml");
             Map<String, Object> parameters = new HashMap<String, Object>();
             parameters.put("IDFacturaParameter", ID);

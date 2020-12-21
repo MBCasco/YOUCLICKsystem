@@ -15,7 +15,7 @@ public class connect {
     public static Connection conDB(){
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/ferreteria","root","qwerty123456789");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/ferreteria","root","");
             return conn;
         }catch (Exception e){
             JOptionPane.showMessageDialog(null, e);
@@ -203,7 +203,7 @@ public class connect {
         Connection conn = conDB();
         ObservableList<cargoHistorico> list = FXCollections.observableArrayList();
         try{
-            PreparedStatement ps = conn.prepareStatement("SELECT c.IDCargoHistorico, e.nombreEmpleado, ca.nombreCargo, c.fechaInicial, c.fechaFinal  FROM cargohistorico AS c INNER JOIN empleado AS e ON e.nombreEmpleado = c.nombreEmpleado INNER JOIN cargo AS ca ON ca.IDCargo = c.IDCargo");
+            PreparedStatement ps = conn.prepareStatement("SELECT c.IDCargoHistorico, e.nombreEmpleado, ca.nombreCargo, c.fechaInicial, c.fechaFinal  FROM cargohistorico AS c INNER JOIN empleado AS e ON e.IDEmpleado = c.IDEmpleado INNER JOIN cargo AS ca ON ca.IDCargo = c.IDCargo;");
             ResultSet rs = ps.executeQuery();
 
             while(rs.next()){
