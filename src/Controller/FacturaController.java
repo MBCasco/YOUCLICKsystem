@@ -1185,7 +1185,7 @@ public class FacturaController extends MenuController implements Initializable {
 
             JasperPrint jp = JasperFillManager.fillReport(reporte, parameters, conn);
 
-            JasperViewer.viewReport(jp, true);
+            JasperViewer.viewReport(jp, false);
         }catch (ClassNotFoundException | SQLException | JRException e){
             JOptionPane.showMessageDialog(null, "Ocurrio este error " + e.getMessage() );
         }
