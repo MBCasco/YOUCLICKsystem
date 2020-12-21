@@ -172,7 +172,11 @@ public class FacturaController extends MenuController implements Initializable {
         UpdateTableF();
         UpdateTableC();
         intComboxF();
-        clearfields();
+        try {
+            clearfields();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         exist = 0;
         tableInventario.setDisable(true);
         ID = 0;
@@ -181,6 +185,7 @@ public class FacturaController extends MenuController implements Initializable {
         pago.setDisable(true);
         prueba4();
         int generado = 0;
+
     }
 
     private void checkBtnStatus(int check) {
@@ -200,7 +205,7 @@ public class FacturaController extends MenuController implements Initializable {
         }
     }
 
-    public void clearfields(){
+    public void clearfields() throws IOException {
         Search_producto();
         hideInventario(false);
         txt_cantidad.clear();
@@ -215,10 +220,12 @@ public class FacturaController extends MenuController implements Initializable {
         txt_nombreCliente.setVisible(false);
         labelStock.setVisible(true);
         btn_seleccionarCliente.setVisible(true);
-        exist = 0;
-        pago.setDisable(true);
 
+        pago.setDisable(true);
+        if(exist != 0){ newlaunch();}
+        exist = 0;
     }
+
     public void clearmini(){
         txt_cantidad.clear();
         txt_precio.clear();
@@ -291,57 +298,77 @@ public class FacturaController extends MenuController implements Initializable {
 
     }
 
-    public void AddProducto() throws SQLException {
-        if ((txt_IDCliente.getText() != null && comEmpleados.getValue() !=null )) {
-            conn = connect.conDB();
+    private boolean validatenumero() {
+        Pattern pa = Pattern.compile("[0-9]{1,8}");
+        Matcher ma = pa.matcher(txt_cantidad.getText().trim());
 
-            if (exist == 0) {
-                CrearFactura();
-                factura = connect.getDataFacturat();
-                int n = factura.size();
-                if (n < 1) {
-                    ID = 1;
-                } else {
-                    ID = factura.get(n - 1).getIDFactura();
+        if(ma.find() && ma.group().equals(txt_cantidad.getText())){
+            return true;
+        } else{
+            Alert alert =new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Validar cantidad");
+            alert.setHeaderText(null);
+            alert.setContentText("Este campo solo permite numeros enteros");
+            alert.showAndWait();
+            clearmini();
+            return false;
+
+        }
+    }
+
+    public void AddProducto() throws SQLException {
+
+        if (validatenumero()){
+            if ((txt_IDCliente.getText() != null && comEmpleados.getValue() !=null )) {
+                conn = connect.conDB();
+
+                if (exist == 0) {
+                    CrearFactura();
+                    factura = connect.getDataFacturat();
+                    int n = factura.size();
+                    if (n < 1) {
+                        ID = 1;
+                    } else {
+                        ID = factura.get(n - 1).getIDFactura();
+                    }
+
+                    exist = 1;
+                    Integer value1 = ID;
+
+                    String sqls = "update facturat set IDDetalleFactura= '" + value1 + "  'where IDFactura='" + value1 + "' ";
+                    String sqls2 = "update facturat set IDPago= '" + value1 + "  'where IDFactura='" + value1 + "' ";
+
+                    pst = conn.prepareStatement(sqls);
+                    pst.execute();
+                    pst = conn.prepareStatement(sqls2);
+                    pst.execute();
                 }
 
-                exist = 1;
-                Integer value1 = ID;
-
-                String sqls = "update facturat set IDDetalleFactura= '" + value1 + "  'where IDFactura='" + value1 + "' ";
-                String sqls2 = "update facturat set IDPago= '" + value1 + "  'where IDFactura='" + value1 + "' ";
-
-                pst = conn.prepareStatement(sqls);
-                pst.execute();
-                pst = conn.prepareStatement(sqls2);
-                pst.execute();
-            }
-
-            try {
-                if (Integer.parseInt(txt_cantidad.getText()) <= Integer.parseInt(txt_stock.getText())){
+                try {
+                    if (Integer.parseInt(txt_cantidad.getText()) <= Integer.parseInt(txt_stock.getText())){
 
 
-                    String sql = "insert into detallefacturat (IDFactura,Cantidad,IDProducto)values(?,?,?)";
-                    pst = conn.prepareStatement(sql);
-                    pst.setInt(1, ID);
-                    pst.setString(2, txt_cantidad.getText());
-                    pst.setString(3, txt_IDP.getText());
-                    pst.execute();
+                        String sql = "insert into detallefacturat (IDFactura,Cantidad,IDProducto)values(?,?,?)";
+                        pst = conn.prepareStatement(sql);
+                        pst.setInt(1, ID);
+                        pst.setString(2, txt_cantidad.getText());
+                        pst.setString(3, txt_IDP.getText());
+                        pst.execute();
 
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Agregado");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Se agregó exitosamente");
-                    alert.showAndWait();
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Agregado");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Se agregó exitosamente");
+                        alert.showAndWait();
 
-                    UpdateTableI();
-                    UpdateTableF();
-                    updatecampos();
-                    clearmini();
+                        UpdateTableI();
+                        UpdateTableF();
+                        updatecampos();
+                        clearmini();
 
-                }else{ Alert alert = new Alert(Alert.AlertType.WARNING);
-                    alert.setContentText("No hay stock Suficiente");
-                    alert.showAndWait();}
+                    }else{ Alert alert = new Alert(Alert.AlertType.WARNING);
+                        alert.setContentText("No hay stock Suficiente");
+                        alert.showAndWait();}
 
 
 
@@ -355,6 +382,9 @@ public class FacturaController extends MenuController implements Initializable {
                 alert.setContentText("Falta agregar Empleado");
                 alert.show();
             }
+
+        }
+
 
     }
 
@@ -426,14 +456,16 @@ public class FacturaController extends MenuController implements Initializable {
         FacturaImpresa();
 
 
+        newlaunch();
+        }
+    }
+
+    public void newlaunch() throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/Layout/pantallaFactura.fxml"));
         stage.setTitle("Factura");
         stage.setScene(new Scene(root, 1360, 768));
         stage.show();
-        }
     }
-
-
 
     public void CrearFactura(){
         conn = connect.conDB();
@@ -447,11 +479,6 @@ public class FacturaController extends MenuController implements Initializable {
             pst.setDouble(5, 0.0);
 
             pst.execute();
-            Alert alert =new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Confirmación");
-            alert.setHeaderText(null);
-            alert.setContentText("Se genero");
-            alert.showAndWait();
             UpdateTableI();
             UpdateTableF();
 
@@ -923,6 +950,8 @@ public class FacturaController extends MenuController implements Initializable {
             return false;
         }
     }
+
+
 
     private boolean validateNumeroTarjeta() {
         Pattern p = Pattern.compile("[0-9]{16}");

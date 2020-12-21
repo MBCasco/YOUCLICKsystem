@@ -196,8 +196,8 @@
                         </ImageView>
                         <TableView fx:id="tablaFactura" layoutX="612.0" layoutY="275.0" onMouseClicked="#getSelectedF" prefHeight="257.0" prefWidth="454.0" style="-fx-background-color: eed09d;">
                            <columns>
-                              <TableColumn fx:id="ColIDP" editable="false" minWidth="0.0" prefWidth="85.6666259765625" text="ID" />
-                              <TableColumn fx:id="ColProcducto" editable="false" minWidth="0.0" prefWidth="85.6666259765625" text="Producto" />
+                              <TableColumn fx:id="ColIDP" editable="false" minWidth="0.0" prefWidth="47.0" text="ID" />
+                              <TableColumn fx:id="ColProcducto" editable="false" minWidth="0.0" prefWidth="125.0" text="Producto" />
                               <TableColumn fx:id="ColPrecioF" editable="false" minWidth="0.0" prefWidth="123.0" text="Precio" />
                               <TableColumn fx:id="ColCantidad" editable="false" prefWidth="72.0" text="Cantidad" />
                               <TableColumn fx:id="ColIDF" editable="false" minWidth="0.0" prefWidth="103.0" text="IDF" visible="false" />
@@ -269,8 +269,8 @@
                               </ImageView>
                               <TableView fx:id="tablaPago" layoutX="417.0" layoutY="8.0" onMouseClicked="#getSelectedPago" prefHeight="223.0" prefWidth="677.0">
                                  <columns>
-                                    <TableColumn fx:id="col_IDPago" prefWidth="75.0" text="ID" />
-                                    <TableColumn fx:id="col_desTipoPago" prefWidth="141.0" text="Tipo pago" />
+                                    <TableColumn fx:id="col_IDPago" prefWidth="34.0" text="ID" />
+                                    <TableColumn fx:id="col_desTipoPago" prefWidth="182.0" text="Tipo pago" />
                                     <TableColumn fx:id="col_cantidadPagada" prefWidth="130.0" text="Cantidad abonada" />
                                     <TableColumn fx:id="col_totalPago" prefWidth="138.0" text="Total" />
                                     <TableColumn fx:id="col_porcentajePagado" prefWidth="93.0" text="Porcentaje" visible="false" />

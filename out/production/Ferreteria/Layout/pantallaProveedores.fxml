@@ -26,9 +26,9 @@
       <Separator layoutX="238.0" layoutY="200.0" prefHeight="37.0" prefWidth="377.0" />
       <TableView fx:id="table_proveedores" layoutX="641.0" layoutY="245.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onContextMenuRequested="#prueba" onMouseClicked="#getSelected" prefHeight="497.0" prefWidth="687.0" style="-fx-background-color: eed09d; -fx-border-color: a18262; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-width: 2;">
          <columns>
-            <TableColumn fx:id="col_id" prefWidth="100.66668701171875" text="ID" />
-            <TableColumn fx:id="col_nombre" prefWidth="170.0" text="Empresa" />
-            <TableColumn fx:id="col_correo" prefWidth="222.0" text="Correo eletrónico" />
+            <TableColumn fx:id="col_id" prefWidth="43.0" text="ID" />
+            <TableColumn fx:id="col_nombre" prefWidth="217.0" text="Empresa" />
+            <TableColumn fx:id="col_correo" prefWidth="233.0" text="Correo eletrónico" />
             <TableColumn fx:id="col_direccion" prefWidth="191.0" text="Dirección" />
          </columns>
       </TableView>
