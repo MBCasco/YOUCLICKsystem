@@ -304,7 +304,7 @@ public class ProductoController extends MenuController implements Initializable 
      */
 
     private boolean validateName(){
-        Pattern p = Pattern.compile("^([A-Z]{1}[a-z]+[ ]*)$");
+        Pattern p = Pattern.compile("^([A-Z]{1}[a-z]+[ ]*)([A-Za-z ]+)$");
         Matcher m = p.matcher(txtNombreP.getText());
 
         if(m.find() && m.group().equals(txtNombreP.getText())){
