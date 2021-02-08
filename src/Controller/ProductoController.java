@@ -92,7 +92,7 @@ public class ProductoController extends MenuController implements Initializable 
     public void addProducto() throws SQLException {
         conn = connect.conDB();
 
-        if (validateFields() & validateName() & validateNumberStock() & validateDescripcion() & validateUbicacion() & validateNumberprecio() & limite()) {
+        if (validateFields() & validateName() & validateNumberStock() & validateDescripcion() & validateUbicacion() & validateNumberprecio() & limite() & validatemarca() & validatecategoria()) {
             try {
                 assert conn != null;
                 PreparedStatement ps = conn.prepareStatement("INSERT INTO producto (nombre,descripcionProducto,precio,IDMarca,IDCategoria) VALUES (?,?,?,?,?)");
@@ -202,7 +202,7 @@ public class ProductoController extends MenuController implements Initializable 
                     alert2.setTitle("Error");
                     alert2.setHeaderText(null);
                     alert2.setContentText("Hubo un error al eliminar." +
-                    "\n Este campo solo elimina por ID");
+                            "\n Este campo solo elimina por ID");
                 }
             }
         });
@@ -414,6 +414,36 @@ public class ProductoController extends MenuController implements Initializable 
         return true;
     }
 
+    private boolean validatemarca() {
+
+        if (comMarca.getEditor().getText().isEmpty()) {
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("MARCA");
+            alert.setHeaderText(null);
+            alert.setContentText("Selecione una marca para el producto");
+            alert.showAndWait();
+            return false;
+        }
+        return true;
+    }
+
+
+
+    private boolean validatecategoria() {
+
+        if (comCat.getEditor().getText().isEmpty()) {
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("CATEGORIA");
+            alert.setHeaderText(null);
+            alert.setContentText("Selecione una categoria para el producto ");
+            alert.showAndWait();
+            return false;
+        }
+        return true;
+    }
+
 
     private boolean limite(){
         if(txtNombreP.getText().length() >= 35){
@@ -438,3 +468,4 @@ public class ProductoController extends MenuController implements Initializable 
 
     }
 }
+

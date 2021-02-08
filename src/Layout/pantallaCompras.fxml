@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1360.0" style="-fx-background-color: #616161; -fx-border-color: c29b61; -fx-border-width: 3;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ComprasController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1360.0" style="-fx-background-color: #616161; -fx-border-color: c29b61; -fx-border-width: 3;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ComprasController">
    <children>
       <Label alignment="CENTER" layoutX="246.0" layoutY="24.0" prefHeight="113.0" prefWidth="1102.0" style="-fx-background-color: FFC107; -fx-border-color: C29B61; -fx-background-radius: 10; -fx-border-radius: 5; -fx-border-style: solid; -fx-border-width: 4;" text="COMPRAS" textAlignment="CENTER">
          <font>
@@ -149,7 +148,7 @@
                               <Image url="@../Imagenes/iconos/Iconos/carne-de-identidad.png" />
                            </image>
                         </ImageView>
-                        <TextField fx:id="txtiD" alignment="CENTER" layoutX="46.0" layoutY="20.0" prefHeight="35.0" prefWidth="331.0" promptText="ID COMPRA" style="-fx-background-color: beige; -fx-border-color: brown; -fx-border-radius: 3;" />
+                        <TextField fx:id="txtiD" alignment="CENTER" editable="false" layoutX="46.0" layoutY="20.0" prefHeight="35.0" prefWidth="331.0" promptText="ID COMPRA" style="-fx-background-color: beige; -fx-border-color: brown; -fx-border-radius: 3;" />
                         <ComboBox fx:id="CBXProveedor" layoutX="46.0" layoutY="76.0" prefHeight="35.0" prefWidth="331.0" promptText="Nombre proveedor" style="-fx-background-color: eed09d; -fx-border-color: a18262; -fx-border-width: 2;" />
                         <ImageView fitHeight="39.0" fitWidth="32.0" layoutX="14.0" layoutY="78.0" pickOnBounds="true" preserveRatio="true">
                            <image>
