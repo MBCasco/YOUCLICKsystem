@@ -93,7 +93,7 @@ public class EmpleadosController extends MenuController implements Initializable
         int codC = 1;
 
 
-        if( validateFields() & limite() & validateName() & validateDireccion() & validateNumber() & validateEmail()) {
+        if( validateFields() & limite() & validateName() & validateDireccion() & validateNumber() & validateEmail()  & validateSexo() & validateCargo() &validateInicio() ) {
             try {
                 pst = conn.prepareStatement(sql);
 
@@ -310,11 +310,7 @@ public class EmpleadosController extends MenuController implements Initializable
 
                 if (person.getNombreE().toLowerCase().indexOf(lowerCaseFilter) != -1) {
                     return true;
-                }else if (String.valueOf(person.getIdEmpleado()).indexOf(lowerCaseFilter)!=-1)
-                    return true;
-
-                else
-                    return false;
+                }else return String.valueOf(person.getIdEmpleado()).indexOf(lowerCaseFilter) != -1;
             });
         });
         SortedList<empleados> sortedData = new SortedList<>(filteredData);
@@ -421,8 +417,11 @@ public class EmpleadosController extends MenuController implements Initializable
         }
     }
 
+
+
     private boolean validateFields(){
-        if (txt_nombre.getText().isEmpty() | txt_telefono.getText().isEmpty() | txt_direccion.getText().isEmpty()  | txt_correo.getText().isEmpty() ){
+        if (txt_nombre.getText().isEmpty() | txt_telefono.getText().isEmpty() | txt_direccion.getText().isEmpty()
+                | txt_correo.getText().isEmpty() ){
 
             Alert alert =new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Espacios vacios!");
@@ -432,16 +431,55 @@ public class EmpleadosController extends MenuController implements Initializable
 
             return false;
         }
-        if ( Sexo.getValue().equals("") | Cargo.getValue().equals("")){
+        return true;
+    }
 
-            Alert alert =new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Espacios vacios!");
+    private boolean validateSexo() {
+
+        if (Sexo.getEditor().getText().isEmpty()) {
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("GÉNERO");
             alert.setHeaderText(null);
-            alert.setContentText("Espacios vacíos, por favor ingresar datos");
+            alert.setContentText("Selecione género del empleado");
             alert.showAndWait();
+            return false;
         }
         return true;
     }
+
+
+
+    private boolean validateCargo() {
+
+        if (Cargo.getEditor().getText().isEmpty()) {
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("CARGO");
+            alert.setHeaderText(null);
+            alert.setContentText("Selecione un cargo para el empleado");
+            alert.showAndWait();
+            return false;
+        }
+        return true;
+    }
+
+
+    private boolean validateInicio() {
+
+        if (date_inicio.getEditor().getText().isEmpty()) {
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Fecha de inicio");
+            alert.setHeaderText(null);
+            alert.setContentText("Selecione una fecha inicio del cargo");
+            alert.showAndWait();
+            return false;
+        }
+        return true;
+    }
+
+
     private boolean limite(){
         if(txt_nombre.getText().length() >= 35){
             Alert alert = new Alert(Alert.AlertType.WARNING);
