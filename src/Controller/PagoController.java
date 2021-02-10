@@ -350,7 +350,7 @@ public class PagoController extends MenuController implements Initializable {
     }
 
     private boolean validateCodTarjeta() {
-        Pattern p = Pattern.compile("[0-9]{3}");
+        Pattern p = Pattern.compile("[0-9]{3,4}");
         Matcher m = p.matcher(txtCodST.getText().trim());
 
 
@@ -388,7 +388,7 @@ public class PagoController extends MenuController implements Initializable {
     }
 
     private boolean validateName() {
-        Pattern p = Pattern.compile("^([A-Z]{1}[a-z]+[ ]*){2,4}$");
+        Pattern p = Pattern.compile("^([A-Z]{1}[a-z ñáéíóú]+[ ]*){2,4}$");
         Matcher m = p.matcher(txtNPT.getText());
 
 

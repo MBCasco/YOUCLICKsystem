@@ -123,10 +123,12 @@ public class ProductoController extends MenuController implements Initializable 
                 clearFields();
 
             } catch (Exception e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
+                Alert alert =new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText(null);
-                alert.setContentText("Por favor revise que los campos estén llenos correctamente y vuelva a intentar.");
+                alert.setContentText("Verifique la siguiente información: " +
+                        " \nRevise que el nombre del producto sea único" +
+                        " \nQue todos los campos esten llenos correctamente");
                 alert.showAndWait();
             }
         }
@@ -304,7 +306,7 @@ public class ProductoController extends MenuController implements Initializable 
      */
 
     private boolean validateName(){
-        Pattern p = Pattern.compile("^([A-Z]{1}[a-z]+[ ]*)([A-Za-z ]+)$");
+        Pattern p = Pattern.compile("^([A-Z]{1}[a-z]+[ ]*)([A-Za-z ñáéíóú]+)$");
         Matcher m = p.matcher(txtNombreP.getText());
 
         if(m.find() && m.group().equals(txtNombreP.getText())){

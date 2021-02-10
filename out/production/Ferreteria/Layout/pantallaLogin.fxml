@@ -7,7 +7,6 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="620.0" style="-fx-background-color: #616161;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.LoginController">
    <children>
       <ImageView fitHeight="231.0" fitWidth="223.0" layoutX="58.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true">
@@ -32,7 +31,7 @@
             </Label>
          </children>
       </Pane>
-      <Label fx:id="lblError" layoutX="356.0" layoutY="100.0" prefHeight="30.0" prefWidth="248.0" textFill="#ed0707">
+      <Label fx:id="lblError" layoutX="326.0" layoutY="100.0" prefHeight="30.0" prefWidth="289.0" textFill="#ed0707">
          <font>
             <Font size="13.0" />
          </font>

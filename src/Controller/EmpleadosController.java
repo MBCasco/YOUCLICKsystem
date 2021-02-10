@@ -140,6 +140,7 @@ public class EmpleadosController extends MenuController implements Initializable
                 alert.setHeaderText(null);
                 alert.setContentText("Verifique la siguiente información: " +
                         " \nRevise que su correo sea único" +
+                        " \nRevise que su numero sea único" +
                         " \nQue todos los campos esten llenos correctamente");
                 alert.showAndWait();
             }
@@ -163,7 +164,7 @@ public class EmpleadosController extends MenuController implements Initializable
     }
 
     public void Delete(){
-        Alert alert =new Alert(Alert.AlertType.ERROR);
+        Alert alert =new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Información");
         alert.setHeaderText(null);
         alert.setContentText("Estás seguro ¿Qué quieres eliminar este empleado?");
@@ -176,8 +177,8 @@ public class EmpleadosController extends MenuController implements Initializable
                     prest.setString(1, txt_eliminar.getText());
 
                     if (prest.executeUpdate() > 0){
-                        Alert alert1 =new Alert(Alert.AlertType.CONFIRMATION);
-                        alert1.setTitle("Confirmación");
+                        Alert alert1 =new Alert(Alert.AlertType.ERROR);
+                        alert1.setTitle("Eliminado");
                         alert1.setHeaderText(null);
                         alert1.setContentText("Se elimino empleado con éxito");
                         alert1.showAndWait();
@@ -341,7 +342,7 @@ public class EmpleadosController extends MenuController implements Initializable
         VALIDACIONES
      */
     private boolean validateName(){
-        Pattern p = Pattern.compile("^([A-Z]{1}[a-z]+[ ]*){2,4}$");
+        Pattern p = Pattern.compile("^([A-Z]{1}[a-z ñáéíóú]+[ ]*){2,4}$");
         Matcher m = p.matcher(txt_nombre.getText());
 
 
@@ -351,11 +352,11 @@ public class EmpleadosController extends MenuController implements Initializable
             Alert alert =new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Validar nombre");
             alert.setHeaderText(null);
-            alert.setContentText("Verifique la siguiente información: " +
-                    " \nDeberá escribir un nombre que contenga:" +
+            alert.setContentText("Deberá escribir un nombre que contenga: " +
                     " \nPrimera letra mayúscula" +
                     " \nAl menos un apellido" +
-                    " \nEste campo solo letras");
+                    " \nEste campo solo letras" +
+                    " \nPor ejemplo: Ricardo Reyes");
             alert.showAndWait();
 
             return false;
@@ -384,7 +385,7 @@ public class EmpleadosController extends MenuController implements Initializable
     }
 
     private boolean validateDireccion(){
-        Pattern p = Pattern.compile("[A-Za-z ]+");
+        Pattern p = Pattern.compile("[A-Za-z 0-9]+");
         Matcher m = p.matcher(txt_direccion.getText());
 
         if(m.find() && m.group().equals(txt_direccion.getText())){
@@ -446,7 +447,7 @@ public class EmpleadosController extends MenuController implements Initializable
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Supera Limite Permitido");
             alert.setHeaderText("Error");
-            alert.setContentText("Supero el Limite de caracteres.+" +
+            alert.setContentText("Supero el Limite de caracteres." +
                     " \n El limite de caracteres es de 35");
             alert.showAndWait();
             return false;
@@ -455,7 +456,7 @@ public class EmpleadosController extends MenuController implements Initializable
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Supera Limite Permitido");
             alert.setHeaderText("Error");
-            alert.setContentText("Supero el Limite de caracteres.+" +
+            alert.setContentText("Supero el Limite de caracteres." +
                     " \n El limite de caracteres es de 50");
             alert.showAndWait();
             return false;

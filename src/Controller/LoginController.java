@@ -78,7 +78,7 @@ public class LoginController implements GlobalConstans {
             if (!resultSet.next()) {
 
                 lblError.setTextFill(Color.TOMATO);
-                lblError.setText("Ingrese correctamente el usuario-contraseña");
+                lblError.setText("Ingrese correctamente el usuario-contrasena");
 
                 System.err.println("Inicio Incorrecto");
                 return "Error";

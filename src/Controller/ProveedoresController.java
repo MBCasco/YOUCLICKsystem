@@ -95,6 +95,7 @@ public class ProveedoresController extends MenuController implements Initializab
                 alert.setTitle("Error");
                 alert.setHeaderText(null);
                 alert.setContentText("Verifique la siguiente información: " +
+                        " \nRevise que su nombre de la empresa sea único" +
                         " \nRevise que su correo sea único" +
                         " \nQue todos los campos esten llenos correctamente");
                 alert.showAndWait();
@@ -114,7 +115,7 @@ public class ProveedoresController extends MenuController implements Initializab
     }
 
     public void Delete(){
-        Alert alert =new Alert(Alert.AlertType.ERROR);
+        Alert alert =new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Información");
         alert.setHeaderText(null);
         alert.setContentText("Estás seguro ¿Qué quieres eliminar este proveedor?");
@@ -127,8 +128,8 @@ public class ProveedoresController extends MenuController implements Initializab
                     prest.setString(1, txt_eliminar.getText());
 
                     if (prest.executeUpdate() > 0){
-                        Alert alert1 =new Alert(Alert.AlertType.CONFIRMATION);
-                        alert1.setTitle("Confirmación");
+                        Alert alert1 =new Alert(Alert.AlertType.ERROR);
+                        alert1.setTitle("Elimidado");
                         alert1.setHeaderText(null);
                         alert1.setContentText("Se elimino proveedor con éxito");
                         alert1.showAndWait();
@@ -263,7 +264,7 @@ public class ProveedoresController extends MenuController implements Initializab
         VALIDACIONES
      */
     private boolean validateName(){
-        Pattern p = Pattern.compile("([A-Z]{1}[A-Za-z ]+)");
+        Pattern p = Pattern.compile("[A-Za-z 0-9 ñáéíóú]+");
         Matcher m = p.matcher(txt_nombre.getText());
 
         if(m.find() && m.group().equals(txt_nombre.getText())){
@@ -272,11 +273,8 @@ public class ProveedoresController extends MenuController implements Initializab
             Alert alert =new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Validar Nombre");
             alert.setHeaderText(null);
-            alert.setContentText("Verifique la siguiente información: " +
-                    " \nDeberá escribir un nombre que contenga:" +
-                    " \nPrimera letra mayúscula" +
-                    " \nAl menos un apellido" +
-                    " \nEste campo solo letras");
+            alert.setContentText("Deberá escribir un nombre que contenga: " +
+                    " \nEste campo solo acepta letras y numeros");
             alert.showAndWait();
 
             return false;
@@ -303,7 +301,7 @@ public class ProveedoresController extends MenuController implements Initializab
     }
 
     private boolean validateDireccion(){
-        Pattern p = Pattern.compile("[A-Za-z ]+");
+        Pattern p = Pattern.compile("[A-Za-z 0-9]+");
         Matcher m = p.matcher(txt_direccion.getText());
 
         if(m.find() && m.group().equals(txt_direccion.getText())){
