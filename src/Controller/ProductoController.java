@@ -92,7 +92,7 @@ public class ProductoController extends MenuController implements Initializable 
     public void addProducto() throws SQLException {
         conn = connect.conDB();
 
-        if (validateFields() & validateName() & validateNumberStock() & validateDescripcion() & validateUbicacion() & validateNumberprecio() & limite() & validatemarca() & validatecategoria()) {
+        if (validateFields() & validateName() & validateNumberStock() & validateDescripcion() & validateUbicacion() & validateNumberprecio() & limite()) {
             try {
                 assert conn != null;
                 PreparedStatement ps = conn.prepareStatement("INSERT INTO producto (nombre,descripcionProducto,precio,IDMarca,IDCategoria) VALUES (?,?,?,?,?)");
@@ -123,7 +123,7 @@ public class ProductoController extends MenuController implements Initializable 
                 clearFields();
 
             } catch (Exception e) {
-                Alert alert =new Alert(Alert.AlertType.ERROR);
+                Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText(null);
                 alert.setContentText("Verifique la siguiente información: " +
@@ -219,11 +219,12 @@ public class ProductoController extends MenuController implements Initializable 
 
                 String value2 = txtNombreP.getText();
                 String value3 = txtDescrpcionP.getText();
-                String value4 = txtPrecio.getText();
-                String value5 = String.valueOf(comMarca.getSelectionModel().getSelectedItem().getIDMarca());
-                String value6 = String.valueOf(comCat.getSelectionModel().getSelectedItem().getIDCategoria());
+                String value4 = txtUbicacion.getText();
+                String value5 = txtPrecio.getText();
+                String value6 = String.valueOf(comMarca.getSelectionModel().getSelectedItem().getIDMarca());
+                String value7 = String.valueOf(comCat.getSelectionModel().getSelectedItem().getIDCategoria());
 
-                String sql = "UPDATE producto SET nombre= '" + value2 + "', descripcionProducto= '" + value3 + "', precio= '" + value4 + "',IDMarca= '" + value5 + "', IDCategoria= '" + value6 + "' WHERE IDProducto='" + value1 + "' ";
+                String sql = "UPDATE producto SET nombre= '" + value2 + "', descripcionProducto= '" + value3 + "', ubicacion= '" + value4 + "',precio= '" + value5 + "',IDMarca= '" + value6 + "', IDCategoria= '" + value7 + "' WHERE IDProducto='" + value1 + "' ";
 
                 pst = conn.prepareStatement(sql);
                 pst.execute();
@@ -416,35 +417,6 @@ public class ProductoController extends MenuController implements Initializable 
         return true;
     }
 
-    private boolean validatemarca() {
-
-        if (comMarca.getEditor().getText().isEmpty()) {
-
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("MARCA");
-            alert.setHeaderText(null);
-            alert.setContentText("Selecione una marca para el producto");
-            alert.showAndWait();
-            return false;
-        }
-        return true;
-    }
-
-
-
-    private boolean validatecategoria() {
-
-        if (comCat.getEditor().getText().isEmpty()) {
-
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("CATEGORIA");
-            alert.setHeaderText(null);
-            alert.setContentText("Selecione una categoria para el producto ");
-            alert.showAndWait();
-            return false;
-        }
-        return true;
-    }
 
 
     private boolean limite(){

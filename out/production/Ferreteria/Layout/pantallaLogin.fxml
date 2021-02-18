@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
-<?import javafx.scene.image.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="620.0" style="-fx-background-color: #616161;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.LoginController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="620.0" style="-fx-background-color: #616161;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.LoginController">
    <children>
       <ImageView fitHeight="231.0" fitWidth="223.0" layoutX="58.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -15,9 +14,9 @@
          </image>
       </ImageView>
       <Line endX="100.0" layoutX="312.0" layoutY="211.0" rotate="90.0" startX="-130.0" stroke="#ffc107" />
-      <TextField fx:id="usuarioTextField" layoutX="326.0" layoutY="137.0" prefHeight="40.0" prefWidth="248.0" promptText="Usuario" style="-fx-border-color: #FFC107;" />
-      <PasswordField fx:id="contraseñaField" layoutX="326.0" layoutY="193.0" prefHeight="40.0" prefWidth="248.0" promptText="Contraseña" style="-fx-border-color: #FFC107;" />
-      <Button fx:id="loginButton" layoutX="390.0" layoutY="249.0" mnemonicParsing="false" onMouseClicked="#handleButtonAction" prefHeight="36.0" prefWidth="121.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="Iniciar Sesión">
+      <TextField fx:id="usuarioTextField" layoutX="327.0" layoutY="161.0" prefHeight="40.0" prefWidth="248.0" promptText="Usuario" style="-fx-border-color: #FFC107;" />
+      <PasswordField fx:id="contraseñaField" layoutX="327.0" layoutY="223.0" prefHeight="40.0" prefWidth="248.0" promptText="Contraseña" style="-fx-border-color: #FFC107;" />
+      <Button fx:id="loginButton" layoutX="391.0" layoutY="280.0" mnemonicParsing="false" onMouseClicked="#handleButtonAction" prefHeight="36.0" prefWidth="121.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="Iniciar Sesión">
          <font>
             <Font size="14.0" />
          </font>
@@ -31,7 +30,7 @@
             </Label>
          </children>
       </Pane>
-      <Label fx:id="lblError" layoutX="326.0" layoutY="100.0" prefHeight="30.0" prefWidth="289.0" textFill="#ed0707">
+      <Label fx:id="lblError" layoutX="326.0" layoutY="100.0" prefHeight="51.0" prefWidth="289.0" textFill="#ed0707">
          <font>
             <Font size="13.0" />
          </font>

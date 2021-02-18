@@ -12,6 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
+import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -124,9 +125,20 @@ public class ComprasController  extends MenuController implements Initializable 
         UpdateTableC();
         UpdateTableP();
         checkBtnStatus(0);
+        fechaStatus(0);
         txtStatus(0);
         exist = 0;
         ID = 0;
+        tab_pago.setDisable(true); // 1
+    }
+
+
+    public void vali(){
+        if(DataFechaP.getEditor().getText().isEmpty()){
+            fechaStatus(0);
+        }else{
+            fechaStatus(1);
+        }
     }
 
     public void pruebareporte() throws SQLException, IOException {
@@ -180,6 +192,8 @@ public class ComprasController  extends MenuController implements Initializable 
 
         }
 
+
+
         try {
 
             String sql = "insert into detallecomprat (IDCompra, Cantidad, IDProducto, IDProveedor)values(?,?,?,?)";
@@ -226,13 +240,14 @@ public class ComprasController  extends MenuController implements Initializable 
 
         }
     }
-
+    
     public void CrearCompra(){
         conn = connect.conDB();
-
         String sql = "INSERT INTO comprat (FechaPedido, FechaLlegada, IDProveedor, IDProducto, totalCompra, impuesto, subtotalCompra) VALUES (?,?,?,?,?,?,?)";
-        if (validateFields() & validateCantidad()) {
+        if (validateFields() & validateCantidad() & validateFecha() & validateFechaR()) {
+
             try {
+
                 pst = conn.prepareStatement(sql);
                 pst.setString(1, DataFechaP.getValue().format(formatter));
                 pst.setString(2, DataFechaR.getValue().format(formatter));
@@ -255,7 +270,7 @@ public class ComprasController  extends MenuController implements Initializable 
                 //Alert alert =new Alert(Alert.AlertType.ERROR);
                 //alert.setTitle("Error");
                 //alert.setHeaderText(null);
-               // alert.setContentText("valio papita");
+                // alert.setContentText("valio papita");
                 //alert.showAndWait();
             }
         }
@@ -266,27 +281,37 @@ public class ComprasController  extends MenuController implements Initializable 
             btn_agregarP.setDisable(true);
             btn_actualizar.setDisable(false);
             btn_eliminar.setDisable(false);
+
+           // DataFechaR.setDisable(false); //2
             //tab_pago.setDisable(true);
         }
         if (check == 0){
+            tab_pago.setDisable(true); //2
+           //  //2
             btn_agregarP.setDisable(false);
             btn_actualizar.setDisable(true);
             btn_eliminar.setDisable(true);
+
             //tab_pago.setDisable(true);
+        }
+    }
+
+    private void fechaStatus (int checkF){
+        if (checkF ==1){
+            DataFechaR.setDisable(false);
+        }
+        if (checkF == 0){
+            DataFechaR.setDisable(true);
         }
     }
 
     private void txtStatus(int checkT){
         if (checkT == 1){
             txtcantidad.setDisable(true);
-            DataFechaP.setDisable(true);
-            DataFechaR.setDisable(false);
             CBXProveedor.setDisable(true);
         }
         if (checkT == 0){
             txtcantidad.setDisable(false);
-            DataFechaP.setDisable(false);
-            DataFechaR.setDisable(false);
             CBXProveedor.setDisable(false);
         }
     }
@@ -336,58 +361,58 @@ public class ComprasController  extends MenuController implements Initializable 
         alert.setContentText("Estás seguro ¿Qué quieres eliminar esta compra?");
         alert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.OK) {
-                    conn = connect.conDB();
-                    try {
-                        String Ssql = "DELETE FROM detallecomprat WHERE IDDetalleCompra = ?";
-                        PreparedStatement prest = conn.prepareStatement(Ssql);
-                       prest.setString(1, id4Delete);
+                conn = connect.conDB();
+                try {
+                    String Ssql = "DELETE FROM detallecomprat WHERE IDDetalleCompra = ?";
+                    PreparedStatement prest = conn.prepareStatement(Ssql);
+                    prest.setString(1, id4Delete);
 
-                        if (prest.executeUpdate() > 0) {
-                            Alert alert1 = new Alert(Alert.AlertType.CONFIRMATION);
-                            alert1.setTitle("Confirmación");
-                            alert1.setHeaderText(null);
-                            alert1.setContentText("Se elimino la compra con éxito");
-                            alert1.showAndWait();
-                            UpdateTableC();
-                            updatecampos();
-                        }
-                    } catch (Exception e) {
-                        Alert alert2 = new Alert(Alert.AlertType.ERROR);
-                        alert2.setTitle("Error");
-                        alert2.setHeaderText(null);
-                        alert2.setContentText("Hubo un error al eliminar,  por favor inténtelo de nuevo." +
-                                "\nEste campo solo permite eliminar por ID.");
+                    if (prest.executeUpdate() > 0) {
+                        Alert alert1 = new Alert(Alert.AlertType.CONFIRMATION);
+                        alert1.setTitle("Confirmación");
+                        alert1.setHeaderText(null);
+                        alert1.setContentText("Se elimino la compra con éxito");
+                        alert1.showAndWait();
+                        UpdateTableC();
+                        updatecampos();
                     }
+                } catch (Exception e) {
+                    Alert alert2 = new Alert(Alert.AlertType.ERROR);
+                    alert2.setTitle("Error");
+                    alert2.setHeaderText(null);
+                    alert2.setContentText("Hubo un error al eliminar,  por favor inténtelo de nuevo." +
+                            "\nEste campo solo permite eliminar por ID.");
+                }
             }
         });
     }
 
     public void Edit(){
-            try {
-                conn = connect.conDB();
-                String value1 = id4Delete;
-                String value2 = txtcantidad.getText();
+        try {
+            conn = connect.conDB();
+            String value1 = id4Delete;
+            String value2 = txtcantidad.getText();
 
-                String sql = "UPDATE detallecomprat SET Cantidad ='" + value2 + "' where IDDetalleCompra='" + value1 + "' ";
-                pst = conn.prepareStatement(sql);
-                pst.execute();
+            String sql = "UPDATE detallecomprat SET Cantidad ='" + value2 + "' where IDDetalleCompra='" + value1 + "' ";
+            pst = conn.prepareStatement(sql);
+            pst.execute();
 
-                    Alert alert =new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Confirmación");
-                alert.setHeaderText(null);
-                alert.setContentText("Se actualizó la compra exitosamente");
-                alert.showAndWait();
+            Alert alert =new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmación");
+            alert.setHeaderText(null);
+            alert.setContentText("Se actualizó la compra exitosamente");
+            alert.showAndWait();
 
-                UpdateTableC();
-                clearFields();
+            UpdateTableC();
+            clearFields();
 
-            } catch (Exception e) {
-                Alert alert =new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText(null);
-                alert.setContentText("Hubo un error al actualizar, revise que todos los campos estén llenados correctamente");
-                alert.showAndWait();
-            }
+        } catch (Exception e) {
+            Alert alert =new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Hubo un error al actualizar, revise que todos los campos estén llenados correctamente");
+            alert.showAndWait();
+        }
         //}
     }
 
@@ -475,6 +500,34 @@ public class ComprasController  extends MenuController implements Initializable 
             alert.showAndWait();
             return false;
         }
+    }
+
+    private boolean validateFecha() {
+
+        if (DataFechaP.getEditor().getText().isEmpty()) {
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Fecha de Pedido");
+            alert.setHeaderText(null);
+            alert.setContentText("Selecione una fecha del pedido");
+            alert.showAndWait();
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validateFechaR() {
+
+        if (DataFechaR.getEditor().getText().isEmpty()) {
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Fecha de Recibido");
+            alert.setHeaderText(null);
+            alert.setContentText("Selecione una fecha de recibido");
+            alert.showAndWait();
+            return false;
+        }
+        return true;
     }
 
     private boolean validateFields(){

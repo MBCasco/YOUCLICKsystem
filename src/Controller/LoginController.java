@@ -18,9 +18,7 @@ import java.sql.ResultSet;
 import java.util.ResourceBundle;
 import javafx.scene.input.MouseEvent;
 
-
-
-public class LoginController implements GlobalConstans {
+public class LoginController<Private> implements GlobalConstans {
 
     @FXML
     private Label lbl_close;
@@ -36,6 +34,7 @@ public class LoginController implements GlobalConstans {
 
     @FXML
     private Button loginButton;
+
 
     public void handleButtonAction(MouseEvent event){
         if(event.getSource() == lbl_close){
@@ -59,6 +58,15 @@ public class LoginController implements GlobalConstans {
     }
 
 
+   /* @FXML
+    private void clearFields() {
+        usuarioTextField.clear();
+        contraseñaField.clear();
+        lblError.setText("");
+    }
+    */
+
+
     public LoginController(){ con = connect.conDB(); }
     Connection con = null;
     PreparedStatement preparedStatement = null;
@@ -75,16 +83,21 @@ public class LoginController implements GlobalConstans {
             preparedStatement.setString(1, usuario);
             preparedStatement.setString(2, contraseña);
             resultSet = preparedStatement.executeQuery();
+
+
             if (!resultSet.next()) {
 
                 lblError.setTextFill(Color.TOMATO);
-                lblError.setText("Ingrese correctamente el usuario-contrasena");
+                lblError.setText("Su intento de ingreso ha fallado,\n verifíque sus credenciales");
 
                 System.err.println("Inicio Incorrecto");
                 return "Error";
-            } else {
+
+
+            } else{
+
                 lblError.setTextFill(Color.GREEN);
-                lblError.setAccessibleText("Inicio Exitoso..Redireccionado..");
+                lblError.setText("Inicio Exitoso..Redireccionado..");
                 System.out.println("Inicio Exitoso");
                 return "Success";
             }

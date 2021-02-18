@@ -56,15 +56,17 @@ public class PagoController extends MenuController implements Initializable {
     private TextField txtNumTarje;
     @FXML
     private TextField txtCodST;
+    //@FXML
+    //private DatePicker DataFT;
     @FXML
-    private DatePicker DataFT;
+    private TextField txtFecha;
     @FXML
     private TextField txtNPT;
 
     private ObservableList<pago> listPA;
     private ObservableList<TipoPago> listTP = TipoPago.getdataTP();
     private ObservableList<pago> dataListPA;
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/yy");
+    //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/yy");
 
     int index = -1;
     Connection conn = null;
@@ -82,6 +84,12 @@ public class PagoController extends MenuController implements Initializable {
         UpdateTable();
         prueba4();
         updatetotal();
+        txtCantidadPagada.setDisable(true);
+        txtNumTarje.setDisable(true);
+        txtNPT.setDisable(true);
+        txtCodST.setDisable(true);
+        //ataFT.setDisable(true);
+        txtFecha.setDisable(true);
         ID = 0;
     }
 
@@ -122,7 +130,8 @@ public class PagoController extends MenuController implements Initializable {
                     pst.setString(1, txtCodST.getText());
                     pst.setString(2, txtNumTarje.getText());
                     pst.setString(3, txtNPT.getText());
-                    pst.setString(4, DataFT.getValue().format(formatter));
+                    //pst.setString(4, DataFT.getValue().format(formatter));
+                    pst.setString(4, txtFecha.getText());
                     pst.execute();
 
                 } catch (SQLException throwables) {
@@ -187,8 +196,12 @@ public class PagoController extends MenuController implements Initializable {
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, e);
                 }
+
+
+
             }
         }
+
     }
 
 
@@ -244,7 +257,8 @@ public class PagoController extends MenuController implements Initializable {
         txtCodST.clear();
         txtNPT.clear();
         fieldDelete.clear();
-        DataFT.setValue(null);
+        //DataFT.setValue(null);
+        txtFecha.clear();
     }
 
     @FXML
@@ -264,16 +278,20 @@ public class PagoController extends MenuController implements Initializable {
 
         CBXTP.valueProperty().addListener((ov, p1, p2) -> {
             if(p2.getIDTipoPago() == 1 ){
+                txtCantidadPagada.setDisable(false);
                 txtNumTarje.setDisable(true);
                 txtNPT.setDisable(true);
                 txtCodST.setDisable(true);
-                DataFT.setDisable(true);
+                //DataFT.setDisable(true);
+                txtFecha.setDisable(true);
 
             }else{
+                txtCantidadPagada.setDisable(false);
                 txtNumTarje.setDisable(false);
                 txtNPT.setDisable(false);
                 txtCodST.setDisable(false);
-                DataFT.setDisable(false);
+                //DataFT.setDisable(false);
+                txtFecha.setDisable(false);
             }
         });
     }
@@ -486,3 +504,5 @@ public class PagoController extends MenuController implements Initializable {
         return true;
     }
 }
+
+

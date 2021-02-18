@@ -10,9 +10,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -93,12 +96,12 @@ public class EmpleadosController extends MenuController implements Initializable
         int codC = 1;
 
 
-        if( validateFields() & limite() & validateName() & validateDireccion() & validateNumber() & validateEmail()  & validateSexo() & validateCargo() &validateInicio() ) {
+        if( validateFields() & limite() & validateName() & validateDireccion() & validateNumber()&  validateEmail() & validateSexo()  & validateInicio()  ) {
             try {
                 pst = conn.prepareStatement(sql);
 
                 pst.setString(1, txt_nombre.getText());
-                pst.setString(2, txt_direccion.getText());
+                pst.setString(2, txt_direccion.getText());  //
                 pst.setString(3, txt_telefono.getText());
                 pst.setString(4, txt_correo.getText());
                 pst.setString(5, date_inicio.getValue().format(formatter));
@@ -140,7 +143,7 @@ public class EmpleadosController extends MenuController implements Initializable
                 alert.setHeaderText(null);
                 alert.setContentText("Verifique la siguiente información: " +
                         " \nRevise que su correo sea único" +
-                        " \nRevise que su numero sea único" +
+                        " \nRevise que su teléfono sea único" +
                         " \nQue todos los campos esten llenos correctamente");
                 alert.showAndWait();
             }
@@ -164,6 +167,7 @@ public class EmpleadosController extends MenuController implements Initializable
     }
 
     public void Delete(){
+        Toolkit.getDefaultToolkit().beep();
         Alert alert =new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Información");
         alert.setHeaderText(null);
@@ -348,11 +352,11 @@ public class EmpleadosController extends MenuController implements Initializable
             Alert alert =new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Validar nombre");
             alert.setHeaderText(null);
-            alert.setContentText("Deberá escribir un nombre que contenga: " +
+            alert.setContentText("Verifique la siguiente información: " +
+                    " \nDeberá escribir un nombre que contenga:" +
                     " \nPrimera letra mayúscula" +
                     " \nAl menos un apellido" +
-                    " \nEste campo solo letras" +
-                    " \nPor ejemplo: Ricardo Reyes");
+                    " \nEste campo solo letras");
             alert.showAndWait();
 
             return false;
@@ -368,6 +372,7 @@ public class EmpleadosController extends MenuController implements Initializable
         if(m.find() && m.group().equals(txt_telefono.getText()) &&  mm.matches()){
             return true;
         } else{
+
             Alert alert =new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Validar Número");
             alert.setHeaderText(null);
@@ -376,6 +381,8 @@ public class EmpleadosController extends MenuController implements Initializable
                     " \nQue el telefono contenga maximo 8 digitos " +
                     " \nEste campo solo acepta numeros");
             alert.showAndWait();
+
+
             return false;
         }
     }
@@ -434,30 +441,15 @@ public class EmpleadosController extends MenuController implements Initializable
         return true;
     }
 
+
     private boolean validateSexo() {
 
-        if (Sexo.getEditor().getText().isEmpty()) {
+        if (Sexo.getValue().equals("")) {
 
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("GÉNERO");
+            alert.setTitle("Error en el género");
             alert.setHeaderText(null);
-            alert.setContentText("Selecione género del empleado");
-            alert.showAndWait();
-            return false;
-        }
-        return true;
-    }
-
-
-
-    private boolean validateCargo() {
-
-        if (Cargo.getEditor().getText().isEmpty()) {
-
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("CARGO");
-            alert.setHeaderText(null);
-            alert.setContentText("Selecione un cargo para el empleado");
+            alert.setContentText("Selecione género y cargo del empleado");
             alert.showAndWait();
             return false;
         }
@@ -485,7 +477,7 @@ public class EmpleadosController extends MenuController implements Initializable
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Supera Limite Permitido");
             alert.setHeaderText("Error");
-            alert.setContentText("Supero el Limite de caracteres." +
+            alert.setContentText("Supero el Limite de caracteres.+" +
                     " \n El limite de caracteres es de 35");
             alert.showAndWait();
             return false;
@@ -494,7 +486,7 @@ public class EmpleadosController extends MenuController implements Initializable
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Supera Limite Permitido");
             alert.setHeaderText("Error");
-            alert.setContentText("Supero el Limite de caracteres." +
+            alert.setContentText("Supero el Limite de caracteres.+" +
                     " \n El limite de caracteres es de 50");
             alert.showAndWait();
             return false;

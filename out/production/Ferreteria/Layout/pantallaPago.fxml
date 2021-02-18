@@ -166,7 +166,7 @@
                               <Font name="Dubai Regular" size="15.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="txtTotal" alignment="CENTER" layoutX="41.0" layoutY="58.0" prefHeight="31.0" prefWidth="272.0" style="-fx-background-color: beige; -fx-border-color: #FFC107;" />
+                        <TextField fx:id="txtTotal" alignment="CENTER" editable="false" layoutX="41.0" layoutY="58.0" prefHeight="31.0" prefWidth="272.0" style="-fx-background-color: beige; -fx-border-color: #FFC107;" />
                         <ImageView fitHeight="30.0" fitWidth="31.0" layoutX="3.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../Imagenes/iconos/Iconos/salary.png" />
@@ -212,7 +212,6 @@
                               <Image url="@../Imagenes/iconos/Iconos/calendar.png" />
                            </image>
                         </ImageView>
-                        <DatePicker fx:id="DataFT" layoutX="771.0" layoutY="136.0" prefHeight="31.0" prefWidth="272.0" style="-fx-background-color: beige; -fx-border-color: a18262; -fx-border-width: 2;" />
                         <Label alignment="CENTER" layoutX="381.0" layoutY="98.0" prefHeight="30.0" prefWidth="195.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="Nombre propietario tarjeta" textFill="#8d5910">
                            <font>
                               <Font name="Dubai Regular" size="15.0" />
@@ -244,6 +243,7 @@
                               <Image url="@../Imagenes/iconos/Iconos/completar.png" />
                            </image>
                         </ImageView>
+                        <TextField fx:id="txtFecha" alignment="CENTER" layoutX="771.0" layoutY="135.0" prefHeight="31.0" prefWidth="272.0" style="-fx-background-color: beige; -fx-border-color: #FFC107;" />
                      </children>
                   </AnchorPane>
                </content></Tab>

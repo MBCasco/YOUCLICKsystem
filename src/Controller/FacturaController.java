@@ -201,6 +201,7 @@ public class FacturaController extends MenuController implements Initializable {
         txtNumTarje.setDisable(true);
         txtNPT.setDisable(true);
         txtCodST.setDisable(true);
+
         DataFT.setDisable(true);
         btnRegistar.setDisable(true);
         btn_finalizarFactura.setDisable(true);
@@ -221,6 +222,7 @@ public class FacturaController extends MenuController implements Initializable {
             labelStock.setVisible(true);
 
 
+
         }
         if (check == 1){
             btn_actualizar.setDisable(false);
@@ -228,6 +230,7 @@ public class FacturaController extends MenuController implements Initializable {
             btn_agregar.setDisable(true);
             txt_stock.setVisible(false);
             labelStock.setVisible(false);
+
         }
     }
 

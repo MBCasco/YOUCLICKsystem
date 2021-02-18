@@ -140,6 +140,7 @@ public class ClientesController extends MenuController implements Initializable 
             btn_registrar.setDisable(true);
             btn_actualizar.setDisable(false);
             btn_eliminar.setDisable(false);
+
         }
         if (check == 0){
             btn_registrar.setDisable(false);
@@ -400,11 +401,11 @@ public class ClientesController extends MenuController implements Initializable 
     }
 
     private boolean limite(){
-        if(txt_nombre.getText().length() >= 10){
+        if(txt_nombre.getText().length() >= 35){
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Supera Limite Permitido");
             alert.setHeaderText("Error");
-            alert.setContentText("Supero el Limite de caracteres." +
+            alert.setContentText("EL nombre supero el Limite de caracteres." +
                     " \n El limite de caracteres es de 35");
             alert.showAndWait();
             return false;
