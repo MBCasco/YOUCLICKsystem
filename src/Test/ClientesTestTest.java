@@ -23,11 +23,11 @@ class ClientesTestTest {
     @org.junit.jupiter.api.Test
     void agregarCliente() {
         System.out.println("Agregar Cliente");
-        String idCliente = "5";
-        String nombre = "Esther Galo";
-        String telefono = "98625237";
-        String direccion = "casita2";
-        String correo = "esther@gmail.com";
+        String idCliente = "13";
+        String nombre = "Meylin Baca";
+        String telefono = "78954565";
+        String direccion = "Loarque";
+        String correo = "wwww@gmail.com";
         String sexo = "1";
         ClientesTest instance = new ClientesTest();
         instance.AgregarCliente(idCliente, nombre, telefono,  direccion, correo, sexo);
@@ -52,30 +52,26 @@ class ClientesTestTest {
     @org.junit.jupiter.api.Test
     void eliminarCliente() {
         System.out.println("Eliminar Cliente");
-        String idCliente = "";
-        String nombre = "";
-        String telefono = "";
-        String direccion = "";
-        String correo = "";
-        String sexo = "";
+        String idCliente = "9";
         ClientesTest instance = new ClientesTest();
-        instance.EliminarCliente(idCliente, nombre, telefono,  direccion, correo, sexo);
+        instance.EliminarCliente(idCliente);
     }
 
     @org.junit.jupiter.api.Test
     void actualizarCliente() {
-        System.out.println("Agregar Cliente");
-        String idCliente = "";
-        String nombre = "";
-        String telefono = "";
-        String direccion = "";
-        String correo = "";
-        String sexo = "";
+        System.out.println("Actualizar Cliente");
+        String idCliente = "11";
+        String nombre = "Rich lozar";
+        String telefono = "90123252";
+        String direccion = "cat 2";
+        String correo = "shsc@gmail.com";
+        String sexo = "2";
         ClientesTest instance = new ClientesTest();
         instance.ActualizarCliente(idCliente, nombre, telefono,  direccion, correo, sexo);
         try {
             Statement st = conn.createStatement();
-            String sql = "Select * from cliente where IDCliente  = '"+idCliente+"'";
+            String sql = ("Update * from cliente where IDCliente  = '"+idCliente+"'");
+
             ResultSet rs = st.executeQuery(sql);
             if(rs.next()){
                 assertEquals(idCliente,rs.getString("IDCliente"));
@@ -95,6 +91,5 @@ class ClientesTestTest {
         System.out.println("Buscar Cliente");
         ClientesTest instance = new ClientesTest();
         instance.BuscarCliente();
-        // TODO review the generated test code and remove the default call to fail.
     }
 }
