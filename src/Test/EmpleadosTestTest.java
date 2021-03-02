@@ -24,13 +24,13 @@ class EmpleadosTestTest {
     @Test
     void agregarEmpleado() {
         System.out.println("Agregar Empleado");
-        String idEmpleado = "2";
+        String idEmpleado = "";
         String nombreE = "Ricardo Reyes";
         String direccionE = "los robles";
         String telefonoE = "32659885";
         String correoE = "rr@gmail.com";
         String fechaI = "2021-03-19";
-        String cargoE = "1";
+        String cargoE = "4";
         String sexoE = "2";
         EmpleadosTest instance = new EmpleadosTest();
         instance.AgregarEmpleado(idEmpleado, nombreE, direccionE, telefonoE, correoE, fechaI, cargoE, sexoE);
@@ -45,7 +45,7 @@ class EmpleadosTestTest {
                 assertEquals(telefonoE,rs.getString("telefonoEmpleado"));
                 assertEquals(correoE,rs.getString("correoEmpleado"));
                 assertEquals(fechaI,rs.getString("fechaInicial"));
-                assertEquals(cargoE,rs.getString("IDcargo"));
+                assertEquals(cargoE,rs.getString("IDCargo"));
                 assertEquals(sexoE,rs.getString("IDSexo"));
             }
         } catch (Exception e) {
@@ -55,11 +55,11 @@ class EmpleadosTestTest {
 
     @Test
     void actualizarEmpleado() {
-        System.out.println("Agregar Empleado");
-        String idEmpleado = "2";
+        System.out.println("Actualizar Empleado");
+        String idEmpleado = "1";
         String nombreE = "Ricardo Reyes";
-        String direccionE = "los robles";
-        String telefonoE = "32659885";
+        String direccionE = "Los robles";
+        String telefonoE = "89678937";
         String correoE = "rr@gmail.com";
         String fechaI = "2021-03-19";
         String fechaF = "2021-04-19";
@@ -79,7 +79,7 @@ class EmpleadosTestTest {
                 assertEquals(correoE,rs.getString("correoEmpleado"));
                 assertEquals(fechaI,rs.getString("fechaInicial"));
                 assertEquals(fechaF,rs.getString("fechaFinal"));
-                assertEquals(cargoE,rs.getString("IDcargo"));
+                assertEquals(cargoE,rs.getString("IDCargo"));
                 assertEquals(sexoE,rs.getString("IDSexo"));
             }
         } catch (Exception e) {
@@ -90,7 +90,7 @@ class EmpleadosTestTest {
     @Test
     void eliminarEmpleado() {
         System.out.println("Eliminar Empleado");
-        String idEmpleado = "2";
+        String idEmpleado = "5";
         EmpleadosTest instance = new EmpleadosTest();
         instance.EliminarEmpleado(idEmpleado);
     }

@@ -7,10 +7,13 @@ import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import javax.swing.*;
+import java.awt.*;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
@@ -60,7 +63,7 @@ public class ClientesController extends MenuController implements Initializable 
     @FXML
     private Button btn_clear;
 
-    private JTextField jTextFieldName =new JTextField();
+
     private int limite  = 8;
     int value;
 
@@ -75,12 +78,22 @@ public class ClientesController extends MenuController implements Initializable 
     PreparedStatement pst = null;
 
     //Agregar Clientes
-    public void Add_clientes() {
+    public void Add_clientes() throws IOException {
         conn = connect.conDB();
         String sql = "insert into cliente (nombreCliente,dirreccionCliente,telefonoCLiente,correoCliente,IDSexo)values(?,?,?,?,?)";
 
         int codS = 1;
+
+
+
         if (validateName() & validateDireccion()  & validateNumber() & validateEmail() & validateFields() & limite()){
+
+            /*if(existeTelefono()){
+                return;
+            }
+
+             */
+
                 try {
                     pst = conn.prepareStatement(sql);
 
@@ -97,6 +110,8 @@ public class ClientesController extends MenuController implements Initializable 
                     pst.setInt(5, codS);
                     pst.execute();
 
+
+
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                     alert.setTitle("Confirmación");
                     alert.setHeaderText(null);
@@ -108,14 +123,8 @@ public class ClientesController extends MenuController implements Initializable 
                     Search_cliente();
 
                 } catch (Exception e) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Verifique la siguiente información: " +
-                            " \nRevise que su correo sea único" +
-                            " \nRevise que su telefono sea único" +
-                            " \nQue todos los campos esten llenos correctamente");
-                    alert.showAndWait();
+                    System.err.println(e.getMessage());
+
                 }
 
         }
@@ -420,8 +429,37 @@ public class ClientesController extends MenuController implements Initializable 
             return false;
         }
         return true;
-
     }
+
+
+    public void numero (){
+        if (txt_telefono.getText().length() >= 8) {
+            Toolkit.getDefaultToolkit().beep();
+            Alert alert =new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Alcanzó el limite");
+            alert.setHeaderText(null);
+            alert.setContentText("Alcanzó el limite de números admitidos");
+            alert.showAndWait();
+        }
+    }
+
+  /*  private boolean existeTelefono() {
+        try {
+            Statement st = conn.createStatement();
+            String sql = "Select * from cliente where telefonoCliente = '" +txt_telefono.getText() + "'";
+            ResultSet rs = st.executeQuery(sql);
+            if (rs.next()) {
+                JOptionPane.showMessageDialog(null, "El Teléfono: " + txt_telefono.getText() + " ya existe", "El número de teléfono que ingresó ¡Ya existe!.", JOptionPane.INFORMATION_MESSAGE);
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+        return false;
+    }
+   */
 }
 
 

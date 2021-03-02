@@ -20,9 +20,6 @@ public class ProveedoresContactoTest {
         }
     }
 
-    ResultSet rs = null;
-    PreparedStatement pst = null;
-
     public void AgregarProveedorContacto(String IdContacto, String IProveedor, String NombreContacto, String Detalles, String TelefonoContacto, String CorreoContacto){
         if((IdContacto.equals(""))){
             javax.swing.JOptionPane.showMessageDialog(null,"Debe ingresar el ID del contacto.","ID Contacto requerido",javax.swing.JOptionPane.INFORMATION_MESSAGE);
@@ -53,6 +50,36 @@ public class ProveedoresContactoTest {
             javax.swing.JOptionPane.showMessageDialog(null,"Debe ingresar el correo del contacto","Correo Contacto requerido",javax.swing.JOptionPane.INFORMATION_MESSAGE);
             return;
         }
+
+        if(existecorreo(CorreoContacto)){
+            return;
+        }
+
+        if(existeTelefono(TelefonoContacto)){
+            return;
+        }
+
+        if(!validarLongitudMax(NombreContacto,35)){
+            JOptionPane.showMessageDialog(null, "El nombre del contacto sobrepasa la longitud permitida", "Alcanzó el limite de caracteres permitidos", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+
+        if(!validarLongitudMax(TelefonoContacto,8)){
+            JOptionPane.showMessageDialog(null, "El teléfono del contacto debe conter 8 dígitos", "Alcanzó el limite de caracteres permitidos", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        if(contieneNumeros(NombreContacto)){
+            JOptionPane.showMessageDialog(null, "Ingrese un nombre que solo contenga letras");
+            return;
+        }
+
+        if(contieneLetras(TelefonoContacto)){
+            JOptionPane.showMessageDialog(null, "El teléfono solo debe contener números ");
+            return;
+        }
+
         try {
             PreparedStatement ps;
 
@@ -63,7 +90,8 @@ public class ProveedoresContactoTest {
             ps.setString(4, TelefonoContacto);
             ps.setString(5, CorreoContacto);
 
-            int res = ps.executeUpdate();
+            ps.execute();
+
             JOptionPane.showMessageDialog(null, "Se ha guardado la información del contacto");
         } catch ( Exception e) {
             System.out.println(e);
@@ -102,19 +130,44 @@ public class ProveedoresContactoTest {
             javax.swing.JOptionPane.showMessageDialog(null,"Debe ingresar el correo del contacto","Correo Contacto requerido",javax.swing.JOptionPane.INFORMATION_MESSAGE);
             return;
         }
+
+        if(existecorreo(CorreoContacto)){
+            return;
+        }
+
+        if(existeTelefono(TelefonoContacto)){
+            return;
+        }
+
+        if(!validarLongitudMax(NombreContacto,35)){
+            JOptionPane.showMessageDialog(null, "El nombre del contacto sobrepasa la longitud permitida", "Alcanzó el limite de caracteres permitidos", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+
+        if(!validarLongitudMax(TelefonoContacto,8)){
+            JOptionPane.showMessageDialog(null, "El teléfono del contacto debe conter 8 dígitos", "Alcanzó el limite de caracteres permitidos", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        if(contieneNumeros(NombreContacto)){
+            JOptionPane.showMessageDialog(null, "Ingrese un nombre que solo contenga letras");
+            return;
+        }
+
+        if(contieneLetras(TelefonoContacto)){
+            JOptionPane.showMessageDialog(null, "El teléfono solo debe contener números ");
+            return;
+        }
+
         try {
             PreparedStatement ps;
 
             ps = conn.prepareStatement("update contactoproveedor set nombreDeContacto= '" + NombreContacto + "', Detalles= '"
                     + Detalles + "', Telefono= '" + TelefonoContacto + "',Correo= '"
                     + CorreoContacto + "' where IDContactoProveedor='" + IdContacto + "' ");
-            ps.setString(1, IProveedor);
-            ps.setString(2, NombreContacto);
-            ps.setString(3, Detalles);
-            ps.setString(4, TelefonoContacto);
-            ps.setString(5, CorreoContacto);
 
-            int res = ps.executeUpdate();
+            ps.execute();
             JOptionPane.showMessageDialog(null, "Se ha actulizado la información del contacto");
         } catch ( Exception e) {
             System.out.println(e);
@@ -132,13 +185,14 @@ public class ProveedoresContactoTest {
         ) == JOptionPane.YES_OPTION) {
 
             try {
-                Statement st2 = conn.createStatement();
-                String sql = "DELETE FROM contactoproveedor WHERE IDContactoProveedor = ?";
 
-                int rs2 = st2.executeUpdate(sql);
-                System.out.println(rs2);
-                if(rs2 > 0){
-                    JOptionPane.showMessageDialog(null, "Se ha borrado la información del contacto" + IdContacto + " correctamente");
+                String sql = "DELETE FROM contactoproveedor WHERE IDContactoProveedor = ?";
+                PreparedStatement prest = conn.prepareStatement(sql);
+                prest.setString(1, IdContacto);
+
+                if(prest.executeUpdate() > 0){
+
+                    JOptionPane.showMessageDialog(null, "Se ha borrado la información del contacto: " + IdContacto + " correctamente");
 
                 }else {
                     JOptionPane.showMessageDialog(null, "¡Error al eliminar la información!");
@@ -172,5 +226,65 @@ public class ProveedoresContactoTest {
         catch (Exception e) {
             System.err.println(e);
         }
+    }
+
+    private boolean existecorreo(String correo) {
+        try {
+            Statement st = conn.createStatement();
+            String sql = "Select * from contactoproveedor where Correo = '" + correo + "'";
+            ResultSet rs = st.executeQuery(sql);
+            if (rs.next()) {
+                JOptionPane.showMessageDialog(null, "El correo: " + correo + " ya existe", "El correo que ingresó ¡Ya existe!.", JOptionPane.INFORMATION_MESSAGE);
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+        return false;
+    }
+
+    private boolean existeTelefono(String Telefono) {
+        try {
+            Statement st = conn.createStatement();
+            String sql = "Select * from contactoproveedor where Telefono = '" + Telefono + "'";
+            ResultSet rs = st.executeQuery(sql);
+            if (rs.next()) {
+                JOptionPane.showMessageDialog(null, "El Teléfono: " + Telefono + " ya existe", "El número de teléfono que ingresó ¡Ya existe!.", JOptionPane.INFORMATION_MESSAGE);
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+        return false;
+    }
+
+    private boolean validarLongitudMax(String texto, int longitud) {
+        if (texto.length() <= longitud) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    private boolean contieneNumeros(String texto){
+        for (int i = 0; i < texto.length(); i++) {
+            if(Character.isDigit(texto.charAt(i)))
+                return true;
+        }
+        return false;
+    }
+
+
+    private boolean contieneLetras(String texto){
+        for (int i = 0; i < texto.length(); i++) {
+            if(Character.isLetter(texto.charAt(i)))
+                return true;
+        }
+        return false;
     }
 }

@@ -23,7 +23,7 @@ class ProveedoresContactoTestTest {
     @Test
     void agregarProveedorContacto() {
         System.out.println("Agregar Proveedor Contacto");
-        String IdContacto = "4";
+        String IdContacto = "1";
         String IProveedor = "1";
         String NombreContacto = "Ricardo Reyes";
         String Detalles = "Administradoor";
@@ -51,12 +51,12 @@ class ProveedoresContactoTestTest {
     @Test
     void actualizarProveedorContacto() {
         System.out.println("Agregar Proveedor Contacto");
-        String IdContacto = "";
-        String IProveedor = "";
-        String NombreContacto = "";
-        String Detalles = "";
-        String TelefonoContacto = "";
-        String CorreoContacto = "";
+        String IdContacto = "1";
+        String IProveedor = "1";
+        String NombreContacto = "Meylin Baca";
+        String Detalles = "Administrador";
+        String TelefonoContacto = "95728187";
+        String CorreoContacto = "meylin@gmail.com";
         ProveedoresContactoTest instance = new ProveedoresContactoTest();
         instance.ActualizarProveedorContacto(IdContacto, IProveedor, NombreContacto, Detalles, TelefonoContacto, CorreoContacto);
         try {
@@ -79,15 +79,10 @@ class ProveedoresContactoTestTest {
     @Test
     void eliminarProveedorContacto() {
         System.out.println("Eliminar Proveedor");
-        String IdContacto = "";
+        String IdContacto = "1";
         ProveedoresContactoTest instance = new ProveedoresContactoTest();
         instance.EliminarProveedorContacto(IdContacto);
     }
 
-    @Test
-    void buscarProveedorContacto() {
-        System.out.println("Buscar Proveedor");
-        ProveedoresContactoTest instance = new ProveedoresContactoTest();
-        instance.BuscarProveedorContacto();
-    }
+
 }

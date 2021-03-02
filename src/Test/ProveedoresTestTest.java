@@ -24,8 +24,8 @@ class ProveedoresTestTest {
 
     @Test
     void agregarProveedor() {
-        System.out.println("Agregar Empleado");
-        String idProveedor = "2";
+        System.out.println("Agregar Proveedor");
+        String idProveedor = "1";
         String nombreP = "Eleven 7";
         String correoP = "hsdbhb@gmail.com";
         String direccionP = "robles";
@@ -49,11 +49,11 @@ class ProveedoresTestTest {
 
     @Test
     void actualizarProveedor() {
-        System.out.println("Actualizar Empleado");
-        String idProveedor = "";
-        String nombreP = "";
-        String correoP = "";
-        String direccionP = "";
+        System.out.println("Actualizar Proveedor");
+        String idProveedor = "1";
+        String nombreP = "eleven 9";
+        String correoP = "holi@gmail.com";
+        String direccionP = "hola";
 
         ProveedoresTest instance = new ProveedoresTest();
         instance.ActualizarProveedor(idProveedor, nombreP, correoP, direccionP);
@@ -75,7 +75,7 @@ class ProveedoresTestTest {
     @Test
     void eliminarProveedor() {
         System.out.println("Eliminar Proveedor");
-        String idProveedor = "";
+        String idProveedor = "1";
         ProveedoresTest instance = new ProveedoresTest();
         instance.EliminarProveedor(idProveedor);
     }

@@ -20,8 +20,9 @@ public class EmpleadosTest {
         }
     }
 
-    ResultSet rs = null;
+
     PreparedStatement pst = null;
+
 
     public void AgregarEmpleado(String idEmpleado, String nombreE, String direccionE , String telefonoE, String correoE , String fechaI, String cargoE, String sexoE ){
         if((idEmpleado.equals(""))){
@@ -65,10 +66,69 @@ public class EmpleadosTest {
             return;
         }
 
+        if(existecorreo(correoE)){
+            return;
+        }
+
+        if(existeTelefono(telefonoE)){
+            return;
+        }
+
+        if(contieneLetras(sexoE)){
+            JOptionPane.showMessageDialog(null, "El género solo debe contener números ");
+            return;
+        }
+
+        if(contieneLetras(cargoE)){
+            JOptionPane.showMessageDialog(null, "El cargo solo debe contener números ");
+            return;
+        }
+
+        if(!validarSexo(sexoE)){
+            JOptionPane.showMessageDialog(null, " Sexo solo puede contener valores entre 1 y 2", "Valor", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        if(!validarCargo(cargoE)){
+            JOptionPane.showMessageDialog(null, " El Cargo solo puede contener valores entre 1 y 4", "Valor", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        if(!validarLongitudMax(nombreE,35)){
+            JOptionPane.showMessageDialog(null, "El nombre del Empleado sobrepasa la longitud permitida", "Alcanzó el limite de caracteres permitidos", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        if(!validarLongitudMax(direccionE,50)){
+            JOptionPane.showMessageDialog(null, "La dirección del Empleado sobrepasa la longitud permitida", "Alcanzó el limite de caracteres permitidos", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        if(!validarLongitudMax(telefonoE,8)){
+            JOptionPane.showMessageDialog(null, "El teléfono del Empleado debe conter 8 dígitos", "Alcanzó el limite de caracteres permitidos", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        if(contieneNumeros(nombreE)){
+            JOptionPane.showMessageDialog(null, "Ingrese un nombre que solo contenga letras");
+            return;
+        }
+
+
+        if(contieneLetras(telefonoE)){
+            JOptionPane.showMessageDialog(null, "El teléfono solo debe contener números ");
+            return;
+        }
+
+        if(contieneLetras(idEmpleado)){
+            JOptionPane.showMessageDialog(null, "El idEmpleado solo debe contener números ");
+            return;
+        }
+
         try {
             PreparedStatement ps;
 
-            ps = conn.prepareStatement("insert into empleado (nombreEmpleado,direccionEmpleado,telefonoEmpleado,correoEmpleado,fechaInicial,IDCargo,IDSexo)values(?,?,?,?,?,?,?)");
+            ps = conn.prepareStatement("insert into empleado (IDEmpleado,nombreEmpleado,direccionEmpleado,telefonoEmpleado,correoEmpleado,fechaInicial,fechaFinal,IDCargo,IDSexo)values(NULL,?,?,?,?,?,NULL,?,?)");
             ps.setString(1, nombreE);
             ps.setString(2, direccionE);
             ps.setString(3, telefonoE);
@@ -77,7 +137,7 @@ public class EmpleadosTest {
             ps.setString(6, cargoE);
             ps.setString(7, sexoE);
 
-            int res = ps.executeUpdate();
+
             JOptionPane.showMessageDialog(null, "Se ha guardado la información del empleado");
         } catch ( Exception e) {
             System.out.println(e);
@@ -117,11 +177,6 @@ public class EmpleadosTest {
             return;
         }
 
-        if((fechaF.equals(""))){
-            javax.swing.JOptionPane.showMessageDialog(null,"Debe ingresar el Fecha Final del empleado","Fecha Final Empleado requerido",javax.swing.JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
-
         if((cargoE.equals(""))){
             javax.swing.JOptionPane.showMessageDialog(null,"Debe ingresar el cargo del empleado","Cargo Empleado requerido",javax.swing.JOptionPane.INFORMATION_MESSAGE);
             return;
@@ -132,25 +187,76 @@ public class EmpleadosTest {
             return;
         }
 
-        try {
-            PreparedStatement ps;
+        if(existecorreo(correoE)){
+            return;
+        }
 
-            ps = conn.prepareStatement(" UPDATE empleado SET nombreEmpleado= '" + nombreE + "', direccionEmpleado= '"
+        if(existeTelefono(telefonoE)){
+            return;
+        }
+
+        if(contieneLetras(sexoE)){
+            JOptionPane.showMessageDialog(null, "El género solo debe contener números ");
+            return;
+        }
+
+        if(contieneLetras(cargoE)){
+            JOptionPane.showMessageDialog(null, "El cargo solo debe contener números ");
+            return;
+        }
+
+        if(!validarSexo(sexoE)){
+            JOptionPane.showMessageDialog(null, " Sexo solo puede contener valores entre 1 y 2", "Valor", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        if(!validarCargo(cargoE)){
+            JOptionPane.showMessageDialog(null, " El Cargo solo puede contener valores entre 1 y 4", "Valor", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+
+        if(!validarLongitudMax(nombreE,35)){
+            JOptionPane.showMessageDialog(null, "El nombre del Empleado sobrepasa la longitud permitida", "Alcanzó el limite de caracteres permitidos", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        if(!validarLongitudMax(direccionE,50)){
+            JOptionPane.showMessageDialog(null, "La dirección del Empleado sobrepasa la longitud permitida", "Alcanzó el limite de caracteres permitidos", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        if(!validarLongitudMax(telefonoE,8)){
+            JOptionPane.showMessageDialog(null, "El teléfono del Empleado debe conter 8 dígitos", "Alcanzó el limite de caracteres permitidos", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        if(contieneNumeros(nombreE)){
+            JOptionPane.showMessageDialog(null, "Ingrese un nombre que solo contenga letras");
+            return;
+        }
+
+        if(contieneLetras(telefonoE)){
+            JOptionPane.showMessageDialog(null, "El teléfono solo debe contener números ");
+            return;
+        }
+
+        if(contieneLetras(idEmpleado)){
+            JOptionPane.showMessageDialog(null, "El idEmpleado solo debe contener números ");
+            return;
+        }
+
+        try {
+
+            String sql= (" UPDATE empleado SET nombreEmpleado= '" + nombreE + "', direccionEmpleado= '"
                     + direccionE + "', telefonoEmpleado= '" + telefonoE + "', correoEmpleado= '"
                     + correoE + "', fechaInicial= '" + fechaI + "', fechaFinal= '"
                     + fechaF + "', IDCargo= '" + cargoE + "', IDSexo= '"
                     + sexoE + "' WHERE IDEmpleado='" + idEmpleado + "' ");
 
-            ps.setString(1, nombreE);
-            ps.setString(2, direccionE);
-            ps.setString(3, telefonoE);
-            ps.setString(4, correoE);
-            ps.setString(5, fechaI);
-            ps.setString(6, fechaF);
-            ps.setString(7, cargoE);
-            ps.setString(8, sexoE);
+            pst = conn.prepareStatement(sql);
+            pst.executeUpdate();
 
-            int res = ps.executeUpdate();
             JOptionPane.showMessageDialog(null, "Se ha actualizado la información del empleado");
         } catch ( Exception e) {
             System.out.println(e);
@@ -170,13 +276,13 @@ public class EmpleadosTest {
         ) == JOptionPane.YES_OPTION) {
 
             try {
-                Statement st2 = conn.createStatement();
                 String sql = "DELETE FROM empleado WHERE IDEmpleado = ?";
 
-                int rs2 = st2.executeUpdate(sql);
-                System.out.println(rs2);
-                if(rs2 > 0){
-                    JOptionPane.showMessageDialog(null, "Se ha borrado la información del empleado" + idEmpleado + " correctamente");
+                PreparedStatement prest = conn.prepareStatement(sql);
+                prest.setString(1, idEmpleado);
+
+                if (prest.executeUpdate() > 0){
+                    JOptionPane.showMessageDialog(null, "Se ha borrado la información del empleado: " + idEmpleado + " correctamente");
 
                 }else {
                     JOptionPane.showMessageDialog(null, "¡Error al eliminar la información!");
@@ -197,7 +303,6 @@ public class EmpleadosTest {
         try {
             String sql = "SELECT * FROM empleado";
             Statement stmt = conn.createStatement();
-            stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
 
             while(rs.next()) {
@@ -212,4 +317,85 @@ public class EmpleadosTest {
         }
 
     }
+
+    private boolean existecorreo(String correo) {
+        try {
+            Statement st = conn.createStatement();
+            String sql = "Select * from empleado where correoEmpleado = '" + correo + "'";
+            ResultSet rs = st.executeQuery(sql);
+            if (rs.next()) {
+                JOptionPane.showMessageDialog(null, "El correo: " + correo + " ya existe", "El correo que ingresó ¡Ya existe!.", JOptionPane.INFORMATION_MESSAGE);
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+        return false;
+    }
+
+    private boolean existeTelefono(String Telefono) {
+        try {
+            Statement st = conn.createStatement();
+            String sql = "Select * from empleado where telefonoEmpleado = '" + Telefono + "'";
+            ResultSet rs = st.executeQuery(sql);
+            if (rs.next()) {
+                JOptionPane.showMessageDialog(null, "El Teléfono: " + Telefono + " ya existe", "El número de teléfono que ingresó ¡Ya existe!.", JOptionPane.INFORMATION_MESSAGE);
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+        return false;
+    }
+
+    private boolean validarLongitudMax(String texto, int longitud) {
+        if (texto.length() <= longitud) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    private boolean contieneNumeros(String texto){
+        for (int i = 0; i < texto.length(); i++) {
+            if(Character.isDigit(texto.charAt(i)))
+                return true;
+        }
+        return false;
+    }
+
+
+    private boolean contieneLetras(String texto){
+        for (int i = 0; i < texto.length(); i++) {
+            if(Character.isLetter(texto.charAt(i)))
+                return true;
+        }
+        return false;
+    }
+
+    private boolean validarSexo(String genero){
+        int sexo = Integer.parseInt(genero);
+        if(sexo >= 1 && sexo <= 2){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    private boolean validarCargo(String cargo){
+        int carg = Integer.parseInt(cargo);
+        if(carg >= 1 && carg <= 4){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
 }

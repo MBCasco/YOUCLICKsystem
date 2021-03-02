@@ -43,6 +43,32 @@ public class ProveedoresTest {
             javax.swing.JOptionPane.showMessageDialog(null,"Debe ingresar el direccion del proveedor","Direccion Proveedor requerido",javax.swing.JOptionPane.INFORMATION_MESSAGE);
             return;
         }
+
+        if(existecorreo(correoP)){
+            return;
+        }
+
+        if(!validarLongitudMax(nombreP,35)){
+            JOptionPane.showMessageDialog(null, "El nombre del proveedor sobrepasa la longitud permitida", "Alcanzó el limite de caracteres permitidos", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        if(!validarLongitudMax(direccionP,50)){
+            JOptionPane.showMessageDialog(null, "La dirección del proveedor sobrepasa la longitud permitida", "Alcanzó el limite de caracteres permitidos", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        if(contieneNumeros(nombreP)){
+            JOptionPane.showMessageDialog(null, "Ingrese un nombre que solo contenga letras");
+            return;
+        }
+
+        if(contieneLetras(idProveedor)){
+            JOptionPane.showMessageDialog(null, "El idProveedor solo debe contener números ");
+            return;
+        }
+
+
         try {
             PreparedStatement ps;
 
@@ -80,17 +106,41 @@ public class ProveedoresTest {
             javax.swing.JOptionPane.showMessageDialog(null,"Debe ingresar el direccion del proveedor","Direccion Proveedor requerido",javax.swing.JOptionPane.INFORMATION_MESSAGE);
             return;
         }
-        try {
-            PreparedStatement ps;
 
-            ps = conn.prepareStatement("update PROVEEDORES set empresaProveedor= '" + nombreP + "', correoProveedor= '"
+        if(existecorreo(correoP)){
+            return;
+        }
+
+        if(!validarLongitudMax(nombreP,35)){
+            JOptionPane.showMessageDialog(null, "El nombre del proveedor sobrepasa la longitud permitida", "Alcanzó el limite de caracteres permitidos", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        if(!validarLongitudMax(direccionP,50)){
+            JOptionPane.showMessageDialog(null, "La dirección del proveedor sobrepasa la longitud permitida", "Alcanzó el limite de caracteres permitidos", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        if(contieneNumeros(nombreP)){
+            JOptionPane.showMessageDialog(null, "Ingrese un nombre que solo contenga letras");
+            return;
+        }
+
+        if(contieneLetras(idProveedor)){
+            JOptionPane.showMessageDialog(null, "El idProveedor solo debe contener números ");
+            return;
+        }
+
+
+        try {
+
+            String sql = ("update PROVEEDORES set empresaProveedor= '" + nombreP + "', correoProveedor= '"
                                         + correoP + "', direccionProveedor= '" + direccionP + "' where IDProveedor='"
                                         + idProveedor + "' ");
-            ps.setString(1, nombreP);
-            ps.setString(2, correoP);
-            ps.setString(3, direccionP);
 
-            int res = ps.executeUpdate();
+            pst = conn.prepareStatement(sql);
+            pst.executeUpdate();
+
             JOptionPane.showMessageDialog(null, "Se ha actualizado la información del proveedor");
         } catch ( Exception e) {
             System.out.println(e);
@@ -110,13 +160,14 @@ public class ProveedoresTest {
         ) == JOptionPane.YES_OPTION) {
 
             try {
-                Statement st2 = conn.createStatement();
-                String sql = "DELETE FROM PROVEEDORES WHERE IDProveedor = ?";
 
-                int rs2 = st2.executeUpdate(sql);
-                System.out.println(rs2);
-                if(rs2 > 0){
-                    JOptionPane.showMessageDialog(null, "Se ha borrado la información del empleado" + idProveedor + " correctamente");
+                String sql = "DELETE FROM PROVEEDORES WHERE IDProveedor = ?";
+                PreparedStatement prest = conn.prepareStatement(sql);
+                prest.setString(1, idProveedor);
+
+
+                if(prest.executeUpdate() > 0){
+                    JOptionPane.showMessageDialog(null, "Se ha borrado la información del empleado: " + idProveedor + " correctamente");
 
                 }else {
                     JOptionPane.showMessageDialog(null, "¡Error al eliminar la información!");
@@ -151,4 +202,48 @@ public class ProveedoresTest {
             System.err.println(e);
         }
     }
+
+    private boolean existecorreo(String correo) {
+        try {
+            Statement st = conn.createStatement();
+            String sql = "Select * from proveedores where correoProveedor = '" + correo + "'";
+            ResultSet rs = st.executeQuery(sql);
+            if (rs.next()) {
+                JOptionPane.showMessageDialog(null, "El correo: " + correo + " ya existe", "El correo que ingresó ¡Ya existe!.", JOptionPane.INFORMATION_MESSAGE);
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+        return false;
+    }
+
+
+    private boolean validarLongitudMax(String texto, int longitud) {
+        if (texto.length() <= longitud) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    private boolean contieneNumeros(String texto){
+        for (int i = 0; i < texto.length(); i++) {
+            if(Character.isDigit(texto.charAt(i)))
+                return true;
+        }
+        return false;
+    }
+
+    private boolean contieneLetras(String texto){
+        for (int i = 0; i < texto.length(); i++) {
+            if(Character.isLetter(texto.charAt(i)))
+                return true;
+        }
+        return false;
+    }
+
 }

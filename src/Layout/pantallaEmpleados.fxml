@@ -119,7 +119,7 @@
                                     <Image url="@../Imagenes/iconos/Iconos/email.png" />
                                  </image>
                               </ImageView>
-                              <TextField fx:id="txt_telefono" layoutX="59.0" layoutY="70.0" prefHeight="27.0" prefWidth="284.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
+                              <TextField fx:id="txt_telefono" layoutX="59.0" layoutY="70.0" onKeyTyped="#numero" prefHeight="27.0" prefWidth="284.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
                            </children>
                         </AnchorPane>
                      </content>

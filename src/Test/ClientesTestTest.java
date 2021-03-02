@@ -23,11 +23,11 @@ class ClientesTestTest {
     @org.junit.jupiter.api.Test
     void agregarCliente() {
         System.out.println("Agregar Cliente");
-        String idCliente = "13";
-        String nombre = "Meylin Baca";
-        String telefono = "78954565";
-        String direccion = "Loarque";
-        String correo = "wwww@gmail.com";
+        String idCliente = "1";
+        String nombre = "Maria Lopez";
+        String telefono = "89272367";
+        String direccion = "Loarque 9";
+        String correo = "mar";
         String sexo = "1";
         ClientesTest instance = new ClientesTest();
         instance.AgregarCliente(idCliente, nombre, telefono,  direccion, correo, sexo);
@@ -39,20 +39,19 @@ class ClientesTestTest {
                 assertEquals(idCliente,rs.getString("IDCliente"));
                 assertEquals(nombre,rs.getString("nombreCliente"));
                 assertEquals(telefono,rs.getString("telefonoCliente"));
-                assertEquals(direccion,rs.getString("direccionCliente"));
+                assertEquals(direccion,rs.getString("dirreccionCliente"));
                 assertEquals(correo,rs.getString("correoCliente"));
                 assertEquals(sexo,rs.getString("IDSexo"));
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-
     }
 
     @org.junit.jupiter.api.Test
     void eliminarCliente() {
         System.out.println("Eliminar Cliente");
-        String idCliente = "9";
+        String idCliente = "1";
         ClientesTest instance = new ClientesTest();
         instance.EliminarCliente(idCliente);
     }
@@ -60,12 +59,12 @@ class ClientesTestTest {
     @org.junit.jupiter.api.Test
     void actualizarCliente() {
         System.out.println("Actualizar Cliente");
-        String idCliente = "11";
-        String nombre = "Rich lozar";
-        String telefono = "90123252";
-        String direccion = "cat 2";
+        String idCliente = "1";
+        String nombre = "sldjkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk";
+        String telefono = "89238937";
+        String direccion = "casa 90";
         String correo = "shsc@gmail.com";
-        String sexo = "2";
+        String sexo = "1";
         ClientesTest instance = new ClientesTest();
         instance.ActualizarCliente(idCliente, nombre, telefono,  direccion, correo, sexo);
         try {
@@ -77,7 +76,7 @@ class ClientesTestTest {
                 assertEquals(idCliente,rs.getString("IDCliente"));
                 assertEquals(nombre,rs.getString("nombreCliente"));
                 assertEquals(telefono,rs.getString("telefonoCliente"));
-                assertEquals(direccion,rs.getString("direccionCliente"));
+                assertEquals(direccion,rs.getString("dirreccionCliente"));
                 assertEquals(correo,rs.getString("correoCliente"));
                 assertEquals(sexo,rs.getString("IDSexo"));
             }

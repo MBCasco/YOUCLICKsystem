@@ -23,7 +23,7 @@ public class ProductoTest {
     ResultSet rs = null;
     PreparedStatement pst = null;
 
-    public void AgregarProducto(String idProducto, String nombre, String descripcion,  String precio, String marca, String categoria){
+    public void AgregarProducto(String idProducto, String nombre, String descripcion, String precio, String marca, String categoria, String stock, String ubicacion, String idInventario){
         if((idProducto.equals(""))){
             javax.swing.JOptionPane.showMessageDialog(null,"Debe ingresar el ID del producto.","ID Producto requerido",javax.swing.JOptionPane.INFORMATION_MESSAGE);
             return;
@@ -55,7 +55,45 @@ public class ProductoTest {
             javax.swing.JOptionPane.showMessageDialog(null,"Debe ingresar el categoria del producto","Categoria Producto requerido",javax.swing.JOptionPane.INFORMATION_MESSAGE);
             return;
         }
+
+        if(!validarLongitudMax(nombre,35)){
+            JOptionPane.showMessageDialog(null, "El teléfono del Empleado debe conter 8 dígitos", "Alcanzó el limite de caracteres permitidos", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        if(!validarLongitudMax(descripcion,50)){
+            JOptionPane.showMessageDialog(null, "La descripcion del producto sobrepasa la longitud permitida", "Alcanzó el limite de caracteres permitidos", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        if(contieneNumeros(nombre)){
+            JOptionPane.showMessageDialog(null, "Ingrese un nombre que solo contenga letras");
+            return;
+        }
+
+        if(contieneNumeros(descripcion)){
+            JOptionPane.showMessageDialog(null, "Ingrese una descripción que solo contenga letras");
+            return;
+        }
+
+        if(contieneLetras(stock)){
+            JOptionPane.showMessageDialog(null, "El stock solo debe contener números ");
+            return;
+        }
+
+        if(contieneLetras(ubicacion)){
+            JOptionPane.showMessageDialog(null, "La ubicación solo debe contener números ");
+            return;
+        }
+
+        if(contieneLetras(idProducto)){
+            JOptionPane.showMessageDialog(null, "El idProducto solo debe contener números ");
+            return;
+        }
+
         try {
+            assert conn != null;
+
             PreparedStatement ps;
 
             ps = conn.prepareStatement("INSERT INTO producto (nombre,descripcionProducto,precio,IDMarca,IDCategoria) VALUES (?,?,?,?,?)");
@@ -64,17 +102,33 @@ public class ProductoTest {
             ps.setString(3, precio);
             ps.setString(4, marca);
             ps.setString(5, categoria);
+            ps.execute();
 
 
-            int res = ps.executeUpdate();
             JOptionPane.showMessageDialog(null, "Se ha guardado la información del producto");
         } catch ( Exception e) {
             System.out.println(e);
             JOptionPane.showMessageDialog(null, "Error al guardar la información");
         }
+
+        try {
+            PreparedStatement ps1;
+
+            ps1 = conn.prepareStatement("INSERT INTO inventario (stock,ubicacion, IDProducto) VALUES (?,?,LAST_INSERT_ID())");
+
+            ps1.setString(1, stock);
+            ps1.setString(2, ubicacion);
+            ps1.execute();
+
+            JOptionPane.showMessageDialog(null, "Se ha guardado la información del inventario");
+        } catch ( Exception e) {
+            System.out.println(e);
+            JOptionPane.showMessageDialog(null, "Error al guardar la información");
+        }
+
     }
-/*
-    public void ActualizarProducto(String idProducto, String nombre, String descripcion,  String precio, String marca, String categoria){
+
+    public void ActualizarProducto(String idProducto, String nombre, String descripcion, String precio, String marca, String categoria){
         if((idProducto.equals(""))){
             javax.swing.JOptionPane.showMessageDialog(null,"Debe ingresar el ID del producto.","ID Producto requerido",javax.swing.JOptionPane.INFORMATION_MESSAGE);
             return;
@@ -106,20 +160,41 @@ public class ProductoTest {
             javax.swing.JOptionPane.showMessageDialog(null,"Debe ingresar el categoria del producto","Categoria Producto requerido",javax.swing.JOptionPane.INFORMATION_MESSAGE);
             return;
         }
+
+        if(!validarLongitudMax(nombre,35)){
+            JOptionPane.showMessageDialog(null, "El teléfono del Empleado debe conter 8 dígitos", "Alcanzó el limite de caracteres permitidos", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        if(!validarLongitudMax(descripcion,50)){
+            JOptionPane.showMessageDialog(null, "La descripcion del producto sobrepasa la longitud permitida", "Alcanzó el limite de caracteres permitidos", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        if(contieneNumeros(nombre)){
+            JOptionPane.showMessageDialog(null, "Ingrese un nombre que solo contenga letras");
+            return;
+        }
+
+        if(contieneNumeros(descripcion)){
+            JOptionPane.showMessageDialog(null, "Ingrese una descripción que solo contenga letras");
+            return;
+        }
+
+        if(contieneLetras(idProducto)){
+            JOptionPane.showMessageDialog(null, "El idProducto solo debe contener números ");
+            return;
+        }
+
         try {
-            PreparedStatement ps;
-
-            ps = conn.prepareStatement("UPDATE producto SET nombre= '" + value2 + "', descripcionProducto= '" + value3 + "', ubicacion= '"
-                    + value4 + "',precio= '" + value5 + "',IDMarca= '" + value6 + "', IDCategoria= '"
-                    + value7 + "' WHERE IDProducto='" + value1 + "' ";
-            ps.setString(1, nombre);
-            ps.setString(2, descripcion);
-            ps.setString(3, precio);
-            ps.setString(4, marca);
-            ps.setString(5, categoria);
 
 
-            int res = ps.executeUpdate();
+            String sql = ("UPDATE producto SET nombre= '" + nombre + "', descripcionProducto= '" + descripcion + "', precio= '" + precio + "',IDMarca= '" + marca + "', IDCategoria= '"
+                    + categoria + "' WHERE IDProducto='" + idProducto + "' ");
+
+
+            pst = conn.prepareStatement(sql);
+            pst.execute();
             JOptionPane.showMessageDialog(null, "Se ha actualizado la información del producto");
         } catch ( Exception e) {
             System.out.println(e);
@@ -128,7 +203,6 @@ public class ProductoTest {
 
     }
 
- */
 
     public void EliminarProducto(String idProducto){
         if (idProducto.equals("")) {
@@ -140,13 +214,12 @@ public class ProductoTest {
         ) == JOptionPane.YES_OPTION) {
 
             try {
-                Statement st2 = conn.createStatement();
                 String sql = "DELETE FROM producto WHERE IDProducto = ?";
+                PreparedStatement prest = conn.prepareStatement(sql);
+                prest.setString(1, idProducto);
 
-                int rs2 = st2.executeUpdate(sql);
-                System.out.println(rs2);
-                if(rs2 > 0){
-                    JOptionPane.showMessageDialog(null, "Se ha borrado la información del producto" + idProducto + " correctamente");
+                if(prest.executeUpdate() > 0){
+                    JOptionPane.showMessageDialog(null, "Se ha borrado la información del producto: " + idProducto + " correctamente");
 
                 }else {
                     JOptionPane.showMessageDialog(null, "¡Error al eliminar la información!");
@@ -163,23 +236,33 @@ public class ProductoTest {
 
     }
 
-    public void BuscarProducto(){
-        try {
-            String sql = "SELECT * FROM producto";
-            Statement stmt = conn.createStatement();
-            stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
 
-            while(rs.next()) {
-
-                String []datos= new String[2];
-                datos[0] =rs.getString("IDProducto");
-                datos[1] =rs.getString("nombre");
-            }
-        }
-        catch (Exception e) {
-            System.err.println(e);
+    private boolean validarLongitudMax(String texto, int longitud) {
+        if (texto.length() <= longitud) {
+            return true;
+        } else {
+            return false;
         }
     }
+
+
+    private boolean contieneNumeros(String texto){
+        for (int i = 0; i < texto.length(); i++) {
+            if(Character.isDigit(texto.charAt(i)))
+                return true;
+        }
+        return false;
+    }
+
+
+    private boolean contieneLetras(String texto){
+        for (int i = 0; i < texto.length(); i++) {
+            if(Character.isLetter(texto.charAt(i)))
+                return true;
+        }
+        return false;
+    }
+
+
 
 }

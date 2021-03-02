@@ -6,10 +6,13 @@ import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -398,5 +401,16 @@ public class ProveedoresContactoController extends MenuController implements Ini
         }
         return true;
 
+    }
+
+    public void numero (){
+        if (txt_telefonoContacto.getText().length() >= 8) {
+            Toolkit.getDefaultToolkit().beep();
+            Alert alert =new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Alcanzó el limite");
+            alert.setHeaderText(null);
+            alert.setContentText("Alcanzó el limite de números admitidos");
+            alert.showAndWait();
+        }
     }
 }

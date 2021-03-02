@@ -67,7 +67,9 @@ public class LoginController<Private> implements GlobalConstans {
     */
 
 
-    public LoginController(){ con = connect.conDB(); }
+    public LoginController(){
+        con = connect.conDB();
+    }
     Connection con = null;
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;

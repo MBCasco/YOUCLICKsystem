@@ -48,11 +48,9 @@ public class CargoHistoricoController extends MenuController implements Initiali
 
         int index = -1;
         Connection conn = null;
-        ResultSet rs = null;
-        PreparedStatement pst = null;
 
         public void UpdateTable() {
-            col_ID.setCellValueFactory(new PropertyValueFactory<cargoHistorico, Integer>("ID"));
+            col_ID.setCellValueFactory(new PropertyValueFactory<>("ID"));
             col_NombreEmpleado.setCellValueFactory(new PropertyValueFactory<cargoHistorico, String>("nombreEmpleado"));
             col_Cargo.setCellValueFactory(new PropertyValueFactory<cargoHistorico, String>("Cargo"));
             col_FechaInicial.setCellValueFactory(new PropertyValueFactory<cargoHistorico, String>("fechaInicial"));

@@ -224,7 +224,7 @@ public class ProductoController extends MenuController implements Initializable 
                 String value6 = String.valueOf(comMarca.getSelectionModel().getSelectedItem().getIDMarca());
                 String value7 = String.valueOf(comCat.getSelectionModel().getSelectedItem().getIDCategoria());
 
-                String sql = "UPDATE producto SET nombre= '" + value2 + "', descripcionProducto= '" + value3 + "', ubicacion= '" + value4 + "',precio= '" + value5 + "',IDMarca= '" + value6 + "', IDCategoria= '" + value7 + "' WHERE IDProducto='" + value1 + "' ";
+                String sql = "UPDATE producto SET nombre= '" + value2 + "', descripcionProducto= '" + value3 + "',precio= '" + value5 + "',IDMarca= '" + value6 + "', IDCategoria= '" + value7 + "' WHERE IDProducto='" + value1 + "' ";
 
                 pst = conn.prepareStatement(sql);
                 pst.execute();

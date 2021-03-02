@@ -495,6 +495,17 @@ public class EmpleadosController extends MenuController implements Initializable
 
     }
 
+    public void numero (){
+        if (txt_telefono.getText().length() >= 8) {
+            Toolkit.getDefaultToolkit().beep();
+            Alert alert =new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Alcanzó el limite");
+            alert.setHeaderText(null);
+            alert.setContentText("Alcanzó el limite de números admitidos");
+            alert.showAndWait();
+        }
+    }
+
     public void CargoH (javafx.event.ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/Layout/pantallaCargoHistorico.fxml"));
         stage.setTitle("Cargo Histórico");
