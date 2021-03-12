@@ -9,19 +9,26 @@ import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
 import javax.xml.crypto.Data;
+import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.Comparator;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -109,6 +116,9 @@ public class ComprasController  extends MenuController implements Initializable 
     boolean x = false;
     int exist = 0;
     int ID;
+    final Calendar calendar = Calendar.getInstance();
+    final java.util.Date  date = calendar.getTime();
+    String fecha = new SimpleDateFormat("yyyyMMdd_HH.mm.ss").format(date);
 
     public void prueba() throws IOException {
         pago();
@@ -209,9 +219,16 @@ public class ComprasController  extends MenuController implements Initializable 
             clearmini();
 
         } catch (Exception e) {
-            Alert alert =new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Error");
-        }
+                try {
+                    Log myLog;
+                    String nombreArchivo = "src\\Log\\COMPRAS_"+fecha+".txt";
+                    myLog = new Log(nombreArchivo);
+                    myLog.logger.setLevel(Level.SEVERE);
+                    myLog.logger.severe(e.getMessage());
+                } catch (Exception ex) {
+                    Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
     }
 
     public void trasferir() throws SQLException {
@@ -223,8 +240,15 @@ public class ComprasController  extends MenuController implements Initializable 
             pst.execute();
 
         } catch (Exception e) {
-            Alert alert =new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Error");
+            try {
+                Log myLog;
+                String nombreArchivo = "src\\Log\\COMPRAS_"+fecha+".txt";
+                myLog = new Log(nombreArchivo);
+                myLog.logger.setLevel(Level.SEVERE);
+                myLog.logger.severe(e.getMessage());
+            } catch (Exception ex) {
+                Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
         String sql1 = "insert into compra select * from comprat where IDCompra = ?;";
@@ -235,8 +259,15 @@ public class ComprasController  extends MenuController implements Initializable 
             System.out.println("entrada");
 
         } catch (Exception e) {
-            Alert alert =new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Error");
+            try {
+                Log myLog;
+                String nombreArchivo = "src\\Log\\COMPRAS_"+fecha+".txt";
+                myLog = new Log(nombreArchivo);
+                myLog.logger.setLevel(Level.SEVERE);
+                myLog.logger.severe(e.getMessage());
+            } catch (Exception ex) {
+                Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
         }
     }
@@ -267,11 +298,15 @@ public class ComprasController  extends MenuController implements Initializable 
                 UpdateTableC();
 
             } catch (Exception e) {
-                //Alert alert =new Alert(Alert.AlertType.ERROR);
-                //alert.setTitle("Error");
-                //alert.setHeaderText(null);
-                // alert.setContentText("valio papita");
-                //alert.showAndWait();
+                try {
+                    Log myLog;
+                    String nombreArchivo = "src\\Log\\COMPRAS_"+fecha+".txt";
+                    myLog = new Log(nombreArchivo);
+                    myLog.logger.setLevel(Level.SEVERE);
+                    myLog.logger.severe(e.getMessage());
+                } catch (Exception ex) {
+                    Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
     }
@@ -355,6 +390,7 @@ public class ComprasController  extends MenuController implements Initializable 
     }
 
     public void DeleteC(){
+        Toolkit.getDefaultToolkit().beep();
         Alert alert =new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Información");
         alert.setHeaderText(null);
@@ -377,11 +413,15 @@ public class ComprasController  extends MenuController implements Initializable 
                         updatecampos();
                     }
                 } catch (Exception e) {
-                    Alert alert2 = new Alert(Alert.AlertType.ERROR);
-                    alert2.setTitle("Error");
-                    alert2.setHeaderText(null);
-                    alert2.setContentText("Hubo un error al eliminar,  por favor inténtelo de nuevo." +
-                            "\nEste campo solo permite eliminar por ID.");
+                    try {
+                        Log myLog;
+                        String nombreArchivo = "src\\Log\\COMPRAS_"+fecha+".txt";
+                        myLog = new Log(nombreArchivo);
+                        myLog.logger.setLevel(Level.SEVERE);
+                        myLog.logger.severe(e.getMessage());
+                    } catch (Exception ex) {
+                        Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             }
         });
@@ -407,11 +447,15 @@ public class ComprasController  extends MenuController implements Initializable 
             clearFields();
 
         } catch (Exception e) {
-            Alert alert =new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText(null);
-            alert.setContentText("Hubo un error al actualizar, revise que todos los campos estén llenados correctamente");
-            alert.showAndWait();
+            try {
+                Log myLog;
+                String nombreArchivo = "src\\Log\\COMPRAS_"+fecha+".txt";
+                myLog = new Log(nombreArchivo);
+                myLog.logger.setLevel(Level.SEVERE);
+                myLog.logger.severe(e.getMessage());
+            } catch (Exception ex) {
+                Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         //}
     }

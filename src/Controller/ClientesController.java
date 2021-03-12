@@ -10,13 +10,17 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
 
-import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -35,6 +39,8 @@ public class ClientesController extends MenuController implements Initializable 
     private TableColumn<clientes, String> col_correo;
     @FXML
     private TableColumn<clientes, String> col_Sexo;
+    @FXML
+    private TableColumn<clientes, Boolean> col_inhabilitar;
 
 
     @FXML
@@ -64,7 +70,7 @@ public class ClientesController extends MenuController implements Initializable 
     private Button btn_clear;
 
 
-    private int limite  = 8;
+
     int value;
 
 
@@ -76,6 +82,11 @@ public class ClientesController extends MenuController implements Initializable 
     Connection conn = null;
     ResultSet rs = null;
     PreparedStatement pst = null;
+    final Calendar calendar = Calendar.getInstance();
+    final java.util.Date  date = calendar.getTime();
+    String fecha = new SimpleDateFormat("yyyyMMdd_HH.mm.ss").format(date);
+
+
 
     //Agregar Clientes
     public void Add_clientes() throws IOException {
@@ -88,11 +99,9 @@ public class ClientesController extends MenuController implements Initializable 
 
         if (validateName() & validateDireccion()  & validateNumber() & validateEmail() & validateFields() & limite()){
 
-            /*if(existeTelefono()){
+            if(existeTelefono() & existeCorreo()){
                 return;
             }
-
-             */
 
                 try {
                     pst = conn.prepareStatement(sql);
@@ -123,10 +132,16 @@ public class ClientesController extends MenuController implements Initializable 
                     Search_cliente();
 
                 } catch (Exception e) {
-                    System.err.println(e.getMessage());
-
+                    try {
+                        Log myLog;
+                        String nombreArchivo = "src\\Log\\CLIENTES_"+fecha+".txt";
+                        myLog = new Log(nombreArchivo);
+                        myLog.logger.setLevel(Level.SEVERE);
+                        myLog.logger.severe(e.getMessage() + " : " + e.getCause());
+                    } catch (IOException ex) {
+                        Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
-
         }
     }
 
@@ -149,7 +164,6 @@ public class ClientesController extends MenuController implements Initializable 
             btn_registrar.setDisable(true);
             btn_actualizar.setDisable(false);
             btn_eliminar.setDisable(false);
-
         }
         if (check == 0){
             btn_registrar.setDisable(false);
@@ -160,6 +174,7 @@ public class ClientesController extends MenuController implements Initializable 
 
     //Eliminar Cliente
     public void Delete(){
+        Toolkit.getDefaultToolkit().beep();
         Alert alert =new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Información");
         alert.setHeaderText(null);
@@ -183,11 +198,15 @@ public class ClientesController extends MenuController implements Initializable 
                     }
 
                 }catch (Exception e){
-                    Alert alert2 = new Alert(Alert.AlertType.ERROR);
-                    alert2.setTitle("Error");
-                    alert2.setHeaderText(null);
-                    alert2.setContentText("Hubo un error al eliminar" +
-                            "\nEste campo solo permite eliminar por ID.");
+                    try {
+                        Log myLog;
+                        String nombreArchivo = "src\\Log\\CLIENTES_"+fecha+".txt";
+                        myLog = new Log(nombreArchivo);
+                        myLog.logger.setLevel(Level.SEVERE);
+                        myLog.logger.severe(e.getMessage());
+                    } catch (Exception ex) {
+                        Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             }
         });
@@ -195,12 +214,14 @@ public class ClientesController extends MenuController implements Initializable 
 
     //Actualizar la tabla
     public void UpdateTable(){
+
         col_cliente.setCellValueFactory(new PropertyValueFactory<>("idCliente"));
         col_nombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         col_telefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
         col_direccion.setCellValueFactory(new PropertyValueFactory<>("direccion"));
         col_correo.setCellValueFactory(new PropertyValueFactory<>("correo"));
         col_Sexo.setCellValueFactory(new PropertyValueFactory<>("sexo"));
+        col_inhabilitar.setCellValueFactory(new PropertyValueFactory<>("inhabilitar"));
 
         listM = connect.getdataclientes();
         table_clientes.setItems(listM);
@@ -213,12 +234,18 @@ public class ClientesController extends MenuController implements Initializable 
         Search_cliente();
         clearFields();
         checkBtnStatus(0);
+
     }
 
     //Editar Clientes
     public void Edit(){
         int codS = 1;
         if (validateFields() & limite() & validateName() & validateDireccion()  & validateNumber() & validateEmail()) {
+
+            if(existeTelefono() & existeCorreo()){
+                return;
+            }
+
             try {
                 conn = connect.conDB();
 
@@ -252,11 +279,15 @@ public class ClientesController extends MenuController implements Initializable 
                 clearFields();
 
             } catch (Exception e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText(null);
-                alert.setContentText("Hubo un error al actualizar, revise que todos los campos estén llenados correctamente");
-                alert.showAndWait();
+                try {
+                    Log myLog;
+                    String nombreArchivo = "src\\Log\\CLIENTES_"+fecha+".txt";
+                    myLog = new Log(nombreArchivo);
+                    myLog.logger.setLevel(Level.SEVERE);
+                    myLog.logger.severe(e.getMessage());
+                } catch (Exception ex) {
+                    Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
     }
@@ -305,9 +336,10 @@ public class ClientesController extends MenuController implements Initializable 
         txt_telefono.setText(col_telefono.getCellData(index).toString());
         txt_correo.setText(col_correo.getCellData(index));
         Sexo.setValue(col_Sexo.getCellData(index));
-        value= col_cliente.getCellData(index);
         txt_eliminar.setText(String.valueOf(value));
         checkBtnStatus(1);
+
+
     }
 
     /*
@@ -434,32 +466,77 @@ public class ClientesController extends MenuController implements Initializable 
 
     public void numero (){
         if (txt_telefono.getText().length() >= 8) {
+
             Toolkit.getDefaultToolkit().beep();
             Alert alert =new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Alcanzó el limite");
             alert.setHeaderText(null);
-            alert.setContentText("Alcanzó el limite de números admitidos");
+            alert.setContentText("Alcanzó el limite de números permitidos");
             alert.showAndWait();
         }
+
     }
 
-  /*  private boolean existeTelefono() {
+
+    private boolean existeTelefono() {
         try {
             Statement st = conn.createStatement();
             String sql = "Select * from cliente where telefonoCliente = '" +txt_telefono.getText() + "'";
             ResultSet rs = st.executeQuery(sql);
             if (rs.next()) {
-                JOptionPane.showMessageDialog(null, "El Teléfono: " + txt_telefono.getText() + " ya existe", "El número de teléfono que ingresó ¡Ya existe!.", JOptionPane.INFORMATION_MESSAGE);
+                Alert alert =new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("El número de teléfono que ingresó ¡Ya existe!");
+                alert.setHeaderText(null);
+                alert.setContentText("El Teléfono: " + txt_telefono.getText() + " ya existe");
+                alert.show();
                 return true;
             } else {
                 return false;
             }
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
+
+            } catch (Exception ex) {
+                Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+
         }
         return false;
     }
-   */
+
+    private boolean existeCorreo() {
+        try {
+            Statement st = conn.createStatement();
+            String sql = "Select * from cliente where correoCliente = '" +txt_correo.getText() + "'";
+            ResultSet rs = st.executeQuery(sql);
+            if (rs.next()) {
+                Alert alert =new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("El correo que ingresó ¡Ya existe!");
+                alert.setHeaderText(null);
+                alert.setContentText("El correo: " + txt_correo.getText() + " ya existe");
+                alert.show();
+                return true;
+            } else {
+                return false;
+            }
+
+            } catch (Exception ex) {
+                Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        return false;
+    }
+
+    public void Desactivar() {
+
+        Toolkit.getDefaultToolkit().beep();
+        Alert alert =new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Información");
+        alert.setHeaderText(null);
+        alert.setContentText("Estás seguro ¿Qué quieres desactivar este cliente?");
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                
+            }
+        });
+    }
+
 }
 
 

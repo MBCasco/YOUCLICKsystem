@@ -34,6 +34,7 @@ public class connect {
                 list.add(new clientes( Integer.parseInt(rs.getString("IDCliente")), rs.getString("nombreCliente"),  Integer.parseInt(rs.getString("telefonoCliente")), rs.getString("dirreccionCliente"), rs.getString("correoCliente"), rs.getString("descripcionSexo")));
             }
         }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
         }
         return list;
     }

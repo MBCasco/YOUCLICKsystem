@@ -10,13 +10,21 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.SingleSelectionModel;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -87,12 +95,20 @@ public class ProductoController extends MenuController implements Initializable 
     Connection conn = null;
     ResultSet rs = null;
     PreparedStatement pst = null;
+    final Calendar calendar = Calendar.getInstance();
+    final java.util.Date  date = calendar.getTime();
+    String fecha = new SimpleDateFormat("yyyyMMdd_HH.mm.ss").format(date);
 
 
     public void addProducto() throws SQLException {
         conn = connect.conDB();
 
-        if (validateFields() & validateName() & validateNumberStock() & validateDescripcion() & validateUbicacion() & validateNumberprecio() & limite()) {
+        if (validateFields() & validateName() & validateNumberStock() & validateDescripcion() & validateUbicacion() & validateNumberprecio() & limite() & validateMarca() & validateCategoria()) {
+
+            if(existeNombre()){
+                return;
+            }
+
             try {
                 assert conn != null;
                 PreparedStatement ps = conn.prepareStatement("INSERT INTO producto (nombre,descripcionProducto,precio,IDMarca,IDCategoria) VALUES (?,?,?,?,?)");
@@ -110,7 +126,15 @@ public class ProductoController extends MenuController implements Initializable 
                 alert.showAndWait();
 
             } catch (Exception e) {
-                System.out.println(e);
+                try {
+                    Log myLog;
+                    String nombreArchivo = "src\\Log\\PRODUCTO_"+fecha+".txt";
+                    myLog = new Log(nombreArchivo);
+                    myLog.logger.setLevel(Level.SEVERE);
+                    myLog.logger.severe(e.getMessage() + " : " + e.getCause());
+                } catch (IOException ex) {
+                    Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
             try {
                 PreparedStatement ps1 = conn.prepareStatement("INSERT INTO inventario (stock,ubicacion, IDProducto) VALUES (?,?,LAST_INSERT_ID())");
@@ -123,13 +147,15 @@ public class ProductoController extends MenuController implements Initializable 
                 clearFields();
 
             } catch (Exception e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText(null);
-                alert.setContentText("Verifique la siguiente información: " +
-                        " \nRevise que el nombre del producto sea único" +
-                        " \nQue todos los campos esten llenos correctamente");
-                alert.showAndWait();
+                try {
+                    Log myLog;
+                    String nombreArchivo = "src\\Log\\PRODUCTO_"+fecha+".txt";
+                    myLog = new Log(nombreArchivo);
+                    myLog.logger.setLevel(Level.SEVERE);
+                    myLog.logger.severe(e.getMessage() + " : " + e.getCause());
+                } catch (IOException ex) {
+                    Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
     }
@@ -178,6 +204,7 @@ public class ProductoController extends MenuController implements Initializable 
     }
 
     public void Delete(){
+        Toolkit.getDefaultToolkit().beep();
         Alert alert =new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Información");
         alert.setHeaderText(null);
@@ -200,11 +227,15 @@ public class ProductoController extends MenuController implements Initializable 
                         clearFields();
                     }
                 }catch (Exception e){
-                    Alert alert2 = new Alert(Alert.AlertType.ERROR);
-                    alert2.setTitle("Error");
-                    alert2.setHeaderText(null);
-                    alert2.setContentText("Hubo un error al eliminar." +
-                            "\n Este campo solo elimina por ID");
+                    try {
+                        Log myLog;
+                        String nombreArchivo = "src\\Log\\PRODUCTO_"+fecha+".txt";
+                        myLog = new Log(nombreArchivo);
+                        myLog.logger.setLevel(Level.SEVERE);
+                        myLog.logger.severe(e.getMessage() + " : " + e.getCause());
+                    } catch (IOException ex) {
+                        Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             }
         });
@@ -213,18 +244,20 @@ public class ProductoController extends MenuController implements Initializable 
     public void Edit(){
 
         String value1 = txtID.getText();
-        if (validateFields() & validateName() & validateNumberStock() & validateDescripcion() & validateUbicacion() & validateNumberprecio() & limite()) {
+        if (validateFields() & validateName() & validateNumberStock() & validateDescripcion() & validateUbicacion() & validateNumberprecio() & limite() & validateMarca() & validateCategoria()) {
+            if(existeNombre()){
+                return;
+            }
             try {
                 conn = connect.conDB();
 
                 String value2 = txtNombreP.getText();
                 String value3 = txtDescrpcionP.getText();
-                String value4 = txtUbicacion.getText();
-                String value5 = txtPrecio.getText();
-                String value6 = String.valueOf(comMarca.getSelectionModel().getSelectedItem().getIDMarca());
-                String value7 = String.valueOf(comCat.getSelectionModel().getSelectedItem().getIDCategoria());
+                String value4 = txtPrecio.getText();
+                String value5 = String.valueOf(comMarca.getSelectionModel().getSelectedItem().getIDMarca());
+                String value6 = String.valueOf(comCat.getSelectionModel().getSelectedItem().getIDCategoria());
 
-                String sql = "UPDATE producto SET nombre= '" + value2 + "', descripcionProducto= '" + value3 + "',precio= '" + value5 + "',IDMarca= '" + value6 + "', IDCategoria= '" + value7 + "' WHERE IDProducto='" + value1 + "' ";
+                String sql = "UPDATE producto SET nombre= '" + value2 + "', descripcionProducto= '" + value3 + "',precio= '" + value4 + "',IDMarca= '" + value5 + "', IDCategoria= '" + value6 + "' WHERE IDProducto='" + value1 + "' ";
 
                 pst = conn.prepareStatement(sql);
                 pst.execute();
@@ -235,8 +268,7 @@ public class ProductoController extends MenuController implements Initializable 
                 alert.setContentText("Se actualizó producto exitosamente");
                 alert.showAndWait();
 
-                UpdateTable();
-                clearFields();
+
 
             } catch (Exception e) {
                 Alert alert2 = new Alert(Alert.AlertType.ERROR);
@@ -246,15 +278,26 @@ public class ProductoController extends MenuController implements Initializable 
             }
             try {
                 conn = connect.conDB();
+                String value7 = txtStock.getText();
                 String value8 = txtUbicacion.getText();
 
-                String sql1 = "UPDATE inventario SET  ubicacion= '" + value8 + "' WHERE IDProducto = '" + value1 + "'";
+                String sql1 = "UPDATE inventario SET  stock= '" + value7 + "', ubicacion= '" + value8 + "' WHERE IDProducto = '" + value1 + "'";
 
                 pst = conn.prepareStatement(sql1);
                 pst.execute();
+                UpdateTable();
+                clearFields();
 
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, e);
+                try {
+                    Log myLog;
+                    String nombreArchivo = "src\\Log\\PRODUCTO_"+fecha+".txt";
+                    myLog = new Log(nombreArchivo);
+                    myLog.logger.setLevel(Level.SEVERE);
+                    myLog.logger.severe(e.getMessage() + " : " + e.getCause());
+                } catch (IOException ex) {
+                    Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
 
@@ -275,6 +318,8 @@ public class ProductoController extends MenuController implements Initializable 
         txtDescrpcionP.setText(col_descripcion.getCellData(index));
         txtPrecio.setText(col_precio.getCellData(index).toString());
         txtEliminar.setText(col_producto.getCellData(index).toString());
+
+
         checkBtnStatus(1);
 
     }
@@ -282,6 +327,13 @@ public class ProductoController extends MenuController implements Initializable 
     public void PrecioH (javafx.event.ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/Layout/pantallaPrecioHistoricoDeProductos.fxml"));
         stage.setTitle("Precio Historico");
+        stage.setScene(new Scene(root, 1360, 768));
+        stage.show();
+    }
+
+    public void agregarMarca (javafx.event.ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/Layout/pantallaMarca.fxml"));
+        stage.setTitle("Marca");
         stage.setScene(new Scene(root, 1360, 768));
         stage.show();
     }
@@ -403,6 +455,32 @@ public class ProductoController extends MenuController implements Initializable 
         }
     }
 
+    private boolean validateMarca() {
+
+        if (comMarca.getSelectionModel().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error en la marca");
+            alert.setHeaderText(null);
+            alert.setContentText("Selecione marca para el producto");
+            alert.showAndWait();
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validateCategoria() {
+
+        if (comCat.getSelectionModel().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error en la categoria");
+            alert.setHeaderText(null);
+            alert.setContentText("Selecione categoria para el producto");
+            alert.showAndWait();
+            return false;
+        }
+        return true;
+    }
+
     private boolean validateFields(){
         if (txtNombreP.getText().isEmpty() | txtStock.getText().isEmpty()  | txtDescrpcionP.getText().isEmpty() | txtUbicacion.getText().isEmpty() | txtPrecio.getText().isEmpty()){
 
@@ -439,7 +517,30 @@ public class ProductoController extends MenuController implements Initializable 
             return false;
         }
         return true;
-
     }
+
+    private boolean existeNombre() {
+        try {
+            Statement st = conn.createStatement();
+            String sql = "Select * from producto where nombre = '" +txtNombreP.getText() + "'";
+            ResultSet rs = st.executeQuery(sql);
+            if (rs.next()) {
+                Alert alert =new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("El nombre que ingresó ¡Ya existe!");
+                alert.setHeaderText(null);
+                alert.setContentText("El nombre: " + txtNombreP.getText() + " ya existe");
+                alert.show();
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (Exception ex) {
+            Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+        return false;
+    }
+
 }
 

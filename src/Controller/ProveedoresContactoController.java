@@ -17,7 +17,13 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -69,6 +75,9 @@ public class ProveedoresContactoController extends MenuController implements Ini
     int index = -1;
     Connection conn = null;
     PreparedStatement pst = null;
+    final Calendar calendar = Calendar.getInstance();
+    final java.util.Date  date = calendar.getTime();
+    String fecha = new SimpleDateFormat("yyyyMMdd_HH.mm.ss").format(date);
     int IDContacto = 0;
 
     public void prueba() throws IOException {
@@ -86,6 +95,11 @@ public class ProveedoresContactoController extends MenuController implements Ini
         conn = connect.conDB();
         String sql = "insert into contactoproveedor (IDProveedor, nombreDeContacto, Detalles, Telefono, Correo)values(?,?,?,?,?)";
         if (validateFields() & limite() & validateName() & validateDetalles()  & validateNumber() & validateEmail() ) {
+
+            if(existeTelefono() & existeCorreo()){
+                return;
+            }
+
             try {
                 pst = conn.prepareStatement(sql);
                 pst.setString(1, txt_IDProveedor.toString());
@@ -106,13 +120,15 @@ public class ProveedoresContactoController extends MenuController implements Ini
                 clearFields();
 
             } catch (Exception e) {
-                Alert alert =new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText(null);
-                alert.setContentText("Verifique la siguiente información: " +
-                        " \nRevise que su correo sea único" +
-                        " \nQue todos los campos esten llenos correctamente");
-                alert.showAndWait();
+                try {
+                    Log myLog;
+                    String nombreArchivo = "src\\Log\\CONTACTOPROVEEDORES_"+fecha+".txt";
+                    myLog = new Log(nombreArchivo);
+                    myLog.logger.setLevel(Level.SEVERE);
+                    myLog.logger.severe(e.getMessage() + " : " + e.getCause());
+                } catch (IOException ex) {
+                    Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
     }
@@ -199,6 +215,7 @@ public class ProveedoresContactoController extends MenuController implements Ini
     }
 
     public void deleteContacto(){
+        Toolkit.getDefaultToolkit().beep();
         Alert alert =new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Información");
         alert.setHeaderText(null);
@@ -228,7 +245,15 @@ public class ProveedoresContactoController extends MenuController implements Ini
                                 "\nEste campo solo permite eliminar por ID.");
                     }
                 }catch (Exception e){
-                    JOptionPane.showMessageDialog(null, "Error, por favor vuelva a intentarlo");
+                    try {
+                        Log myLog;
+                        String nombreArchivo = "src\\Log\\CONTACTOPROVEEDORES_"+fecha+".txt";
+                        myLog = new Log(nombreArchivo);
+                        myLog.logger.setLevel(Level.SEVERE);
+                        myLog.logger.severe(e.getMessage() + " : " + e.getCause());
+                    } catch (IOException ex) {
+                        Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             }
         });
@@ -236,6 +261,11 @@ public class ProveedoresContactoController extends MenuController implements Ini
 
     public void EditContacto(){
         if (validateFields() & limite() & validateName() & validateDetalles()  & validateNumber() & validateEmail()){
+
+            if(existeTelefono() & existeCorreo()){
+                return;
+            }
+
             try {
                 conn = connect.conDB();
                 String value1 = txt_IdContacto.getText();
@@ -259,11 +289,15 @@ public class ProveedoresContactoController extends MenuController implements Ini
                 Search_contacto();
 
             } catch (Exception e) {
-                Alert alert =new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText(null);
-                alert.setContentText("Hubo un error al actualizar, revise que todos los campos estén llenados correctamente");
-                alert.showAndWait();
+                try {
+                    Log myLog;
+                    String nombreArchivo = "src\\Log\\CONTACTOPROVEEDORES_"+fecha+".txt";
+                    myLog = new Log(nombreArchivo);
+                    myLog.logger.setLevel(Level.SEVERE);
+                    myLog.logger.severe(e.getMessage() + " : " + e.getCause());
+                } catch (IOException ex) {
+                    Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
     }
@@ -413,4 +447,63 @@ public class ProveedoresContactoController extends MenuController implements Ini
             alert.showAndWait();
         }
     }
+
+    private boolean existeTelefono() {
+        try {
+            Statement st = conn.createStatement();
+            String sql = "Select * from contactoproveedor where Telefono = '" +txt_telefonoContacto.getText() + "'";
+            ResultSet rs = st.executeQuery(sql);
+            if (rs.next()) {
+                Alert alert =new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("El número de teléfono que ingresó ¡Ya existe!");
+                alert.setHeaderText(null);
+                alert.setContentText("El Teléfono: " + txt_telefonoContacto.getText() + " ya existe");
+                alert.show();
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            try {
+                Log myLog;
+                String nombreArchivo = "src\\Log\\CLIENTES_"+fecha+".txt";
+                myLog = new Log(nombreArchivo);
+                myLog.logger.setLevel(Level.SEVERE);
+                myLog.logger.severe(e.getMessage());
+            } catch (Exception ex) {
+                Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return false;
+    }
+
+    private boolean existeCorreo() {
+        try {
+            Statement st = conn.createStatement();
+            String sql = "Select * from contactoproveedor where Correo = '" +txt_correoContacto.getText() + "'";
+            ResultSet rs = st.executeQuery(sql);
+            if (rs.next()) {
+                Alert alert =new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("El correo que ingresó ¡Ya existe!");
+                alert.setHeaderText(null);
+                alert.setContentText("El correo: " + txt_correoContacto.getText() + " ya existe");
+                alert.show();
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            try {
+                Log myLog;
+                String nombreArchivo = "src\\Log\\CLIENTES_"+fecha+".txt";
+                myLog = new Log(nombreArchivo);
+                myLog.logger.setLevel(Level.SEVERE);
+                myLog.logger.severe(e.getMessage());
+            } catch (Exception ex) {
+                Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return false;
+    }
+
 }

@@ -1,11 +1,14 @@
 package Models;
 
-public class clientes {
+import javafx.scene.control.CheckBox;
+
+public class clientes{
 
     int idCliente;
     int telefono;
     String  sexo;
     String nombre, direccion, correo;
+    private CheckBox inhabilitar;
 
 
     public void setIdCliente(int idCliente) {
@@ -55,12 +58,24 @@ public class clientes {
         return sexo;
     }
 
-    public clientes(int idCliente, String nombre,int telefono,  String direccion, String correo, String sexo) {
+    public CheckBox getInhabilitar() {
+        return inhabilitar;
+    }
+
+    public void setInhabilitar(CheckBox inhabilitar) {
+        this.inhabilitar = inhabilitar;
+    }
+
+
+    public clientes(int idCliente, String nombre, int telefono, String direccion, String correo, String sexo) {
         this.idCliente = idCliente;
         this.telefono = telefono;
         this.nombre = nombre;
         this.direccion = direccion;
         this.correo = correo;
         this.sexo = sexo;
+        this.inhabilitar = new CheckBox();
     }
+
+
 }

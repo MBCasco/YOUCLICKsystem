@@ -8,17 +8,23 @@ import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -77,6 +83,9 @@ public class PagoController extends MenuController implements Initializable {
     PreparedStatement pst4 = null;
     String id4Delete = null;
     int ID;
+    final Calendar calendar = Calendar.getInstance();
+    final java.util.Date  date = calendar.getTime();
+    String fecha = new SimpleDateFormat("yyyyMMdd_HH.mm.ss").format(date);
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -162,7 +171,15 @@ public class PagoController extends MenuController implements Initializable {
                     UpdateTable();
 
                 } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, e);
+                    try {
+                        Log myLog;
+                        String nombreArchivo = "src\\Log\\PAGO_"+fecha+".txt";
+                        myLog = new Log(nombreArchivo);
+                        myLog.logger.setLevel(Level.SEVERE);
+                        myLog.logger.severe(e.getMessage() + " : " + e.getCause());
+                    } catch (IOException ex) {
+                        Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             }
         }
@@ -194,7 +211,15 @@ public class PagoController extends MenuController implements Initializable {
                     UpdateTable();
 
                 } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, e);
+                    try {
+                        Log myLog;
+                        String nombreArchivo = "src\\Log\\PAGO_"+fecha+".txt";
+                        myLog = new Log(nombreArchivo);
+                        myLog.logger.setLevel(Level.SEVERE);
+                        myLog.logger.severe(e.getMessage() + " : " + e.getCause());
+                    } catch (IOException ex) {
+                        Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
 
 
@@ -217,6 +242,7 @@ public class PagoController extends MenuController implements Initializable {
     }
 
     public void deleteP(){
+        Toolkit.getDefaultToolkit().beep();
         Alert alert =new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Información");
         alert.setHeaderText(null);
@@ -238,11 +264,15 @@ public class PagoController extends MenuController implements Initializable {
                         UpdateTable();
                     }
                 } catch (Exception e) {
-                    Alert alert2 = new Alert(Alert.AlertType.ERROR);
-                    alert2.setTitle("Error");
-                    alert2.setHeaderText(null);
-                    alert2.setContentText("Hubo un error al eliminar,  por favor inténtelo de nuevo." +
-                            "\nEste campo solo permite eliminar por ID.");
+                    try {
+                        Log myLog;
+                        String nombreArchivo = "src\\Log\\PAGO_"+fecha+".txt";
+                        myLog = new Log(nombreArchivo);
+                        myLog.logger.setLevel(Level.SEVERE);
+                        myLog.logger.severe(e.getMessage() + " : " + e.getCause());
+                    } catch (IOException ex) {
+                        Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             }
         });
@@ -252,7 +282,6 @@ public class PagoController extends MenuController implements Initializable {
     private void clearFields() {
         txtCantidadPagada.clear();
         //txtProcentajeP.clear();
-        txtTotal.clear();
         txtNumTarje.clear();
         txtCodST.clear();
         txtNPT.clear();
@@ -323,8 +352,15 @@ public class PagoController extends MenuController implements Initializable {
             compra();
 
         } catch (Exception e) {
-            Alert alert =new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Error");
+            try {
+                Log myLog;
+                String nombreArchivo = "src\\Log\\PAGO_"+fecha+".txt";
+                myLog = new Log(nombreArchivo);
+                myLog.logger.setLevel(Level.SEVERE);
+                myLog.logger.severe(e.getMessage() + " : " + e.getCause());
+            } catch (IOException ex) {
+                Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
         }
 

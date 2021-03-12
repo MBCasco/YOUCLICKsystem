@@ -205,13 +205,14 @@
             </Label>
             <TableView fx:id="table_empleados" layoutX="11.0" layoutY="246.0" onMouseClicked="#getSelected" prefHeight="311.0" prefWidth="642.0" style="-fx-background-color: eed09d; -fx-border-color: a18262; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-width: 2;">
                <columns>
-                  <TableColumn fx:id="col_id" prefWidth="67.0" text="ID" />
-                  <TableColumn fx:id="col_nombre" prefWidth="105.0" text="Nombre" />
-                  <TableColumn fx:id="col_direccion" prefWidth="100.0" text="Dirección" />
+                  <TableColumn fx:id="col_id" prefWidth="49.0" text="ID" />
+                  <TableColumn fx:id="col_nombre" prefWidth="111.0" text="Nombre" />
+                  <TableColumn fx:id="col_direccion" prefWidth="90.0" text="Dirección" />
                   <TableColumn fx:id="col_telefono" prefWidth="98.0" text="Teléfono" />
-                  <TableColumn fx:id="col_correo" prefWidth="112.0" text="Correo electrónico" />
-                  <TableColumn fx:id="col_cargo" prefWidth="75.0" text="Cargo" />
-                  <TableColumn fx:id="col_sexo" prefWidth="82.0" text="Género" />
+                  <TableColumn fx:id="col_correo" prefWidth="123.0" text="Correo electrónico" />
+                  <TableColumn fx:id="col_cargo" prefWidth="61.0" text="Cargo" />
+                  <TableColumn fx:id="col_sexo" prefWidth="56.0" text="Género" />
+                  <TableColumn fx:id="col_inhabilitar" prefWidth="49.0" text="Inhabilitar" />
                </columns>
             </TableView>
             <ImageView fitHeight="32.0" fitWidth="36.0" layoutX="80.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">

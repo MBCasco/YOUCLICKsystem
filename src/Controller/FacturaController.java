@@ -22,11 +22,11 @@ import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -173,6 +173,9 @@ public class FacturaController extends MenuController implements Initializable {
     ObservableList<factura> factura2;
 
     int ID;
+    final Calendar calendar = Calendar.getInstance();
+    final java.util.Date  date = calendar.getTime();
+    String fecha = new SimpleDateFormat("yyyyMMdd_HH.mm.ss").format(date);
 
 
     @Override
@@ -287,12 +290,17 @@ public class FacturaController extends MenuController implements Initializable {
                     clearmini();
 
                 }catch(Exception e){
-                    Alert alert =new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Hubo un error al actualizar, revise que todos los campos estén llenos correctamente");
-                    alert.showAndWait();
-                }}
+                    try {
+                        Log myLog;
+                        String nombreArchivo = "src\\Log\\FACTURAS_"+fecha+".txt";
+                        myLog = new Log(nombreArchivo);
+                        myLog.logger.setLevel(Level.SEVERE);
+                        myLog.logger.severe(e.getMessage() + " : " + e.getCause());
+                    } catch (IOException ex) {
+                        Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
         }
 
     }
@@ -411,8 +419,15 @@ public class FacturaController extends MenuController implements Initializable {
 
 
                 } catch(Exception e){
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error");
+                    try {
+                        Log myLog;
+                        String nombreArchivo = "src\\Log\\FACTURAS_"+fecha+".txt";
+                        myLog = new Log(nombreArchivo);
+                        myLog.logger.setLevel(Level.SEVERE);
+                        myLog.logger.severe(e.getMessage() + " : " + e.getCause());
+                    } catch (IOException ex) {
+                        Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
 
             } else{
@@ -449,8 +464,15 @@ public class FacturaController extends MenuController implements Initializable {
             pst.execute();
 
         } catch (Exception e) {
-            Alert alert =new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Error");
+            try {
+                Log myLog;
+                String nombreArchivo = "src\\Log\\FACTURAS_"+fecha+".txt";
+                myLog = new Log(nombreArchivo);
+                myLog.logger.setLevel(Level.SEVERE);
+                myLog.logger.severe(e.getMessage() + " : " + e.getCause());
+            } catch (IOException ex) {
+                Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
        String sql1 = "insert into factura select * from facturat where IDFactura = ?;";
@@ -459,8 +481,15 @@ public class FacturaController extends MenuController implements Initializable {
             pst.setInt(1,ID);
             pst.execute();
         } catch (Exception e) {
-            Alert alert =new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Error");
+            try {
+                Log myLog;
+                String nombreArchivo = "src\\Log\\FACTURAS_"+fecha+".txt";
+                myLog = new Log(nombreArchivo);
+                myLog.logger.setLevel(Level.SEVERE);
+                myLog.logger.severe(e.getMessage() + " : " + e.getCause());
+            } catch (IOException ex) {
+                Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
         }
 
@@ -471,8 +500,15 @@ public class FacturaController extends MenuController implements Initializable {
             pst.execute();
 
         } catch (Exception e) {
-            Alert alert =new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Error");
+            try {
+                Log myLog;
+                String nombreArchivo = "src\\Log\\FACTURAS_"+fecha+".txt";
+                myLog = new Log(nombreArchivo);
+                myLog.logger.setLevel(Level.SEVERE);
+                myLog.logger.severe(e.getMessage() + " : " + e.getCause());
+            } catch (IOException ex) {
+                Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
         String sql4 = "insert into detalledepagofactura select * from detalledepagofacturat where IDPago = ?;";
@@ -481,8 +517,15 @@ public class FacturaController extends MenuController implements Initializable {
             pst.setInt(1,ID);
             pst.execute();
         } catch (Exception e) {
-            Alert alert =new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Error");
+            try {
+                Log myLog;
+                String nombreArchivo = "src\\Log\\FACTURAS_"+fecha+".txt";
+                myLog = new Log(nombreArchivo);
+                myLog.logger.setLevel(Level.SEVERE);
+                myLog.logger.severe(e.getMessage() + " : " + e.getCause());
+            } catch (IOException ex) {
+                Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
         }
 
@@ -521,13 +564,21 @@ public class FacturaController extends MenuController implements Initializable {
             UpdateTableF();
 
         } catch (Exception e) {
-            Alert alert =new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Error");
+            try {
+                Log myLog;
+                String nombreArchivo = "src\\Log\\FACTURAS_"+fecha+".txt";
+                myLog = new Log(nombreArchivo);
+                myLog.logger.setLevel(Level.SEVERE);
+                myLog.logger.severe(e.getMessage() + " : " + e.getCause());
+            } catch (IOException ex) {
+                Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 
     public void Delete(){
         conn = connect.conDB();
+
         try {
             String sql = "DELETE from detallefacturat WHERE IDDetalleFactura = ?";
             PreparedStatement pst = conn.prepareStatement(sql);
@@ -537,6 +588,15 @@ public class FacturaController extends MenuController implements Initializable {
             clearmini();
 
         }catch (Exception e){
+            try {
+                Log myLog;
+                String nombreArchivo = "src\\Log\\FACTURAS_"+fecha+".txt";
+                myLog = new Log(nombreArchivo);
+                myLog.logger.setLevel(Level.SEVERE);
+                myLog.logger.severe(e.getMessage() + " : " + e.getCause());
+            } catch (IOException ex) {
+                Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
         UpdateTableF();
@@ -793,7 +853,15 @@ public class FacturaController extends MenuController implements Initializable {
                 btn_finalizarFactura.setDisable(false);
 
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, e);
+                try {
+                    Log myLog;
+                    String nombreArchivo = "src\\Log\\FACTURAS_"+fecha+".txt";
+                    myLog = new Log(nombreArchivo);
+                    myLog.logger.setLevel(Level.SEVERE);
+                    myLog.logger.severe(e.getMessage() + " : " + e.getCause());
+                } catch (IOException ex) {
+                    Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
 
@@ -1175,7 +1243,7 @@ public class FacturaController extends MenuController implements Initializable {
         txt_totalacumulado.setText(hola.get(0));
     }
 
-    public void FacturaImpresa() throws JRException, ClassNotFoundException, SQLException {
+    public void FacturaImpresa() {
 
         JasperReport reporte;
         try {

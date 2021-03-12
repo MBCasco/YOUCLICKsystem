@@ -1,5 +1,6 @@
 package Controller;
 
+import Models.clientes;
 import Models.empleados;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -14,15 +15,20 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import javax.swing.*;
+
 import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -43,6 +49,8 @@ public class EmpleadosController extends MenuController implements Initializable
     private TableColumn<empleados, String> col_cargo;
     @FXML
     private TableColumn<empleados, String> col_sexo;
+    @FXML
+    private TableColumn<clientes, Boolean> col_inhabilitar;
 
     @FXML
     private TextField txt_nombre;
@@ -73,8 +81,6 @@ public class EmpleadosController extends MenuController implements Initializable
     private Button btn_actualizar;
     @FXML
     private Button btn_eliminar;
-    @FXML
-    private Button btn_clear;
 
 
     ObservableList<empleados> listE;
@@ -87,6 +93,10 @@ public class EmpleadosController extends MenuController implements Initializable
     Connection conn = null;
     ResultSet rs = null;
     PreparedStatement pst = null;
+    final Calendar calendar = Calendar.getInstance();
+    final java.util.Date  date = calendar.getTime();
+    String fecha = new SimpleDateFormat("yyyyMMdd_HH.mm.ss").format(date);
+
 
     public void Add_Empleados() {
         conn = connect.conDB();
@@ -96,12 +106,17 @@ public class EmpleadosController extends MenuController implements Initializable
         int codC = 1;
 
 
-        if( validateFields() & limite() & validateName() & validateDireccion() & validateNumber()&  validateEmail() & validateSexo()  & validateInicio()  ) {
+        if( validateFields() & limite() & validateName() & validateDireccion() & validateNumber()&  validateEmail() & validateSexo() & validateCargo() & validateInicio()) {
+
+            if(existeTelefono() & existeCorreo()){
+                return;
+            }
+
             try {
                 pst = conn.prepareStatement(sql);
 
                 pst.setString(1, txt_nombre.getText());
-                pst.setString(2, txt_direccion.getText());  //
+                pst.setString(2, txt_direccion.getText());
                 pst.setString(3, txt_telefono.getText());
                 pst.setString(4, txt_correo.getText());
                 pst.setString(5, date_inicio.getValue().format(formatter));
@@ -138,14 +153,15 @@ public class EmpleadosController extends MenuController implements Initializable
                 search_empleado();
 
             } catch (Exception e) {
-                Alert alert =new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText(null);
-                alert.setContentText("Verifique la siguiente información: " +
-                        " \nRevise que su correo sea único" +
-                        " \nRevise que su teléfono sea único" +
-                        " \nQue todos los campos esten llenos correctamente");
-                alert.showAndWait();
+                try {
+                    Log myLog;
+                    String nombreArchivo = "src\\Log\\EMPLEADOS_"+fecha+".txt";
+                    myLog = new Log(nombreArchivo);
+                    myLog.logger.setLevel(Level.SEVERE);
+                    myLog.logger.severe(e.getMessage());
+                } catch (Exception ex) {
+                    Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
     }
@@ -191,11 +207,15 @@ public class EmpleadosController extends MenuController implements Initializable
                     }
 
                 }catch (Exception e){
-                    Alert alert2 = new Alert(Alert.AlertType.ERROR);
-                    alert2.setTitle("Error");
-                    alert2.setHeaderText(null);
-                    alert2.setContentText("Hubo un error al eliminar, " +
-                            "\nsolo puede eliminar por ID");
+                    try {
+                        Log myLog;
+                        String nombreArchivo = "src\\Log\\EMPLEADOS_"+fecha+".txt";
+                        myLog = new Log(nombreArchivo);
+                        myLog.logger.setLevel(Level.SEVERE);
+                        myLog.logger.severe(e.getMessage());
+                    } catch (Exception ex) {
+                        Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             }
         });
@@ -209,6 +229,7 @@ public class EmpleadosController extends MenuController implements Initializable
         col_correo.setCellValueFactory(new PropertyValueFactory<>("correoE"));
         col_cargo.setCellValueFactory(new PropertyValueFactory<>("cargoE"));
         col_sexo.setCellValueFactory(new PropertyValueFactory<>("sexoE"));
+        col_inhabilitar.setCellValueFactory(new PropertyValueFactory<>("inhabilitar"));
 
         listE = connect.getdataempleados();
         table_empleados.setItems(listE);
@@ -248,7 +269,12 @@ public class EmpleadosController extends MenuController implements Initializable
         int codS = 1;
         int codC = 1;
 
-        if ( validateName() &validateDireccion() & validateNumber() &  validateEmail()) {
+        if ( validateName() &validateDireccion() & validateNumber() &  validateEmail()& validateSexo() & validateCargo() & validateInicio() & validateFinal()) {
+
+            if(existeTelefono() & existeCorreo()){
+                return;
+            }
+
             try {
                 conn = connect.conDB();
                 String value1 = txt_id.getText();
@@ -292,7 +318,15 @@ public class EmpleadosController extends MenuController implements Initializable
                 search_empleado();
                 clearFields();
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, e);
+                try {
+                    Log myLog;
+                    String nombreArchivo = "src\\Log\\EMPLEADOS_"+fecha+".txt";
+                    myLog = new Log(nombreArchivo);
+                    myLog.logger.setLevel(Level.SEVERE);
+                    myLog.logger.severe(e.getMessage());
+                } catch (Exception ex) {
+                    Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
     }
@@ -441,22 +475,6 @@ public class EmpleadosController extends MenuController implements Initializable
         return true;
     }
 
-
-    private boolean validateSexo() {
-
-        if (Sexo.getValue().equals("")) {
-
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error en el género");
-            alert.setHeaderText(null);
-            alert.setContentText("Selecione género y cargo del empleado");
-            alert.showAndWait();
-            return false;
-        }
-        return true;
-    }
-
-
     private boolean validateInicio() {
 
         if (date_inicio.getEditor().getText().isEmpty()) {
@@ -471,6 +489,45 @@ public class EmpleadosController extends MenuController implements Initializable
         return true;
     }
 
+    private boolean validateFinal() {
+
+        if (date_final.getEditor().getText().isEmpty()) {
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Fecha final");
+            alert.setHeaderText(null);
+            alert.setContentText("Selecione una fecha final del cargo");
+            alert.showAndWait();
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validateSexo() {
+
+        if (Sexo.getSelectionModel().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error en el género");
+            alert.setHeaderText(null);
+            alert.setContentText("Selecione género del empleado");
+            alert.showAndWait();
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validateCargo() {
+
+        if (Cargo.getSelectionModel().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error en el cargo");
+            alert.setHeaderText(null);
+            alert.setContentText("Selecione cargo del empleado");
+            alert.showAndWait();
+            return false;
+        }
+        return true;
+    }
 
     private boolean limite(){
         if(txt_nombre.getText().length() >= 35){
@@ -506,10 +563,69 @@ public class EmpleadosController extends MenuController implements Initializable
         }
     }
 
+    private boolean existeTelefono() {
+        try {
+            Statement st = conn.createStatement();
+            String sql = "Select * from empleado where telefonoEmpleado = '" +txt_telefono.getText() + "'";
+            ResultSet rs = st.executeQuery(sql);
+            if (rs.next()) {
+                Alert alert =new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("El número de teléfono que ingresó ¡Ya existe!");
+                alert.setHeaderText(null);
+                alert.setContentText("El Teléfono: " + txt_telefono.getText() + " ya existe");
+                alert.show();
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            try {
+                Log myLog;
+                String nombreArchivo = "src\\Log\\EMPLEADOS_"+fecha+".txt";
+                myLog = new Log(nombreArchivo);
+                myLog.logger.setLevel(Level.SEVERE);
+                myLog.logger.severe(e.getMessage());
+            } catch (Exception ex) {
+                Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return false;
+    }
+
+    private boolean existeCorreo() {
+        try {
+            Statement st = conn.createStatement();
+            String sql = "Select * from empleado where correoEmpleado = '" +txt_correo.getText() + "'";
+            ResultSet rs = st.executeQuery(sql);
+            if (rs.next()) {
+                Alert alert =new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("El correo que ingresó ¡Ya existe!");
+                alert.setHeaderText(null);
+                alert.setContentText("El correo: " + txt_correo.getText() + " ya existe");
+                alert.show();
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            try {
+                Log myLog;
+                String nombreArchivo = "src\\Log\\EMPLEADOS_"+fecha+".txt";
+                myLog = new Log(nombreArchivo);
+                myLog.logger.setLevel(Level.SEVERE);
+                myLog.logger.severe(e.getMessage());
+            } catch (Exception ex) {
+                Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return false;
+    }
+
     public void CargoH (javafx.event.ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/Layout/pantallaCargoHistorico.fxml"));
         stage.setTitle("Cargo Histórico");
         stage.setScene(new Scene(root, 1360, 768));
         stage.show();
     }
+
 }
