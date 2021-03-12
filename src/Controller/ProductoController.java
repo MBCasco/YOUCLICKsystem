@@ -86,10 +86,9 @@ public class ProductoController extends MenuController implements Initializable 
 
 
     ObservableList<producto> listP;
-    ObservableList<marca> listaMarca = marca.getdatamarca();
+    ObservableList<marca> listaMarca = connect.getdatamarca();
     ObservableList<categoria> listcategoria = categoria.getdatacategoria();
     ObservableList<producto> dataListP;
-
 
     int index = -1;
     Connection conn = null;

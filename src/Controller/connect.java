@@ -1,5 +1,6 @@
 
 package Controller;
+import ComboBoxController.marca;
 import Models.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,6 +22,23 @@ public class connect {
             JOptionPane.showMessageDialog(null, e);
             return null;
         }
+    }
+
+    public static ObservableList<marca> getdatamarca(){
+        Connection conn = conDB();
+        ObservableList<marca> list = FXCollections.observableArrayList();
+        try{
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM marca");
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()){
+                list.add(new marca(Integer.parseInt(rs.getString("IDMarca")), rs.getString("nombreMarca")));
+            }
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null,e.getMessage());
+        }
+
+        return list;
     }
 
     public static ObservableList<clientes> getdataclientes(){
@@ -282,6 +300,7 @@ public class connect {
                 list.add(new detallecompra(rs.getInt("IDProducto"), rs.getString("empresaProveedor"), rs.getString("nombre"), rs.getInt("Cantidad"), rs.getInt("IDDetalleCompra")));
             }
         }catch(Exception e){
+            JOptionPane.showMessageDialog(null,e.getMessage());
         }
         return list;
     }

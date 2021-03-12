@@ -5,40 +5,10 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1360.0" style="-fx-background-color: #616161; -fx-border-color: c29b61; -fx-border-width: 3;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1360.0" style="-fx-background-color: #616161; -fx-border-color: c29b61; -fx-border-width: 3;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MarcaController">
    <children>
       <VBox layoutX="6.0" layoutY="23.0" prefHeight="720.0" prefWidth="195.0" spacing="5.0" AnchorPane.topAnchor="23.0">
          <children>
-            <ImageView fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Desktop/clientes.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Desktop/proveedor.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Desktop/empleados.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Desktop/Factura.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Desktop/Inventario.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="122.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Desktop/producto.png" />
-               </image>
-            </ImageView>
          </children></VBox>
       <Label alignment="CENTER" layoutX="188.0" layoutY="23.0" prefHeight="98.0" prefWidth="1027.0" style="-fx-background-color: ffdb58; -fx-background-radius: 10; -fx-border-color: c29b61; -fx-border-radius: 5; -fx-border-style: solid; -fx-border-width: 4;" text="MARCA">
          <font>
@@ -61,7 +31,7 @@
             </Label>
             <ImageView fitHeight="43.0" fitWidth="36.0" layoutX="491.0" layoutY="117.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@buscar.png" />
+                  <Image url="@../Imagenes/iconos/Iconos/buscar.png" />
                </image>
             </ImageView>
             <Button fx:id="btn_eliminar" layoutX="886.0" layoutY="191.0" mnemonicParsing="false" onAction="#Delete" prefHeight="32.0" prefWidth="83.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="Eliminar" textFill="#eed09d">
@@ -87,12 +57,12 @@
             </TableView>
             <ImageView fitHeight="32.0" fitWidth="36.0" layoutX="48.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@formulario-de-registro.png" />
+                  <Image url="@../Imagenes/iconos/Iconos/formulario-de-registro.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="32.0" fitWidth="36.0" layoutX="896.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@formulario-de-registro.png" />
+                  <Image url="@../Imagenes/iconos/Iconos/formulario-de-registro.png" />
                </image>
             </ImageView>
             <TextField fx:id="txt_buscar" layoutX="537.0" layoutY="122.0" prefHeight="27.0" prefWidth="327.0" promptText="Nombre o ID" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
@@ -109,10 +79,10 @@
             <TextField fx:id="txt_nombre" layoutX="38.0" layoutY="196.0" prefHeight="27.0" prefWidth="290.0" style="-fx-background-color: beige; -fx-border-color: ffc107;" />
             <ImageView fitHeight="43.0" fitWidth="36.0" layoutX="492.0" layoutY="189.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@buscar.png" />
+                  <Image url="@../Imagenes/iconos/Iconos/eliminar2.png" />
                </image>
             </ImageView>
-            <Button fx:id="btn_agregar" layoutX="374.0" layoutY="117.0" mnemonicParsing="false" onAction="#Add_Marca" prefHeight="32.0" prefWidth="83.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="Agregar" textFill="#eed09d">
+            <Button fx:id="btn_agregar" layoutX="374.0" layoutY="117.0" mnemonicParsing="false" onAction="#agregar" prefHeight="32.0" prefWidth="83.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="Agregar" textFill="#eed09d">
                <font>
                   <Font name="Dubai Bold" size="12.0" />
                </font>

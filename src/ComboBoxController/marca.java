@@ -4,17 +4,11 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
-
-import java.sql.*;
-import static Controller.connect.conDB;
 
 public class marca {
 
-    private IntegerProperty IDMarca;
-    private StringProperty nombreMarca;
+    public IntegerProperty IDMarca;
+    public StringProperty nombreMarca;
 
     public marca(Integer IDMarca, String nombreMarca){
         this.IDMarca = new SimpleIntegerProperty(IDMarca);
@@ -45,26 +39,9 @@ public class marca {
         this.nombreMarca.set(nombreMarca);
     }
 
-    public static ObservableList<marca> getdatamarca(){
-        Connection conn = conDB();
-        ObservableList<marca> list = FXCollections.observableArrayList();
-        try{
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM marca");
-            ResultSet rs = ps.executeQuery();
-
-            while(rs.next()){
-                list.add(new marca(Integer.parseInt(rs.getString("IDMarca")), rs.getString("nombreMarca")));
-            }
-        }catch(Exception e){
-        }
-
-        return list;
-    }
-
     @Override
     public String toString(){
         return nombreMarca.get();
     }
-
 
 }
