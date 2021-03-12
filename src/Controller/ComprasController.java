@@ -407,7 +407,7 @@ public class ComprasController  extends MenuController implements Initializable 
                         Alert alert1 = new Alert(Alert.AlertType.CONFIRMATION);
                         alert1.setTitle("Confirmación");
                         alert1.setHeaderText(null);
-                        alert1.setContentText("Se elimino la compra con éxito");
+                        alert1.setContentText("Se eliminò la compra con éxito");
                         alert1.showAndWait();
                         UpdateTableC();
                         updatecampos();
@@ -537,10 +537,10 @@ public class ComprasController  extends MenuController implements Initializable 
             Alert alert =new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Validar Cantidad");
             alert.setHeaderText(null);
-            alert.setContentText("Verifique la siguiente informacion: " +
-                    " \nEste campo solo acepta numeros" +
-                    " \nQue el numero que ingreso sea entero" +
-                    " \nY el numero que ingreso contenga maximo 8 digitos");
+            alert.setContentText("Verifique la siguiente informaciòn: " +
+                    " \nEste campo solo acepta nùmeros" +
+                    " \nQue el nùmero que ingreso sea entero" +
+                    " \nY el nùmero que ingreso contenga màximo 8 dìgitos");
             alert.showAndWait();
             return false;
         }

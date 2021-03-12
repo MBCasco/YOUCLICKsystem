@@ -191,7 +191,7 @@ public class ClientesController extends MenuController implements Initializable 
                         Alert alert1 =new Alert(Alert.AlertType.ERROR);
                         alert1.setTitle("Eliminado");
                         alert1.setHeaderText(null);
-                        alert1.setContentText("Se elimino cliente con éxito");
+                        alert1.setContentText("Se eliminò cliente con éxito");
                         alert1.showAndWait();
                         UpdateTable();
                         clearFields();
@@ -382,9 +382,9 @@ public class ClientesController extends MenuController implements Initializable 
             alert.setTitle("Validar Número");
             alert.setHeaderText(null);
             alert.setContentText("Verifique la siguiente información: " +
-                    " \nQue el telefono comience con: 2,3,7,8 o 9 " +
-                    " \nQue el telefono contenga maximo 8 digitos " +
-                    " \nEste campo solo acepta numeros");
+                    " \nQue el telèfono comience con: 2,3,7,8 o 9 " +
+                    " \nQue el telèfono contenga maximo 8 digitos " +
+                    " \nEste campo solo acepta nùmeros");
             alert.showAndWait();
             return false;
         }
@@ -401,7 +401,7 @@ public class ClientesController extends MenuController implements Initializable 
             alert.setTitle("Validar dirección");
             alert.setHeaderText(null);
             alert.setContentText("Verifique la siguiente información: " +
-                    " \nEste campo solo letras y numeros");
+                    " \nEste campo solo letras y nùmeros");
             alert.showAndWait();
 
             return false;
@@ -444,19 +444,19 @@ public class ClientesController extends MenuController implements Initializable 
     private boolean limite(){
         if(txt_nombre.getText().length() >= 35){
             Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Supera Limite Permitido");
+            alert.setTitle("Supera Lìmite Permitido");
             alert.setHeaderText("Error");
-            alert.setContentText("EL nombre supero el Limite de caracteres." +
-                    " \n El limite de caracteres es de 35");
+            alert.setContentText("EL nombre superò el Lìmite de caracteres." +
+                    " \n El lìmite de caracteres es de 35");
             alert.showAndWait();
             return false;
         }
         if(txt_direccion.getText().length() >= 50){
             Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Supera Limite Permitido");
+            alert.setTitle("Supera Lìmite Permitido");
             alert.setHeaderText("Error");
-            alert.setContentText("Supero el Limite de caracteres." +
-                    " \n El limite de caracteres es de 50");
+            alert.setContentText("Superò el Lìmite de caracteres." +
+                    " \n El lìmite de caracteres es de 50");
             alert.showAndWait();
             return false;
         }
@@ -469,9 +469,9 @@ public class ClientesController extends MenuController implements Initializable 
 
             Toolkit.getDefaultToolkit().beep();
             Alert alert =new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Alcanzó el limite");
+            alert.setTitle("Alcanzó el lìmite");
             alert.setHeaderText(null);
-            alert.setContentText("Alcanzó el limite de números permitidos");
+            alert.setContentText("Alcanzó el lìmite de números permitidos");
             alert.showAndWait();
         }
 

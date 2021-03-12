@@ -106,11 +106,13 @@ public class EmpleadosController extends MenuController implements Initializable
         int codC = 1;
 
 
-        if( validateFields() & limite() & validateName() & validateDireccion() & validateNumber()&  validateEmail() & validateSexo() & validateCargo() & validateInicio()) {
+        if( validateFields() & limite() & validateName() & validateDireccion() & validateNumber()&  validateEmail() & validateSexo() & validateCargo() & validateInicio() ) { //
 
-            if(existeTelefono() & existeCorreo()){
+           if(existeTelefono() & existeCorreo()){
                 return;
             }
+
+
 
             try {
                 pst = conn.prepareStatement(sql);
@@ -269,11 +271,12 @@ public class EmpleadosController extends MenuController implements Initializable
         int codS = 1;
         int codC = 1;
 
-        if ( validateName() &validateDireccion() & validateNumber() &  validateEmail()& validateSexo() & validateCargo() & validateInicio() & validateFinal()) {
+        if ( validateName() &validateDireccion() & validateNumber() &  validateEmail()& validateSexo() & validateCargo() & validateInicio() & validateFinal() ) { //
 
-            if(existeTelefono() & existeCorreo()){
+           if(existeTelefono() & existeCorreo()){
                 return;
             }
+
 
             try {
                 conn = connect.conDB();
@@ -503,6 +506,7 @@ public class EmpleadosController extends MenuController implements Initializable
         return true;
     }
 
+
     private boolean validateSexo() {
 
         if (Sexo.getSelectionModel().isEmpty()) {
@@ -620,6 +624,7 @@ public class EmpleadosController extends MenuController implements Initializable
         }
         return false;
     }
+
 
     public void CargoH (javafx.event.ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/Layout/pantallaCargoHistorico.fxml"));
