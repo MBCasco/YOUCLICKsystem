@@ -64,13 +64,7 @@ public class empleados {
         this.correoE = correoE;
     }
 
-    public CheckBox getInhabilitar() {
-        return inhabilitar;
-    }
 
-    public void setInhabilitar(CheckBox inhabilitar) {
-        this.inhabilitar = inhabilitar;
-    }
 
     int idEmpleado;
     int telefonoE;
@@ -79,7 +73,6 @@ public class empleados {
     SimpleStringProperty nombreE;
     String direccionE;
     String correoE;
-    private CheckBox inhabilitar;
 
 
     public empleados( int idEmpleado, String nombreE, String direccionE , int telefonoE, String correoE ,String cargoE, String sexoE ) {
@@ -90,7 +83,7 @@ public class empleados {
         this.correoE = correoE;
         this.sexoE = sexoE;
         this.telefonoE = telefonoE;
-        this.inhabilitar = new CheckBox();
+
     }
 
     @Override

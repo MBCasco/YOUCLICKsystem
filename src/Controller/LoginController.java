@@ -2,28 +2,28 @@ package Controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Node;
+
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
-import javafx.stage.Stage;
+
 import javafx.scene.paint.Color;
 import java.io.IOException;
-import java.net.URL;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.ResourceBundle;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javafx.scene.input.MouseEvent;
 
-public class LoginController<Private> implements GlobalConstans {
+public class LoginController implements GlobalConstans {
 
     @FXML
     private Label lbl_close;
@@ -42,10 +42,10 @@ public class LoginController<Private> implements GlobalConstans {
 
     final Calendar calendar = Calendar.getInstance();
     final java.util.Date  date = calendar.getTime();
-    String fecha = new SimpleDateFormat("yyyyMMdd_HH.mm.ss").format(date);
+    String fecha = new SimpleDateFormat("yyyyMMdd-hh.mm.ss").format(date);
 
 
-    public void handleButtonAction(MouseEvent event){
+    public void handleButtonAction(MouseEvent event) throws SQLException {
         if(event.getSource() == lbl_close){
             System.exit(0);
         }
@@ -87,11 +87,12 @@ public class LoginController<Private> implements GlobalConstans {
     public LoginController(){
         con = connect.conDB();
     }
-    Connection con = null;
+
+    Connection con;
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
 
-    private String LogIn() {
+    private String LogIn()  throws SQLException  {
         String usuario = usuarioTextField.getText();
         String contraseña = contraseñaField.getText();
 
@@ -121,15 +122,15 @@ public class LoginController<Private> implements GlobalConstans {
                 return "Success";
             }
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             try {
                 Log myLog;
                 String nombreArchivo = "src\\Log\\LOGIN_"+fecha+".txt";
                 myLog = new Log(nombreArchivo);
                 myLog.logger.setLevel(Level.SEVERE);
-                myLog.logger.severe(e.getMessage() + " : " + e.getCause());
+                myLog.logger.severe(e.getMessage() + " Causado por: " + e.getCause());
             } catch (IOException ex) {
-                Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ClientesController.class.getName()).log(Level.SEVERE, null, ex);
             }
             return "Exception";
         }

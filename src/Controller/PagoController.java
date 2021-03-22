@@ -131,99 +131,94 @@ public class PagoController extends MenuController implements Initializable {
     }
 
     public void add_pago() {
-        conn = connect.conDB();
-        if (CBXTP.getValue().getIDTipoPago() == 2) {
-            if (validateFieldsPT()  & validateCantidad() & validateTotal() & validateCodTarjeta() & validateNumeroTarjeta() & validateName()) {
-                try {
-                    pst = conn.prepareStatement("insert into tarjeta (CODSEGTARJETA, numeroDeTarjeta, nombrePropietarioTarjeta, fechaExpiracion) values (?,?,?,?)");
-                    pst.setString(1, txtCodST.getText());
-                    pst.setString(2, txtNumTarje.getText());
-                    pst.setString(3, txtNPT.getText());
-                    //pst.setString(4, DataFT.getValue().format(formatter));
-                    pst.setString(4, txtFecha.getText());
-                    pst.execute();
-
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
-                }
-                try {
-                    pst = conn.prepareStatement("insert into detalledepagocomprat (IDPago,cantidadPagada, porcentajePagado, IDTipoPago, CODSEGTARJETA) values (?,?,?,?,?)");
-                    pst.setString(1, TxtIDCompra.toString());
-                    pst.setString(2, txtCantidadPagada.getText());
-                    pst.setDouble(3, 0.0);
-                    pst.setString(4, String.valueOf(CBXTP.getSelectionModel().getSelectedItem().getIDTipoPago()));
-                    pst.setString(5, txtCodST.getText());
-                    pst.execute();
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
-                }
-                try {
-                    pst = conn.prepareStatement("insert into pagocomprat (IDCompra,totalPago) values(?,?)");
-                    pst.setString(1, TxtIDCompra.toString());
-                    pst.setString(2, txtTotal.getText());
-                    pst.execute();
-
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Informacion");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Se agregó exitosamente");
-                    alert.showAndWait();
-                    UpdateTable();
-
-                } catch (Exception e) {
+        try {
+            conn = connect.conDB();
+            if (CBXTP.getValue().getIDTipoPago() == 2) {
+                if (validateFieldsPT()  & validateCantidad() & validateTotal() & validateCodTarjeta() & validateNumeroTarjeta() & validateName()) {
                     try {
-                        Log myLog;
-                        String nombreArchivo = "src\\Log\\PAGO_"+fecha+".txt";
-                        myLog = new Log(nombreArchivo);
-                        myLog.logger.setLevel(Level.SEVERE);
-                        myLog.logger.severe(e.getMessage() + " : " + e.getCause());
-                    } catch (IOException ex) {
-                        Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                        pst = conn.prepareStatement("insert into tarjeta (CODSEGTARJETA, numeroDeTarjeta, nombrePropietarioTarjeta, fechaExpiracion) values (?,?,?,?)");
+                        pst.setString(1, txtCodST.getText());
+                        pst.setString(2, txtNumTarje.getText());
+                        pst.setString(3, txtNPT.getText());
+                        //pst.setString(4, DataFT.getValue().format(formatter));
+                        pst.setString(4, txtFecha.getText());
+                        pst.execute();
+
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+                    try {
+                        pst = conn.prepareStatement("insert into detalledepagocomprat (IDPago,cantidadPagada, porcentajePagado, IDTipoPago, CODSEGTARJETA) values (?,?,?,?,?)");
+                        pst.setString(1, TxtIDCompra.toString());
+                        pst.setString(2, txtCantidadPagada.getText());
+                        pst.setDouble(3, 0.0);
+                        pst.setString(4, String.valueOf(CBXTP.getSelectionModel().getSelectedItem().getIDTipoPago()));
+                        pst.setString(5, txtCodST.getText());
+                        pst.execute();
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+                    try {
+                        pst = conn.prepareStatement("insert into pagocomprat (IDCompra,totalPago) values(?,?)");
+                        pst.setString(1, TxtIDCompra.toString());
+                        pst.setString(2, txtTotal.getText());
+                        pst.execute();
+
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Informacion");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Se agregó exitosamente");
+                        alert.showAndWait();
+                        UpdateTable();
+
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(null, e);
                     }
                 }
             }
-        }
 
-        if (CBXTP.getValue().getIDTipoPago() == 1) {
-            if (validateFieldsPE() /*& limite()*/ & validateCantidad()  & validateTotal()) {
-                try {
-                    pst = conn.prepareStatement("insert into detalledepagocomprat (IDPago,cantidadPagada, porcentajePagado, IDTipoPago) values (?,?,?,?)");
-                    pst.setString(1, TxtIDCompra.toString());
-                    pst.setString(2, txtCantidadPagada.getText());
-                    pst.setDouble(3, 0.0);
-                    pst.setString(4, String.valueOf(CBXTP.getSelectionModel().getSelectedItem().getIDTipoPago()));
-                    pst.execute();
-
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
-                }
-                try {
-                    pst = conn.prepareStatement("insert into pagocomprat (IDCompra,totalPago) values(?,?)");
-                    pst.setString(1, TxtIDCompra.toString());
-                    pst.setString(2, txtTotal.getText());
-                    pst.execute();
-
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setTitle("Confirmación");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Se agregó el pago exitosamente");
-                    alert.showAndWait();
-                    UpdateTable();
-
-                } catch (Exception e) {
+            if (CBXTP.getValue().getIDTipoPago() == 1) {
+                if (validateFieldsPE() /*& limite()*/ & validateCantidad()  & validateTotal()) {
                     try {
-                        Log myLog;
-                        String nombreArchivo = "src\\Log\\PAGO_"+fecha+".txt";
-                        myLog = new Log(nombreArchivo);
-                        myLog.logger.setLevel(Level.SEVERE);
-                        myLog.logger.severe(e.getMessage() + " : " + e.getCause());
-                    } catch (IOException ex) {
-                        Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                        pst = conn.prepareStatement("insert into detalledepagocomprat (IDPago,cantidadPagada, porcentajePagado, IDTipoPago) values (?,?,?,?)");
+                        pst.setString(1, TxtIDCompra.toString());
+                        pst.setString(2, txtCantidadPagada.getText());
+                        pst.setDouble(3, 0.0);
+                        pst.setString(4, String.valueOf(CBXTP.getSelectionModel().getSelectedItem().getIDTipoPago()));
+                        pst.execute();
+
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
                     }
+                    try {
+                        pst = conn.prepareStatement("insert into pagocomprat (IDCompra,totalPago) values(?,?)");
+                        pst.setString(1, TxtIDCompra.toString());
+                        pst.setString(2, txtTotal.getText());
+                        pst.execute();
+
+                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                        alert.setTitle("Confirmación");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Se agregó el pago exitosamente");
+                        alert.showAndWait();
+                        UpdateTable();
+
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(null, e);
+                    }
+
                 }
+            }
 
-
-
+        } catch (Exception e) {
+            try {
+                Log myLog;
+                String nombreArchivo = "src\\Log\\PAGO_"+fecha+".txt";
+                myLog = new Log(nombreArchivo);
+                myLog.logger.setLevel(Level.SEVERE);
+                myLog.logger.severe(e.getMessage() + "Causado por: " + e.getCause());
+                } catch (IOException ex) {
+                Logger.getLogger(ClientesController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
@@ -242,40 +237,43 @@ public class PagoController extends MenuController implements Initializable {
     }
 
     public void deleteP(){
-        Toolkit.getDefaultToolkit().beep();
-        Alert alert =new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Información");
-        alert.setHeaderText(null);
-        alert.setContentText("Estás seguro ¿Qué quieres eliminar esta pago?");
-        alert.showAndWait().ifPresent(response -> {
-            if (response == ButtonType.OK) {
-                conn = connect.conDB();
-                try {
-                    String Ssql = "DELETE FROM detalledepagocomprat WHERE IDPago = ?";
-                    PreparedStatement prest = conn.prepareStatement(Ssql);
-                    prest.setString(1, id4Delete);
 
-                    if (prest.executeUpdate() > 0) {
-                        Alert alert1 = new Alert(Alert.AlertType.CONFIRMATION);
-                        alert1.setTitle("Confirmación");
-                        alert1.setHeaderText(null);
-                        alert1.setContentText("Se elimino el pago con éxito");
-                        alert1.showAndWait();
-                        UpdateTable();
-                    }
-                } catch (Exception e) {
+            Toolkit.getDefaultToolkit().beep();
+            Alert alert =new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Información");
+            alert.setHeaderText(null);
+            alert.setContentText("Estás seguro ¿Qué quieres eliminar esta pago?");
+            alert.showAndWait().ifPresent(response -> {
+                if (response == ButtonType.OK) {
+                    conn = connect.conDB();
                     try {
-                        Log myLog;
-                        String nombreArchivo = "src\\Log\\PAGO_"+fecha+".txt";
-                        myLog = new Log(nombreArchivo);
-                        myLog.logger.setLevel(Level.SEVERE);
-                        myLog.logger.severe(e.getMessage() + " : " + e.getCause());
-                    } catch (IOException ex) {
-                        Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                        String Ssql = "DELETE FROM detalledepagocomprat WHERE IDPago = ?";
+                        PreparedStatement prest = conn.prepareStatement(Ssql);
+                        prest.setString(1, id4Delete);
+
+                        if (prest.executeUpdate() > 0) {
+                            Alert alert1 = new Alert(Alert.AlertType.CONFIRMATION);
+                            alert1.setTitle("Confirmación");
+                            alert1.setHeaderText(null);
+                            alert1.setContentText("Se elimino el pago con éxito");
+                            alert1.showAndWait();
+                            UpdateTable();
+                        }
+                    } catch (Exception e) {
+                        try {
+                            Log myLog;
+                            String nombreArchivo = "src\\Log\\PAGO_"+fecha+".txt";
+                            myLog = new Log(nombreArchivo);
+                            myLog.logger.setLevel(Level.SEVERE);
+                            myLog.logger.severe(e.getMessage() + "Causado por: " + e.getCause());
+                        } catch (IOException ex) {
+                            Logger.getLogger(ClientesController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }
                 }
-            }
-        });
+            });
+
+
     }
 
     @FXML
@@ -352,16 +350,7 @@ public class PagoController extends MenuController implements Initializable {
             compra();
 
         } catch (Exception e) {
-            try {
-                Log myLog;
-                String nombreArchivo = "src\\Log\\PAGO_"+fecha+".txt";
-                myLog = new Log(nombreArchivo);
-                myLog.logger.setLevel(Level.SEVERE);
-                myLog.logger.severe(e.getMessage() + " : " + e.getCause());
-            } catch (IOException ex) {
-                Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
+            JOptionPane.showMessageDialog(null, e);
         }
 
     }

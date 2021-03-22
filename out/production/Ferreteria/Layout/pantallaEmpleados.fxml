@@ -209,10 +209,9 @@
                   <TableColumn fx:id="col_nombre" prefWidth="111.0" text="Nombre" />
                   <TableColumn fx:id="col_direccion" prefWidth="90.0" text="Dirección" />
                   <TableColumn fx:id="col_telefono" prefWidth="98.0" text="Teléfono" />
-                  <TableColumn fx:id="col_correo" prefWidth="123.0" text="Correo electrónico" />
-                  <TableColumn fx:id="col_cargo" prefWidth="61.0" text="Cargo" />
-                  <TableColumn fx:id="col_sexo" prefWidth="56.0" text="Género" />
-                  <TableColumn fx:id="col_inhabilitar" prefWidth="49.0" text="Inhabilitar" />
+                  <TableColumn fx:id="col_correo" prefWidth="132.0" text="Correo electrónico" />
+                  <TableColumn fx:id="col_cargo" prefWidth="75.0" text="Cargo" />
+                  <TableColumn fx:id="col_sexo" prefWidth="83.0" text="Género" />
                </columns>
             </TableView>
             <ImageView fitHeight="32.0" fitWidth="36.0" layoutX="80.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">

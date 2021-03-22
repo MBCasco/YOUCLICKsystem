@@ -14,6 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
+import javax.swing.*;
 import javax.xml.crypto.Data;
 import java.awt.*;
 import java.io.IOException;
@@ -182,53 +183,59 @@ public class ComprasController  extends MenuController implements Initializable 
 
     public void AddProducto() throws SQLException {
         conn = connect.conDB();
-        if(exist == 0){
-            CrearCompra();
-            compras = connect.getdatacomprast();
-            int n = compras.size();
-            if (n < 1){
-                ID = 1;
-            }else {
-                ID = compras.get(n-1).getIDCompra();
+
+        if(validateProducto() & validateFields() & validateFecha() & validateFechaR() & validateCantidad() ) {
+
+
+            if (exist == 0) {
+                CrearCompra();
+                compras = connect.getdatacomprast();
+                int n = compras.size();
+                if (n < 1) {
+                    ID = 1;
+                } else {
+                    ID = compras.get(n - 1).getIDCompra();
+                }
+
+                exist = 1;
+                Integer value1 = ID;
+
+                pst = conn.prepareStatement("update comprat set IDDetalleCompra= '" + value1 + "  'where IDCompra='" + value1 + "' ");
+                pst.execute();
+                pst = conn.prepareStatement("update comprat set IDPago= '" + value1 + "  'where IDCompra='" + value1 + "' ");
+                pst.execute();
+
             }
 
-            exist = 1;
-            Integer value1 = ID;
 
-            pst = conn.prepareStatement("update comprat set IDDetalleCompra= '" + value1 + "  'where IDCompra='" + value1 + "' ");
-            pst.execute();
-            pst = conn.prepareStatement("update comprat set IDPago= '" + value1 + "  'where IDCompra='" + value1 + "' ");
-            pst.execute();
+            try {
+
+                String sql = "insert into detallecomprat (IDCompra, Cantidad, IDProducto, IDProveedor)values(?,?,?,?)";
+                pst = conn.prepareStatement(sql);
+                pst.setInt(1, ID);
+                pst.setString(2, txtcantidad.getText());
+                pst.setString(3, txtIdPro.getText());
+                pst.setString(4, String.valueOf(CBXProveedor.getSelectionModel().getSelectedItem().getIDProveedor()));
+                pst.execute();
+                UpdateTableP();
+                UpdateTableC();
+                updatecampos();
+                clearmini();
+
+            } catch (SQLException e) {
+                try {
+                    Log myLog;
+                    String nombreArchivo = "src\\Log\\COMPRAS_" + fecha + ".txt";
+                    myLog = new Log(nombreArchivo);
+                    myLog.logger.setLevel(Level.ALL);
+                    myLog.logger.info(e.getMessage() + " Causado por: " + e.getCause());
+                } catch (IOException ex) {
+                    Logger.getLogger(ClientesController.class.getName()).log(Level.ALL, null, ex);
+                }
+            }
 
         }
 
-
-
-        try {
-
-            String sql = "insert into detallecomprat (IDCompra, Cantidad, IDProducto, IDProveedor)values(?,?,?,?)";
-            pst = conn.prepareStatement(sql);
-            pst.setInt(1, ID);
-            pst.setString(2, txtcantidad.getText());
-            pst.setString(3, txtIdPro.getText());
-            pst.setString(4, String.valueOf(CBXProveedor.getSelectionModel().getSelectedItem().getIDProveedor()));
-            pst.execute();
-            UpdateTableP();
-            UpdateTableC();
-            updatecampos();
-            clearmini();
-
-        } catch (Exception e) {
-                try {
-                    Log myLog;
-                    String nombreArchivo = "src\\Log\\COMPRAS_"+fecha+".txt";
-                    myLog = new Log(nombreArchivo);
-                    myLog.logger.setLevel(Level.SEVERE);
-                    myLog.logger.severe(e.getMessage());
-                } catch (Exception ex) {
-                    Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
     }
 
     public void trasferir() throws SQLException {
@@ -244,10 +251,10 @@ public class ComprasController  extends MenuController implements Initializable 
                 Log myLog;
                 String nombreArchivo = "src\\Log\\COMPRAS_"+fecha+".txt";
                 myLog = new Log(nombreArchivo);
-                myLog.logger.setLevel(Level.SEVERE);
-                myLog.logger.severe(e.getMessage());
-            } catch (Exception ex) {
-                Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                myLog.logger.setLevel(Level.ALL);
+                myLog.logger.info(e.getMessage() + " Causado por: " + e.getCause());
+            } catch (IOException ex) {
+                Logger.getLogger(ClientesController.class.getName()).log(Level.ALL, null, ex);
             }
         }
 
@@ -263,19 +270,21 @@ public class ComprasController  extends MenuController implements Initializable 
                 Log myLog;
                 String nombreArchivo = "src\\Log\\COMPRAS_"+fecha+".txt";
                 myLog = new Log(nombreArchivo);
-                myLog.logger.setLevel(Level.SEVERE);
-                myLog.logger.severe(e.getMessage());
-            } catch (Exception ex) {
-                Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                myLog.logger.setLevel(Level.ALL);
+                myLog.logger.info(e.getMessage() + " Causado por: " + e.getCause());
+            } catch (IOException ex) {
+                Logger.getLogger(ClientesController.class.getName()).log(Level.ALL, null, ex);
             }
 
         }
+
     }
     
     public void CrearCompra(){
         conn = connect.conDB();
         String sql = "INSERT INTO comprat (FechaPedido, FechaLlegada, IDProveedor, IDProducto, totalCompra, impuesto, subtotalCompra) VALUES (?,?,?,?,?,?,?)";
-        if (validateFields() & validateCantidad() & validateFecha() & validateFechaR()) {
+
+        if ( validateCantidad()) {
 
             try {
 
@@ -302,10 +311,10 @@ public class ComprasController  extends MenuController implements Initializable 
                     Log myLog;
                     String nombreArchivo = "src\\Log\\COMPRAS_"+fecha+".txt";
                     myLog = new Log(nombreArchivo);
-                    myLog.logger.setLevel(Level.SEVERE);
-                    myLog.logger.severe(e.getMessage());
+                    myLog.logger.setLevel(Level.ALL);
+                    myLog.logger.severe(e.getMessage() + " Causado por: " + e.getCause());
                 } catch (Exception ex) {
-                    Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ClientesController.class.getName()).log(Level.ALL, null, ex);
                 }
             }
         }
@@ -417,10 +426,10 @@ public class ComprasController  extends MenuController implements Initializable 
                         Log myLog;
                         String nombreArchivo = "src\\Log\\COMPRAS_"+fecha+".txt";
                         myLog = new Log(nombreArchivo);
-                        myLog.logger.setLevel(Level.SEVERE);
-                        myLog.logger.severe(e.getMessage());
+                        myLog.logger.setLevel(Level.ALL);
+                        myLog.logger.severe(e.getMessage() + " Causado por: " + e.getCause());
                     } catch (Exception ex) {
-                        Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(ClientesController.class.getName()).log(Level.ALL, null, ex);
                     }
                 }
             }
@@ -451,10 +460,10 @@ public class ComprasController  extends MenuController implements Initializable 
                 Log myLog;
                 String nombreArchivo = "src\\Log\\COMPRAS_"+fecha+".txt";
                 myLog = new Log(nombreArchivo);
-                myLog.logger.setLevel(Level.SEVERE);
-                myLog.logger.severe(e.getMessage());
+                myLog.logger.setLevel(Level.ALL);
+                myLog.logger.severe(e.getMessage() + " Causado por: " + e.getCause());
             } catch (Exception ex) {
-                Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ClientesController.class.getName()).log(Level.ALL, null, ex);
             }
         }
         //}
@@ -575,12 +584,26 @@ public class ComprasController  extends MenuController implements Initializable 
     }
 
     private boolean validateFields(){
-        if (txtcantidad.getText().isEmpty() | CBXProveedor.getSelectionModel().isEmpty()){
+        if (CBXProveedor.getSelectionModel().isEmpty()){
 
-            Alert alert =new Alert(Alert.AlertType.WARNING);
+            Alert alert =new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Espacios vacios!");
             alert.setHeaderText(null);
-            alert.setContentText("Espacios vacíos, por favor ingresar datos");
+            alert.setContentText("Debe selecionar un proveedor");
+            alert.showAndWait();
+
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validateProducto(){
+        if (txtcantidad.getText().isEmpty() | txtIdPro.getText().isEmpty() | txtPrecio.getText().isEmpty() ){
+
+            Alert alert =new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Espacios vacios!");
+            alert.setHeaderText(null);
+            alert.setContentText("Debe selecionar un producto");
             alert.showAndWait();
 
             return false;

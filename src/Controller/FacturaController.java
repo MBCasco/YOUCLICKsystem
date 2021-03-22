@@ -295,9 +295,9 @@ public class FacturaController extends MenuController implements Initializable {
                         String nombreArchivo = "src\\Log\\FACTURAS_"+fecha+".txt";
                         myLog = new Log(nombreArchivo);
                         myLog.logger.setLevel(Level.SEVERE);
-                        myLog.logger.severe(e.getMessage() + " : " + e.getCause());
+                        myLog.logger.severe( e.getMessage() + " Causado por: " + e.getCause());
                     } catch (IOException ex) {
-                        Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(ClientesController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
@@ -424,9 +424,9 @@ public class FacturaController extends MenuController implements Initializable {
                         String nombreArchivo = "src\\Log\\FACTURAS_"+fecha+".txt";
                         myLog = new Log(nombreArchivo);
                         myLog.logger.setLevel(Level.SEVERE);
-                        myLog.logger.severe(e.getMessage() + " : " + e.getCause());
+                        myLog.logger.severe( e.getMessage() + " Causado por: " + e.getCause());
                     } catch (IOException ex) {
-                        Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(ClientesController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
 
@@ -469,9 +469,9 @@ public class FacturaController extends MenuController implements Initializable {
                 String nombreArchivo = "src\\Log\\FACTURAS_"+fecha+".txt";
                 myLog = new Log(nombreArchivo);
                 myLog.logger.setLevel(Level.SEVERE);
-                myLog.logger.severe(e.getMessage() + " : " + e.getCause());
+                myLog.logger.severe( e.getMessage() + " Causado por: " + e.getCause());
             } catch (IOException ex) {
-                Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ClientesController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
@@ -486,9 +486,9 @@ public class FacturaController extends MenuController implements Initializable {
                 String nombreArchivo = "src\\Log\\FACTURAS_"+fecha+".txt";
                 myLog = new Log(nombreArchivo);
                 myLog.logger.setLevel(Level.SEVERE);
-                myLog.logger.severe(e.getMessage() + " : " + e.getCause());
+                myLog.logger.severe( e.getMessage() + " Causado por: " + e.getCause());
             } catch (IOException ex) {
-                Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ClientesController.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         }
@@ -505,9 +505,9 @@ public class FacturaController extends MenuController implements Initializable {
                 String nombreArchivo = "src\\Log\\FACTURAS_"+fecha+".txt";
                 myLog = new Log(nombreArchivo);
                 myLog.logger.setLevel(Level.SEVERE);
-                myLog.logger.severe(e.getMessage() + " : " + e.getCause());
+                myLog.logger.severe( e.getMessage() + " Causado por: " + e.getCause());
             } catch (IOException ex) {
-                Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ClientesController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
@@ -522,9 +522,9 @@ public class FacturaController extends MenuController implements Initializable {
                 String nombreArchivo = "src\\Log\\FACTURAS_"+fecha+".txt";
                 myLog = new Log(nombreArchivo);
                 myLog.logger.setLevel(Level.SEVERE);
-                myLog.logger.severe(e.getMessage() + " : " + e.getCause());
+                myLog.logger.severe( e.getMessage() + " Causado por: " + e.getCause());
             } catch (IOException ex) {
-                Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ClientesController.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         }
@@ -569,9 +569,9 @@ public class FacturaController extends MenuController implements Initializable {
                 String nombreArchivo = "src\\Log\\FACTURAS_"+fecha+".txt";
                 myLog = new Log(nombreArchivo);
                 myLog.logger.setLevel(Level.SEVERE);
-                myLog.logger.severe(e.getMessage() + " : " + e.getCause());
+                myLog.logger.severe( e.getMessage() + " Causado por: " + e.getCause());
             } catch (IOException ex) {
-                Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ClientesController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -593,9 +593,9 @@ public class FacturaController extends MenuController implements Initializable {
                 String nombreArchivo = "src\\Log\\FACTURAS_"+fecha+".txt";
                 myLog = new Log(nombreArchivo);
                 myLog.logger.setLevel(Level.SEVERE);
-                myLog.logger.severe(e.getMessage() + " : " + e.getCause());
+                myLog.logger.severe( e.getMessage() + " Causado por: " + e.getCause());
             } catch (IOException ex) {
-                Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ClientesController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
@@ -833,6 +833,7 @@ public class FacturaController extends MenuController implements Initializable {
     }
 
     public void add_pago() {
+        try {
         conn = connect.conDB();
 
         if(generado == 0 ){
@@ -858,9 +859,9 @@ public class FacturaController extends MenuController implements Initializable {
                     String nombreArchivo = "src\\Log\\FACTURAS_"+fecha+".txt";
                     myLog = new Log(nombreArchivo);
                     myLog.logger.setLevel(Level.SEVERE);
-                    myLog.logger.severe(e.getMessage() + " : " + e.getCause());
+                    myLog.logger.severe( e.getMessage() + " Causado por: " + e.getCause());
                 } catch (IOException ex) {
-                    Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ClientesController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
@@ -911,6 +912,18 @@ public class FacturaController extends MenuController implements Initializable {
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
                 }
+            }
+        }
+
+        } catch (Exception e) {
+            try {
+                Log myLog;
+                String nombreArchivo = "src\\Log\\FACTURAS_"+fecha+".txt";
+                myLog = new Log(nombreArchivo);
+                myLog.logger.setLevel(Level.SEVERE);
+                myLog.logger.severe( e.getMessage() + " Causado por: " + e.getCause());
+            } catch (IOException ex) {
+                Logger.getLogger(ClientesController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

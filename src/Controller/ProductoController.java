@@ -100,6 +100,8 @@ public class ProductoController extends MenuController implements Initializable 
 
 
     public void addProducto() throws SQLException {
+        try {
+
         conn = connect.conDB();
 
         if (validateFields() & validateName() & validateNumberStock() & validateDescripcion() & validateUbicacion() & validateNumberprecio() & limite() & validateMarca() & validateCategoria()) {
@@ -130,9 +132,9 @@ public class ProductoController extends MenuController implements Initializable 
                     String nombreArchivo = "src\\Log\\PRODUCTO_"+fecha+".txt";
                     myLog = new Log(nombreArchivo);
                     myLog.logger.setLevel(Level.SEVERE);
-                    myLog.logger.severe(e.getMessage() + " : " + e.getCause());
+                    myLog.logger.severe(e.getMessage() + "Causado por: " + e.getCause());
                 } catch (IOException ex) {
-                    Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ClientesController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             try {
@@ -151,10 +153,21 @@ public class ProductoController extends MenuController implements Initializable 
                     String nombreArchivo = "src\\Log\\PRODUCTO_"+fecha+".txt";
                     myLog = new Log(nombreArchivo);
                     myLog.logger.setLevel(Level.SEVERE);
-                    myLog.logger.severe(e.getMessage() + " : " + e.getCause());
+                    myLog.logger.severe(e.getMessage() + "Causado por: " + e.getCause());
                 } catch (IOException ex) {
-                    Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ClientesController.class.getName()).log(Level.SEVERE, null, ex);
                 }
+            }
+        }
+        } catch (Exception e) {
+            try {
+                Log myLog;
+                String nombreArchivo = "src\\Log\\PRODUCTO_"+fecha+".txt";
+                myLog = new Log(nombreArchivo);
+                myLog.logger.setLevel(Level.SEVERE);
+                myLog.logger.severe(e.getMessage() + "Causado por: " + e.getCause());
+            } catch (IOException ex) {
+                Logger.getLogger(ClientesController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -231,9 +244,9 @@ public class ProductoController extends MenuController implements Initializable 
                         String nombreArchivo = "src\\Log\\PRODUCTO_"+fecha+".txt";
                         myLog = new Log(nombreArchivo);
                         myLog.logger.setLevel(Level.SEVERE);
-                        myLog.logger.severe(e.getMessage() + " : " + e.getCause());
+                        myLog.logger.severe(e.getMessage() + "Causado por: " + e.getCause());
                     } catch (IOException ex) {
-                        Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(ClientesController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
@@ -241,12 +254,9 @@ public class ProductoController extends MenuController implements Initializable 
     }
 
     public void Edit(){
-
+        try{
         String value1 = txtID.getText();
         if (validateFields() & validateName() & validateNumberStock() & validateDescripcion() & validateUbicacion() & validateNumberprecio() & limite() & validateMarca() & validateCategoria()) {
-            if(existeNombre()){
-                return;
-            }
             try {
                 conn = connect.conDB();
 
@@ -270,10 +280,15 @@ public class ProductoController extends MenuController implements Initializable 
 
 
             } catch (Exception e) {
-                Alert alert2 = new Alert(Alert.AlertType.ERROR);
-                alert2.setTitle("Error");
-                alert2.setHeaderText(null);
-                alert2.setContentText("Hubo un error al actualizar, por favor vuelva a intentar.");
+                try {
+                    Log myLog;
+                    String nombreArchivo = "src\\Log\\PRODUCTO_"+fecha+".txt";
+                    myLog = new Log(nombreArchivo);
+                    myLog.logger.setLevel(Level.SEVERE);
+                    myLog.logger.severe(e.getMessage() + "Causado por: " + e.getCause());
+                } catch (IOException ex) {
+                    Logger.getLogger(ClientesController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
             try {
                 conn = connect.conDB();
@@ -293,12 +308,24 @@ public class ProductoController extends MenuController implements Initializable 
                     String nombreArchivo = "src\\Log\\PRODUCTO_"+fecha+".txt";
                     myLog = new Log(nombreArchivo);
                     myLog.logger.setLevel(Level.SEVERE);
-                    myLog.logger.severe(e.getMessage() + " : " + e.getCause());
+                    myLog.logger.severe(e.getMessage() + "Causado por: " + e.getCause());
                 } catch (IOException ex) {
-                    Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ClientesController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
+
+    } catch (Exception e) {
+        try {
+            Log myLog;
+            String nombreArchivo = "src\\Log\\PRODUCTO_"+fecha+".txt";
+            myLog = new Log(nombreArchivo);
+            myLog.logger.setLevel(Level.SEVERE);
+            myLog.logger.severe(e.getMessage() + "Causado por: " + e.getCause());
+        } catch (IOException ex) {
+            Logger.getLogger(ClientesController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     }
 

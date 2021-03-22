@@ -12,11 +12,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
+import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -39,9 +41,6 @@ public class ClientesController extends MenuController implements Initializable 
     private TableColumn<clientes, String> col_correo;
     @FXML
     private TableColumn<clientes, String> col_Sexo;
-    @FXML
-    private TableColumn<clientes, Boolean> col_inhabilitar;
-
 
     @FXML
     private TextField txt_nombre;
@@ -90,18 +89,17 @@ public class ClientesController extends MenuController implements Initializable 
 
     //Agregar Clientes
     public void Add_clientes() throws IOException {
-        conn = connect.conDB();
-        String sql = "insert into cliente (nombreCliente,dirreccionCliente,telefonoCLiente,correoCliente,IDSexo)values(?,?,?,?,?)";
 
-        int codS = 1;
+            conn = connect.conDB();
+            String sql = "insert into cliente (nombreCliente,dirreccionCliente,telefonoCLiente,correoCliente,IDSexo)values(?,?,?,?,?)";
 
+            int codS = 1;
 
+            if (validateName() & validateDireccion()  & validateNumber() & validateEmail() & validateFields() & limite()) {
 
-        if (validateName() & validateDireccion()  & validateNumber() & validateEmail() & validateFields() & limite()){
-
-            if(existeTelefono() & existeCorreo()){
-                return;
-            }
+                if (existeTelefono() & existeCorreo()) {
+                    return;
+                }
 
                 try {
                     pst = conn.prepareStatement(sql);
@@ -120,7 +118,6 @@ public class ClientesController extends MenuController implements Initializable 
                     pst.execute();
 
 
-
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                     alert.setTitle("Confirmación");
                     alert.setHeaderText(null);
@@ -136,13 +133,15 @@ public class ClientesController extends MenuController implements Initializable 
                         Log myLog;
                         String nombreArchivo = "src\\Log\\CLIENTES_"+fecha+".txt";
                         myLog = new Log(nombreArchivo);
-                        myLog.logger.setLevel(Level.SEVERE);
-                        myLog.logger.severe(e.getMessage() + " : " + e.getCause());
-                    } catch (IOException ex) {
-                        Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                        myLog.logger.setLevel(Level.ALL);
+                        myLog.logger.severe(e.getMessage() + " Causado por: " + e.getCause());
+                    } catch (Exception ex) {
+                        Logger.getLogger(ClientesController.class.getName()).log(Level.ALL, null, ex);
                     }
                 }
-        }
+
+            }
+
     }
 
     //Limpiar los campos
@@ -174,42 +173,44 @@ public class ClientesController extends MenuController implements Initializable 
 
     //Eliminar Cliente
     public void Delete(){
-        Toolkit.getDefaultToolkit().beep();
-        Alert alert =new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Información");
-        alert.setHeaderText(null);
-        alert.setContentText("Estás seguro ¿Qué quieres eliminar este cliente?");
-        alert.showAndWait().ifPresent(response -> {
-            if (response == ButtonType.OK) {
-                conn = connect.conDB();
-                try {
-                    String Ssql = "DELETE FROM cliente WHERE IDCliente = ?";
-                    PreparedStatement prest = conn.prepareStatement(Ssql);
-                    prest.setString(1, txt_eliminar.getText());
 
-                    if (prest.executeUpdate() > 0){
-                        Alert alert1 =new Alert(Alert.AlertType.ERROR);
-                        alert1.setTitle("Eliminado");
-                        alert1.setHeaderText(null);
-                        alert1.setContentText("Se eliminò cliente con éxito");
-                        alert1.showAndWait();
-                        UpdateTable();
-                        clearFields();
-                    }
-
-                }catch (Exception e){
+            Toolkit.getDefaultToolkit().beep();
+            Alert alert =new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Información");
+            alert.setHeaderText(null);
+            alert.setContentText("Estás seguro ¿Qué quieres eliminar este cliente?");
+            alert.showAndWait().ifPresent(response -> {
+                if (response == ButtonType.OK) {
+                    conn = connect.conDB();
                     try {
-                        Log myLog;
-                        String nombreArchivo = "src\\Log\\CLIENTES_"+fecha+".txt";
-                        myLog = new Log(nombreArchivo);
-                        myLog.logger.setLevel(Level.SEVERE);
-                        myLog.logger.severe(e.getMessage());
-                    } catch (Exception ex) {
-                        Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                        String Ssql = "DELETE FROM cliente WHERE IDCliente = ?";
+                        PreparedStatement prest = conn.prepareStatement(Ssql);
+                        prest.setString(1, txt_eliminar.getText());
+
+                        if (prest.executeUpdate() > 0){
+                            Alert alert1 =new Alert(Alert.AlertType.ERROR);
+                            alert1.setTitle("Eliminado");
+                            alert1.setHeaderText(null);
+                            alert1.setContentText("Se eliminò cliente con éxito");
+                            alert1.showAndWait();
+                            UpdateTable();
+                            clearFields();
+                        }
+
+                    }catch (Exception e){
+                        try {
+                            Log myLog;
+                            String nombreArchivo = "src\\Log\\CLIENTES_"+fecha+".txt";
+                            myLog = new Log(nombreArchivo);
+                            myLog.logger.setLevel(Level.ALL);
+                            myLog.logger.severe(e.getMessage() + " Causado por: " + e.getCause());
+                        } catch (Exception ex) {
+                            Logger.getLogger(ClientesController.class.getName()).log(Level.ALL, null, ex);
+                        }
                     }
                 }
-            }
-        });
+            });
+
     }
 
     //Actualizar la tabla
@@ -221,7 +222,6 @@ public class ClientesController extends MenuController implements Initializable 
         col_direccion.setCellValueFactory(new PropertyValueFactory<>("direccion"));
         col_correo.setCellValueFactory(new PropertyValueFactory<>("correo"));
         col_Sexo.setCellValueFactory(new PropertyValueFactory<>("sexo"));
-        col_inhabilitar.setCellValueFactory(new PropertyValueFactory<>("inhabilitar"));
 
         listM = connect.getdataclientes();
         table_clientes.setItems(listM);
@@ -239,57 +239,54 @@ public class ClientesController extends MenuController implements Initializable 
 
     //Editar Clientes
     public void Edit(){
-        int codS = 1;
-        if (validateFields() & limite() & validateName() & validateDireccion()  & validateNumber() & validateEmail()) {
+            int codS = 1;
+            if (validateFields() & limite() & validateName() & validateDireccion()  & validateNumber() & validateEmail()) {
 
-            if(existeTelefono() & existeCorreo()){
-                return;
-            }
 
-            try {
-                conn = connect.conDB();
-
-                String value1 = txt_id.getText();
-                String value2 = txt_nombre.getText();
-                String value3 = txt_direccion.getText();
-                String value4 = txt_telefono.getText();
-                String value5 = txt_correo.getText();
-
-                if (Sexo.getValue().equals("Femenino")) {
-                    codS = 1;
-                } else if (Sexo.getValue().equals("Masculino")) {
-                    codS = 2;
-                }
-                int value6 = codS;
-
-                String sql = ("update cliente set nombreCliente= '" + value2 + "', dirreccionCliente= '" +
-                        value3 + "', telefonoCliente= '" + value4 + "', correoCliente= '" + value5 + "', IDSexo= '" + value6 + " ' where IDCliente='" + value1 + "' ");
-
-                pst = conn.prepareStatement(sql);
-                pst.execute();
-
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Confirmación");
-                alert.setHeaderText(null);
-                alert.setContentText("Se actualizó el cliente exitosamente");
-                alert.showAndWait();
-
-                UpdateTable();
-                Search_cliente();
-                clearFields();
-
-            } catch (Exception e) {
                 try {
-                    Log myLog;
-                    String nombreArchivo = "src\\Log\\CLIENTES_"+fecha+".txt";
-                    myLog = new Log(nombreArchivo);
-                    myLog.logger.setLevel(Level.SEVERE);
-                    myLog.logger.severe(e.getMessage());
-                } catch (Exception ex) {
-                    Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                    conn = connect.conDB();
+
+                    String value1 = txt_id.getText();
+                    String value2 = txt_nombre.getText();
+                    String value3 = txt_direccion.getText();
+                    String value4 = txt_telefono.getText();
+                    String value5 = txt_correo.getText();
+
+                    if (Sexo.getValue().equals("Femenino")) {
+                        codS = 1;
+                    } else if (Sexo.getValue().equals("Masculino")) {
+                        codS = 2;
+                    }
+                    int value6 = codS;
+
+                    String sql = ("update cliente set nombreCliente= '" + value2 + "', dirreccionCliente= '" +
+                            value3 + "', telefonoCliente= '" + value4 + "', correoCliente= '" + value5 + "', IDSexo= '" + value6 + " ' where IDCliente='" + value1 + "' ");
+
+                    pst = conn.prepareStatement(sql);
+                    pst.execute();
+
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Confirmación");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Se actualizó el cliente exitosamente");
+                    alert.showAndWait();
+
+                    UpdateTable();
+                    Search_cliente();
+                    clearFields();
+
+                } catch (SQLException e) {
+                    try {
+                        Log myLog;
+                        String nombreArchivo = "src\\Log\\CLIENTES_"+fecha+".txt";
+                        myLog = new Log(nombreArchivo);
+                        myLog.logger.setLevel(Level.ALL);
+                        myLog.logger.severe(e.getMessage() + " Causado por: " + e.getCause());
+                    } catch (Exception ex) {
+                        Logger.getLogger(ClientesController.class.getName()).log(Level.ALL, null, ex);
+                    }
                 }
             }
-        }
     }
 
     //Buscar clientes
@@ -494,8 +491,16 @@ public class ClientesController extends MenuController implements Initializable 
                 return false;
             }
 
+            } catch (Exception e) {
+            try {
+                Log myLog;
+                String nombreArchivo = "src\\Log\\CLIENTES_"+fecha+".txt";
+                myLog = new Log(nombreArchivo);
+                myLog.logger.setLevel(Level.ALL);
+                myLog.logger.severe(e.getMessage() + " Causado por: " + e.getCause());
             } catch (Exception ex) {
-                Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ClientesController.class.getName()).log(Level.ALL, null, ex);
+            }
 
         }
         return false;
@@ -517,24 +522,18 @@ public class ClientesController extends MenuController implements Initializable 
                 return false;
             }
 
+            } catch (Exception e) {
+            try {
+                Log myLog;
+                String nombreArchivo = "src\\Log\\CLIENTES_"+fecha+".txt";
+                myLog = new Log(nombreArchivo);
+                myLog.logger.setLevel(Level.ALL);
+                myLog.logger.severe(e.getMessage() + " Causado por: " + e.getCause());
             } catch (Exception ex) {
-                Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ClientesController.class.getName()).log(Level.ALL, null, ex);
+            }
             }
         return false;
-    }
-
-    public void Desactivar() {
-
-        Toolkit.getDefaultToolkit().beep();
-        Alert alert =new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Información");
-        alert.setHeaderText(null);
-        alert.setContentText("Estás seguro ¿Qué quieres desactivar este cliente?");
-        alert.showAndWait().ifPresent(response -> {
-            if (response == ButtonType.OK) {
-                
-            }
-        });
     }
 
 }

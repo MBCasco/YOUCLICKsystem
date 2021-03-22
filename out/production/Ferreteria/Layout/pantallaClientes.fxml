@@ -165,12 +165,11 @@
             <TableView fx:id="table_clientes" fixedCellSize="0.0" layoutX="14.0" layoutY="243.0" onMouseClicked="#getSelected" prefHeight="326.0" prefWidth="603.0" style="-fx-background-color: eed09d; -fx-border-color: a18262; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-width: 2;">
                <columns>
                   <TableColumn fx:id="col_cliente" prefWidth="80.333251953125" text="ID" />
-                  <TableColumn fx:id="col_nombre" prefWidth="77.0" text="Nombre" />
-                  <TableColumn fx:id="col_direccion" prefWidth="85.0" text="Dirección" />
-                  <TableColumn fx:id="col_telefono" prefWidth="87.0" text="Teléfono" />
-                  <TableColumn fx:id="col_correo" prefWidth="129.0" text="Correo electrónico" />
-                  <TableColumn fx:id="col_Sexo" prefWidth="69.0" text="Género" />
-                  <TableColumn fx:id="col_inhabilitar" prefWidth="69.0" text="Inhabilitar" />
+                  <TableColumn fx:id="col_nombre" prefWidth="106.0" text="Nombre" />
+                  <TableColumn fx:id="col_direccion" prefWidth="81.0" text="Dirección" />
+                  <TableColumn fx:id="col_telefono" prefWidth="96.0" text="Teléfono" />
+                  <TableColumn fx:id="col_correo" prefWidth="131.0" text="Correo electrónico" />
+                  <TableColumn fx:id="col_Sexo" prefWidth="104.0" text="Género" />
                </columns>
             </TableView>
             <ImageView fitHeight="32.0" fitWidth="36.0" layoutX="90.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
@@ -183,11 +182,6 @@
                   <Image url="@../Imagenes/iconos/Iconos/formulario-de-registro.png" />
                </image>
             </ImageView>
-            <Button fx:id="btn_desactivar" layoutX="466.0" layoutY="186.0" mnemonicParsing="false" onAction="#Desactivar" prefHeight="24.0" prefWidth="83.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="Desactivar" textFill="#eed09d">
-               <font>
-                  <Font name="Dubai Bold" size="12.0" />
-               </font>
-            </Button>
          </children>
       </AnchorPane>
       <VBox layoutX="14.0" layoutY="24.0" prefHeight="720.0" prefWidth="195.0" spacing="5.0">

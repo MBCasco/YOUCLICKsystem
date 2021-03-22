@@ -12,13 +12,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+
 import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.ResourceBundle;
@@ -107,18 +105,19 @@ public class ProveedoresController extends MenuController implements Initializab
                 Search_proveedor();
                 clearFields();
 
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 try {
                     Log myLog;
                     String nombreArchivo = "src\\Log\\PROVEEDORES_"+fecha+".txt";
                     myLog = new Log(nombreArchivo);
                     myLog.logger.setLevel(Level.SEVERE);
-                    myLog.logger.severe(e.getMessage() + " : " + e.getCause());
+                    myLog.logger.severe( e.getMessage() + " Causado por: " + e.getCause());
                 } catch (IOException ex) {
-                    Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ClientesController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
+
     }
 
     @FXML
@@ -133,6 +132,7 @@ public class ProveedoresController extends MenuController implements Initializab
     }
 
     public void Delete(){
+
         Toolkit.getDefaultToolkit().beep();
         Alert alert =new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Información");
@@ -155,19 +155,20 @@ public class ProveedoresController extends MenuController implements Initializab
                         UpdateTable();
                         clearFields();
                     }
-                }catch (Exception e){
+                }catch (SQLException e){
                     try {
                         Log myLog;
                         String nombreArchivo = "src\\Log\\PROVEEDORES_"+fecha+".txt";
                         myLog = new Log(nombreArchivo);
                         myLog.logger.setLevel(Level.SEVERE);
-                        myLog.logger.severe(e.getMessage() + " : " + e.getCause());
+                        myLog.logger.severe( e.getMessage() + " Causado por: " + e.getCause());
                     } catch (IOException ex) {
-                        Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(ClientesController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
         });
+
     }
 
     public void UpdateTable(){
@@ -205,11 +206,8 @@ public class ProveedoresController extends MenuController implements Initializab
     }
 
     public void Edit(){
-        if (validateName() & validateEmail() & validateDireccion() & validateFields() & limite()) {
 
-            if( existeCorreo() & existeNombre()){
-                return;
-            }
+        if (validateName() & validateEmail() & validateDireccion() & validateFields() & limite()) {
 
             try {
                 conn = connect.conDB();
@@ -218,7 +216,7 @@ public class ProveedoresController extends MenuController implements Initializab
                 String value3 = txt_correo.getText();
                 String value4 = txt_direccion.getText();
 
-                String sql = "update PROVEEDORES set empresaProveedor= '" + value2 + "', correoProveedor= '" + value3 + "', direccionProveedor= '" + value4 + "' where IDProveedor='" + value1 + "' ";
+                String sql = "update PROVEEDORES set empresProveedor= '" + value2 + "', correoProveedor= '" + value3 + "', direccionProveedor= '" + value4 + "' where IDProveedor='" + value1 + "' ";
                 pst = conn.prepareStatement(sql);
                 pst.execute();
 
@@ -232,18 +230,19 @@ public class ProveedoresController extends MenuController implements Initializab
                 Search_proveedor();
                 clearFields();
 
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 try {
                     Log myLog;
                     String nombreArchivo = "src\\Log\\PROVEEDORES_"+fecha+".txt";
                     myLog = new Log(nombreArchivo);
                     myLog.logger.setLevel(Level.SEVERE);
-                    myLog.logger.severe(e.getMessage() + " : " + e.getCause());
+                    myLog.logger.severe( e.getMessage() + " Causado por: " + e.getCause());
                 } catch (IOException ex) {
-                    Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ClientesController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
+
     }
 
     @FXML
@@ -404,9 +403,17 @@ public class ProveedoresController extends MenuController implements Initializab
                 return false;
             }
 
+            } catch (Exception e) {
+            try {
+                Log myLog;
+                String nombreArchivo = "src\\Log\\PROVEEDORES_"+fecha+".txt";
+                myLog = new Log(nombreArchivo);
+                myLog.logger.setLevel(Level.SEVERE);
+                myLog.logger.severe(e.getMessage() + " Causado por: " + e.getCause());
             } catch (Exception ex) {
                 Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
         return false;
     }
 
@@ -426,9 +433,16 @@ public class ProveedoresController extends MenuController implements Initializab
                 return false;
             }
 
-        } catch (Exception ex) {
-            Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
-
+        } catch (Exception e) {
+            try {
+                Log myLog;
+                String nombreArchivo = "src\\Log\\PROVEEDORES_"+fecha+".txt";
+                myLog = new Log(nombreArchivo);
+                myLog.logger.setLevel(Level.SEVERE);
+                myLog.logger.severe(e.getMessage() + " Causado por: " + e.getCause());
+            } catch (Exception ex) {
+                Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return false;
     }

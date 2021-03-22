@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1360.0" style="-fx-background-color: #616161; -fx-border-color: c29b61; -fx-border-width: 3;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ReporteController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1360.0" style="-fx-background-color: #616161; -fx-border-color: c29b61; -fx-border-width: 3;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ReporteController">
    <children>
       <Label alignment="CENTER" layoutX="13.0" layoutY="22.0" prefHeight="113.0" prefWidth="1335.0" style="-fx-background-color: FFC107; -fx-border-color: C29B61; -fx-background-radius: 10; -fx-border-radius: 5; -fx-border-style: solid; -fx-border-width: 4;" text="REPORTE COMPRAS" textAlignment="CENTER">
          <font>
@@ -24,7 +24,7 @@
          <graphic>
             <ImageView fitHeight="54.0" fitWidth="49.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../Imagenes/iconos/Iconos/log-out.png" />
+                  <Image url="@../Imagenes/iconos/Iconos/izquierda.png" />
                </image>
             </ImageView>
          </graphic>

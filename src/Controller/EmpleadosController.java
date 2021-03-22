@@ -16,13 +16,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 
+import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
@@ -49,8 +47,6 @@ public class EmpleadosController extends MenuController implements Initializable
     private TableColumn<empleados, String> col_cargo;
     @FXML
     private TableColumn<empleados, String> col_sexo;
-    @FXML
-    private TableColumn<clientes, Boolean> col_inhabilitar;
 
     @FXML
     private TextField txt_nombre;
@@ -154,16 +150,18 @@ public class EmpleadosController extends MenuController implements Initializable
                 UpdateTable();
                 search_empleado();
 
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 try {
                     Log myLog;
                     String nombreArchivo = "src\\Log\\EMPLEADOS_"+fecha+".txt";
                     myLog = new Log(nombreArchivo);
-                    myLog.logger.setLevel(Level.SEVERE);
-                    myLog.logger.severe(e.getMessage());
+                    myLog.logger.setLevel(Level.ALL);
+                    myLog.logger.severe(e.getMessage() + " Causado por: " + e.getCause());
                 } catch (Exception ex) {
-                    Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(EmpleadosController.class.getName()).log(Level.ALL, null, ex);
                 }
+
+                //JOptionPane.showMessageDialog(null, e);
             }
         }
     }
@@ -185,6 +183,7 @@ public class EmpleadosController extends MenuController implements Initializable
     }
 
     public void Delete(){
+
         Toolkit.getDefaultToolkit().beep();
         Alert alert =new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Información");
@@ -208,19 +207,20 @@ public class EmpleadosController extends MenuController implements Initializable
                         clearFields();
                     }
 
-                }catch (Exception e){
+                }catch (SQLException e){
                     try {
                         Log myLog;
                         String nombreArchivo = "src\\Log\\EMPLEADOS_"+fecha+".txt";
                         myLog = new Log(nombreArchivo);
-                        myLog.logger.setLevel(Level.SEVERE);
-                        myLog.logger.severe(e.getMessage());
+                        myLog.logger.setLevel(Level.ALL);
+                        myLog.logger.severe(e.getMessage() + " Causado por: " + e.getCause());
                     } catch (Exception ex) {
-                        Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(EmpleadosController.class.getName()).log(Level.ALL, null, ex);
                     }
                 }
             }
         });
+
     }
 
     public void UpdateTable(){
@@ -231,7 +231,6 @@ public class EmpleadosController extends MenuController implements Initializable
         col_correo.setCellValueFactory(new PropertyValueFactory<>("correoE"));
         col_cargo.setCellValueFactory(new PropertyValueFactory<>("cargoE"));
         col_sexo.setCellValueFactory(new PropertyValueFactory<>("sexoE"));
-        col_inhabilitar.setCellValueFactory(new PropertyValueFactory<>("inhabilitar"));
 
         listE = connect.getdataempleados();
         table_empleados.setItems(listE);
@@ -268,14 +267,12 @@ public class EmpleadosController extends MenuController implements Initializable
 
     public void Edit(){
 
+
         int codS = 1;
         int codC = 1;
 
         if ( validateName() &validateDireccion() & validateNumber() &  validateEmail()& validateSexo() & validateCargo() & validateInicio() & validateFinal() ) { //
 
-           if(existeTelefono() & existeCorreo()){
-                return;
-            }
 
 
             try {
@@ -320,15 +317,15 @@ public class EmpleadosController extends MenuController implements Initializable
                 UpdateTable();
                 search_empleado();
                 clearFields();
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 try {
                     Log myLog;
                     String nombreArchivo = "src\\Log\\EMPLEADOS_"+fecha+".txt";
                     myLog = new Log(nombreArchivo);
-                    myLog.logger.setLevel(Level.SEVERE);
-                    myLog.logger.severe(e.getMessage());
+                    myLog.logger.setLevel(Level.ALL);
+                    myLog.logger.severe(e.getMessage() + " Causado por: " + e.getCause());
                 } catch (Exception ex) {
-                    Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(EmpleadosController.class.getName()).log(Level.ALL, null, ex);
                 }
             }
         }
@@ -587,10 +584,10 @@ public class EmpleadosController extends MenuController implements Initializable
                 Log myLog;
                 String nombreArchivo = "src\\Log\\EMPLEADOS_"+fecha+".txt";
                 myLog = new Log(nombreArchivo);
-                myLog.logger.setLevel(Level.SEVERE);
-                myLog.logger.severe(e.getMessage());
+                myLog.logger.setLevel(Level.ALL);
+                myLog.logger.severe(e.getMessage() + " Causado por: " + e.getCause());
             } catch (Exception ex) {
-                Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(EmpleadosController.class.getName()).log(Level.ALL, null, ex);
             }
         }
         return false;
@@ -616,10 +613,10 @@ public class EmpleadosController extends MenuController implements Initializable
                 Log myLog;
                 String nombreArchivo = "src\\Log\\EMPLEADOS_"+fecha+".txt";
                 myLog = new Log(nombreArchivo);
-                myLog.logger.setLevel(Level.SEVERE);
-                myLog.logger.severe(e.getMessage());
+                myLog.logger.setLevel(Level.ALL);
+                myLog.logger.severe(e.getMessage() + " Causado por: " + e.getCause());
             } catch (Exception ex) {
-                Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(EmpleadosController.class.getName()).log(Level.ALL, null, ex);
             }
         }
         return false;

@@ -8,8 +8,6 @@ public class clientes{
     int telefono;
     String  sexo;
     String nombre, direccion, correo;
-    private CheckBox inhabilitar;
-
 
     public void setIdCliente(int idCliente) {
         this.idCliente = idCliente;
@@ -58,13 +56,6 @@ public class clientes{
         return sexo;
     }
 
-    public CheckBox getInhabilitar() {
-        return inhabilitar;
-    }
-
-    public void setInhabilitar(CheckBox inhabilitar) {
-        this.inhabilitar = inhabilitar;
-    }
 
 
     public clientes(int idCliente, String nombre, int telefono, String direccion, String correo, String sexo) {
@@ -74,7 +65,6 @@ public class clientes{
         this.direccion = direccion;
         this.correo = correo;
         this.sexo = sexo;
-        this.inhabilitar = new CheckBox();
     }
 
 
