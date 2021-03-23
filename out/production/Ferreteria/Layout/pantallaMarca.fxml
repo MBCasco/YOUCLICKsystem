@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1360.0" style="-fx-background-color: #616161; -fx-border-color: c29b61; -fx-border-width: 3;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MarcaController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1360.0" style="-fx-background-color: #616161; -fx-border-color: c29b61; -fx-border-width: 3;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MarcaController">
     <children>
         <VBox layoutX="6.0" layoutY="23.0" prefHeight="720.0" prefWidth="195.0" spacing="5.0" AnchorPane.topAnchor="23.0">
             <children>
@@ -97,6 +98,11 @@
                         <Image url="@../Imagenes/iconos/Iconos/actualizar.png" />
                     </image>
                 </ImageView>
+            <Button layoutX="887.0" layoutY="148.0" mnemonicParsing="false" onAction="#reporteMarca" prefHeight="32.0" prefWidth="83.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="Reporte" textFill="#eed09d">
+               <font>
+                  <Font name="Dubai Bold" size="12.0" />
+               </font>
+            </Button>
             </children>
         </AnchorPane>
         <Button alignment="CENTER" layoutX="1214.0" layoutY="671.0" mnemonicParsing="false" onAction="#Salir" prefHeight="50.0" prefWidth="118.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="ATRAS" textFill="#eed09d">
@@ -116,4 +122,3 @@
         </ImageView>
     </children>
 </AnchorPane>
-

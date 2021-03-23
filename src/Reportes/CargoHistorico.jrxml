@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CargoHistorico" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="22e6b4e4-9427-4a72-a195-7c1f48c1ad50">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ferreteria"/>
+	<parameter name="cargohistoricoParameter" class="java.lang.Integer"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT c.IDCargoHistorico, e.nombreEmpleado, ca.nombreCargo, c.fechaInicial, c.fechaFinal  FROM cargohistorico AS c 
+INNER JOIN empleado AS e ON e.IDEmpleado = c.IDEmpleado INNER JOIN cargo AS ca ON ca.IDCargo = c.IDCargo]]>
+	</queryString>
+	<field name="IDCargoHistorico" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="IDCargoHistorico"/>
+		<property name="com.jaspersoft.studio.field.label" value="IDCargoHistorico"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cargohistorico"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombreEmpleado" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nombreEmpleado"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombreEmpleado"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="empleado"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombreCargo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nombreCargo"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombreCargo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cargo"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fechaInicial" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="fechaInicial"/>
+		<property name="com.jaspersoft.studio.field.label" value="fechaInicial"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cargohistorico"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fechaFinal" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="fechaFinal"/>
+		<property name="com.jaspersoft.studio.field.label" value="fechaFinal"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cargohistorico"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="96" splitType="Stretch">
+			<staticText>
+				<reportElement x="430" y="10" width="50" height="20" uuid="a05e433c-0c8e-4858-b747-9c27d6b74166"/>
+				<box rightPadding="4"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Date:]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="480" y="10" width="84" height="20" uuid="cb89f0aa-2eff-4fb1-9387-f699f0838152"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="480" y="29" width="84" height="20" uuid="f0fb0fe8-a812-450a-88c8-e8f730cf038f"/>
+				<textFieldExpression><![CDATA["INV0001"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="430" y="29" width="50" height="20" uuid="2a476e1b-4f88-496d-b531-becca170c7d3"/>
+				<box rightPadding="4"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Invoice #]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="140" y="10" width="210" height="25" uuid="7174f24c-1e95-45f7-a74a-35b2348f6e5b">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="19" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ferreteria Alonso/Toño]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="140" y="43" width="205" height="15" uuid="3e93eb97-e2c9-4c49-a372-fa3e61cc25f9"/>
+				<text><![CDATA[Reporte Cargo Historico]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="140" y="60" width="205" height="15" uuid="753db63b-4e08-497d-a095-411a4589c9bf"/>
+				<text><![CDATA[Usuario: Administrador]]></text>
+			</staticText>
+			<line>
+				<reportElement x="24" y="95" width="504" height="1" uuid="2b8629fa-8c16-42ff-b43f-305610dbfdb3">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<image>
+				<reportElement x="0" y="0" width="80" height="80" uuid="8eb2a0e1-f37c-4c4e-bc58-d1bde25499e0"/>
+				<imageExpression><![CDATA["src\\Imagenes\\pp.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="8" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement positionType="Float" x="30" y="0" width="40" height="20" forecolor="#000000" uuid="3cb0b6a1-618a-49de-9e2d-816ea32914d7">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ac64d346-a5a0-4eb3-a0ff-9393954c8e1c"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="70" y="0" width="130" height="20" forecolor="#000000" uuid="75bbb0ab-22fc-4f51-a8ba-8ea1a35aedfc">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="013780b8-c98b-4511-8e81-2a2674bfdd80"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre Empleado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="200" y="0" width="130" height="20" forecolor="#000000" uuid="f7caf7ff-4157-4eb5-9d23-d2eb383a28f8">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="45dfe423-2e42-4cb4-9d77-660018a10972"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre de Cargo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="330" y="0" width="110" height="20" forecolor="#000000" uuid="bd34c0d0-cce1-466c-9e8f-bcfba50bc370">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="34060323-ae73-40f3-aec9-9dca0f0cdf1e"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha Inicial]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="440" y="0" width="98" height="20" forecolor="#000000" uuid="97ddd7f1-49c8-41ef-a7bc-5470b6cbfab5">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="82c3e3b4-11f7-4520-970a-23bdf09f1156"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha Final]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="26" splitType="Stretch">
+			<textField>
+				<reportElement x="30" y="0" width="40" height="20" uuid="f17e42cc-fae2-4104-b479-c7520e205e1a"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{IDCargoHistorico}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="70" y="0" width="130" height="20" uuid="8f631d42-9aa9-49ee-bf6c-139d0e710db1"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{nombreEmpleado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="200" y="0" width="130" height="20" uuid="6788a5f3-dfb9-4fa8-9e12-3e3ac00544b3"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{nombreCargo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="330" y="0" width="110" height="20" uuid="e8e48e9d-653b-44f1-981d-3ec8dfe534d3"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{fechaInicial}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="440" y="0" width="98" height="20" uuid="bdaf33d7-69ab-4dcf-adf4-b0b181788059"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{fechaFinal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField evaluationTime="Report">
+				<reportElement x="475" y="14" width="100" height="30" uuid="d6a0afcf-e2e1-4206-8773-ef0549e61740"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[" of " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="375" y="14" width="100" height="30" uuid="16879c55-d517-41f9-bcc2-aff49077da8a"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="13" splitType="Stretch"/>
+	</summary>
+</jasperReport>
