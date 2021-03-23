@@ -213,5 +213,6 @@
             <Font name="Dubai Bold" size="16.0" />
          </font>
       </Label>
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="1130.0" layoutY="198.0" mnemonicParsing="false" onAction="#reporteProveedor" prefHeight="32.0" prefWidth="95.0" style="-fx-border-color: ffc107; -fx-background-color: a18262;" text="Reporte" textFill="#eed09d" />
    </children>
 </AnchorPane>

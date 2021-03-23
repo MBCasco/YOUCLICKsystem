@@ -14,15 +14,18 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.view.JasperViewer;
 
+import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -307,5 +310,24 @@ public class MarcaController extends MenuController implements Initializable {
         stage.setTitle("Productos");
         stage.setScene(new Scene(root, 1360, 768));
         stage.show();
+    }
+
+    public void reporteMarca() throws JRException, ClassNotFoundException, SQLException {
+
+        JasperReport reporte;
+        try {
+
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/ferreteria", "root", "");
+            reporte = JasperCompileManager.compileReport("src/Reportes/Marca.jrxml");
+            Map<String, Object> parameters = new HashMap<String, Object>();
+            parameters.put("marcaParameter", 1);
+
+            JasperPrint jp = JasperFillManager.fillReport(reporte, parameters, conn);
+
+            JasperViewer.viewReport(jp, false);
+        }catch (ClassNotFoundException | SQLException | JRException e){
+            JOptionPane.showMessageDialog(null, "Ocurrio este error " + e.getMessage() );
+        }
     }
 }

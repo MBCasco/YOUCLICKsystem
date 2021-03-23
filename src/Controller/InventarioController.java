@@ -12,9 +12,17 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.view.JasperViewer;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class InventarioController extends MenuController implements Initializable {
@@ -107,6 +115,25 @@ public class InventarioController extends MenuController implements Initializabl
         SortedList<inventario> sortedData = new SortedList<>(filteredData);
         sortedData.comparatorProperty().bind(tablaInventario.comparatorProperty());
         tablaInventario.setItems(sortedData);
+    }
+
+    public void reporteInventario() throws JRException, ClassNotFoundException, SQLException {
+
+        JasperReport reporte;
+        try {
+
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/ferreteria", "root", "");
+            reporte = JasperCompileManager.compileReport("src/Reportes/Inventario.jrxml");
+            Map<String, Object> parameters = new HashMap<String, Object>();
+            parameters.put("inventarioParameter", 1);
+
+            JasperPrint jp = JasperFillManager.fillReport(reporte, parameters, conn);
+
+            JasperViewer.viewReport(jp, false);
+        }catch (ClassNotFoundException | SQLException | JRException e){
+            JOptionPane.showMessageDialog(null, "Ocurrio este error " + e.getMessage() );
+        }
     }
 
 }

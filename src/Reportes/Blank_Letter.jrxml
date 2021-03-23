@@ -91,14 +91,7 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="199" splitType="Stretch">
-			<staticText>
-				<reportElement x="0" y="0" width="150" height="50" uuid="1a036c69-cfc1-4e3a-8dff-d1b4cb069c63"/>
-				<textElement>
-					<font size="19"/>
-				</textElement>
-				<text><![CDATA[FERRETERIA ALONSO/TOÑO]]></text>
-			</staticText>
+		<band height="198" splitType="Stretch">
 			<staticText>
 				<reportElement x="380" y="10" width="100" height="30" uuid="7cf2636b-78e5-4117-9b96-a0c5b09b8fee">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ebafb5f2-3e89-410c-bf94-2a5e42be9f36"/>
@@ -123,10 +116,24 @@
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{fechaFactura}]]></textFieldExpression>
 			</textField>
+			<image>
+				<reportElement x="0" y="0" width="80" height="80" uuid="8a28ffc2-06ed-4faa-94e6-ca1230fa364b"/>
+				<imageExpression><![CDATA["src\\Imagenes\\pp.jpg"]]></imageExpression>
+			</image>
 			<staticText>
-				<reportElement x="160" y="5" width="229" height="45" uuid="30d1475a-053c-4675-b0dc-9b8664888994"/>
+				<reportElement x="160" y="10" width="210" height="25" uuid="de4960d6-6542-4c75-895f-c6069bc09469">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="19" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ferreteria Alonso/Toño]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="160" y="42" width="205" height="27" uuid="8b280628-01be-41e9-bcbb-06049c81b93d"/>
 				<textElement textAlignment="Center">
-					<font size="25"/>
+					<font size="20"/>
 				</textElement>
 				<text><![CDATA[FACTURA]]></text>
 			</staticText>

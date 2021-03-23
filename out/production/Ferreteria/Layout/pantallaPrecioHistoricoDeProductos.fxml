@@ -6,7 +6,6 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1360.0" style="-fx-background-color: #616161; -fx-border-color: c29b61; -fx-border-width: 3;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.PrecioHistoricoController">
    <children>
       <TableView fx:id="table_precioHistorico" layoutX="227.0" layoutY="284.0" prefHeight="472.0" prefWidth="1066.0" style="-fx-background-color: eed09d; -fx-border-color: a18262; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-width: 2;">
@@ -137,5 +136,10 @@
             </VBox>
          </children>
       </VBox>
+      <Button layoutX="1190.0" layoutY="243.0" mnemonicParsing="false" onAction="#reportePrecio" prefHeight="30.0" prefWidth="83.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="Reporte">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

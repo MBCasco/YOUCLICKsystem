@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1360.0" style="-fx-background-color: #616161; -fx-border-color: c29b61; -fx-border-width: 3;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ProveedoresContactoController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1360.0" style="-fx-background-color: #616161; -fx-border-color: c29b61; -fx-border-width: 3;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ProveedoresContactoController">
    <children>
       <Pane layoutX="235.0" layoutY="24.0" prefHeight="108.0" prefWidth="1099.0" style="-fx-background-color: #ffc107; -fx-border-color: c29b61; -fx-background-radius: 10; -fx-border-radius: 5; -fx-border-style: solid; -fx-border-width: 4;">
          <children>
@@ -221,5 +222,6 @@
             <TableColumn fx:id="col_correoElectronicoContacto" prefWidth="166.0" text="Correo electrónico" />
         </columns>
       </TableView>
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="1128.0" layoutY="199.0" mnemonicParsing="false" onAction="#reporteContacto" prefHeight="32.0" prefWidth="95.0" style="-fx-border-color: ffc107; -fx-background-color: a18262;" text="Reporte" textFill="#eed09d" />
    </children>
 </AnchorPane>

@@ -10,11 +10,14 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.view.JasperViewer;
 
+import javax.swing.*;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class PrecioHistoricoController extends MenuController implements Initializable {
@@ -95,6 +98,25 @@ public class PrecioHistoricoController extends MenuController implements Initial
         SortedList<precioHistorico> sortedData = new SortedList<>(filteredData);
         sortedData.comparatorProperty().bind(table_precioHistorico.comparatorProperty());
         table_precioHistorico.setItems(sortedData);
+    }
+
+    public void reportePrecio() throws JRException, ClassNotFoundException, SQLException {
+
+        JasperReport reporte;
+        try {
+
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/ferreteria", "root", "");
+            reporte = JasperCompileManager.compileReport("src/Reportes/PrecioProducto.jrxml");
+            Map<String, Object> parameters = new HashMap<String, Object>();
+            parameters.put("precioParameter", 1);
+
+            JasperPrint jp = JasperFillManager.fillReport(reporte, parameters, conn);
+
+            JasperViewer.viewReport(jp, false);
+        }catch (ClassNotFoundException | SQLException | JRException e){
+            JOptionPane.showMessageDialog(null, "Ocurrio este error " + e.getMessage() );
+        }
     }
 
 }
