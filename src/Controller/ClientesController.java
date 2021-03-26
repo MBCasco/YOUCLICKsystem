@@ -66,6 +66,8 @@ public class ClientesController extends MenuController implements Initializable 
     @FXML
     private Button btn_eliminar;
     @FXML
+    private Button btn_reporte;
+    @FXML
     private Button btn_clear;
 
 
@@ -85,6 +87,43 @@ public class ClientesController extends MenuController implements Initializable 
     final java.util.Date  date = calendar.getTime();
     String fecha = new SimpleDateFormat("yyyyMMdd_HH.mm.ss").format(date);
 
+
+    private void habilitar(){
+
+        conn = connect.conDB();
+
+        try {
+            String sql = "select * from acceso where FuncionesClientes";
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            if(rs.next()){
+
+                if(rs.getString("FuncionesClientes").contains("R")){
+                    btn_registrar.setVisible(true);
+                }
+                if(rs.getString("FuncionesClientes").contains("A")){
+                    btn_actualizar.setVisible(true);
+                }
+                if(rs.getString("FuncionesClientes").contains("E")){
+                    btn_eliminar.setVisible(true);
+                }
+                if(rs.getString("FuncionesClientes").contains("I")){
+                    btn_reporte.setVisible(true);
+                }
+
+            }
+        } catch (SQLException e) {
+            try {
+                Log myLog;
+                String nombreArchivo = "src\\Log\\CLIENTES_"+fecha+".txt";
+                myLog = new Log(nombreArchivo);
+                myLog.logger.setLevel(Level.ALL);
+                myLog.logger.severe(e.getMessage() + " Causado por: " + e.getCause());
+            } catch (Exception ex) {
+                Logger.getLogger(ClientesController.class.getName()).log(Level.ALL, null, ex);
+            }
+        }
+    }
 
 
     //Agregar Clientes
@@ -234,6 +273,7 @@ public class ClientesController extends MenuController implements Initializable 
         Search_cliente();
         clearFields();
         checkBtnStatus(0);
+        habilitar();
 
     }
 

@@ -62,6 +62,8 @@ public class ProveedoresController extends MenuController implements Initializab
     @FXML
     private Button btn_eliminar;
     @FXML
+    private Button btn_reporte;
+    @FXML
     private Button btn_clearFields;
     @FXML
     private Tab tab_contacto;
@@ -77,6 +79,34 @@ public class ProveedoresController extends MenuController implements Initializab
     final Calendar calendar = Calendar.getInstance();
     final java.util.Date  date = calendar.getTime();
     String fecha = new SimpleDateFormat("yyyyMMdd_HH.mm.ss").format(date);
+
+
+    private void habilitar(String nombreUsuario){
+        try {
+            Statement st = conn.createStatement();
+            String sql = "select * from acceso where nombrUsuario = '"+nombreUsuario+"'";
+            ResultSet rs = st.executeQuery(sql);
+            if(rs.next()){
+
+                if(rs.getString("FuncionesProveedores").contains("R")){
+                    btn_registrar.setVisible(true);
+                }
+                if(rs.getString("FuncionesProveedores").contains("A")){
+                    btn_actualizar.setVisible(true);
+                }
+                if(rs.getString("FuncionesProveedores").contains("E")){
+                    btn_eliminar.setVisible(true);
+                }
+                if(rs.getString("FuncionesProveedores").contains("I")){
+                    btn_reporte.setVisible(true);
+                }
+
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientesController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     public void prueba() throws IOException {
         contactos();

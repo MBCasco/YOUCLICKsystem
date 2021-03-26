@@ -1,8 +1,10 @@
 package Controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -45,6 +47,7 @@ public class LoginController implements GlobalConstans {
     String fecha = new SimpleDateFormat("yyyyMMdd-hh.mm.ss").format(date);
 
 
+
     public void handleButtonAction(MouseEvent event) throws SQLException {
         if(event.getSource() == lbl_close){
             System.exit(0);
@@ -53,7 +56,6 @@ public class LoginController implements GlobalConstans {
             //login here
             if(LogIn().equals("Success")){
                 try{
-
 
                     Scene scene = new Scene (FXMLLoader.load(getClass().getResource("/Layout/pantallaPrincipal.fxml")));
                     stage.setTitle("Pantalla Principal");
@@ -66,9 +68,9 @@ public class LoginController implements GlobalConstans {
                         String nombreArchivo = "src\\Log\\LOGIN_"+fecha+".txt";
                         myLog = new Log(nombreArchivo);
                         myLog.logger.setLevel(Level.SEVERE);
-                        myLog.logger.severe(e.getMessage() + " : " + e.getCause());
+                        myLog.logger.severe(e.getMessage() + " Causado por: " + e.getCause());
                     } catch (IOException ex) {
-                        Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(ClientesController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
@@ -92,11 +94,14 @@ public class LoginController implements GlobalConstans {
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
 
-    private String LogIn()  throws SQLException  {
+    private String LogIn() {
+
         String usuario = usuarioTextField.getText();
         String contraseña = contraseñaField.getText();
 
-        String sql = "SELECT * FROM admins Where usuario = ? and contraseña = ?";
+
+
+        String sql = "SELECT * FROM admins where usuario = ? and contraseña = ?";
 
         try {
             preparedStatement = con.prepareStatement(sql);

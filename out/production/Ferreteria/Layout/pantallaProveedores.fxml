@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
-<?import java.lang.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1360.0" style="-fx-background-color: #616161; -fx-border-color: c29b61; -fx-border-width: 3;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ProveedoresController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1360.0" style="-fx-background-color: #616161; -fx-border-color: c29b61; -fx-border-width: 3;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ProveedoresController">
    <children>
       <Pane layoutX="235.0" layoutY="24.0" prefHeight="108.0" prefWidth="1099.0" style="-fx-background-color: #ffc107; -fx-border-color: c29b61; -fx-background-radius: 10; -fx-border-radius: 5; -fx-border-style: solid; -fx-border-width: 4;">
          <children>
@@ -213,6 +212,6 @@
             <Font name="Dubai Bold" size="16.0" />
          </font>
       </Label>
-      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="1130.0" layoutY="198.0" mnemonicParsing="false" onAction="#reporteProveedor" prefHeight="32.0" prefWidth="95.0" style="-fx-border-color: ffc107; -fx-background-color: a18262;" text="Reporte" textFill="#eed09d" />
+      <Button fx:id="btn_reporte" alignment="CENTER" contentDisplay="CENTER" layoutX="1130.0" layoutY="198.0" mnemonicParsing="false" onAction="#reporteProveedor" prefHeight="32.0" prefWidth="95.0" style="-fx-border-color: ffc107; -fx-background-color: a18262;" text="Reporte" textFill="#eed09d" />
    </children>
 </AnchorPane>

@@ -8,6 +8,7 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -18,12 +19,12 @@ import net.sf.jasperreports.view.JasperViewer;
 import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class InventarioController extends MenuController implements Initializable {
 
@@ -57,8 +58,34 @@ public class InventarioController extends MenuController implements Initializabl
     @FXML
     private TextField filterField;
 
+    @FXML
+    private Button btn_hacercompra;
+    @FXML
+    private Button btn_reporte;
+
     ObservableList<inventario> listI;
     ObservableList<inventario> dataList;
+    Connection conn = null;
+
+    private void habilitar(String nombreUsuario){
+        try {
+            Statement st = conn.createStatement();
+            String sql = "select * from acceso where nombrUsuario = '"+nombreUsuario+"'";
+            ResultSet rs = st.executeQuery(sql);
+            if(rs.next()){
+
+                if(rs.getString("FuncionesInventario").contains("C")){
+                    btn_hacercompra.setVisible(true);
+                }
+                if(rs.getString("FuncionesClientes").contains("I")){
+                    btn_reporte.setVisible(true);
+                }
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientesController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     public void pruebaI(javafx.event.ActionEvent actionEvent) throws IOException {
         compra();

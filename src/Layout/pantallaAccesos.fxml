@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1360.0" style="-fx-background-color: #616161; -fx-border-color: c29b61; -fx-border-width: 3;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ControAccesos">
+    <children>
+        <Label alignment="CENTER" layoutX="37.0" layoutY="22.0" prefHeight="98.0" prefWidth="1287.0" style="-fx-background-color: ffdb58; -fx-background-radius: 10; -fx-border-color: c29b61; -fx-border-radius: 5; -fx-border-style: solid; -fx-border-width: 4;" text="Control de acceso">
+            <font>
+                <Font name="Elephant" size="36.0" />
+            </font>
+        </Label>
+        <AnchorPane layoutX="60.0" layoutY="135.0" prefHeight="582.0" prefWidth="1214.0" style="-fx-background-color: d5c5ae; -fx-border-color: ffc107; -fx-border-width: 2; -fx-border-radius: 5; -fx-background-radius: 5;">
+            <children>
+                <Label alignment="CENTER" layoutX="104.0" layoutY="375.0" prefHeight="25.0" prefWidth="162.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="Inventario" textFill="#8d5910">
+                    <font>
+                        <Font name="Dubai Bold" size="12.0" />
+                    </font>
+                </Label>
+                <Label alignment="CENTER" layoutX="104.0" layoutY="404.0" prefHeight="25.0" prefWidth="162.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="Compra" textFill="#8d5910">
+                    <font>
+                        <Font name="Dubai Bold" size="12.0" />
+                    </font>
+                </Label>
+                <Label alignment="CENTER" layoutX="4.0" layoutY="13.0" prefHeight="32.0" prefWidth="1230.0" style="-fx-background-color: ffdb58; -fx-border-color: c29b61;" text="Permisos de Pantalla" textFill="#a18262">
+                    <font>
+                        <Font name="Dubai Bold" size="16.0" />
+                    </font>
+                </Label>
+                <Label alignment="CENTER" layoutX="104.0" layoutY="345.0" prefHeight="25.0" prefWidth="162.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="Productos" textFill="#8d5910">
+                    <font>
+                        <Font name="Dubai Bold" size="12.0" />
+                    </font>
+                </Label>
+                <Label alignment="CENTER" layoutX="104.0" layoutY="317.0" prefHeight="25.0" prefWidth="162.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="Empleados" textFill="#8d5910">
+                    <font>
+                        <Font name="Dubai Bold" size="12.0" />
+                    </font>
+                </Label>
+                <Button fx:id="btn_guargar" layoutX="1046.0" layoutY="391.0" mnemonicParsing="false" onAction="#guardar" prefHeight="38.0" prefWidth="125.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="Guardar" textFill="#eed09d">
+                    <font>
+                        <Font name="Dubai Bold" size="12.0" />
+                    </font>
+                </Button>
+                <Pane layoutX="182.0" layoutY="93.0" prefHeight="134.0" prefWidth="850.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 5; -fx-border-radius: 5;">
+                    <children>
+                        <CheckBox fx:id="chb_clientes" layoutX="60.0" layoutY="22.0" mnemonicParsing="false" onAction="#habilitarClientes" text="Clientes" textFill="#8d5910">
+                            <font>
+                                <Font name="Dubai Bold" size="14.0" />
+                            </font>
+                        </CheckBox>
+                        <CheckBox fx:id="chb_compras" layoutX="357.0" layoutY="23.0" mnemonicParsing="false" onAction="#habilitarCompras" text="Compra" textFill="#8d5910">
+                            <font>
+                                <Font name="Dubai Regular" size="14.0" />
+                            </font></CheckBox>
+                        <CheckBox fx:id="chb_empleados" layoutX="123.0" layoutY="83.0" mnemonicParsing="false" onAction="#habilitarEmpleados" text="Empleados" textFill="#8d5910">
+                            <font>
+                                <Font name="Dubai Regular" size="14.0" />
+                            </font>
+                        </CheckBox>
+                        <CheckBox fx:id="chb_productos" layoutX="208.0" layoutY="22.0" mnemonicParsing="false" onAction="#habilitarProductos" text="Productos" textFill="#8d5910">
+                            <font>
+                                <Font name="Dubai Regular" size="14.0" />
+                            </font></CheckBox>
+                        <CheckBox fx:id="chb_facturas" layoutX="507.0" layoutY="25.0" mnemonicParsing="false" onAction="#habilitarFacturas" text="Factura" textFill="#8d5910">
+                            <font>
+                                <Font name="Dubai Regular" size="14.0" />
+                            </font></CheckBox>
+                        <CheckBox fx:id="chb_proveedores" layoutX="420.0" layoutY="82.0" mnemonicParsing="false" onAction="#habilitarProveedores" text="Proveedores" textFill="#8d5910">
+                            <font>
+                                <Font name="Dubai Regular" size="14.0" />
+                            </font></CheckBox>
+                        <CheckBox fx:id="chb_marca" layoutX="606.0" layoutY="82.0" mnemonicParsing="false" onAction="#habilitarMarca" text="Marca" textFill="#8d5910">
+                            <font>
+                                <Font name="Dubai Regular" size="14.0" />
+                            </font></CheckBox>
+                        <CheckBox fx:id="chb_inventario" layoutX="283.0" layoutY="82.0" mnemonicParsing="false" onAction="#habilitarInventario" text="Inventario" textFill="#8d5910">
+                            <font>
+                                <Font name="Dubai Bold" size="14.0" />
+                            </font></CheckBox>
+                    </children>
+                </Pane>
+                <Label layoutX="421.0" layoutY="56.0" text="Usuario" />
+                <Label alignment="CENTER" layoutX="104.0" layoutY="461.0" prefHeight="25.0" prefWidth="162.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="Marca" textFill="#8d5910">
+                    <font>
+                        <Font name="Dubai Bold" size="12.0" />
+                    </font>
+                </Label>
+                <Label alignment="CENTER" layoutX="104.0" layoutY="432.0" prefHeight="25.0" prefWidth="162.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="Proveedores" textFill="#8d5910">
+                    <font>
+                        <Font name="Dubai Bold" size="12.0" />
+                    </font>
+                </Label>
+                <Label alignment="CENTER" layoutX="104.0" layoutY="490.0" prefHeight="25.0" prefWidth="162.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="Factura" textFill="#8d5910">
+                    <font>
+                        <Font name="Dubai Bold" size="12.0" />
+                    </font>
+                </Label>
+                <Label alignment="CENTER" layoutX="104.0" layoutY="289.0" prefHeight="25.0" prefWidth="162.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 3; -fx-border-radius: 3;" text="Clientes" textFill="#8d5910">
+                    <font>
+                        <Font name="Dubai Bold" size="12.0" />
+                    </font>
+                </Label>
+                <Pane layoutX="295.0" layoutY="288.0" prefHeight="234.0" prefWidth="692.0" style="-fx-background-color: eed09d; -fx-border-color: black; -fx-background-radius: 5; -fx-border-radius: 5;">
+                    <children>
+                        <CheckBox fx:id="chb_clientesA" layoutX="238.0" layoutY="6.0" mnemonicParsing="false" text="Actualizar" />
+                        <CheckBox fx:id="chb_clientesR" layoutX="22.0" layoutY="6.0" mnemonicParsing="false" text="Registrar" />
+                        <CheckBox fx:id="chb_clientesE" layoutX="374.0" layoutY="5.0" mnemonicParsing="false" text="Eliminar" />
+                        <CheckBox fx:id="chb_clientesI" layoutX="574.0" layoutY="6.0" mnemonicParsing="false" text="Imprimir" />
+                        <CheckBox fx:id="chb_empleadosI" layoutX="574.0" layoutY="30.0" mnemonicParsing="false" text="Imprimir" />
+                        <CheckBox fx:id="chb_empleadosE" layoutX="374.0" layoutY="30.0" mnemonicParsing="false" text="Eliminar" />
+                        <CheckBox fx:id="chb_empleadosR" layoutX="22.0" layoutY="30.0" mnemonicParsing="false" text="Registrar" />
+                        <CheckBox fx:id="chb_empleadosA" layoutX="238.0" layoutY="30.0" mnemonicParsing="false" text="Actualizar" />
+                        <CheckBox fx:id="chb_productosI" layoutX="574.0" layoutY="59.0" mnemonicParsing="false" text="Imprimir" />
+                        <CheckBox fx:id="chb_productosE" layoutX="374.0" layoutY="59.0" mnemonicParsing="false" text="Eliminar" />
+                        <CheckBox fx:id="chb_productosR" layoutX="22.0" layoutY="59.0" mnemonicParsing="false" text="Registrar" />
+                        <CheckBox fx:id="chb_productosA" layoutX="238.0" layoutY="59.0" mnemonicParsing="false" text="Actualizar" />
+                        <CheckBox fx:id="chb_inventarioI" layoutX="574.0" layoutY="90.0" mnemonicParsing="false" text="Imprimir" />
+                        <CheckBox fx:id="chb_inventarioC" layoutX="101.0" layoutY="90.0" mnemonicParsing="false" text="Hacer Compra" />
+                        <CheckBox fx:id="chb_compraI" layoutX="574.0" layoutY="121.0" mnemonicParsing="false" text="Imprimir" />
+                        <CheckBox fx:id="chb_compraE" layoutX="374.0" layoutY="121.0" mnemonicParsing="false" text="Eliminar" />
+                        <CheckBox fx:id="chb_compraR" layoutX="22.0" layoutY="120.0" mnemonicParsing="false" text="Registrar" />
+                        <CheckBox fx:id="chb_compraA" layoutX="238.0" layoutY="121.0" mnemonicParsing="false" text="Actualizar" />
+                        <CheckBox fx:id="chb_proveedoresI" layoutX="574.0" layoutY="148.0" mnemonicParsing="false" text="Imprimir" />
+                        <CheckBox fx:id="chb_proveedoresE" layoutX="374.0" layoutY="147.0" mnemonicParsing="false" text="Eliminar" />
+                        <CheckBox fx:id="chb_proveedoresR" layoutX="22.0" layoutY="147.0" mnemonicParsing="false" text="Registrar" />
+                        <CheckBox fx:id="chb_proveedoresA" layoutX="238.0" layoutY="147.0" mnemonicParsing="false" text="Actualizar" />
+                        <CheckBox fx:id="chb_marcaI" layoutX="574.0" layoutY="177.0" mnemonicParsing="false" text="Imprimir" />
+                        <CheckBox fx:id="chb_marcaE" layoutX="374.0" layoutY="177.0" mnemonicParsing="false" text="Eliminar" />
+                        <CheckBox fx:id="chb_marcaR" layoutX="22.0" layoutY="177.0" mnemonicParsing="false" text="Registrar" />
+                        <CheckBox fx:id="chb_marcaA" layoutX="238.0" layoutY="177.0" mnemonicParsing="false" text="Actualizar" />
+                        <CheckBox fx:id="chb_facturasI" layoutX="574.0" layoutY="203.0" mnemonicParsing="false" text="Imprimir" />
+                        <CheckBox fx:id="chb_productosP" layoutX="101.0" layoutY="59.0" mnemonicParsing="false" text="Historial de precios" />
+                        <CheckBox fx:id="chb_productosM" layoutX="458.0" layoutY="59.0" mnemonicParsing="false" text="Agregar Marca" />
+                        <CheckBox fx:id="chb_empleadosC" layoutX="101.0" layoutY="30.0" mnemonicParsing="false" text="Cargo histórico" />
+                    </children>
+                </Pane>
+                <Button fx:id="btn_salir" layoutX="31.0" layoutY="13.0" mnemonicParsing="false" onAction="#salir" prefHeight="32.0" prefWidth="87.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="Salir" textFill="#eed09d">
+                    <font>
+                        <Font name="Dubai Bold" size="12.0" />
+                    </font>
+                </Button>
+                <Separator layoutX="46.0" layoutY="249.0" prefHeight="3.0" prefWidth="474.0" style="-fx-background-color: #8d5910; -fx-border-color: #8d5910;" />
+                <Separator layoutX="757.0" layoutY="248.0" prefHeight="3.0" prefWidth="435.0" style="-fx-background-color: #8d5910; -fx-border-color: #8d5910;" />
+                <Separator layoutX="49.0" layoutY="63.0" prefHeight="3.0" prefWidth="346.0" style="-fx-background-color: #8d5910; -fx-border-color: #8d5910;" />
+                <Separator layoutX="826.0" layoutY="63.0" prefHeight="3.0" prefWidth="362.0" style="-fx-background-color: #8d5910; -fx-border-color: #8d5910;" />
+                <Label layoutX="553.0" layoutY="236.0" prefHeight="29.0" prefWidth="192.0" text="Permisos de Funcionalidad" textFill="#8d5910">
+                    <font>
+                        <Font name="Dubai Bold" size="16.0" />
+                    </font>
+                </Label>
+            <ComboBox fx:id="cmb_nombreUsuario" layoutX="479.0" layoutY="53.0" onAction="#cmbUsuario" prefHeight="29.0" prefWidth="311.0" promptText="Seleccione un usuario" />
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>

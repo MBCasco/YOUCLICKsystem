@@ -178,6 +178,23 @@ public class FacturaController extends MenuController implements Initializable {
     String fecha = new SimpleDateFormat("yyyyMMdd_HH.mm.ss").format(date);
 
 
+    private void habilitar(String nombreUsuario){
+        try {
+            Statement st = conn.createStatement();
+            String sql = "select * from acceso where nombrUsuario = '"+nombreUsuario+"'";
+            ResultSet rs = st.executeQuery(sql);
+            if(rs.next()){
+
+                if(rs.getString("FuncionesMarca").contains("I")){
+                    btn_finalizarFactura.setVisible(true);
+                }
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientesController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Search_producto();

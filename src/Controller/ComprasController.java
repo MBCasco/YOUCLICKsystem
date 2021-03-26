@@ -19,10 +19,7 @@ import javax.xml.crypto.Data;
 import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
@@ -86,6 +83,8 @@ public class ComprasController  extends MenuController implements Initializable 
     @FXML
     private Button btn_eliminar;
     @FXML
+    private Button btn_reporte;
+    @FXML
     private Button btn_limpiar;
     @FXML
     private Tab tab_pago;
@@ -120,6 +119,34 @@ public class ComprasController  extends MenuController implements Initializable 
     final Calendar calendar = Calendar.getInstance();
     final java.util.Date  date = calendar.getTime();
     String fecha = new SimpleDateFormat("yyyyMMdd_HH.mm.ss").format(date);
+
+
+    private void habilitar(String nombreUsuario){
+        try {
+            Statement st = conn.createStatement();
+            String sql = "select * from acceso where nombrUsuario = '"+nombreUsuario+"'";
+            ResultSet rs = st.executeQuery(sql);
+            if(rs.next()){
+
+                if(rs.getString("FuncionesCompras").contains("R")){
+                    btn_agregarP.setVisible(true);
+                }
+                if(rs.getString("FuncionesCompras").contains("A")){
+                    btn_actualizar.setVisible(true);
+                }
+                if(rs.getString("FuncionesCompras").contains("E")){
+                    btn_eliminar.setVisible(true);
+                }
+                if(rs.getString("FuncionesCompras").contains("I")){
+                    btn_reporte.setVisible(true);
+                }
+
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientesController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     public void prueba() throws IOException {
         pago();

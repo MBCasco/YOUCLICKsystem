@@ -57,6 +57,8 @@ public class MarcaController extends MenuController implements Initializable {
     private Button btn_actualizar;
     @FXML
     private Button btn_eliminar;
+    @FXML
+    private Button btn_reporte;
 
     int value;
 
@@ -71,6 +73,33 @@ public class MarcaController extends MenuController implements Initializable {
     final Calendar calendar = Calendar.getInstance();
     final java.util.Date  date = calendar.getTime();
     String fecha = new SimpleDateFormat("yyyyMMdd_HH.mm.ss").format(date);
+
+    private void habilitar(String nombreUsuario){
+        try {
+            Statement st = conn.createStatement();
+            String sql = "select * from acceso where nombrUsuario = '"+nombreUsuario+"'";
+            ResultSet rs = st.executeQuery(sql);
+            if(rs.next()){
+
+                if(rs.getString("FuncionesMarca").contains("R")){
+                    btn_agregar.setVisible(true);
+                }
+                if(rs.getString("FuncionesMarca").contains("A")){
+                    btn_actualizar.setVisible(true);
+                }
+                if(rs.getString("FuncionesMarca").contains("E")){
+                    btn_eliminar.setVisible(true);
+                }
+                if(rs.getString("FuncionesMarca").contains("I")){
+                    btn_reporte.setVisible(true);
+                }
+
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientesController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
 
     public void agregar() {

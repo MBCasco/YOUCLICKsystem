@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1360.0" style="-fx-background-color: #616161; -fx-border-color: c29b61; -fx-border-width: 3;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.InventarioController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1360.0" style="-fx-background-color: #616161; -fx-border-color: c29b61; -fx-border-width: 3;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.InventarioController">
    <children>
       <TableView fx:id="tablaInventario" layoutX="225.0" layoutY="365.0" prefHeight="391.0" prefWidth="1119.0" style="-fx-background-color: eed09d; -fx-border-color: a18262; -fx-border-radius: 5; -fx-background-radius: 5; -fx-border-width: 2;">
         <columns>
@@ -132,7 +131,7 @@
             <TextField fx:id="filterField" layoutX="61.0" layoutY="74.0" prefHeight="31.0" prefWidth="562.0" promptText="ID o nombre" />
          </children>
       </Pane>
-      <Button alignment="CENTER_RIGHT" layoutX="1098.0" layoutY="189.0" mnemonicParsing="false" onAction="#pruebaI" prefHeight="88.0" prefWidth="231.0" style="-fx-background-color: #616161; -fx-border-color: #ffdb58; -fx-border-radius: 5;" text="Hacer compras" textFill="WHITE">
+      <Button fx:id="btn_hacercompra" alignment="CENTER_RIGHT" layoutX="1098.0" layoutY="189.0" mnemonicParsing="false" onAction="#pruebaI" prefHeight="88.0" prefWidth="231.0" style="-fx-background-color: #616161; -fx-border-color: #ffdb58; -fx-border-radius: 5;" text="Hacer compras" textFill="WHITE">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
@@ -142,7 +141,7 @@
             <Image url="@../Imagenes/iconos/Iconos/compra.png" />
          </image>
       </ImageView>
-      <Button layoutX="1153.0" layoutY="284.0" mnemonicParsing="false" onAction="#reporteInventario" prefHeight="39.0" prefWidth="121.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="Reporte">
+      <Button fx:id="btn_reporte" layoutX="1153.0" layoutY="284.0" mnemonicParsing="false" onAction="#reporteInventario" prefHeight="39.0" prefWidth="121.0" style="-fx-background-color: a18262; -fx-border-color: ffc107;" text="Reporte">
          <font>
             <Font size="18.0" />
          </font>

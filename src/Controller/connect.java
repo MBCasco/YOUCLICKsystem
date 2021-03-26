@@ -5,13 +5,12 @@ import Models.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javax.swing.*;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
+import java.util.ArrayList;
 
 public class connect {
     Connection conn = null;
+    ResultSet rs;
 
     public static Connection conDB(){
         try{
@@ -361,5 +360,6 @@ public class connect {
         }
         return list;
     }
+
 }
 

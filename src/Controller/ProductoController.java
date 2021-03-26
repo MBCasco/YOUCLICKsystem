@@ -87,6 +87,12 @@ public class ProductoController extends MenuController implements Initializable 
     private Button btn_eliminar;
     @FXML
     private Button btn_clear;
+    @FXML
+    private Button btn_historialprecio;
+    @FXML
+    private Button btn_marca;
+    @FXML
+    private Button btn_reporte;
 
 
     ObservableList<producto> listP;
@@ -102,6 +108,38 @@ public class ProductoController extends MenuController implements Initializable 
     final java.util.Date  date = calendar.getTime();
     String fecha = new SimpleDateFormat("yyyyMMdd_HH.mm.ss").format(date);
 
+    private void habilitar(String nombreUsuario){
+        try {
+            Statement st = conn.createStatement();
+            String sql = "select * from acceso where nombrUsuario = '"+nombreUsuario+"'";
+            ResultSet rs = st.executeQuery(sql);
+            if(rs.next()){
+
+                if(rs.getString("FuncionesProductos").contains("R")){
+                    btn_registrar.setVisible(true);
+                }
+                if(rs.getString("FuncionesProductos").contains("P")){
+                    btn_historialprecio.setVisible(true);
+                }
+                if(rs.getString("FuncionesProductos").contains("A")){
+                    btn_actualizar.setVisible(true);
+                }
+                if(rs.getString("FuncionesProductos").contains("E")){
+                    btn_eliminar.setVisible(true);
+                }
+                if(rs.getString("FuncionesProductos").contains("M")){
+                    btn_marca.setVisible(true);
+                }
+                if(rs.getString("FuncionesProductos").contains("I")){
+                    btn_reporte.setVisible(true);
+                }
+
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientesController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     public void addProducto() throws SQLException {
         try {
